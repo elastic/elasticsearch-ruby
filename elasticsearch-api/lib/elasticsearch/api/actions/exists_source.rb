@@ -24,21 +24,23 @@ module Elasticsearch
       # Check for a document source.
       # Check whether a document source exists in an index.
       # For example:
-      # +
+      #
+      # ```
       # HEAD my-index-000001/_source/1
-      # +
+      # ```
+      #
       # A document's source is not available if it is disabled in the mapping.
       #
       # @option arguments [String] :id A unique identifier for the document. (*Required*)
       # @option arguments [String] :index A comma-separated list of data streams, indices, and aliases.
-      #  It supports wildcards (+*+). (*Required*)
+      #  It supports wildcards (`*`). (*Required*)
       # @option arguments [String] :preference The node or shard the operation should be performed on.
       #  By default, the operation is randomized between the shard replicas.
-      # @option arguments [Boolean] :realtime If +true+, the request is real-time as opposed to near-real-time. Server default: true.
-      # @option arguments [Boolean] :refresh If +true+, the request refreshes the relevant shards before retrieving the document.
-      #  Setting it to +true+ should be done after careful thought and verification that this does not cause a heavy load on the system (and slow down indexing).
+      # @option arguments [Boolean] :realtime If `true`, the request is real-time as opposed to near-real-time. Server default: true.
+      # @option arguments [Boolean] :refresh If `true`, the request refreshes the relevant shards before retrieving the document.
+      #  Setting it to `true` should be done after careful thought and verification that this does not cause a heavy load on the system (and slow down indexing).
       # @option arguments [String] :routing A custom value used to route operations to a specific shard.
-      # @option arguments [Boolean, String, Array<String>] :_source Indicates whether to return the +_source+ field (+true+ or +false+) or lists the fields to return.
+      # @option arguments [Boolean, String, Array<String>] :_source Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
       # @option arguments [String, Array<String>] :_source_excludes A comma-separated list of source fields to exclude in the response.
       # @option arguments [String, Array<String>] :_source_includes A comma-separated list of source fields to include in the response.
       # @option arguments [Integer] :version The version number for concurrency control.

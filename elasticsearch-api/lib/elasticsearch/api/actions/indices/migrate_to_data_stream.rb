@@ -27,7 +27,7 @@ module Elasticsearch
         # You must have a matching index template that is data stream enabled.
         # The alias must meet the following criteria:
         # The alias must have a write index;
-        # All indices for the alias must have a +@timestamp+ field mapping of a +date+ or +date_nanos+ field type;
+        # All indices for the alias must have a `@timestamp` field mapping of a `date` or `date_nanos` field type;
         # The alias must not have any filters;
         # The alias must not use custom routing.
         # If successful, the request removes the alias and creates a data stream with the same name.

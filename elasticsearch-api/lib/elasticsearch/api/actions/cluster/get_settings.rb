@@ -25,8 +25,8 @@ module Elasticsearch
         # Get cluster-wide settings.
         # By default, it returns only settings that have been explicitly defined.
         #
-        # @option arguments [Boolean] :flat_settings If +true+, returns settings in flat format.
-        # @option arguments [Boolean] :include_defaults If +true+, returns default cluster settings from the local node.
+        # @option arguments [Boolean] :flat_settings If `true`, returns settings in flat format.
+        # @option arguments [Boolean] :include_defaults If `true`, returns default cluster settings from the local node.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Time] :timeout Period to wait for a response.

@@ -28,7 +28,7 @@ module Elasticsearch
         # You must specify both the current step and the step to be executed in the body of the request.
         # The request will fail if the current step does not match the step currently running for the index
         # This is to prevent the index from being moved from an unexpected step into the next step.
-        # When specifying the target (+next_step+) to which the index will be moved, either the name or both the action and name fields are optional.
+        # When specifying the target (`next_step`) to which the index will be moved, either the name or both the action and name fields are optional.
         # If only the phase is specified, the index will move to the first step of the first action in the target phase.
         # If the phase and action are specified, the index will move to the first step of the specified action in the specified phase.
         # Only actions specified in the ILM policy are considered valid.

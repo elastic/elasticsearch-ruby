@@ -28,15 +28,15 @@ module Elasticsearch
         #
         # @option arguments [String] :id The unique identifier of the query.
         #  A query ID is provided in the ES|QL async query API response for a query that does not complete in the designated time.
-        #  A query ID is also provided when the request was submitted with the +keep_on_completion+ parameter set to +true+. (*Required*)
-        # @option arguments [Boolean] :drop_null_columns Indicates whether columns that are entirely +null+ will be removed from the +columns+ and +values+ portion of the results.
-        #  If +true+, the response will include an extra section under the name +all_columns+ which has the name of all the columns.
+        #  A query ID is also provided when the request was submitted with the `keep_on_completion` parameter set to `true`. (*Required*)
+        # @option arguments [Boolean] :drop_null_columns Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
+        #  If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
         # @option arguments [Time] :keep_alive The period for which the query and its results are stored in the cluster.
         #  When this period expires, the query and its results are deleted, even if the query is still ongoing.
         # @option arguments [Time] :wait_for_completion_timeout The period to wait for the request to finish.
         #  By default, the request waits for complete query results.
         #  If the request completes during the period specified in this parameter, complete query results are returned.
-        #  Otherwise, the response returns an +is_running+ value of +true+ and no results.
+        #  Otherwise, the response returns an `is_running` value of `true` and no results.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-async-query-get

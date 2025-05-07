@@ -25,11 +25,11 @@ module Elasticsearch
       # Evaluate the quality of ranked search results over a set of typical search queries.
       #
       # @option arguments [String, Array] :index A  comma-separated list of data streams, indices, and index aliases used to limit the request.
-      #  Wildcard (+*+) expressions are supported.
-      #  To target all data streams and indices in a cluster, omit this parameter or use +_all+ or +*+.
-      # @option arguments [Boolean] :allow_no_indices If +false+, the request returns an error if any wildcard expression, index alias, or +_all+ value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting +foo*,bar*+ returns an error if an index starts with +foo+ but no index starts with +bar+. Server default: true.
+      #  Wildcard (`*`) expressions are supported.
+      #  To target all data streams and indices in a cluster, omit this parameter or use `_all` or `*`.
+      # @option arguments [Boolean] :allow_no_indices If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. Server default: true.
       # @option arguments [String, Array<String>] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
-      # @option arguments [Boolean] :ignore_unavailable If +true+, missing or closed indices are not included in the response.
+      # @option arguments [Boolean] :ignore_unavailable If `true`, missing or closed indices are not included in the response.
       # @option arguments [String] :search_type Search operation type
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body request body

@@ -26,12 +26,13 @@ module Elasticsearch
       # Before using this API, you should be familiar with the Mapbox vector tile specification.
       # The API returns results as a binary mapbox vector tile.
       # Internally, Elasticsearch translates a vector tile search API request into a search containing:
-      # * A +geo_bounding_box+ query on the +<field>+. The query uses the +<zoom>/<x>/<y>+ tile as a bounding box.
-      # * A +geotile_grid+ or +geohex_grid+ aggregation on the +<field>+. The +grid_agg+ parameter determines the aggregation type. The aggregation uses the +<zoom>/<x>/<y>+ tile as a bounding box.
-      # * Optionally, a +geo_bounds+ aggregation on the +<field>+. The search only includes this aggregation if the +exact_bounds+ parameter is +true+.
-      # * If the optional parameter +with_labels+ is +true+, the internal search will include a dynamic runtime field that calls the +getLabelPosition+ function of the geometry doc value. This enables the generation of new point features containing suggested geometry labels, so that, for example, multi-polygons will have only one label.
-      # For example, Elasticsearch may translate a vector tile search API request with a +grid_agg+ argument of +geotile+ and an +exact_bounds+ argument of +true+ into the following search
-      # +
+      # * A `geo_bounding_box` query on the `<field>`. The query uses the `<zoom>/<x>/<y>` tile as a bounding box.
+      # * A `geotile_grid` or `geohex_grid` aggregation on the `<field>`. The `grid_agg` parameter determines the aggregation type. The aggregation uses the `<zoom>/<x>/<y>` tile as a bounding box.
+      # * Optionally, a `geo_bounds` aggregation on the `<field>`. The search only includes this aggregation if the `exact_bounds` parameter is `true`.
+      # * If the optional parameter `with_labels` is `true`, the internal search will include a dynamic runtime field that calls the `getLabelPosition` function of the geometry doc value. This enables the generation of new point features containing suggested geometry labels, so that, for example, multi-polygons will have only one label.
+      # For example, Elasticsearch may translate a vector tile search API request with a `grid_agg` argument of `geotile` and an `exact_bounds` argument of `true` into the following search
+      #
+      # ```
       # GET my-index/_search
       # {
       #   "size": 10000,
@@ -75,14 +76,15 @@ module Elasticsearch
       #     }
       #   }
       # }
-      # +
+      # ```
+      #
       # The API returns results as a binary Mapbox vector tile.
       # Mapbox vector tiles are encoded as Google Protobufs (PBF). By default, the tile contains three layers:
-      # * A +hits+ layer containing a feature for each +<field>+ value matching the +geo_bounding_box+ query.
-      # * An +aggs+ layer containing a feature for each cell of the +geotile_grid+ or +geohex_grid+. The layer only contains features for cells with matching data.
+      # * A `hits` layer containing a feature for each `<field>` value matching the `geo_bounding_box` query.
+      # * An `aggs` layer containing a feature for each cell of the `geotile_grid` or `geohex_grid`. The layer only contains features for cells with matching data.
       # * A meta layer containing:
       #   * A feature containing a bounding box. By default, this is the bounding box of the tile.
-      #   * Value ranges for any sub-aggregations on the +geotile_grid+ or +geohex_grid+.
+      #   * Value ranges for any sub-aggregations on the `geotile_grid` or `geohex_grid`.
       #   * Metadata for the search.
       # The API only returns features that can display at its zoom level.
       # For example, if a polygon feature has no area at its zoom level, the API omits it.
@@ -90,20 +92,20 @@ module Elasticsearch
       # IMPORTANT: You can specify several options for this API as either a query parameter or request body parameter.
       # If you specify both parameters, the query parameter takes precedence.
       # **Grid precision for geotile**
-      # For a +grid_agg+ of +geotile+, you can use cells in the +aggs+ layer as tiles for lower zoom levels.
-      # +grid_precision+ represents the additional zoom levels available through these cells. The final precision is computed by as follows: +<zoom> + grid_precision+.
-      # For example, if +<zoom>+ is 7 and +grid_precision+ is 8, then the +geotile_grid+ aggregation will use a precision of 15.
+      # For a `grid_agg` of `geotile`, you can use cells in the `aggs` layer as tiles for lower zoom levels.
+      # `grid_precision` represents the additional zoom levels available through these cells. The final precision is computed by as follows: `<zoom> + grid_precision`.
+      # For example, if `<zoom>` is 7 and `grid_precision` is 8, then the `geotile_grid` aggregation will use a precision of 15.
       # The maximum final precision is 29.
-      # The +grid_precision+ also determines the number of cells for the grid as follows: +(2^grid_precision) x (2^grid_precision)+.
+      # The `grid_precision` also determines the number of cells for the grid as follows: `(2^grid_precision) x (2^grid_precision)`.
       # For example, a value of 8 divides the tile into a grid of 256 x 256 cells.
-      # The +aggs+ layer only contains features for cells with matching data.
+      # The `aggs` layer only contains features for cells with matching data.
       # **Grid precision for geohex**
-      # For a +grid_agg+ of +geohex+, Elasticsearch uses +<zoom>+ and +grid_precision+ to calculate a final precision as follows: +<zoom> + grid_precision+.
-      # This precision determines the H3 resolution of the hexagonal cells produced by the +geohex+ aggregation.
+      # For a `grid_agg` of `geohex`, Elasticsearch uses `<zoom>` and `grid_precision` to calculate a final precision as follows: `<zoom> + grid_precision`.
+      # This precision determines the H3 resolution of the hexagonal cells produced by the `geohex` aggregation.
       # The following table maps the H3 resolution for each precision.
-      # For example, if +<zoom>+ is 3 and +grid_precision+ is 3, the precision is 6.
+      # For example, if `<zoom>` is 3 and `grid_precision` is 3, the precision is 6.
       # At a precision of 6, hexagonal cells have an H3 resolution of 2.
-      # If +<zoom>+ is 3 and +grid_precision+ is 4, the precision is 7.
+      # If `<zoom>` is 3 and `grid_precision` is 4, the precision is 7.
       # At a precision of 7, hexagonal cells have an H3 resolution of 3.
       # | Precision | Unique tile bins | H3 resolution | Unique hex bins |  Ratio |
       # | --------- | ---------------- | ------------- | ----------------| ----- |
@@ -146,13 +148,13 @@ module Elasticsearch
       # @option arguments [Integer] :zoom Zoom level for the vector tile to search (*Required*)
       # @option arguments [Integer] :x X coordinate for the vector tile to search (*Required*)
       # @option arguments [Integer] :y Y coordinate for the vector tile to search (*Required*)
-      # @option arguments [Boolean] :exact_bounds If +false+, the meta layer's feature is the bounding box of the tile.
+      # @option arguments [Boolean] :exact_bounds If `false`, the meta layer's feature is the bounding box of the tile.
       #  If true, the meta layer's feature is a bounding box resulting from a
       #  geo_bounds aggregation. The aggregation runs on <field> values that intersect
       #  the <zoom>/<x>/<y> tile with wrap_longitude set to false. The resulting
       #  bounding box may be larger than the vector tile.
       # @option arguments [Integer] :extent The size, in pixels, of a side of the tile. Vector tiles are square with equal sides. Server default: 4096.
-      # @option arguments [String] :grid_agg Aggregation used to create a grid for +field+.
+      # @option arguments [String] :grid_agg Aggregation used to create a grid for `field`.
       # @option arguments [Integer] :grid_precision Additional zoom levels available through the aggs layer. For example, if <zoom> is 7
       #  and grid_precision is 8, you can zoom in up to level 15. Accepts 0-8. If 0, results
       #  don't include the aggs layer. Server default: 8.
@@ -162,14 +164,14 @@ module Elasticsearch
       #  of the cell. Server default: grid.
       # @option arguments [Integer] :size Maximum number of features to return in the hits layer. Accepts 0-10000.
       #  If 0, results don't include the hits layer. Server default: 10000.
-      # @option arguments [Boolean] :with_labels If +true+, the hits and aggs layers will contain additional point features representing
+      # @option arguments [Boolean] :with_labels If `true`, the hits and aggs layers will contain additional point features representing
       #  suggested label positions for the original features.
-      #  - +Point+ and +MultiPoint+ features will have one of the points selected.
-      #  - +Polygon+ and +MultiPolygon+ features will have a single point generated, either the centroid, if it is within the polygon, or another point within the polygon selected from the sorted triangle-tree.
-      #  - +LineString+ features will likewise provide a roughly central point selected from the triangle-tree.
+      #  - `Point` and `MultiPoint` features will have one of the points selected.
+      #  - `Polygon` and `MultiPolygon` features will have a single point generated, either the centroid, if it is within the polygon, or another point within the polygon selected from the sorted triangle-tree.
+      #  - `LineString` features will likewise provide a roughly central point selected from the triangle-tree.
       #  - The aggregation results will provide one central point for each aggregation bucket.
       #  All attributes from the original features will also be copied to the new label features.
-      #  In addition, the new features will be distinguishable using the tag +_mvt_label_position+.
+      #  In addition, the new features will be distinguishable using the tag `_mvt_label_position`.
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body request body
       #

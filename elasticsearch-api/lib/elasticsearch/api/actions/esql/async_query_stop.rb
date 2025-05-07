@@ -28,9 +28,9 @@ module Elasticsearch
         #
         # @option arguments [String] :id The unique identifier of the query.
         #  A query ID is provided in the ES|QL async query API response for a query that does not complete in the designated time.
-        #  A query ID is also provided when the request was submitted with the +keep_on_completion+ parameter set to +true+. (*Required*)
-        # @option arguments [Boolean] :drop_null_columns Indicates whether columns that are entirely +null+ will be removed from the +columns+ and +values+ portion of the results.
-        #  If +true+, the response will include an extra section under the name +all_columns+ which has the name of all the columns.
+        #  A query ID is also provided when the request was submitted with the `keep_on_completion` parameter set to `true`. (*Required*)
+        # @option arguments [Boolean] :drop_null_columns Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
+        #  If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-async-query-stop

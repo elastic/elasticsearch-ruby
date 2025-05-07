@@ -26,8 +26,8 @@ module Elasticsearch
         # Get information about how machine learning jobs and trained models are using memory,
         # on each node, both within the JVM heap, and natively, outside of the JVM.
         #
-        # @option arguments [String] :node_id The names of particular nodes in the cluster to target. For example, +nodeId1,nodeId2+ or
-        #  +ml:true+
+        # @option arguments [String] :node_id The names of particular nodes in the cluster to target. For example, `nodeId1,nodeId2` or
+        #  `ml:true`
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout
         #  expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request

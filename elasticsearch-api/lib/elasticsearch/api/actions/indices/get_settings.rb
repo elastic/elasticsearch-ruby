@@ -27,22 +27,22 @@ module Elasticsearch
         # For data streams, it returns setting information for the stream's backing indices.
         #
         # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and aliases used to limit
-        #  the request. Supports wildcards (+*+). To target all data streams and
-        #  indices, omit this parameter or use +*+ or +_all+.
+        #  the request. Supports wildcards (`*`). To target all data streams and
+        #  indices, omit this parameter or use `*` or `_all`.
         # @option arguments [String, Array<String>] :name Comma-separated list or wildcard expression of settings to retrieve.
-        # @option arguments [Boolean] :allow_no_indices If +false+, the request returns an error if any wildcard expression, index
-        #  alias, or +_all+ value targets only missing or closed indices. This
+        # @option arguments [Boolean] :allow_no_indices If `false`, the request returns an error if any wildcard expression, index
+        #  alias, or `_all` value targets only missing or closed indices. This
         #  behavior applies even if the request targets other open indices. For
-        #  example, a request targeting +foo*,bar*+ returns an error if an index
-        #  starts with foo but no index starts with +bar+. Server default: true.
+        #  example, a request targeting `foo*,bar*` returns an error if an index
+        #  starts with foo but no index starts with `bar`. Server default: true.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
         #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-        #  Supports comma-separated values, such as +open,hidden+. Server default: open.
-        # @option arguments [Boolean] :flat_settings If +true+, returns settings in flat format.
-        # @option arguments [Boolean] :ignore_unavailable If +false+, the request returns an error if it targets a missing or closed index.
-        # @option arguments [Boolean] :include_defaults If +true+, return all default settings in the response.
-        # @option arguments [Boolean] :local If +true+, the request retrieves information from the local node only. If
-        #  +false+, information is retrieved from the master node.
+        #  Supports comma-separated values, such as `open,hidden`. Server default: open.
+        # @option arguments [Boolean] :flat_settings If `true`, returns settings in flat format.
+        # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a missing or closed index.
+        # @option arguments [Boolean] :include_defaults If `true`, return all default settings in the response.
+        # @option arguments [Boolean] :local If `true`, the request retrieves information from the local node only. If
+        #  `false`, information is retrieved from the master node.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is
         #  received before the timeout expires, the request fails and returns an
         #  error. Server default: 30s.

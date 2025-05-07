@@ -27,20 +27,20 @@ module Elasticsearch
         # IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
         #
         # @option arguments [String] :bytes The unit used to display byte values.
-        # @option arguments [Boolean, String] :full_id If +true+, return the full node ID. If +false+, return the shortened node ID. Server default: false.
+        # @option arguments [Boolean, String] :full_id If `true`, return the full node ID. If `false`, return the shortened node ID. Server default: false.
         # @option arguments [Boolean] :include_unloaded_segments If true, the response includes information from segments that are not loaded into memory.
         # @option arguments [String, Array<String>] :h A comma-separated list of columns names to display.
         #  It supports simple wildcards. Server default: ip,hp,rp,r,m,n,cpu,l.
         # @option arguments [String, Array<String>] :s A comma-separated list of column names or aliases that determines the sort order.
-        #  Sorting defaults to ascending and can be changed by setting +:asc+
-        #  or +:desc+ as a suffix to the column name.
+        #  Sorting defaults to ascending and can be changed by setting `:asc`
+        #  or `:desc` as a suffix to the column name.
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [String] :time The unit used to display time values.
         # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
-        #  +text+, +json+, +cbor+, +yaml+, or +smile+. Server default: text.
-        # @option arguments [Boolean] :help When set to +true+ will output available columns. This option
+        #  `text`, `json`, `cbor`, `yaml`, or `smile`. Server default: text.
+        # @option arguments [Boolean] :help When set to `true` will output available columns. This option
         #  can't be combined with any other query string option.
-        # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
+        # @option arguments [Boolean] :v When set to `true` will enable verbose output.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-nodes

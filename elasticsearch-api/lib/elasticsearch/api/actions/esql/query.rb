@@ -30,10 +30,10 @@ module Elasticsearch
         #
         # @option arguments [String] :format A short version of the Accept header, e.g. json, yaml.
         # @option arguments [String] :delimiter The character to use between values within a CSV row. Only valid for the CSV format.
-        # @option arguments [Boolean] :drop_null_columns Should columns that are entirely +null+ be removed from the +columns+ and +values+ portion of the results?
-        #  Defaults to +false+. If +true+ then the response will include an extra section under the name +all_columns+ which has the name of all columns.
-        # @option arguments [Boolean] :allow_partial_results If +true+, partial results will be returned if there are shard failures, but the query can continue to execute on other clusters and shards.
-        #  If +false+, the query will fail if there are any failures.To override the default behavior, you can set the +esql.query.allow_partial_results+ cluster setting to +false+. Server default: true.
+        # @option arguments [Boolean] :drop_null_columns Should columns that are entirely `null` be removed from the `columns` and `values` portion of the results?
+        #  Defaults to `false`. If `true` then the response will include an extra section under the name `all_columns` which has the name of all columns.
+        # @option arguments [Boolean] :allow_partial_results If `true`, partial results will be returned if there are shard failures, but the query can continue to execute on other clusters and shards.
+        #  If `false`, the query will fail if there are any failures.To override the default behavior, you can set the `esql.query.allow_partial_results` cluster setting to `false`. Server default: true.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

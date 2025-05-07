@@ -23,7 +23,7 @@ module Elasticsearch
     module Inference
       module Actions
         # Create a VoyageAI inference endpoint.
-        # Create an inference endpoint to perform an inference task with the +voyageai+ service.
+        # Create an inference endpoint to perform an inference task with the `voyageai` service.
         # Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
         #
         # @option arguments [String] :task_type The type of the inference task that the model will perform. (*Required*)

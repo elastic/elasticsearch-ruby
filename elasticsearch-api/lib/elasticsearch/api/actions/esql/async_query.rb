@@ -26,19 +26,19 @@ module Elasticsearch
         # Asynchronously run an ES|QL (Elasticsearch query language) query, monitor its progress, and retrieve results when they become available.
         # The API accepts the same parameters and request body as the synchronous query API, along with additional async related properties.
         #
-        # @option arguments [Boolean] :allow_partial_results If +true+, partial results will be returned if there are shard failures, but the query can continue to execute on other clusters and shards.
-        #  If +false+, the query will fail if there are any failures.To override the default behavior, you can set the +esql.query.allow_partial_results+ cluster setting to +false+. Server default: true.
+        # @option arguments [Boolean] :allow_partial_results If `true`, partial results will be returned if there are shard failures, but the query can continue to execute on other clusters and shards.
+        #  If `false`, the query will fail if there are any failures.To override the default behavior, you can set the `esql.query.allow_partial_results` cluster setting to `false`. Server default: true.
         # @option arguments [String] :delimiter The character to use between values within a CSV row.
         #  It is valid only for the CSV format.
-        # @option arguments [Boolean] :drop_null_columns Indicates whether columns that are entirely +null+ will be removed from the +columns+ and +values+ portion of the results.
-        #  If +true+, the response will include an extra section under the name +all_columns+ which has the name of all the columns.
-        # @option arguments [String] :format A short version of the Accept header, for example +json+ or +yaml+.
+        # @option arguments [Boolean] :drop_null_columns Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
+        #  If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
+        # @option arguments [String] :format A short version of the Accept header, for example `json` or `yaml`.
         # @option arguments [Time] :keep_alive The period for which the query and its results are stored in the cluster.
         #  The default period is five days.
         #  When this period expires, the query and its results are deleted, even if the query is still ongoing.
-        #  If the +keep_on_completion+ parameter is false, Elasticsearch only stores async queries that do not complete within the period set by the +wait_for_completion_timeout+ parameter, regardless of this value. Server default: 5d.
+        #  If the `keep_on_completion` parameter is false, Elasticsearch only stores async queries that do not complete within the period set by the `wait_for_completion_timeout` parameter, regardless of this value. Server default: 5d.
         # @option arguments [Boolean] :keep_on_completion Indicates whether the query and its results are stored in the cluster.
-        #  If false, the query and its results are stored in the cluster only if the request does not complete during the period set by the +wait_for_completion_timeout+ parameter.
+        #  If false, the query and its results are stored in the cluster only if the request does not complete during the period set by the `wait_for_completion_timeout` parameter.
         # @option arguments [Time] :wait_for_completion_timeout The period to wait for the request to finish.
         #  By default, the request waits for 1 second for the query results.
         #  If the query completes during this period, results are returned

@@ -23,11 +23,11 @@ module Elasticsearch
     module Security
       module Actions
         # Get security index settings.
-        # Get the user-configurable settings for the security internal index (+.security+ and associated indices).
+        # Get the user-configurable settings for the security internal index (`.security` and associated indices).
         # Only a subset of the index settings — those that are user-configurable—will be shown.
         # This includes:
-        # * +index.auto_expand_replicas+
-        # * +index.number_of_replicas+
+        # * `index.auto_expand_replicas`
+        # * `index.number_of_replicas`
         #
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error.

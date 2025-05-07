@@ -32,7 +32,7 @@ module Elasticsearch
         # snapshot after Black Friday or a critical system failure.
         #
         # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
-        # @option arguments [String] :snapshot_id You can specify +empty+ as the <snapshot_id>. Reverting to the empty
+        # @option arguments [String] :snapshot_id You can specify `empty` as the <snapshot_id>. Reverting to the empty
         #  snapshot means the anomaly detection job starts learning a new model from
         #  scratch when it is started. (*Required*)
         # @option arguments [Boolean] :delete_intervening_results If true, deletes the results in the time period between the latest

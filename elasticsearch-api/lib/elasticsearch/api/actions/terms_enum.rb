@@ -26,8 +26,8 @@ module Elasticsearch
       # This API is designed for low-latency look-ups used in auto-complete scenarios.
       #
       # @option arguments [String] :index A comma-separated list of data streams, indices, and index aliases to search.
-      #  Wildcard (+*+) expressions are supported.
-      #  To search all data streams or indices, omit this parameter or use +*+  or +_all+. (*Required*)
+      #  Wildcard (`*`) expressions are supported.
+      #  To search all data streams or indices, omit this parameter or use `*`  or `_all`. (*Required*)
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body request body
       #

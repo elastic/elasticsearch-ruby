@@ -26,7 +26,7 @@ module Elasticsearch
         # Get the status of a previously submitted async search request given its identifier, without retrieving search results.
         # If the Elasticsearch security features are enabled, the access to the status of a specific async search is restricted to:
         # * The user or API key that submitted the original async search request.
-        # * Users that have the +monitor+ cluster privilege or greater privileges.
+        # * Users that have the `monitor` cluster privilege or greater privileges.
         #
         # @option arguments [String] :id A unique identifier for the async search. (*Required*)
         # @option arguments [Time] :keep_alive The length of time that the async search needs to be available.

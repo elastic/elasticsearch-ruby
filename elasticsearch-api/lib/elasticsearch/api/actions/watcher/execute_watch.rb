@@ -30,7 +30,7 @@ module Elasticsearch
         # You can use the run watch API to run watches that are not yet registered by specifying the watch definition inline.
         # This serves as great tool for testing and debugging your watches prior to adding them to Watcher.
         # When Elasticsearch security features are enabled on your cluster, watches are run with the privileges of the user that stored the watches.
-        # If your user is allowed to read index +a+, but not index +b+, then the exact same set of rules will apply during execution of a watch.
+        # If your user is allowed to read index `a`, but not index `b`, then the exact same set of rules will apply during execution of a watch.
         # When using the run watch API, the authorization data of the user that called the API will be used as a base, instead of the information who stored the watch.
         #
         # @option arguments [String] :id The watch identifier.

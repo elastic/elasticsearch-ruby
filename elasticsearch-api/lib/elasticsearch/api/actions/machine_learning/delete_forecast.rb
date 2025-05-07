@@ -24,16 +24,16 @@ module Elasticsearch
       module Actions
         # Delete forecasts from a job.
         # By default, forecasts are retained for 14 days. You can specify a
-        # different retention period with the +expires_in+ parameter in the forecast
+        # different retention period with the `expires_in` parameter in the forecast
         # jobs API. The delete forecast API enables you to delete one or more
         # forecasts before they expire.
         #
         # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
         # @option arguments [String] :forecast_id A comma-separated list of forecast identifiers. If you do not specify
-        #  this optional parameter or if you specify +_all+ or +*+ the API deletes
+        #  this optional parameter or if you specify `_all` or `*` the API deletes
         #  all forecasts from the job.
         # @option arguments [Boolean] :allow_no_forecasts Specifies whether an error occurs when there are no forecasts. In
-        #  particular, if this parameter is set to +false+ and there are no
+        #  particular, if this parameter is set to `false` and there are no
         #  forecasts associated with the job, attempts to delete all forecasts
         #  return an error. Server default: true.
         # @option arguments [Time] :timeout Specifies the period of time to wait for the completion of the delete

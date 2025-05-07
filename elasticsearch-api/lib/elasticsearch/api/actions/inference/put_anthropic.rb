@@ -23,10 +23,10 @@ module Elasticsearch
     module Inference
       module Actions
         # Create an Anthropic inference endpoint.
-        # Create an inference endpoint to perform an inference task with the +anthropic+ service.
+        # Create an inference endpoint to perform an inference task with the `anthropic` service.
         #
         # @option arguments [String] :task_type The task type.
-        #  The only valid task type for the model to perform is +completion+. (*Required*)
+        #  The only valid task type for the model to perform is `completion`. (*Required*)
         # @option arguments [String] :anthropic_inference_id The unique identifier of the inference endpoint. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body

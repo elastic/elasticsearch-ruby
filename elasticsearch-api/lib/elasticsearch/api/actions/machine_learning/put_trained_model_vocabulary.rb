@@ -24,7 +24,7 @@ module Elasticsearch
       module Actions
         # Create a trained model vocabulary.
         # This API is supported only for natural language processing (NLP) models.
-        # The vocabulary is stored in the index as described in +inference_config.*.vocabulary+ of the trained model definition.
+        # The vocabulary is stored in the index as described in `inference_config.*.vocabulary` of the trained model definition.
         #
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers

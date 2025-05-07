@@ -23,7 +23,7 @@ module Elasticsearch
     module Inference
       module Actions
         # Create a Google Vertex AI inference endpoint.
-        # Create an inference endpoint to perform an inference task with the +googlevertexai+ service.
+        # Create an inference endpoint to perform an inference task with the `googlevertexai` service.
         #
         # @option arguments [String] :task_type The type of the inference task that the model will perform. (*Required*)
         # @option arguments [String] :googlevertexai_inference_id The unique identifier of the inference endpoint. (*Required*)

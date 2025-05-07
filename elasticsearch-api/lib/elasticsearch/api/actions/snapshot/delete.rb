@@ -26,10 +26,10 @@ module Elasticsearch
         #
         # @option arguments [String] :repository The name of the repository to delete a snapshot from. (*Required*)
         # @option arguments [String] :snapshot A comma-separated list of snapshot names to delete.
-        #  It also accepts wildcards (+*+). (*Required*)
+        #  It also accepts wildcards (`*`). (*Required*)
         # @option arguments [Time] :master_timeout The period to wait for the master node.
         #  If the master node is not available before the timeout expires, the request fails and returns an error.
-        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
+        #  To indicate that the request should never timeout, set it to `-1`. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-delete

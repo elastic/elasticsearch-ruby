@@ -25,12 +25,12 @@ module Elasticsearch
         # Get tokens from text analysis.
         # The analyze API performs analysis on a text string and returns the resulting tokens.
         # Generating excessive amount of tokens may cause a node to run out of memory.
-        # The +index.analyze.max_token_count+ setting enables you to limit the number of tokens that can be produced.
+        # The `index.analyze.max_token_count` setting enables you to limit the number of tokens that can be produced.
         # If more than this limit of tokens gets generated, an error occurs.
-        # The +_analyze+ endpoint without a specified index will always use +10000+ as its limit.
+        # The `_analyze` endpoint without a specified index will always use `10000` as its limit.
         #
         # @option arguments [String] :index Index used to derive the analyzer.
-        #  If specified, the +analyzer+ or field parameter overrides this value.
+        #  If specified, the `analyzer` or field parameter overrides this value.
         #  If no index is specified or the index does not have a default analyzer, the analyze API uses the standard analyzer.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body

@@ -29,7 +29,7 @@ module Elasticsearch
         #
         # @option arguments [String] :name The distinct name that identifies the role mapping.
         #  The name is used solely as an identifier to facilitate interaction via the API; it does not affect the behavior of the mapping in any way. (*Required*)
-        # @option arguments [String] :refresh If +true+ (the default) then refresh the affected shards to make this operation visible to search, if +wait_for+ then wait for a refresh to make this operation visible to search, if +false+ then do nothing with refreshes.
+        # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-role-mapping

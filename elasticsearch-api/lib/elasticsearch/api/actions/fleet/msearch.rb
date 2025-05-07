@@ -25,7 +25,7 @@ module Elasticsearch
         # Run multiple Fleet searches.
         # Run several Fleet searches with a single API request.
         # The API follows the same structure as the multi search API.
-        # However, similar to the Fleet search API, it supports the +wait_for_checkpoints+ parameter.
+        # However, similar to the Fleet search API, it supports the `wait_for_checkpoints` parameter.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
@@ -48,7 +48,7 @@ module Elasticsearch
         #  Elasticsearch to immediately execute the search. Server default: [].
         # @option arguments [Boolean] :allow_partial_search_results If true, returns partial results if there are shard request timeouts or shard failures.
         #  If false, returns an error with no partial results.
-        #  Defaults to the configured cluster setting +search.default_allow_partial_results+, which is true by default.
+        #  Defaults to the configured cluster setting `search.default_allow_partial_results`, which is true by default.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body searches
         #

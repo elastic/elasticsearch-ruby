@@ -24,13 +24,13 @@ module Elasticsearch
       module Actions
         # Get service accounts.
         # Get a list of service accounts that match the provided path parameters.
-        # NOTE: Currently, only the +elastic/fleet-server+ service account is available.
+        # NOTE: Currently, only the `elastic/fleet-server` service account is available.
         #
         # @option arguments [String] :namespace The name of the namespace.
         #  Omit this parameter to retrieve information about all service accounts.
-        #  If you omit this parameter, you must also omit the +service+ parameter.
+        #  If you omit this parameter, you must also omit the `service` parameter.
         # @option arguments [String] :service The service name.
-        #  Omit this parameter to retrieve information about all service accounts that belong to the specified +namespace+.
+        #  Omit this parameter to retrieve information about all service accounts that belong to the specified `namespace`.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-service-accounts

@@ -23,7 +23,7 @@ module Elasticsearch
     module Inference
       module Actions
         # Create a Cohere inference endpoint.
-        # Create an inference endpoint to perform an inference task with the +cohere+ service.
+        # Create an inference endpoint to perform an inference task with the `cohere` service.
         #
         # @option arguments [String] :task_type The type of the inference task that the model will perform. (*Required*)
         # @option arguments [String] :cohere_inference_id The unique identifier of the inference endpoint. (*Required*)

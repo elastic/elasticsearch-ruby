@@ -28,7 +28,7 @@ module Elasticsearch
         #
         # @option arguments [String] :id Identifier for the search to delete.
         #  A search ID is provided in the EQL search API's response for an async search.
-        #  A search ID is also provided if the request’s +keep_on_completion+ parameter is +true+. (*Required*)
+        #  A search ID is also provided if the request’s `keep_on_completion` parameter is `true`. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-eql-delete

@@ -29,7 +29,7 @@ module Elasticsearch
         # It is also possible that Elasticsearch must complete its work on other tasks before it can process the cancellation.
         # The get task information API will continue to list these cancelled tasks until they complete.
         # The cancelled flag in the response indicates that the cancellation command has been processed and the task will stop as soon as possible.
-        # To troubleshoot why a cancelled task does not complete promptly, use the get task information API with the +?detailed+ parameter to identify the other tasks the system is running.
+        # To troubleshoot why a cancelled task does not complete promptly, use the get task information API with the `?detailed` parameter to identify the other tasks the system is running.
         # You can also use the node hot threads API to obtain detailed information about the work the system is doing instead of completing the cancelled task.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach

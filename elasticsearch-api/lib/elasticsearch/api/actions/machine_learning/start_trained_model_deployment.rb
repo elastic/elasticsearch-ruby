@@ -27,8 +27,8 @@ module Elasticsearch
         #
         # @option arguments [String] :model_id The unique identifier of the trained model. Currently, only PyTorch models are supported. (*Required*)
         # @option arguments [Integer, String] :cache_size The inference cache size (in memory outside the JVM heap) per node for the model.
-        #  The default value is the same size as the +model_size_bytes+. To disable the cache,
-        #  +0b+ can be provided.
+        #  The default value is the same size as the `model_size_bytes`. To disable the cache,
+        #  `0b` can be provided.
         # @option arguments [String] :deployment_id A unique identifier for the deployment of the model.
         # @option arguments [Integer] :number_of_allocations The number of model allocations on each node where the model is deployed.
         #  All allocations on a node share the same copy of the model in memory but use

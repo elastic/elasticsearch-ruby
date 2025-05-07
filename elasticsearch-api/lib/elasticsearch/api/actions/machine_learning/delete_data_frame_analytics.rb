@@ -25,7 +25,7 @@ module Elasticsearch
         # Delete a data frame analytics job.
         #
         # @option arguments [String] :id Identifier for the data frame analytics job. (*Required*)
-        # @option arguments [Boolean] :force If +true+, it deletes a job that is not stopped; this method is quicker than stopping and deleting the job.
+        # @option arguments [Boolean] :force If `true`, it deletes a job that is not stopped; this method is quicker than stopping and deleting the job.
         # @option arguments [Time] :timeout The time to wait for the job to be deleted. Server default: 1m.
         # @option arguments [Hash] :headers Custom HTTP headers
         #

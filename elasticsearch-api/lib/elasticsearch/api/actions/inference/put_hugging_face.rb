@@ -23,18 +23,18 @@ module Elasticsearch
     module Inference
       module Actions
         # Create a Hugging Face inference endpoint.
-        # Create an inference endpoint to perform an inference task with the +hugging_face+ service.
+        # Create an inference endpoint to perform an inference task with the `hugging_face` service.
         # You must first create an inference endpoint on the Hugging Face endpoint page to get an endpoint URL.
-        # Select the model you want to use on the new endpoint creation page (for example +intfloat/e5-small-v2+), then select the sentence embeddings task under the advanced configuration section.
+        # Select the model you want to use on the new endpoint creation page (for example `intfloat/e5-small-v2`), then select the sentence embeddings task under the advanced configuration section.
         # Create the endpoint and copy the URL after the endpoint initialization has been finished.
         # The following models are recommended for the Hugging Face service:
-        # * +all-MiniLM-L6-v2+
-        # * +all-MiniLM-L12-v2+
-        # * +all-mpnet-base-v2+
-        # * +e5-base-v2+
-        # * +e5-small-v2+
-        # * +multilingual-e5-base+
-        # * +multilingual-e5-small+
+        # * `all-MiniLM-L6-v2`
+        # * `all-MiniLM-L12-v2`
+        # * `all-mpnet-base-v2`
+        # * `e5-base-v2`
+        # * `e5-small-v2`
+        # * `multilingual-e5-base`
+        # * `multilingual-e5-small`
         #
         # @option arguments [String] :task_type The type of the inference task that the model will perform. (*Required*)
         # @option arguments [String] :huggingface_inference_id The unique identifier of the inference endpoint. (*Required*)

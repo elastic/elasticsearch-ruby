@@ -24,13 +24,13 @@ module Elasticsearch
       module Actions
         # Delete application privileges.
         # To use this API, you must have one of the following privileges:
-        # * The +manage_security+ cluster privilege (or a greater privilege such as +all+).
+        # * The `manage_security` cluster privilege (or a greater privilege such as `all`).
         # * The "Manage Application Privileges" global privilege for the application being referenced in the request.
         #
         # @option arguments [String] :application The name of the application.
         #  Application privileges are always associated with exactly one application. (*Required*)
         # @option arguments [String, Array<String>] :name The name of the privilege. (*Required*)
-        # @option arguments [String] :refresh If +true+ (the default) then refresh the affected shards to make this operation visible to search, if +wait_for+ then wait for a refresh to make this operation visible to search, if +false+ then do nothing with refreshes.
+        # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-privileges

@@ -24,16 +24,22 @@ module Elasticsearch
       # Run multiple searches.
       # The format of the request is similar to the bulk API format and makes use of the newline delimited JSON (NDJSON) format.
       # The structure is as follows:
-      # +
-      # header\n
-      # body\n
-      # header\n
-      # body\n
-      # +
+      #
+      # ```
+      # header
+      #
+      # body
+      #
+      # header
+      #
+      # body
+      #
+      # ```
+      #
       # This structure is specifically optimized to reduce parsing if a specific search ends up redirected to another node.
-      # IMPORTANT: The final line of data must end with a newline character +\n+.
-      # Each newline character may be preceded by a carriage return +\r+.
-      # When sending requests to this endpoint the +Content-Type+ header should be set to +application/x-ndjson+.
+      # IMPORTANT: The final line of data must end with a newline character `\n`.
+      # Each newline character may be preceded by a carriage return `\r`.
+      # When sending requests to this endpoint the `Content-Type` header should be set to `application/x-ndjson`.
       #
       # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and index aliases to search.
       # @option arguments [Boolean] :allow_no_indices If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar.
@@ -48,7 +54,7 @@ module Elasticsearch
       #  Typically, this adds a small overhead to a request.
       #  However, using computationally expensive named queries on a large number of hits may add significant overhead.
       # @option arguments [Integer] :max_concurrent_searches Maximum number of concurrent searches the multi search API can execute.
-      #  Defaults to +max(1, (# of data nodes * min(search thread pool size, 10)))+.
+      #  Defaults to `max(1, (# of data nodes * min(search thread pool size, 10)))`.
       # @option arguments [Integer] :max_concurrent_shard_requests Maximum number of concurrent shard requests that each sub-search request executes per node. Server default: 5.
       # @option arguments [Integer] :pre_filter_shard_size Defines a threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method i.e., if date filters are mandatory to match but the shard bounds and the query are disjoint.
       # @option arguments [Boolean] :rest_total_hits_as_int If true, hits.total are returned as an integer in the response. Defaults to false, which returns an object.

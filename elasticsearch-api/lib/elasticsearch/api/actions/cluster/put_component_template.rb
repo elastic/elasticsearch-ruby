@@ -25,24 +25,24 @@ module Elasticsearch
         # Create or update a component template.
         # Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
         # An index template can be composed of multiple component templates.
-        # To use a component template, specify it in an index template’s +composed_of+ list.
+        # To use a component template, specify it in an index template’s `composed_of` list.
         # Component templates are only applied to new data streams and indices as part of a matching index template.
         # Settings and mappings specified directly in the index template or the create index request override any settings or mappings specified in a component template.
         # Component templates are only used during index creation.
         # For data streams, this includes data stream creation and the creation of a stream’s backing indices.
         # Changes to component templates do not affect existing indices, including a stream’s backing indices.
-        # You can use C-style +/* *\/+ block comments in component templates.
+        # You can use C-style `/* *\/` block comments in component templates.
         # You can include comments anywhere in the request body except before the opening curly bracket.
         # **Applying component templates**
         # You cannot directly apply a component template to a data stream or index.
-        # To be applied, a component template must be included in an index template's +composed_of+ list.
+        # To be applied, a component template must be included in an index template's `composed_of` list.
         #
         # @option arguments [String] :name Name of the component template to create.
-        #  Elasticsearch includes the following built-in component templates: +logs-mappings+; +logs-settings+; +metrics-mappings+; +metrics-settings+;+synthetics-mapping+; +synthetics-settings+.
+        #  Elasticsearch includes the following built-in component templates: `logs-mappings`; `logs-settings`; `metrics-mappings`; `metrics-settings`;`synthetics-mapping`; `synthetics-settings`.
         #  Elastic Agent uses these templates to configure backing indices for its data streams.
-        #  If you use Elastic Agent and want to overwrite one of these templates, set the +version+ for your replacement template higher than the current version.
-        #  If you don’t use Elastic Agent and want to disable all built-in component and index templates, set +stack.templates.enabled+ to +false+ using the cluster update settings API. (*Required*)
-        # @option arguments [Boolean] :create If +true+, this request cannot replace or update existing component templates.
+        #  If you use Elastic Agent and want to overwrite one of these templates, set the `version` for your replacement template higher than the current version.
+        #  If you don’t use Elastic Agent and want to disable all built-in component and index templates, set `stack.templates.enabled` to `false` using the cluster update settings API. (*Required*)
+        # @option arguments [Boolean] :create If `true`, this request cannot replace or update existing component templates.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers

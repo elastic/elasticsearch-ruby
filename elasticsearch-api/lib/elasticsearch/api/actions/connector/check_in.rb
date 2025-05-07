@@ -23,7 +23,7 @@ module Elasticsearch
     module Connector
       module Actions
         # Check in a connector.
-        # Update the +last_seen+ field in the connector and set it to the current timestamp.
+        # Update the `last_seen` field in the connector and set it to the current timestamp.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the

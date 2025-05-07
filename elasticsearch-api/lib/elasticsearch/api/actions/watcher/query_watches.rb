@@ -24,7 +24,7 @@ module Elasticsearch
       module Actions
         # Query watches.
         # Get all registered watches in a paginated manner and optionally filter watches by a query.
-        # Note that only the +_id+ and +metadata.*+ fields are queryable or sortable.
+        # Note that only the `_id` and `metadata.*` fields are queryable or sortable.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body

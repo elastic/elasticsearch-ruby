@@ -25,7 +25,7 @@ module Elasticsearch
         # Get anomaly detection job results for influencers.
         # Influencers are the entities that have contributed to, or are to blame for,
         # the anomalies. Influencer results are available only if an
-        # +influencer_field_name+ is specified in the job configuration.
+        # `influencer_field_name` is specified in the job configuration.
         #
         # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
         # @option arguments [Boolean] :desc If true, the results are sorted in descending order.
@@ -39,7 +39,7 @@ module Elasticsearch
         # @option arguments [Integer] :from Skips the specified number of influencers. Server default: 0.
         # @option arguments [Integer] :size Specifies the maximum number of influencers to obtain. Server default: 100.
         # @option arguments [String] :sort Specifies the sort field for the requested influencers. By default, the
-        #  influencers are sorted by the +influencer_score+ value.
+        #  influencers are sorted by the `influencer_score` value.
         # @option arguments [String, Time] :start Returns influencers with timestamps after this time. The default value
         #  means it is unset and results are not limited to specific timestamps. Server default: -1.
         # @option arguments [Hash] :headers Custom HTTP headers

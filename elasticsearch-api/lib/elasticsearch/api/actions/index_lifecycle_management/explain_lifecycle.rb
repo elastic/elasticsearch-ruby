@@ -27,8 +27,8 @@ module Elasticsearch
         # For data streams, the API retrieves the current lifecycle status for the stream's backing indices.
         # The response indicates when the index entered each lifecycle state, provides the definition of the running phase, and information about any failures.
         #
-        # @option arguments [String] :index Comma-separated list of data streams, indices, and aliases to target. Supports wildcards (+*+).
-        #  To target all data streams and indices, use +*+ or +_all+. (*Required*)
+        # @option arguments [String] :index Comma-separated list of data streams, indices, and aliases to target. Supports wildcards (`*`).
+        #  To target all data streams and indices, use `*` or `_all`. (*Required*)
         # @option arguments [Boolean] :only_errors Filters the returned indices to only indices that are managed by ILM and are in an error state, either due to an encountering an error while executing the policy, or attempting to use a policy that does not exist.
         # @option arguments [Boolean] :only_managed Filters the returned indices to only indices that are managed by ILM.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.

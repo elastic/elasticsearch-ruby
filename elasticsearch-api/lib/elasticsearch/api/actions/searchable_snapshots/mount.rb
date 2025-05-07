@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :snapshot The name of the snapshot of the index to mount. (*Required*)
         # @option arguments [Time] :master_timeout The period to wait for the master node.
         #  If the master node is not available before the timeout expires, the request fails and returns an error.
-        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
+        #  To indicate that the request should never timeout, set it to `-1`. Server default: 30s.
         # @option arguments [Boolean] :wait_for_completion If true, the request blocks until the operation is complete.
         # @option arguments [String] :storage The mount option for the searchable snapshot index. Server default: full_copy.
         # @option arguments [Hash] :headers Custom HTTP headers

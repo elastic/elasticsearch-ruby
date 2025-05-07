@@ -26,7 +26,7 @@ module Elasticsearch
         # Start an indefinite basic license, which gives access to all the basic features.
         # NOTE: In order to start a basic license, you must not currently have a basic license.
         # If the basic license does not support all of the features that are available with your current license, however, you are notified in the response.
-        # You must then re-submit the API request with the +acknowledge+ parameter set to +true+.
+        # You must then re-submit the API request with the `acknowledge` parameter set to `true`.
         # To check the status of your basic license, use the get basic license API.
         #
         # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)

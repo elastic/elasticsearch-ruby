@@ -27,9 +27,9 @@ module Elasticsearch
         #
         # @option arguments [String] :name Name of the data stream, which must meet the following criteria:
         #  Lowercase only;
-        #  Cannot include +\+, +/+, +*+, +?+, +"+, +<+, +>+, +|+, +,+, +#+, +:+, or a space character;
-        #  Cannot start with +-+, +_+, +++, or +.ds-+;
-        #  Cannot be +.+ or +..+;
+        #  Cannot include `\`, `/`, `*`, `?`, `"`, `<`, `>`, `|`, `,`, `#`, `:`, or a space character;
+        #  Cannot start with `-`, `_`, `+`, or `.ds-`;
+        #  Cannot be `.` or `..`;
         #  Cannot be longer than 255 bytes. Multi-byte characters count towards this limit faster. (*Required*)
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.

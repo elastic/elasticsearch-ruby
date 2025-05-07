@@ -30,19 +30,19 @@ module Elasticsearch
         #
         # @option arguments [String] :transform_id A transform identifier or a wildcard expression.
         #  If you do not specify one of these options, the API returns information for all transforms.
-        # @option arguments [Boolean] :allow_no_match Specifies what to do when the request: contains wildcard expressions and there are no transforms that match; contains the +_all+ string or no identifiers and there are no matches; contains wildcard expressions and there are only partial matches.
-        #  If +true+, it returns an empty transforms array when there are no matches and the subset of results when there are partial matches.
-        #  If +false+, the request returns a 404 status code when there are no matches or only partial matches. Server default: true.
+        # @option arguments [Boolean] :allow_no_match Specifies what to do when the request: contains wildcard expressions and there are no transforms that match; contains the `_all` string or no identifiers and there are no matches; contains wildcard expressions and there are only partial matches.
+        #  If `true`, it returns an empty transforms array when there are no matches and the subset of results when there are partial matches.
+        #  If `false`, the request returns a 404 status code when there are no matches or only partial matches. Server default: true.
         # @option arguments [Integer] :from Skips the specified number of transforms. Server default: 0.
         # @option arguments [String, Array<String>] :h Comma-separated list of column names to display. Server default: changes_last_detection_time,checkpoint,checkpoint_progress,documents_processed,id,last_search_time,state.
         # @option arguments [String, Array<String>] :s Comma-separated list of column names or column aliases used to sort the response.
         # @option arguments [String] :time The unit used to display time values.
         # @option arguments [Integer] :size The maximum number of transforms to obtain. Server default: 100.
         # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
-        #  +text+, +json+, +cbor+, +yaml+, or +smile+. Server default: text.
-        # @option arguments [Boolean] :help When set to +true+ will output available columns. This option
+        #  `text`, `json`, `cbor`, `yaml`, or `smile`. Server default: text.
+        # @option arguments [Boolean] :help When set to `true` will output available columns. This option
         #  can't be combined with any other query string option.
-        # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
+        # @option arguments [Boolean] :v When set to `true` will enable verbose output.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-transforms

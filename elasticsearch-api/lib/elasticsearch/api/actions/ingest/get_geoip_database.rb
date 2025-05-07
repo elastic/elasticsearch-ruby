@@ -26,8 +26,8 @@ module Elasticsearch
         # Get information about one or more IP geolocation database configurations.
         #
         # @option arguments [String, Array] :id A comma-separated list of database configuration IDs to retrieve.
-        #  Wildcard (+*+) expressions are supported.
-        #  To get all database configurations, omit this parameter or use +*+.
+        #  Wildcard (`*`) expressions are supported.
+        #  To get all database configurations, omit this parameter or use `*`.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-geoip-database

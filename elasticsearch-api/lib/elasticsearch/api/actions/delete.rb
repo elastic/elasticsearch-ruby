@@ -26,21 +26,23 @@ module Elasticsearch
       # NOTE: You cannot send deletion requests directly to a data stream.
       # To delete a document in a data stream, you must target the backing index containing the document.
       # **Optimistic concurrency control**
-      # Delete operations can be made conditional and only be performed if the last modification to the document was assigned the sequence number and primary term specified by the +if_seq_no+ and +if_primary_term+ parameters.
-      # If a mismatch is detected, the operation will result in a +VersionConflictException+ and a status code of +409+.
+      # Delete operations can be made conditional and only be performed if the last modification to the document was assigned the sequence number and primary term specified by the `if_seq_no` and `if_primary_term` parameters.
+      # If a mismatch is detected, the operation will result in a `VersionConflictException` and a status code of `409`.
       # **Versioning**
       # Each document indexed is versioned.
       # When deleting a document, the version can be specified to make sure the relevant document you are trying to delete is actually being deleted and it has not changed in the meantime.
       # Every write operation run on a document, deletes included, causes its version to be incremented.
       # The version number of a deleted document remains available for a short time after deletion to allow for control of concurrent operations.
-      # The length of time for which a deleted document's version remains available is determined by the +index.gc_deletes+ index setting.
+      # The length of time for which a deleted document's version remains available is determined by the `index.gc_deletes` index setting.
       # **Routing**
       # If routing is used during indexing, the routing value also needs to be specified to delete a document.
-      # If the +_routing+ mapping is set to +required+ and no routing value is specified, the delete API throws a +RoutingMissingException+ and rejects the request.
+      # If the `_routing` mapping is set to `required` and no routing value is specified, the delete API throws a `RoutingMissingException` and rejects the request.
       # For example:
-      # +
+      #
+      # ```
       # DELETE /my-index-000001/_doc/1?routing=shard-1
-      # +
+      # ```
+      #
       # This request deletes the document with ID 1, but it is routed based on the user.
       # The document is not deleted if the correct routing is not specified.
       # **Distributed**
@@ -51,9 +53,9 @@ module Elasticsearch
       # @option arguments [String] :index The name of the target index. (*Required*)
       # @option arguments [Integer] :if_primary_term Only perform the operation if the document has this primary term.
       # @option arguments [Integer] :if_seq_no Only perform the operation if the document has this sequence number.
-      # @option arguments [String] :refresh If +true+, Elasticsearch refreshes the affected shards to make this operation visible to search.
-      #  If +wait_for+, it waits for a refresh to make this operation visible to search.
-      #  If +false+, it does nothing with refreshes. Server default: false.
+      # @option arguments [String] :refresh If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search.
+      #  If `wait_for`, it waits for a refresh to make this operation visible to search.
+      #  If `false`, it does nothing with refreshes. Server default: false.
       # @option arguments [String] :routing A custom value used to route operations to a specific shard.
       # @option arguments [Time] :timeout The period to wait for active shards.This parameter is useful for situations where the primary shard assigned to perform the delete operation might not be available when the delete operation runs.
       #  Some reasons for this might be that the primary shard is currently recovering from a store or undergoing relocation.
@@ -62,8 +64,8 @@ module Elasticsearch
       #  It must match the current version of the document for the request to succeed.
       # @option arguments [String] :version_type The version type.
       # @option arguments [Integer, String] :wait_for_active_shards The minimum number of shard copies that must be active before proceeding with the operation.
-      #  You can set it to +all+ or any positive integer up to the total number of shards in the index (+number_of_replicas+1+).
-      #  The default value of +1+ means it waits for each primary shard to be active. Server default: 1.
+      #  You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
+      #  The default value of `1` means it waits for each primary shard to be active. Server default: 1.
       # @option arguments [Hash] :headers Custom HTTP headers
       #
       # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-delete

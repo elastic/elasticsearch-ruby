@@ -28,11 +28,11 @@ module Elasticsearch
         # Individual users and external applications should not call this API directly.
         # Elastic reserves the right to change or remove this feature in future releases without prior notice.
         #
-        # @option arguments [String] :data A comma-separated list of filters for the +data+ field of the profile document.
-        #  To return all content use +data=*+.
-        #  To return a subset of content, use +data=<key>+ to retrieve content nested under the specified +<key>+.
-        #  By default, the API returns no +data+ content.
-        #  It is an error to specify +data+ as both the query parameter and the request body field.
+        # @option arguments [String] :data A comma-separated list of filters for the `data` field of the profile document.
+        #  To return all content use `data=*`.
+        #  To return a subset of content, use `data=<key>` to retrieve content nested under the specified `<key>`.
+        #  By default, the API returns no `data` content.
+        #  It is an error to specify `data` as both the query parameter and the request body field.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

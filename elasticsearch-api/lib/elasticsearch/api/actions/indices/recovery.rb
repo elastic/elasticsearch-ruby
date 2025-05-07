@@ -41,10 +41,10 @@ module Elasticsearch
         # This means that if a shard copy completes a recovery and then Elasticsearch relocates it onto a different node then the information about the original recovery will not be shown in the recovery API.
         #
         # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and aliases used to limit the request.
-        #  Supports wildcards (+*+).
-        #  To target all data streams and indices, omit this parameter or use +*+ or +_all+.
-        # @option arguments [Boolean] :active_only If +true+, the response only includes ongoing shard recoveries.
-        # @option arguments [Boolean] :detailed If +true+, the response includes detailed information about shard recoveries.
+        #  Supports wildcards (`*`).
+        #  To target all data streams and indices, omit this parameter or use `*` or `_all`.
+        # @option arguments [Boolean] :active_only If `true`, the response only includes ongoing shard recoveries.
+        # @option arguments [Boolean] :detailed If `true`, the response includes detailed information about shard recoveries.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-recovery

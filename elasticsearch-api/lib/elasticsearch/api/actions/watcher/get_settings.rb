@@ -23,8 +23,8 @@ module Elasticsearch
     module Watcher
       module Actions
         # Get Watcher index settings.
-        # Get settings for the Watcher internal index (+.watches+).
-        # Only a subset of settings are shown, for example +index.auto_expand_replicas+ and +index.number_of_replicas+.
+        # Get settings for the Watcher internal index (`.watches`).
+        # Only a subset of settings are shown, for example `index.auto_expand_replicas` and `index.number_of_replicas`.
         #
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error.

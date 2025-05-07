@@ -24,19 +24,19 @@ module Elasticsearch
       module Actions
         # Create or update application privileges.
         # To use this API, you must have one of the following privileges:
-        # * The +manage_security+ cluster privilege (or a greater privilege such as +all+).
+        # * The `manage_security` cluster privilege (or a greater privilege such as `all`).
         # * The "Manage Application Privileges" global privilege for the application being referenced in the request.
         # Application names are formed from a prefix, with an optional suffix that conform to the following rules:
         # * The prefix must begin with a lowercase ASCII letter.
         # * The prefix must contain only ASCII letters or digits.
         # * The prefix must be at least 3 characters long.
-        # * If the suffix exists, it must begin with either a dash +-+ or +_+.
-        # * The suffix cannot contain any of the following characters: +\+, +/+, +*+, +?+, +"+, +<+, +>+, +|+, +,+, +*+.
+        # * If the suffix exists, it must begin with either a dash `-` or `_`.
+        # * The suffix cannot contain any of the following characters: `\`, `/`, `*`, `?`, `"`, `<`, `>`, `|`, `,`, `*`.
         # * No part of the name can contain whitespace.
-        # Privilege names must begin with a lowercase ASCII letter and must contain only ASCII letters and digits along with the characters +_+, +-+, and +.+.
-        # Action names can contain any number of printable ASCII characters and must contain at least one of the following characters: +/+, +*+, +:+.
+        # Privilege names must begin with a lowercase ASCII letter and must contain only ASCII letters and digits along with the characters `_`, `-`, and `.`.
+        # Action names can contain any number of printable ASCII characters and must contain at least one of the following characters: `/`, `*`, `:`.
         #
-        # @option arguments [String] :refresh If +true+ (the default) then refresh the affected shards to make this operation visible to search, if +wait_for+ then wait for a refresh to make this operation visible to search, if +false+ then do nothing with refreshes.
+        # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body privileges
         #

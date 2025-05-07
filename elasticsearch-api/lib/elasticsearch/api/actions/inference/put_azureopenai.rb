@@ -23,14 +23,14 @@ module Elasticsearch
     module Inference
       module Actions
         # Create an Azure OpenAI inference endpoint.
-        # Create an inference endpoint to perform an inference task with the +azureopenai+ service.
+        # Create an inference endpoint to perform an inference task with the `azureopenai` service.
         # The list of chat completion models that you can choose from in your Azure OpenAI deployment include:
         # * {https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#gpt-4-and-gpt-4-turbo-models GPT-4 and GPT-4 Turbo models}
         # * {https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#gpt-35 GPT-3.5}
         # The list of embeddings models that you can choose from in your deployment can be found in the {https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#embeddings Azure models documentation}.
         #
         # @option arguments [String] :task_type The type of the inference task that the model will perform.
-        #  NOTE: The +chat_completion+ task type only supports streaming and only through the _stream API. (*Required*)
+        #  NOTE: The `chat_completion` task type only supports streaming and only through the _stream API. (*Required*)
         # @option arguments [String] :azureopenai_inference_id The unique identifier of the inference endpoint. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body

@@ -25,12 +25,12 @@ module Elasticsearch
         # Get snapshot repository information.
         #
         # @option arguments [String, Array<String>] :repository A comma-separated list of snapshot repository names used to limit the request.
-        #  Wildcard (+*+) expressions are supported including combining wildcards with exclude patterns starting with +-+.To get information about all snapshot repositories registered in the cluster, omit this parameter or use +*+ or +_all+.
-        # @option arguments [Boolean] :local If +true+, the request gets information from the local node only.
-        #  If +false+, the request gets information from the master node.
+        #  Wildcard (`*`) expressions are supported including combining wildcards with exclude patterns starting with `-`.To get information about all snapshot repositories registered in the cluster, omit this parameter or use `*` or `_all`.
+        # @option arguments [Boolean] :local If `true`, the request gets information from the local node only.
+        #  If `false`, the request gets information from the master node.
         # @option arguments [Time] :master_timeout The period to wait for the master node.
         #  If the master node is not available before the timeout expires, the request fails and returns an error.
-        #  To indicate that the request should never timeout, set it to +-1+. Server default: to 30s.
+        #  To indicate that the request should never timeout, set it to `-1`. Server default: to 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-get-repository

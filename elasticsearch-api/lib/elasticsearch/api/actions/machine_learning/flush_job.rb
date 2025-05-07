@@ -37,11 +37,11 @@ module Elasticsearch
         #  and the model is updated for data from the specified time interval.
         # @option arguments [Boolean] :calc_interim If true, calculates the interim results for the most recent bucket or all
         #  buckets within the latency period.
-        # @option arguments [String, Time] :end When used in conjunction with +calc_interim+ and +start+, specifies the
+        # @option arguments [String, Time] :end When used in conjunction with `calc_interim` and `start`, specifies the
         #  range of buckets on which to calculate interim results.
         # @option arguments [String, Time] :skip_time Specifies to skip to a particular time value. Results are not generated
         #  and the model is not updated for data from the specified time interval.
-        # @option arguments [String, Time] :start When used in conjunction with +calc_interim+, specifies the range of
+        # @option arguments [String, Time] :start When used in conjunction with `calc_interim`, specifies the range of
         #  buckets on which to calculate interim results.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body

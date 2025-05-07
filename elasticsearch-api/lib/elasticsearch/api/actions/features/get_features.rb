@@ -23,7 +23,7 @@ module Elasticsearch
     module Features
       module Actions
         # Get the features.
-        # Get a list of features that can be included in snapshots using the +feature_states+ field when creating a snapshot.
+        # Get a list of features that can be included in snapshots using the `feature_states` field when creating a snapshot.
         # You can use this API to determine which feature states to include when taking a snapshot.
         # By default, all feature states are included in a snapshot if that snapshot includes the global state, or none if it does not.
         # A feature state includes one or more system indices necessary for a given feature to function.

@@ -29,8 +29,8 @@ module Elasticsearch
         # You can limit the request to a single or set of anomaly detection jobs by
         # using a job identifier, a group name, a comma-separated list of jobs, or a
         # wildcard expression. You can delete expired data for all anomaly detection
-        # jobs by using +_all+, by specifying +*+ as the +<job_id>+, or by omitting the
-        # +<job_id>+.
+        # jobs by using `_all`, by specifying `*` as the `<job_id>`, or by omitting the
+        # `<job_id>`.
         #
         # @option arguments [String] :job_id Identifier for an anomaly detection job. It can be a job identifier, a
         #  group name, or a wildcard expression.

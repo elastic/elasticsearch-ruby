@@ -26,13 +26,13 @@ module Elasticsearch
         # Stops one or more transforms.
         #
         # @option arguments [String] :transform_id Identifier for the transform. To stop multiple transforms, use a comma-separated list or a wildcard expression.
-        #  To stop all transforms, use +_all+ or +*+ as the identifier. (*Required*)
+        #  To stop all transforms, use `_all` or `*` as the identifier. (*Required*)
         # @option arguments [Boolean] :allow_no_match Specifies what to do when the request: contains wildcard expressions and there are no transforms that match;
-        #  contains the +_all+ string or no identifiers and there are no matches; contains wildcard expressions and there
+        #  contains the `_all` string or no identifiers and there are no matches; contains wildcard expressions and there
         #  are only partial matches.If it is true, the API returns a successful acknowledgement message when there are no matches. When there are
         #  only partial matches, the API stops the appropriate transforms.If it is false, the request returns a 404 status code when there are no matches or only partial matches. Server default: true.
         # @option arguments [Boolean] :force If it is true, the API forcefully stops the transforms.
-        # @option arguments [Time] :timeout Period to wait for a response when +wait_for_completion+ is +true+. If no response is received before the
+        # @option arguments [Time] :timeout Period to wait for a response when `wait_for_completion` is `true`. If no response is received before the
         #  timeout expires, the request returns a timeout exception. However, the request continues processing and
         #  eventually moves the transform to a STOPPED state. Server default: 30s.
         # @option arguments [Boolean] :wait_for_checkpoint If it is true, the transform does not completely stop until the current checkpoint is completed. If it is false,

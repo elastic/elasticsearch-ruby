@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_remotes Include remote cluster data into the response
         # @option arguments [Time] :timeout Period to wait for each node to respond.
         #  If a node does not respond before its timeout expires, the response does not include its stats.
-        #  However, timed out nodes are included in the response’s +_nodes.failed+ property. Defaults to no timeout.
+        #  However, timed out nodes are included in the response’s `_nodes.failed` property. Defaults to no timeout.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-stats

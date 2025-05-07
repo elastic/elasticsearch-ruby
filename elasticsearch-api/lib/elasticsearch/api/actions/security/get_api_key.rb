@@ -24,25 +24,25 @@ module Elasticsearch
       module Actions
         # Get API key information.
         # Retrieves information for one or more API keys.
-        # NOTE: If you have only the +manage_own_api_key+ privilege, this API returns only the API keys that you own.
-        # If you have +read_security+, +manage_api_key+ or greater privileges (including +manage_security+), this API returns all API keys regardless of ownership.
+        # NOTE: If you have only the `manage_own_api_key` privilege, this API returns only the API keys that you own.
+        # If you have `read_security`, `manage_api_key` or greater privileges (including `manage_security`), this API returns all API keys regardless of ownership.
         #
         # @option arguments [String] :id An API key id.
-        #  This parameter cannot be used with any of +name+, +realm_name+ or +username+.
+        #  This parameter cannot be used with any of `name`, `realm_name` or `username`.
         # @option arguments [String] :name An API key name.
-        #  This parameter cannot be used with any of +id+, +realm_name+ or +username+.
+        #  This parameter cannot be used with any of `id`, `realm_name` or `username`.
         #  It supports prefix search with wildcard.
         # @option arguments [Boolean] :owner A boolean flag that can be used to query API keys owned by the currently authenticated user.
-        #  The +realm_name+ or +username+ parameters cannot be specified when this parameter is set to +true+ as they are assumed to be the currently authenticated ones.
+        #  The `realm_name` or `username` parameters cannot be specified when this parameter is set to `true` as they are assumed to be the currently authenticated ones.
         # @option arguments [String] :realm_name The name of an authentication realm.
-        #  This parameter cannot be used with either +id+ or +name+ or when +owner+ flag is set to +true+.
+        #  This parameter cannot be used with either `id` or `name` or when `owner` flag is set to `true`.
         # @option arguments [String] :username The username of a user.
-        #  This parameter cannot be used with either +id+ or +name+ or when +owner+ flag is set to +true+.
+        #  This parameter cannot be used with either `id` or `name` or when `owner` flag is set to `true`.
         # @option arguments [Boolean] :with_limited_by Return the snapshot of the owner user's role descriptors
         #  associated with the API key. An API key's actual
         #  permission is the intersection of its assigned role
         #  descriptors and the owner user's role descriptors.
-        # @option arguments [Boolean] :active_only A boolean flag that can be used to query API keys that are currently active. An API key is considered active if it is neither invalidated, nor expired at query time. You can specify this together with other parameters such as +owner+ or +name+. If +active_only+ is false, the response will include both active and inactive (expired or invalidated) keys.
+        # @option arguments [Boolean] :active_only A boolean flag that can be used to query API keys that are currently active. An API key is considered active if it is neither invalidated, nor expired at query time. You can specify this together with other parameters such as `owner` or `name`. If `active_only` is false, the response will include both active and inactive (expired or invalidated) keys.
         # @option arguments [Boolean] :with_profile_uid Determines whether to also retrieve the profile uid, for the API key owner principal, if it exists.
         # @option arguments [Hash] :headers Custom HTTP headers
         #

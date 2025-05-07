@@ -27,10 +27,10 @@ module Elasticsearch
         # @option arguments [String, Array] :id A comma-separated list of IP location database configurations. (*Required*)
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error.
-        #  A value of +-1+ indicates that the request should never time out. Server default: 30s.
+        #  A value of `-1` indicates that the request should never time out. Server default: 30s.
         # @option arguments [Time] :timeout The period to wait for a response.
         #  If no response is received before the timeout expires, the request fails and returns an error.
-        #  A value of +-1+ indicates that the request should never time out. Server default: 30s.
+        #  A value of `-1` indicates that the request should never time out. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-delete-ip-location-database

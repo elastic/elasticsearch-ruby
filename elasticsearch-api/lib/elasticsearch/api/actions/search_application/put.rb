@@ -29,7 +29,7 @@ module Elasticsearch
         # SLA of official GA features.
         #
         # @option arguments [String] :name The name of the search application to be created or updated. (*Required*)
-        # @option arguments [Boolean] :create If +true+, this request cannot replace or update existing Search Applications.
+        # @option arguments [Boolean] :create If `true`, this request cannot replace or update existing Search Applications.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body search_application
         #

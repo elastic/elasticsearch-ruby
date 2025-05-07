@@ -29,10 +29,10 @@ module Elasticsearch
         # Elastic reserves the right to change or remove this feature in future releases without prior notice.
         #
         # @option arguments [Userprofileid] :uid A unique identifier for the user profile. (*Required*)
-        # @option arguments [String] :data A comma-separated list of filters for the +data+ field of the profile document.
-        #  To return all content use +data=*+.
-        #  To return a subset of content use +data=<key>+ to retrieve content nested under the specified +<key>+.
-        #  By default returns no +data+ content.
+        # @option arguments [String] :data A comma-separated list of filters for the `data` field of the profile document.
+        #  To return all content use `data=*`.
+        #  To return a subset of content use `data=<key>` to retrieve content nested under the specified `<key>`.
+        #  By default returns no `data` content.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-user-profile

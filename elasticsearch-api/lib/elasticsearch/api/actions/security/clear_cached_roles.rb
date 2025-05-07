@@ -26,7 +26,7 @@ module Elasticsearch
         # Evict roles from the native role cache.
         #
         # @option arguments [String, Array<String>] :name A comma-separated list of roles to evict from the role cache.
-        #  To evict all roles, use an asterisk (+*+).
+        #  To evict all roles, use an asterisk (`*`).
         #  It does not support other wildcard patterns. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #

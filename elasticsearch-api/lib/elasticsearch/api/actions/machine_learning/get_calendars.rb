@@ -24,7 +24,7 @@ module Elasticsearch
       module Actions
         # Get calendar configuration info.
         #
-        # @option arguments [String] :calendar_id A string that uniquely identifies a calendar. You can get information for multiple calendars by using a comma-separated list of ids or a wildcard expression. You can get information for all calendars by using +_all+ or +*+ or by omitting the calendar identifier.
+        # @option arguments [String] :calendar_id A string that uniquely identifies a calendar. You can get information for multiple calendars by using a comma-separated list of ids or a wildcard expression. You can get information for all calendars by using `_all` or `*` or by omitting the calendar identifier.
         # @option arguments [Integer] :from Skips the specified number of calendars. This parameter is supported only when you omit the calendar identifier. Server default: 0.
         # @option arguments [Integer] :size Specifies the maximum number of calendars to obtain. This parameter is supported only when you omit the calendar identifier. Server default: 10000.
         # @option arguments [Hash] :headers Custom HTTP headers

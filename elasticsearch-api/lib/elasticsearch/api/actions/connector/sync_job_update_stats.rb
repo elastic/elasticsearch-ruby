@@ -23,8 +23,8 @@ module Elasticsearch
     module Connector
       module Actions
         # Set the connector sync job stats.
-        # Stats include: +deleted_document_count+, +indexed_document_count+, +indexed_document_volume+, and +total_document_count+.
-        # You can also update +last_seen+.
+        # Stats include: `deleted_document_count`, `indexed_document_count`, `indexed_document_volume`, and `total_document_count`.
+        # You can also update `last_seen`.
         # This API is mainly used by the connector service for updating sync job information.
         # To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
         # This service runs automatically on Elastic Cloud for Elastic managed connectors.

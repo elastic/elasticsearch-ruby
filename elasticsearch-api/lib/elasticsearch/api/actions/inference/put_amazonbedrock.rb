@@ -23,7 +23,7 @@ module Elasticsearch
     module Inference
       module Actions
         # Create an Amazon Bedrock inference endpoint.
-        # Creates an inference endpoint to perform an inference task with the +amazonbedrock+ service.
+        # Creates an inference endpoint to perform an inference task with the `amazonbedrock` service.
         #
         # @option arguments [String] :task_type The type of the inference task that the model will perform. (*Required*)
         # @option arguments [String] :amazonbedrock_inference_id The unique identifier of the inference endpoint. (*Required*)

@@ -23,7 +23,7 @@ module Elasticsearch
     module Connector
       module Actions
         # Update the connector index name.
-        # Update the +index_name+ field of a connector, specifying the index where the data ingested by the connector is stored.
+        # Update the `index_name` field of a connector, specifying the index where the data ingested by the connector is stored.
         # This functionality is in Beta and is subject to change. The design and
         # code is less mature than official GA features and is being provided
         # as-is with no warranties. Beta features are not subject to the support

@@ -24,34 +24,34 @@ module Elasticsearch
       # Count search results.
       # Get the number of documents matching a query.
       # The query can be provided either by using a simple query string as a parameter, or by defining Query DSL within the request body.
-      # The query is optional. When no query is provided, the API uses +match_all+ to count all the documents.
+      # The query is optional. When no query is provided, the API uses `match_all` to count all the documents.
       # The count API supports multi-target syntax. You can run a single count API search across multiple data streams and indices.
       # The operation is broadcast across all shards.
       # For each shard ID group, a replica is chosen and the search is run against it.
       # This means that replicas increase the scalability of the count.
       #
       # @option arguments [String, Array] :index A comma-separated list of data streams, indices, and aliases to search.
-      #  It supports wildcards (+*+).
-      #  To search all data streams and indices, omit this parameter or use +*+ or +_all+.
-      # @option arguments [Boolean] :allow_no_indices If +false+, the request returns an error if any wildcard expression, index alias, or +_all+ value targets only missing or closed indices.
+      #  It supports wildcards (`*`).
+      #  To search all data streams and indices, omit this parameter or use `*` or `_all`.
+      # @option arguments [Boolean] :allow_no_indices If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
       #  This behavior applies even if the request targets other open indices.
-      #  For example, a request targeting +foo*,bar*+ returns an error if an index starts with +foo+ but no index starts with +bar+. Server default: true.
+      #  For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. Server default: true.
       # @option arguments [String] :analyzer The analyzer to use for the query string.
-      #  This parameter can be used only when the +q+ query string parameter is specified.
-      # @option arguments [Boolean] :analyze_wildcard If +true+, wildcard and prefix queries are analyzed.
-      #  This parameter can be used only when the +q+ query string parameter is specified.
-      # @option arguments [String] :default_operator The default operator for query string query: +AND+ or +OR+.
-      #  This parameter can be used only when the +q+ query string parameter is specified. Server default: OR.
+      #  This parameter can be used only when the `q` query string parameter is specified.
+      # @option arguments [Boolean] :analyze_wildcard If `true`, wildcard and prefix queries are analyzed.
+      #  This parameter can be used only when the `q` query string parameter is specified.
+      # @option arguments [String] :default_operator The default operator for query string query: `AND` or `OR`.
+      #  This parameter can be used only when the `q` query string parameter is specified. Server default: OR.
       # @option arguments [String] :df The field to use as a default when no field prefix is given in the query string.
-      #  This parameter can be used only when the +q+ query string parameter is specified.
+      #  This parameter can be used only when the `q` query string parameter is specified.
       # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
       #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-      #  It supports comma-separated values, such as +open,hidden+. Server default: open.
-      # @option arguments [Boolean] :ignore_throttled If +true+, concrete, expanded, or aliased indices are ignored when frozen. Server default: true.
-      # @option arguments [Boolean] :ignore_unavailable If +false+, the request returns an error if it targets a missing or closed index.
-      # @option arguments [Boolean] :lenient If +true+, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
-      #  This parameter can be used only when the +q+ query string parameter is specified.
-      # @option arguments [Float] :min_score The minimum +_score+ value that documents must have to be included in the result.
+      #  It supports comma-separated values, such as `open,hidden`. Server default: open.
+      # @option arguments [Boolean] :ignore_throttled If `true`, concrete, expanded, or aliased indices are ignored when frozen. Server default: true.
+      # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a missing or closed index.
+      # @option arguments [Boolean] :lenient If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
+      #  This parameter can be used only when the `q` query string parameter is specified.
+      # @option arguments [Float] :min_score The minimum `_score` value that documents must have to be included in the result.
       # @option arguments [String] :preference The node or shard the operation should be performed on.
       #  By default, it is random.
       # @option arguments [String] :routing A custom value used to route operations to a specific shard.

@@ -31,8 +31,8 @@ module Elasticsearch
         #  It must be unique in the repository. (*Required*)
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
-        # @option arguments [Boolean] :wait_for_completion If +true+, the request returns a response when the snapshot is complete.
-        #  If +false+, the request returns a response when the snapshot initializes.
+        # @option arguments [Boolean] :wait_for_completion If `true`, the request returns a response when the snapshot is complete.
+        #  If `false`, the request returns a response when the snapshot initializes.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

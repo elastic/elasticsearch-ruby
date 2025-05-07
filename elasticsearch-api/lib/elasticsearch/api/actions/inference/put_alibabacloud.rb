@@ -23,7 +23,7 @@ module Elasticsearch
     module Inference
       module Actions
         # Create an AlibabaCloud AI Search inference endpoint.
-        # Create an inference endpoint to perform an inference task with the +alibabacloud-ai-search+ service.
+        # Create an inference endpoint to perform an inference task with the `alibabacloud-ai-search` service.
         #
         # @option arguments [String] :task_type The type of the inference task that the model will perform. (*Required*)
         # @option arguments [String] :alibabacloud_inference_id The unique identifier of the inference endpoint. (*Required*)

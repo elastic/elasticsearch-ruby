@@ -24,9 +24,9 @@ module Elasticsearch
       module Actions
         # Render a search application query.
         # Generate an Elasticsearch query using the specified query parameters and the search template associated with the search application or a default template if none is specified.
-        # If a parameter used in the search template is not specified in +params+, the parameter's default value will be used.
+        # If a parameter used in the search template is not specified in `params`, the parameter's default value will be used.
         # The API returns the specific Elasticsearch query that would be generated and run by calling the search application search API.
-        # You must have +read+ privileges on the backing alias of the search application.
+        # You must have `read` privileges on the backing alias of the search application.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the

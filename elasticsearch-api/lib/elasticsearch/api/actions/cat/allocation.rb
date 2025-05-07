@@ -30,18 +30,18 @@ module Elasticsearch
         # @option arguments [String] :bytes The unit used to display byte values.
         # @option arguments [String, Array<String>] :h List of columns to appear in the response. Supports simple wildcards.
         # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
-        #  Sorting defaults to ascending and can be changed by setting +:asc+
-        #  or +:desc+ as a suffix to the column name.
-        # @option arguments [Boolean] :local If +true+, the request computes the list of selected nodes from the
-        #  local cluster state. If +false+ the list of selected nodes are computed
+        #  Sorting defaults to ascending and can be changed by setting `:asc`
+        #  or `:desc` as a suffix to the column name.
+        # @option arguments [Boolean] :local If `true`, the request computes the list of selected nodes from the
+        #  local cluster state. If `false` the list of selected nodes are computed
         #  from the cluster state of the master node. In both cases the coordinating
         #  node will send requests for further information to each selected node.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
-        #  +text+, +json+, +cbor+, +yaml+, or +smile+. Server default: text.
-        # @option arguments [Boolean] :help When set to +true+ will output available columns. This option
+        #  `text`, `json`, `cbor`, `yaml`, or `smile`. Server default: text.
+        # @option arguments [Boolean] :help When set to `true` will output available columns. This option
         #  can't be combined with any other query string option.
-        # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
+        # @option arguments [Boolean] :v When set to `true` will enable verbose output.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-allocation
