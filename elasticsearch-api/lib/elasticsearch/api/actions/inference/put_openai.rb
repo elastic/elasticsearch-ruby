@@ -24,11 +24,6 @@ module Elasticsearch
       module Actions
         # Create an OpenAI inference endpoint.
         # Create an inference endpoint to perform an inference task with the +openai+ service or +openai+ compatible APIs.
-        # When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-        # After creating the endpoint, wait for the model deployment to complete before using it.
-        # To verify the deployment status, use the get trained model statistics API.
-        # Look for +"state": "fully_allocated"+ in the response and ensure that the +"allocation_count"+ matches the +"target_allocation_count"+.
-        # Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
         #
         # @option arguments [String] :task_type The type of the inference task that the model will perform.
         #  NOTE: The +chat_completion+ task type only supports streaming and only through the _stream API. (*Required*)
