@@ -25,9 +25,9 @@ module Elasticsearch
         # Delete data streams.
         # Deletes one or more data streams and their backing indices.
         #
-        # @option arguments [String, Array<String>] :name Comma-separated list of data streams to delete. Wildcard (+*+) expressions are supported. (*Required*)
+        # @option arguments [String, Array<String>] :name Comma-separated list of data streams to delete. Wildcard (`*`) expressions are supported. (*Required*)
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
-        # @option arguments [String, Array<String>] :expand_wildcards Type of data stream that wildcard patterns can match. Supports comma-separated values,such as +open,hidden+. Server default: open.
+        # @option arguments [String, Array<String>] :expand_wildcards Type of data stream that wildcard patterns can match. Supports comma-separated values,such as `open,hidden`. Server default: open.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-data-stream

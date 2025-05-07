@@ -29,7 +29,7 @@ module Elasticsearch
         # The SAML message that is submitted can be:
         # * A response to a SAML authentication request that was previously created using the SAML prepare authentication API.
         # * An unsolicited SAML message in the case of an IdP-initiated single sign-on (SSO) flow.
-        # In either case, the SAML message needs to be a base64 encoded XML document with a root element of +<Response>+.
+        # In either case, the SAML message needs to be a base64 encoded XML document with a root element of `<Response>`.
         # After successful validation, Elasticsearch responds with an Elasticsearch internal access token and refresh token that can be subsequently used for authentication.
         # This API endpoint essentially exchanges SAML responses that indicate successful authentication in the IdP for Elasticsearch access and refresh tokens, which can be used for authentication against Elasticsearch.
         #

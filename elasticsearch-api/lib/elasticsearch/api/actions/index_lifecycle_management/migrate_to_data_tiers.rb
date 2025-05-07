@@ -32,13 +32,13 @@ module Elasticsearch
         # 1. Remove custom allocation settings from existing ILM policies.
         # 1. Replace custom allocation settings from existing indices with the corresponding tier preference.
         # ILM must be stopped before performing the migration.
-        # Use the stop ILM and get ILM status APIs to wait until the reported operation mode is +STOPPED+.
+        # Use the stop ILM and get ILM status APIs to wait until the reported operation mode is `STOPPED`.
         #
         # @option arguments [Boolean] :dry_run If true, simulates the migration from node attributes based allocation filters to data tiers, but does not perform the migration.
         #  This provides a way to retrieve the indices and ILM policies that need to be migrated.
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error.
-        #  It can also be set to +-1+ to indicate that the request should never timeout. Server default: 30s.
+        #  It can also be set to `-1` to indicate that the request should never timeout. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

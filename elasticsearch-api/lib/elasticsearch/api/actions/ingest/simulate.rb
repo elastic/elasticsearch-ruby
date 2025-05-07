@@ -27,8 +27,8 @@ module Elasticsearch
         # You can either specify an existing pipeline to use with the provided documents or supply a pipeline definition in the body of the request.
         #
         # @option arguments [String] :id The pipeline to test.
-        #  If you don't specify a +pipeline+ in the request body, this parameter is required.
-        # @option arguments [Boolean] :verbose If +true+, the response includes output data for each processor in the executed pipeline.
+        #  If you don't specify a `pipeline` in the request body, this parameter is required.
+        # @option arguments [Boolean] :verbose If `true`, the response includes output data for each processor in the executed pipeline.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

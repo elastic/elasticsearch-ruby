@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :name The auto-follow pattern collection to delete. (*Required*)
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
         #  If the master node is not available before the timeout expires, the request fails and returns an error.
-        #  It can also be set to +-1+ to indicate that the request should never timeout. Server default: 30s.
+        #  It can also be set to `-1` to indicate that the request should never timeout. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-delete-auto-follow-pattern

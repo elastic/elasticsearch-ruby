@@ -23,7 +23,7 @@ module Elasticsearch
     module Connector
       module Actions
         # Cancel a connector sync job.
-        # Cancel a connector sync job, which sets the status to cancelling and updates +cancellation_requested_at+ to the current time.
+        # Cancel a connector sync job, which sets the status to cancelling and updates `cancellation_requested_at` to the current time.
         # The connector service is then responsible for setting the status of connector sync jobs to cancelled.
         # This functionality is in Beta and is subject to change. The design and
         # code is less mature than official GA features and is being provided

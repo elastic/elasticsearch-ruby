@@ -27,7 +27,7 @@ module Elasticsearch
         #
         # @option arguments [String] :name Enrich policy to execute. (*Required*)
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
-        # @option arguments [Boolean] :wait_for_completion If +true+, the request blocks other enrich policy execution requests until complete. Server default: true.
+        # @option arguments [Boolean] :wait_for_completion If `true`, the request blocks other enrich policy execution requests until complete. Server default: true.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-enrich-execute-policy

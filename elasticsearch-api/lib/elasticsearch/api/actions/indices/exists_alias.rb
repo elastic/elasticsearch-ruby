@@ -25,16 +25,16 @@ module Elasticsearch
         # Check aliases.
         # Check if one or more data stream or index aliases exist.
         #
-        # @option arguments [String, Array<String>] :name Comma-separated list of aliases to check. Supports wildcards (+*+). (*Required*)
-        # @option arguments [String, Array] :index Comma-separated list of data streams or indices used to limit the request. Supports wildcards (+*+).
-        #  To target all data streams and indices, omit this parameter or use +*+ or +_all+.
-        # @option arguments [Boolean] :allow_no_indices If +false+, the request returns an error if any wildcard expression, index alias, or +_all+ value targets only missing or closed indices.
+        # @option arguments [String, Array<String>] :name Comma-separated list of aliases to check. Supports wildcards (`*`). (*Required*)
+        # @option arguments [String, Array] :index Comma-separated list of data streams or indices used to limit the request. Supports wildcards (`*`).
+        #  To target all data streams and indices, omit this parameter or use `*` or `_all`.
+        # @option arguments [Boolean] :allow_no_indices If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
         #  This behavior applies even if the request targets other open indices. Server default: true.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
         #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-        #  Supports comma-separated values, such as +open,hidden+.
-        #  Valid values are: +all+, +open+, +closed+, +hidden+, +none+. Server default: open.
-        # @option arguments [Boolean] :ignore_unavailable If +false+, requests that include a missing data stream or index in the target indices or data streams return an error.
+        #  Supports comma-separated values, such as `open,hidden`.
+        #  Valid values are: `all`, `open`, `closed`, `hidden`, `none`. Server default: open.
+        # @option arguments [Boolean] :ignore_unavailable If `false`, requests that include a missing data stream or index in the target indices or data streams return an error.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers

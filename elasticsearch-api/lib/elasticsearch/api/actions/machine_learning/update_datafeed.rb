@@ -31,17 +31,17 @@ module Elasticsearch
         # @option arguments [String] :datafeed_id A numerical character string that uniquely identifies the datafeed.
         #  This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores.
         #  It must start and end with alphanumeric characters. (*Required*)
-        # @option arguments [Boolean] :allow_no_indices If +true+, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the
-        #  +_all+ string or when no indices are specified. Server default: true.
+        # @option arguments [Boolean] :allow_no_indices If `true`, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the
+        #  `_all` string or when no indices are specified. Server default: true.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
         #  whether wildcard expressions match hidden data streams. Supports comma-separated values. Valid values are:
-        #  - +all+: Match any data stream or index, including hidden ones.
-        #  - +closed+: Match closed, non-hidden indices. Also matches any non-hidden data stream. Data streams cannot be closed.
-        #  - +hidden+: Match hidden data streams and hidden indices. Must be combined with +open+, +closed+, or both.
-        #  - +none+: Wildcard patterns are not accepted.
-        #  - +open+: Match open, non-hidden indices. Also matches any non-hidden data stream. Server default: open.
-        # @option arguments [Boolean] :ignore_throttled If +true+, concrete, expanded or aliased indices are ignored when frozen. Server default: true.
-        # @option arguments [Boolean] :ignore_unavailable If +true+, unavailable indices (missing or closed) are ignored.
+        #  - `all`: Match any data stream or index, including hidden ones.
+        #  - `closed`: Match closed, non-hidden indices. Also matches any non-hidden data stream. Data streams cannot be closed.
+        #  - `hidden`: Match hidden data streams and hidden indices. Must be combined with `open`, `closed`, or both.
+        #  - `none`: Wildcard patterns are not accepted.
+        #  - `open`: Match open, non-hidden indices. Also matches any non-hidden data stream. Server default: open.
+        # @option arguments [Boolean] :ignore_throttled If `true`, concrete, expanded or aliased indices are ignored when frozen. Server default: true.
+        # @option arguments [Boolean] :ignore_unavailable If `true`, unavailable indices (missing or closed) are ignored.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

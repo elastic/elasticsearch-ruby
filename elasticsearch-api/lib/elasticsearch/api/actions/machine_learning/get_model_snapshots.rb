@@ -26,8 +26,8 @@ module Elasticsearch
         #
         # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
         # @option arguments [String] :snapshot_id A numerical character string that uniquely identifies the model snapshot. You can get information for multiple
-        #  snapshots by using a comma-separated list or a wildcard expression. You can get all snapshots by using +_all+,
-        #  by specifying +*+ as the snapshot ID, or by omitting the snapshot ID.
+        #  snapshots by using a comma-separated list or a wildcard expression. You can get all snapshots by using `_all`,
+        #  by specifying `*` as the snapshot ID, or by omitting the snapshot ID.
         # @option arguments [Boolean] :desc If true, the results are sorted in descending order.
         # @option arguments [String, Time] :end Returns snapshots with timestamps earlier than this time.
         # @option arguments [Integer] :from Skips the specified number of snapshots. Server default: 0.

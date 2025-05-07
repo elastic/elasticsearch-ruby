@@ -27,11 +27,11 @@ module Elasticsearch
         # Otherwise, the stored results are deleted.
         # If the Elasticsearch security features are enabled, only the following users can use this API to delete a query:
         # * The authenticated user that submitted the original query request
-        # * Users with the +cancel_task+ cluster privilege
+        # * Users with the `cancel_task` cluster privilege
         #
         # @option arguments [String] :id The unique identifier of the query.
         #  A query ID is provided in the ES|QL async query API response for a query that does not complete in the designated time.
-        #  A query ID is also provided when the request was submitted with the +keep_on_completion+ parameter set to +true+. (*Required*)
+        #  A query ID is also provided when the request was submitted with the `keep_on_completion` parameter set to `true`. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-async-query-delete

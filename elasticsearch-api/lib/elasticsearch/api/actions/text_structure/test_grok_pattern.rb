@@ -28,7 +28,7 @@ module Elasticsearch
         #
         # @option arguments [String] :ecs_compatibility The mode of compatibility with ECS compliant Grok patterns.
         #  Use this parameter to specify whether to use ECS Grok patterns instead of legacy ones when the structure finder creates a Grok pattern.
-        #  Valid values are +disabled+ and +v1+. Server default: disabled.
+        #  Valid values are `disabled` and `v1`. Server default: disabled.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

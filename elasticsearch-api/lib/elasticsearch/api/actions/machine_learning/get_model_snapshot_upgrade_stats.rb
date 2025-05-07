@@ -26,8 +26,8 @@ module Elasticsearch
         #
         # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
         # @option arguments [String] :snapshot_id A numerical character string that uniquely identifies the model snapshot. You can get information for multiple
-        #  snapshots by using a comma-separated list or a wildcard expression. You can get all snapshots by using +_all+,
-        #  by specifying +*+ as the snapshot ID, or by omitting the snapshot ID. (*Required*)
+        #  snapshots by using a comma-separated list or a wildcard expression. You can get all snapshots by using `_all`,
+        #  by specifying `*` as the snapshot ID, or by omitting the snapshot ID. (*Required*)
         # @option arguments [Boolean] :allow_no_match Specifies what to do when the request:
         #  -  Contains wildcard expressions and there are no jobs that match.
         #  -  Contains the _all string or no identifiers and there are no matches.

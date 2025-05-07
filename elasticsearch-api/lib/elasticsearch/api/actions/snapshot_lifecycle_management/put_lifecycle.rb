@@ -30,10 +30,10 @@ module Elasticsearch
         # @option arguments [String] :policy_id The identifier for the snapshot lifecycle policy you want to create or update. (*Required*)
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error.
-        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
+        #  To indicate that the request should never timeout, set it to `-1`. Server default: 30s.
         # @option arguments [Time] :timeout The period to wait for a response.
         #  If no response is received before the timeout expires, the request fails and returns an error.
-        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
+        #  To indicate that the request should never timeout, set it to `-1`. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

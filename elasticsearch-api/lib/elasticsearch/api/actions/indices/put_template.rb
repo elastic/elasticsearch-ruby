@@ -31,7 +31,7 @@ module Elasticsearch
         # Index templates are only applied during index creation.
         # Changes to index templates do not affect existing indices.
         # Settings and mappings specified in create index API requests override any settings or mappings specified in an index template.
-        # You can use C-style +/* *\/+ block comments in index templates.
+        # You can use C-style `/* *\/` block comments in index templates.
         # You can include comments anywhere in the request body, except before the opening curly bracket.
         # **Indices matching multiple templates**
         # Multiple index templates can potentially match an index, in this case, both the settings and mappings are merged into the final configuration of the index.

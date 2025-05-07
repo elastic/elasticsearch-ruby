@@ -27,8 +27,8 @@ module Elasticsearch
         #
         # @option arguments [String] :set_id The ID of the synonym set to update. (*Required*)
         # @option arguments [String] :rule_id The ID of the synonym rule to delete. (*Required*)
-        # @option arguments [Boolean] :refresh If +true+, the request will refresh the analyzers with the deleted synonym rule and wait for the new synonyms to be available before returning.
-        #  If +false+, analyzers will not be reloaded with the deleted synonym rule Server default: true.
+        # @option arguments [Boolean] :refresh If `true`, the request will refresh the analyzers with the deleted synonym rule and wait for the new synonyms to be available before returning.
+        #  If `false`, analyzers will not be reloaded with the deleted synonym rule Server default: true.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-delete-synonym-rule

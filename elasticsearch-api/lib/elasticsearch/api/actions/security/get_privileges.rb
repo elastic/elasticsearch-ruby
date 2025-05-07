@@ -24,7 +24,7 @@ module Elasticsearch
       module Actions
         # Get application privileges.
         # To use this API, you must have one of the following privileges:
-        # * The +read_security+ cluster privilege (or a greater privilege such as +manage_security+ or +all+).
+        # * The `read_security` cluster privilege (or a greater privilege such as `manage_security` or `all`).
         # * The "Manage Application Privileges" global privilege for the application being referenced in the request.
         #
         # @option arguments [String] :application The name of the application.

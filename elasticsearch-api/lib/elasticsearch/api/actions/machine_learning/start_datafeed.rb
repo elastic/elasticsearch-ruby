@@ -36,15 +36,15 @@ module Elasticsearch
         #  alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric
         #  characters. (*Required*)
         # @option arguments [String, Time] :end The time that the datafeed should end, which can be specified by using one of the following formats:
-        #  - ISO 8601 format with milliseconds, for example +2017-01-22T06:00:00.000Z+
-        #  - ISO 8601 format without milliseconds, for example +2017-01-22T06:00:00+00:00+
-        #  - Milliseconds since the epoch, for example +1485061200000+
-        #  Date-time arguments using either of the ISO 8601 formats must have a time zone designator, where +Z+ is accepted
-        #  as an abbreviation for UTC time. When a URL is expected (for example, in browsers), the +++ used in time zone
-        #  designators must be encoded as +%2B+.
+        #  - ISO 8601 format with milliseconds, for example `2017-01-22T06:00:00.000Z`
+        #  - ISO 8601 format without milliseconds, for example `2017-01-22T06:00:00+00:00`
+        #  - Milliseconds since the epoch, for example `1485061200000`
+        #  Date-time arguments using either of the ISO 8601 formats must have a time zone designator, where `Z` is accepted
+        #  as an abbreviation for UTC time. When a URL is expected (for example, in browsers), the `+` used in time zone
+        #  designators must be encoded as `%2B`.
         #  The end time value is exclusive. If you do not specify an end time, the datafeed
         #  runs continuously.
-        # @option arguments [String, Time] :start The time that the datafeed should begin, which can be specified by using the same formats as the +end+ parameter.
+        # @option arguments [String, Time] :start The time that the datafeed should begin, which can be specified by using the same formats as the `end` parameter.
         #  This value is inclusive.
         #  If you do not specify a start time and the datafeed is associated with a new anomaly detection job, the analysis
         #  starts from the earliest time for which data is available.

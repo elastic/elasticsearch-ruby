@@ -23,8 +23,8 @@ module Elasticsearch
     module Actions
       # Close a point in time.
       # A point in time must be opened explicitly before being used in search requests.
-      # The +keep_alive+ parameter tells Elasticsearch how long it should persist.
-      # A point in time is automatically closed when the +keep_alive+ period has elapsed.
+      # The `keep_alive` parameter tells Elasticsearch how long it should persist.
+      # A point in time is automatically closed when the `keep_alive` period has elapsed.
       # However, keeping points in time has a cost; close them as soon as they are no longer required for search requests.
       #
       # @option arguments [Hash] :headers Custom HTTP headers

@@ -27,7 +27,7 @@ module Elasticsearch
       #
       # @option arguments [String] :task_id The ID for the task. (*Required*)
       # @option arguments [Float] :requests_per_second The throttle for this request in sub-requests per second.
-      #  To turn off throttling, set it to +-1+. Server default: -1.
+      #  To turn off throttling, set it to `-1`. Server default: -1.
       # @option arguments [Hash] :headers Custom HTTP headers
       #
       # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-update-by-query-rethrottle

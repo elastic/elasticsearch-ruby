@@ -28,7 +28,7 @@ module Elasticsearch
         #
         # @option arguments [String] :id A unique identifier for the async search. (*Required*)
         # @option arguments [Time] :keep_alive The length of time that the async search should be available in the cluster.
-        #  When not specified, the +keep_alive+ set with the corresponding submit async request will be used.
+        #  When not specified, the `keep_alive` set with the corresponding submit async request will be used.
         #  Otherwise, it is possible to override the value and extend the validity of the request.
         #  When this period expires, the search, if still running, is cancelled.
         #  If the search is completed, its saved results are deleted.

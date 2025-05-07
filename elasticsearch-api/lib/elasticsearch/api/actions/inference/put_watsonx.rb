@@ -23,12 +23,12 @@ module Elasticsearch
     module Inference
       module Actions
         # Create a Watsonx inference endpoint.
-        # Create an inference endpoint to perform an inference task with the +watsonxai+ service.
-        # You need an IBM Cloud Databases for Elasticsearch deployment to use the +watsonxai+ inference service.
+        # Create an inference endpoint to perform an inference task with the `watsonxai` service.
+        # You need an IBM Cloud Databases for Elasticsearch deployment to use the `watsonxai` inference service.
         # You can provision one through the IBM catalog, the Cloud Databases CLI plug-in, the Cloud Databases API, or Terraform.
         #
         # @option arguments [String] :task_type The task type.
-        #  The only valid task type for the model to perform is +text_embedding+. (*Required*)
+        #  The only valid task type for the model to perform is `text_embedding`. (*Required*)
         # @option arguments [String] :watsonx_inference_id The unique identifier of the inference endpoint. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body

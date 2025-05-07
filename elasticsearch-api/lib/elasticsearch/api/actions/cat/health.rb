@@ -27,23 +27,23 @@ module Elasticsearch
         # They are not intended for use by applications. For application consumption, use the cluster health API.
         # This API is often used to check malfunctioning clusters.
         # To help you track cluster health alongside log files and alerting systems, the API returns timestamps in two formats:
-        # +HH:MM:SS+, which is human-readable but includes no date information;
-        # +Unix epoch time+, which is machine-sortable and includes date information.
+        # `HH:MM:SS`, which is human-readable but includes no date information;
+        # `Unix epoch time`, which is machine-sortable and includes date information.
         # The latter format is useful for cluster recoveries that take multiple days.
         # You can use the cat health API to verify cluster health across multiple nodes.
         # You also can use the API to track the recovery of a large cluster over a longer period of time.
         #
         # @option arguments [String] :time The unit used to display time values.
-        # @option arguments [Boolean] :ts If true, returns +HH:MM:SS+ and Unix epoch timestamps. Server default: true.
+        # @option arguments [Boolean] :ts If true, returns `HH:MM:SS` and Unix epoch timestamps. Server default: true.
         # @option arguments [String, Array<String>] :h List of columns to appear in the response. Supports simple wildcards.
         # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
-        #  Sorting defaults to ascending and can be changed by setting +:asc+
-        #  or +:desc+ as a suffix to the column name.
+        #  Sorting defaults to ascending and can be changed by setting `:asc`
+        #  or `:desc` as a suffix to the column name.
         # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
-        #  +text+, +json+, +cbor+, +yaml+, or +smile+. Server default: text.
-        # @option arguments [Boolean] :help When set to +true+ will output available columns. This option
+        #  `text`, `json`, `cbor`, `yaml`, or `smile`. Server default: text.
+        # @option arguments [Boolean] :help When set to `true` will output available columns. This option
         #  can't be combined with any other query string option.
-        # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
+        # @option arguments [Boolean] :v When set to `true` will enable verbose output.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-health

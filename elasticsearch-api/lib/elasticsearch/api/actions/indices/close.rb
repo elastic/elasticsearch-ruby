@@ -31,26 +31,26 @@ module Elasticsearch
         # The data of opened and closed indices is automatically replicated by the cluster to ensure that enough shard copies are safely kept around at all times.
         # You can open and close multiple indices.
         # An error is thrown if the request explicitly refers to a missing index.
-        # This behaviour can be turned off using the +ignore_unavailable=true+ parameter.
+        # This behaviour can be turned off using the `ignore_unavailable=true` parameter.
         # By default, you must explicitly name the indices you are opening or closing.
-        # To open or close indices with +_all+, +*+, or other wildcard expressions, change the+action.destructive_requires_name+ setting to +false+. This setting can also be changed with the cluster update settings API.
+        # To open or close indices with `_all`, `*`, or other wildcard expressions, change the`action.destructive_requires_name` setting to `false`. This setting can also be changed with the cluster update settings API.
         # Closed indices consume a significant amount of disk-space which can cause problems in managed environments.
-        # Closing indices can be turned off with the cluster settings API by setting +cluster.indices.close.enable+ to +false+.
+        # Closing indices can be turned off with the cluster settings API by setting `cluster.indices.close.enable` to `false`.
         #
         # @option arguments [String, Array] :index Comma-separated list or wildcard expression of index names used to limit the request. (*Required*)
-        # @option arguments [Boolean] :allow_no_indices If +false+, the request returns an error if any wildcard expression, index alias, or +_all+ value targets only missing or closed indices.
+        # @option arguments [Boolean] :allow_no_indices If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
         #  This behavior applies even if the request targets other open indices. Server default: true.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
         #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-        #  Supports comma-separated values, such as +open,hidden+.
-        #  Valid values are: +all+, +open+, +closed+, +hidden+, +none+. Server default: open.
-        # @option arguments [Boolean] :ignore_unavailable If +false+, the request returns an error if it targets a missing or closed index.
+        #  Supports comma-separated values, such as `open,hidden`.
+        #  Valid values are: `all`, `open`, `closed`, `hidden`, `none`. Server default: open.
+        # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a missing or closed index.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Time] :timeout Period to wait for a response.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Integer, String] :wait_for_active_shards The number of shard copies that must be active before proceeding with the operation.
-        #  Set to +all+ or any positive integer up to the total number of shards in the index (+number_of_replicas+1+). Server default: 1.
+        #  Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). Server default: 1.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-close

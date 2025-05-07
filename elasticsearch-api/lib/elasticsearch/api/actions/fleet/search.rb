@@ -77,7 +77,7 @@ module Elasticsearch
         #  Elasticsearch to immediately execute the search. Server default: [].
         # @option arguments [Boolean] :allow_partial_search_results If true, returns partial results if there are shard request timeouts or shard failures.
         #  If false, returns an error with no partial results.
-        #  Defaults to the configured cluster setting +search.default_allow_partial_results+, which is true by default.
+        #  Defaults to the configured cluster setting `search.default_allow_partial_results`, which is true by default.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

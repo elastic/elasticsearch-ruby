@@ -36,7 +36,7 @@ module Elasticsearch
         # You can see the current value for the upgrade_mode setting by using the get
         # machine learning info API.
         #
-        # @option arguments [Boolean] :enabled When +true+, it enables +upgrade_mode+ which temporarily halts all job
+        # @option arguments [Boolean] :enabled When `true`, it enables `upgrade_mode` which temporarily halts all job
         #  and datafeed tasks and prohibits new job and datafeed tasks from
         #  starting.
         # @option arguments [Time] :timeout The time to wait for the request to be completed. Server default: 30s.

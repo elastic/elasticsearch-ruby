@@ -24,7 +24,7 @@ module Elasticsearch
       module Actions
         # Get the dangling indices.
         # If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling.
-        # For example, this can happen if you delete more than +cluster.indices.tombstones.size+ indices while an Elasticsearch node is offline.
+        # For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
         # Use this API to list dangling indices, which you can then import or delete.
         #
         # @option arguments [Hash] :headers Custom HTTP headers

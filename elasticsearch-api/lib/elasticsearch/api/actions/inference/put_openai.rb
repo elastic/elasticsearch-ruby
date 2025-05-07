@@ -23,10 +23,10 @@ module Elasticsearch
     module Inference
       module Actions
         # Create an OpenAI inference endpoint.
-        # Create an inference endpoint to perform an inference task with the +openai+ service or +openai+ compatible APIs.
+        # Create an inference endpoint to perform an inference task with the `openai` service or `openai` compatible APIs.
         #
         # @option arguments [String] :task_type The type of the inference task that the model will perform.
-        #  NOTE: The +chat_completion+ task type only supports streaming and only through the _stream API. (*Required*)
+        #  NOTE: The `chat_completion` task type only supports streaming and only through the _stream API. (*Required*)
         # @option arguments [String] :openai_inference_id The unique identifier of the inference endpoint. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body

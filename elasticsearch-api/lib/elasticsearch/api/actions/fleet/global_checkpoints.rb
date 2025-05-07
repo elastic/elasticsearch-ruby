@@ -28,13 +28,13 @@ module Elasticsearch
         #
         # @option arguments [Indexname, Indexalias] :index A single index or index alias that resolves to a single index. (*Required*)
         # @option arguments [Boolean] :wait_for_advance A boolean value which controls whether to wait (until the timeout) for the global checkpoints
-        #  to advance past the provided +checkpoints+.
+        #  to advance past the provided `checkpoints`.
         # @option arguments [Boolean] :wait_for_index A boolean value which controls whether to wait (until the timeout) for the target index to exist
-        #  and all primary shards be active. Can only be true when +wait_for_advance+ is true.
-        # @option arguments [Array<Integer>] :checkpoints A comma separated list of previous global checkpoints. When used in combination with +wait_for_advance+,
+        #  and all primary shards be active. Can only be true when `wait_for_advance` is true.
+        # @option arguments [Array<Integer>] :checkpoints A comma separated list of previous global checkpoints. When used in combination with `wait_for_advance`,
         #  the API will only return once the global checkpoints advances past the checkpoints. Providing an empty list
         #  will cause Elasticsearch to immediately return the current global checkpoints. Server default: [].
-        # @option arguments [Time] :timeout Period to wait for a global checkpoints to advance past +checkpoints+. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a global checkpoints to advance past `checkpoints`. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-fleet

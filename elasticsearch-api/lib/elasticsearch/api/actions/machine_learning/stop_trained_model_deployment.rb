@@ -26,9 +26,9 @@ module Elasticsearch
         #
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
         # @option arguments [Boolean] :allow_no_match Specifies what to do when the request: contains wildcard expressions and there are no deployments that match;
-        #  contains the  +_all+ string or no identifiers and there are no matches; or contains wildcard expressions and
+        #  contains the  `_all` string or no identifiers and there are no matches; or contains wildcard expressions and
         #  there are only partial matches. By default, it returns an empty array when there are no matches and the subset of results when there are partial matches.
-        #  If +false+, the request returns a 404 status code when there are no matches or only partial matches. Server default: true.
+        #  If `false`, the request returns a 404 status code when there are no matches or only partial matches. Server default: true.
         # @option arguments [Boolean] :force Forcefully stops the deployment, even if it is used by ingest pipelines. You can't use these pipelines until you
         #  restart the model deployment.
         # @option arguments [Hash] :headers Custom HTTP headers

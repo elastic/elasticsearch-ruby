@@ -23,7 +23,7 @@ module Elasticsearch
     module Inference
       module Actions
         # Create an ELSER inference endpoint.
-        # Create an inference endpoint to perform an inference task with the +elser+ service.
+        # Create an inference endpoint to perform an inference task with the `elser` service.
         # You can also deploy ELSER by using the Elasticsearch inference integration.
         #
         # @option arguments [String] :task_type The type of the inference task that the model will perform. (*Required*)

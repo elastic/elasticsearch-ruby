@@ -30,7 +30,7 @@ module Elasticsearch
         # For more information, refer to the documentation about controlling the user cache.
         #
         # @option arguments [String, Array<String>] :realms A comma-separated list of realms.
-        #  To clear all realms, use an asterisk (+*+).
+        #  To clear all realms, use an asterisk (`*`).
         #  It does not support other wildcard patterns. (*Required*)
         # @option arguments [Array<String>] :usernames A comma-separated list of the users to clear from the cache.
         #  If you do not specify this parameter, the API evicts all users from the user cache.

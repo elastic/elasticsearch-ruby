@@ -28,12 +28,12 @@ module Elasticsearch
         # IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
         #
         # @option arguments [String, Array<String>] :name A comma-separated list of index template names used to limit the request.
-        #  Wildcard (+*+) expressions are supported. (*Required*)
+        #  Wildcard (`*`) expressions are supported. (*Required*)
         # @option arguments [Boolean] :flat_settings Indicates whether to use a flat format for the response.
         # @option arguments [Boolean] :local Indicates whether to get information from the local node only.
         # @option arguments [Time] :master_timeout The period to wait for the master node.
         #  If the master node is not available before the timeout expires, the request fails and returns an error.
-        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
+        #  To indicate that the request should never timeout, set it to `-1`. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-exists-template

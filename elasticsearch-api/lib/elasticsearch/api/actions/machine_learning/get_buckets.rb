@@ -29,15 +29,15 @@ module Elasticsearch
         # @option arguments [String, Time] :timestamp The timestamp of a single bucket result. If you do not specify this
         #  parameter, the API returns information about all buckets.
         # @option arguments [Float] :anomaly_score Returns buckets with anomaly scores greater or equal than this value. Server default: 0.
-        # @option arguments [Boolean] :desc If +true+, the buckets are sorted in descending order.
-        # @option arguments [String, Time] :end Returns buckets with timestamps earlier than this time. +-1+ means it is
+        # @option arguments [Boolean] :desc If `true`, the buckets are sorted in descending order.
+        # @option arguments [String, Time] :end Returns buckets with timestamps earlier than this time. `-1` means it is
         #  unset and results are not limited to specific timestamps. Server default: -1.
-        # @option arguments [Boolean] :exclude_interim If +true+, the output excludes interim results.
+        # @option arguments [Boolean] :exclude_interim If `true`, the output excludes interim results.
         # @option arguments [Boolean] :expand If true, the output includes anomaly records.
         # @option arguments [Integer] :from Skips the specified number of buckets. Server default: 0.
         # @option arguments [Integer] :size Specifies the maximum number of buckets to obtain. Server default: 100.
         # @option arguments [String] :sort Specifies the sort field for the requested buckets. Server default: timestamp.
-        # @option arguments [String, Time] :start Returns buckets with timestamps after this time. +-1+ means it is unset
+        # @option arguments [String, Time] :start Returns buckets with timestamps after this time. `-1` means it is unset
         #  and results are not limited to specific timestamps. Server default: -1.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body

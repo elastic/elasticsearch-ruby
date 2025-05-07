@@ -23,7 +23,7 @@ module Elasticsearch
     module Inference
       module Actions
         # Create an Azure AI studio inference endpoint.
-        # Create an inference endpoint to perform an inference task with the +azureaistudio+ service.
+        # Create an inference endpoint to perform an inference task with the `azureaistudio` service.
         #
         # @option arguments [String] :task_type The type of the inference task that the model will perform. (*Required*)
         # @option arguments [String] :azureaistudio_inference_id The unique identifier of the inference endpoint. (*Required*)

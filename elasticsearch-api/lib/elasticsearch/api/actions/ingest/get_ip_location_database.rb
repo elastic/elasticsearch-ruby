@@ -25,11 +25,11 @@ module Elasticsearch
         # Get IP geolocation database configurations.
         #
         # @option arguments [String, Array] :id Comma-separated list of database configuration IDs to retrieve.
-        #  Wildcard (+*+) expressions are supported.
-        #  To get all database configurations, omit this parameter or use +*+.
+        #  Wildcard (`*`) expressions are supported.
+        #  To get all database configurations, omit this parameter or use `*`.
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error.
-        #  A value of +-1+ indicates that the request should never time out. Server default: 30s.
+        #  A value of `-1` indicates that the request should never time out. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-ip-location-database

@@ -30,7 +30,7 @@ module Elasticsearch
         # support SLA of official GA features.
         #
         # @option arguments [String, Array] :node_id Comma-separated list of node IDs or names used to limit returned information. (*Required*)
-        # @option arguments [Integer] :max_archive_version Specifies the maximum +archive_version+ to be cleared from the archive. (*Required*)
+        # @option arguments [Integer] :max_archive_version Specifies the maximum `archive_version` to be cleared from the archive. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-clear-repositories-metering-archive

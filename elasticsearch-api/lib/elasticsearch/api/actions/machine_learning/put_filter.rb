@@ -24,7 +24,7 @@ module Elasticsearch
       module Actions
         # Create a filter.
         # A filter contains a list of strings. It can be used by one or more anomaly detection jobs.
-        # Specifically, filters are referenced in the +custom_rules+ property of detector configuration objects.
+        # Specifically, filters are referenced in the `custom_rules` property of detector configuration objects.
         #
         # @option arguments [String] :filter_id A string that uniquely identifies a filter. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers

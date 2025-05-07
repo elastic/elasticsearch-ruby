@@ -29,17 +29,17 @@ module Elasticsearch
         # application consumption, use the get data frame analytics jobs statistics API.
         #
         # @option arguments [String] :id The ID of the data frame analytics to fetch
-        # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no configs. (This includes +_all+ string or when no configs have been specified)
+        # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no configs. (This includes `_all` string or when no configs have been specified)
         # @option arguments [String] :bytes The unit in which to display byte values
         # @option arguments [String, Array<String>] :h Comma-separated list of column names to display. Server default: create_time,id,state,type.
         # @option arguments [String, Array<String>] :s Comma-separated list of column names or column aliases used to sort the
         #  response.
         # @option arguments [String] :time Unit used to display time values.
         # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
-        #  +text+, +json+, +cbor+, +yaml+, or +smile+. Server default: text.
-        # @option arguments [Boolean] :help When set to +true+ will output available columns. This option
+        #  `text`, `json`, `cbor`, `yaml`, or `smile`. Server default: text.
+        # @option arguments [Boolean] :help When set to `true` will output available columns. This option
         #  can't be combined with any other query string option.
-        # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
+        # @option arguments [Boolean] :v When set to `true` will enable verbose output.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-ml-data-frame-analytics

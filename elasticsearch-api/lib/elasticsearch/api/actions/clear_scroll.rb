@@ -25,7 +25,7 @@ module Elasticsearch
       # Clear the search context and results for a scrolling search.
       #
       # @option arguments [String, Array] :scroll_id A comma-separated list of scroll IDs to clear.
-      #  To clear all scroll IDs, use +_all+.
+      #  To clear all scroll IDs, use `_all`.
       #  IMPORTANT: Scroll IDs can be long. It is recommended to specify scroll IDs in the request body parameter.
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body request body

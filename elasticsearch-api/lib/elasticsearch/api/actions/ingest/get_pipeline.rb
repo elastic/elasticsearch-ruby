@@ -27,8 +27,8 @@ module Elasticsearch
         # This API returns a local reference of the pipeline.
         #
         # @option arguments [String] :id Comma-separated list of pipeline IDs to retrieve.
-        #  Wildcard (+*+) expressions are supported.
-        #  To get all ingest pipelines, omit this parameter or use +*+.
+        #  Wildcard (`*`) expressions are supported.
+        #  To get all ingest pipelines, omit this parameter or use `*`.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :summary Return pipelines without their definitions (default: false)

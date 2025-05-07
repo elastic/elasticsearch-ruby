@@ -27,22 +27,22 @@ module Elasticsearch
         # This API does not return data stream aliases.
         # IMPORTANT: CAT APIs are only intended for human consumption using the command line or the Kibana console. They are not intended for use by applications. For application consumption, use the aliases API.
         #
-        # @option arguments [String, Array<String>] :name A comma-separated list of aliases to retrieve. Supports wildcards (+*+).  To retrieve all aliases, omit this parameter or use +*+ or +_all+.
+        # @option arguments [String, Array<String>] :name A comma-separated list of aliases to retrieve. Supports wildcards (`*`).  To retrieve all aliases, omit this parameter or use `*` or `_all`.
         # @option arguments [String, Array<String>] :h List of columns to appear in the response. Supports simple wildcards.
         # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
-        #  Sorting defaults to ascending and can be changed by setting +:asc+
-        #  or +:desc+ as a suffix to the column name.
+        #  Sorting defaults to ascending and can be changed by setting `:asc`
+        #  or `:desc` as a suffix to the column name.
         # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
         #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-        #  It supports comma-separated values, such as +open,hidden+.
+        #  It supports comma-separated values, such as `open,hidden`.
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
         #  If the master node is not available before the timeout expires, the request fails and returns an error.
-        #  To indicated that the request should never timeout, you can set it to +-1+. Server default: 30s.
+        #  To indicated that the request should never timeout, you can set it to `-1`. Server default: 30s.
         # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
-        #  +text+, +json+, +cbor+, +yaml+, or +smile+. Server default: text.
-        # @option arguments [Boolean] :help When set to +true+ will output available columns. This option
+        #  `text`, `json`, `cbor`, `yaml`, or `smile`. Server default: text.
+        # @option arguments [Boolean] :help When set to `true` will output available columns. This option
         #  can't be combined with any other query string option.
-        # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
+        # @option arguments [Boolean] :v When set to `true` will enable verbose output.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-aliases

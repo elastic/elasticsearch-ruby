@@ -24,7 +24,7 @@ module Elasticsearch
       module Actions
         # Import a dangling index.
         # If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling.
-        # For example, this can happen if you delete more than +cluster.indices.tombstones.size+ indices while an Elasticsearch node is offline.
+        # For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
         #
         # @option arguments [String] :index_uuid The UUID of the index to import. Use the get dangling indices API to locate the UUID. (*Required*)
         # @option arguments [Boolean] :accept_data_loss This parameter must be set to true to import a dangling index.

@@ -26,7 +26,7 @@ module Elasticsearch
         # Instantly run a transform to process data.
         # If you run this API, the transform will process the new data instantly,
         # without waiting for the configured frequency interval. After the API is called,
-        # the transform will be processed again at +now + frequency+ unless the API
+        # the transform will be processed again at `now + frequency` unless the API
         # is called again in the meantime.
         #
         # @option arguments [String] :transform_id Identifier for the transform. (*Required*)

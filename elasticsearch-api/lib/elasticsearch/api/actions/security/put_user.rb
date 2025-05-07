@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [String] :username An identifier for the user.NOTE: Usernames must be at least 1 and no more than 507 characters.
         #  They can contain alphanumeric characters (a-z, A-Z, 0-9), spaces, punctuation, and printable symbols in the Basic Latin (ASCII) block.
         #  Leading or trailing whitespace is not allowed. (*Required*)
-        # @option arguments [String] :refresh Valid values are +true+, +false+, and +wait_for+.
+        # @option arguments [String] :refresh Valid values are `true`, `false`, and `wait_for`.
         #  These values have the same meaning as in the index API, but the default value for this API is true. Server default: true.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body

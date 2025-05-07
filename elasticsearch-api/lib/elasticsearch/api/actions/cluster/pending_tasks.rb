@@ -28,8 +28,8 @@ module Elasticsearch
         # These are distinct from the tasks reported by the task management API which include periodic tasks and tasks initiated by the user, such as node stats, search queries, or create index requests.
         # However, if a user-initiated task such as a create index command causes a cluster state update, the activity of this task might be reported by both task api and pending cluster tasks API.
         #
-        # @option arguments [Boolean] :local If +true+, the request retrieves information from the local node only.
-        #  If +false+, information is retrieved from the master node.
+        # @option arguments [Boolean] :local If `true`, the request retrieves information from the local node only.
+        #  If `false`, information is retrieved from the master node.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers

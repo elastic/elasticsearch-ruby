@@ -32,9 +32,9 @@ module Elasticsearch
         #  - Contains wildcard expressions and there are no jobs that match.
         #  - Contains the _all string or no identifiers and there are no matches.
         #  - Contains wildcard expressions and there are only partial matches.
-        #  If +true+, the API returns an empty +jobs+ array when
+        #  If `true`, the API returns an empty `jobs` array when
         #  there are no matches and the subset of results when there are partial
-        #  matches. If +false+, the API returns a +404+ status
+        #  matches. If `false`, the API returns a `404` status
         #  code when there are no matches or only partial matches. Server default: true.
         # @option arguments [Hash] :headers Custom HTTP headers
         #

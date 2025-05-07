@@ -25,7 +25,7 @@ module Elasticsearch
         # Delete a model snapshot.
         # You cannot delete the active model snapshot. To delete that snapshot, first
         # revert to a different one. To identify the active model snapshot, refer to
-        # the +model_snapshot_id+ in the results from the get jobs API.
+        # the `model_snapshot_id` in the results from the get jobs API.
         #
         # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
         # @option arguments [String] :snapshot_id Identifier for the model snapshot. (*Required*)

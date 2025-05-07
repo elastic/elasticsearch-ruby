@@ -38,7 +38,7 @@ module Elasticsearch
         # @option arguments [Boolean] :desc If true, the results are sorted in descending order.
         # @option arguments [String, Time] :end Returns records with timestamps earlier than this time. The default value
         #  means results are not limited to specific timestamps. Server default: -1.
-        # @option arguments [Boolean] :exclude_interim If +true+, the output excludes interim results.
+        # @option arguments [Boolean] :exclude_interim If `true`, the output excludes interim results.
         # @option arguments [Integer] :from Skips the specified number of records. Server default: 0.
         # @option arguments [Float] :record_score Returns records with anomaly scores greater or equal than this value. Server default: 0.
         # @option arguments [Integer] :size Specifies the maximum number of records to obtain. Server default: 100.

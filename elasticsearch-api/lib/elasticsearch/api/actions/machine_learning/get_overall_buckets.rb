@@ -25,45 +25,45 @@ module Elasticsearch
         # Get overall bucket results.
         # Retrievs overall bucket results that summarize the bucket results of
         # multiple anomaly detection jobs.
-        # The +overall_score+ is calculated by combining the scores of all the
+        # The `overall_score` is calculated by combining the scores of all the
         # buckets within the overall bucket span. First, the maximum
-        # +anomaly_score+ per anomaly detection job in the overall bucket is
-        # calculated. Then the +top_n+ of those scores are averaged to result in
-        # the +overall_score+. This means that you can fine-tune the
-        # +overall_score+ so that it is more or less sensitive to the number of
+        # `anomaly_score` per anomaly detection job in the overall bucket is
+        # calculated. Then the `top_n` of those scores are averaged to result in
+        # the `overall_score`. This means that you can fine-tune the
+        # `overall_score` so that it is more or less sensitive to the number of
         # jobs that detect an anomaly at the same time. For example, if you set
-        # +top_n+ to +1+, the +overall_score+ is the maximum bucket score in the
-        # overall bucket. Alternatively, if you set +top_n+ to the number of jobs,
-        # the +overall_score+ is high only when all jobs detect anomalies in that
-        # overall bucket. If you set the +bucket_span+ parameter (to a value
-        # greater than its default), the +overall_score+ is the maximum
-        # +overall_score+ of the overall buckets that have a span equal to the
+        # `top_n` to `1`, the `overall_score` is the maximum bucket score in the
+        # overall bucket. Alternatively, if you set `top_n` to the number of jobs,
+        # the `overall_score` is high only when all jobs detect anomalies in that
+        # overall bucket. If you set the `bucket_span` parameter (to a value
+        # greater than its default), the `overall_score` is the maximum
+        # `overall_score` of the overall buckets that have a span equal to the
         # jobs' largest bucket span.
         #
         # @option arguments [String] :job_id Identifier for the anomaly detection job. It can be a job identifier, a
         #  group name, a comma-separated list of jobs or groups, or a wildcard
         #  expression.You can summarize the bucket results for all anomaly detection jobs by
-        #  using +_all+ or by specifying +*+ as the +<job_id>+. (*Required*)
+        #  using `_all` or by specifying `*` as the `<job_id>`. (*Required*)
         # @option arguments [Boolean] :allow_no_match Specifies what to do when the request:
         #  - Contains wildcard expressions and there are no jobs that match.
-        #  - Contains the +_all+ string or no identifiers and there are no matches.
+        #  - Contains the `_all` string or no identifiers and there are no matches.
         #  - Contains wildcard expressions and there are only partial matches.
-        #  If +true+, the request returns an empty +jobs+ array when there are no
+        #  If `true`, the request returns an empty `jobs` array when there are no
         #  matches and the subset of results when there are partial matches. If this
-        #  parameter is +false+, the request returns a +404+ status code when there
+        #  parameter is `false`, the request returns a `404` status code when there
         #  are no matches or only partial matches. Server default: true.
         # @option arguments [Time] :bucket_span The span of the overall buckets. Must be greater or equal to the largest
         #  bucket span of the specified anomaly detection jobs, which is the default
         #  value.By default, an overall bucket has a span equal to the largest bucket span
         #  of the specified anomaly detection jobs. To override that behavior, use
-        #  the optional +bucket_span+ parameter.
+        #  the optional `bucket_span` parameter.
         # @option arguments [String, Time] :end Returns overall buckets with timestamps earlier than this time.
-        # @option arguments [Boolean] :exclude_interim If +true+, the output excludes interim results.
+        # @option arguments [Boolean] :exclude_interim If `true`, the output excludes interim results.
         # @option arguments [Double, String] :overall_score Returns overall buckets with overall scores greater than or equal to this
         #  value.
         # @option arguments [String, Time] :start Returns overall buckets with timestamps after this time.
         # @option arguments [Integer] :top_n The number of top anomaly detection job bucket scores to be used in the
-        #  +overall_score+ calculation. Server default: 1.
+        #  `overall_score` calculation. Server default: 1.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

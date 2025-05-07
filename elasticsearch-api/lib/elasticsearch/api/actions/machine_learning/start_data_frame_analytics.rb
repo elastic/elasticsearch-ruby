@@ -27,7 +27,7 @@ module Elasticsearch
         # throughout its lifecycle.
         # If the destination index does not exist, it is created automatically the
         # first time you start the data frame analytics job. The
-        # +index.number_of_shards+ and +index.number_of_replicas+ settings for the
+        # `index.number_of_shards` and `index.number_of_replicas` settings for the
         # destination index are copied from the source index. If there are multiple
         # source indices, the destination index copies the highest setting values. The
         # mappings for the destination index are also copied from the source indices.

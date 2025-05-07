@@ -29,26 +29,26 @@ module Elasticsearch
       # @option arguments [String] :index Index names that are used to limit the request.
       #  Only a single index name can be provided to this parameter. (*Required*)
       # @option arguments [String] :analyzer The analyzer to use for the query string.
-      #  This parameter can be used only when the +q+ query string parameter is specified.
-      # @option arguments [Boolean] :analyze_wildcard If +true+, wildcard and prefix queries are analyzed.
-      #  This parameter can be used only when the +q+ query string parameter is specified.
-      # @option arguments [String] :default_operator The default operator for query string query: +AND+ or +OR+.
-      #  This parameter can be used only when the +q+ query string parameter is specified. Server default: OR.
+      #  This parameter can be used only when the `q` query string parameter is specified.
+      # @option arguments [Boolean] :analyze_wildcard If `true`, wildcard and prefix queries are analyzed.
+      #  This parameter can be used only when the `q` query string parameter is specified.
+      # @option arguments [String] :default_operator The default operator for query string query: `AND` or `OR`.
+      #  This parameter can be used only when the `q` query string parameter is specified. Server default: OR.
       # @option arguments [String] :df The field to use as default where no field prefix is given in the query string.
-      #  This parameter can be used only when the +q+ query string parameter is specified.
-      # @option arguments [Boolean] :lenient If +true+, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
-      #  This parameter can be used only when the +q+ query string parameter is specified.
+      #  This parameter can be used only when the `q` query string parameter is specified.
+      # @option arguments [Boolean] :lenient If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
+      #  This parameter can be used only when the `q` query string parameter is specified.
       # @option arguments [String] :preference The node or shard the operation should be performed on.
       #  It is random by default.
       # @option arguments [String] :routing A custom value used to route operations to a specific shard.
-      # @option arguments [Boolean, String, Array<String>] :_source +True+ or +false+ to return the +_source+ field or not or a list of fields to return.
+      # @option arguments [Boolean, String, Array<String>] :_source `True` or `false` to return the `_source` field or not or a list of fields to return.
       # @option arguments [String, Array<String>] :_source_excludes A comma-separated list of source fields to exclude from the response.
-      #  You can also use this parameter to exclude fields from the subset specified in +_source_includes+ query parameter.
-      #  If the +_source+ parameter is +false+, this parameter is ignored.
+      #  You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter.
+      #  If the `_source` parameter is `false`, this parameter is ignored.
       # @option arguments [String, Array<String>] :_source_includes A comma-separated list of source fields to include in the response.
       #  If this parameter is specified, only these source fields are returned.
-      #  You can exclude fields from this subset using the +_source_excludes+ query parameter.
-      #  If the +_source+ parameter is +false+, this parameter is ignored.
+      #  You can exclude fields from this subset using the `_source_excludes` query parameter.
+      #  If the `_source` parameter is `false`, this parameter is ignored.
       # @option arguments [String, Array<String>] :stored_fields A comma-separated list of stored fields to return in the response.
       # @option arguments [String] :q The query in the Lucene query string syntax.
       # @option arguments [Hash] :headers Custom HTTP headers

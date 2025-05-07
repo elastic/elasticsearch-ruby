@@ -27,7 +27,7 @@ module Elasticsearch
         # The cache is also automatically cleared on state changes of the security index.
         #
         # @option arguments [String, Array] :ids Comma-separated list of API key IDs to evict from the API key cache.
-        #  To evict all API keys, use +*+.
+        #  To evict all API keys, use `*`.
         #  Does not support other wildcard patterns. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #

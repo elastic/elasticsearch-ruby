@@ -26,8 +26,8 @@ module Elasticsearch
         # Run an SQL request.
         #
         # @option arguments [String] :format The format for the response.
-        #  You can also specify a format using the +Accept+ HTTP header.
-        #  If you specify both this parameter and the +Accept+ HTTP header, this parameter takes precedence.
+        #  You can also specify a format using the `Accept` HTTP header.
+        #  If you specify both this parameter and the `Accept` HTTP header, this parameter takes precedence.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

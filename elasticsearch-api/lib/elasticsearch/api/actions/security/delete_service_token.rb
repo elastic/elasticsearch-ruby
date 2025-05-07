@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :namespace The namespace, which is a top-level grouping of service accounts. (*Required*)
         # @option arguments [String] :service The service name. (*Required*)
         # @option arguments [String] :name The name of the service account token. (*Required*)
-        # @option arguments [String] :refresh If +true+ then refresh the affected shards to make this operation visible to search, if +wait_for+ (the default) then wait for a refresh to make this operation visible to search, if +false+ then do nothing with refreshes.
+        # @option arguments [String] :refresh If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-service-token

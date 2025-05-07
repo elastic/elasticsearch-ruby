@@ -27,10 +27,10 @@ module Elasticsearch
         # @option arguments [String] :id The database configuration identifier. (*Required*)
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error.
-        #  A value of +-1+ indicates that the request should never time out. Server default: 30s.
+        #  A value of `-1` indicates that the request should never time out. Server default: 30s.
         # @option arguments [Time] :timeout The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
         #  If no response is received before the timeout expires, the cluster metadata update still applies but the response indicates that it was not completely acknowledged.
-        #  A value of +-1+ indicates that the request should never time out. Server default: 30s.
+        #  A value of `-1` indicates that the request should never time out. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body configuration
         #

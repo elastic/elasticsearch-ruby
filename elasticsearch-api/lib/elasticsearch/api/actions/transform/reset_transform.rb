@@ -23,12 +23,12 @@ module Elasticsearch
     module Transform
       module Actions
         # Reset a transform.
-        # Before you can reset it, you must stop it; alternatively, use the +force+ query parameter.
+        # Before you can reset it, you must stop it; alternatively, use the `force` query parameter.
         # If the destination index was created by the transform, it is deleted.
         #
         # @option arguments [String] :transform_id Identifier for the transform. This identifier can contain lowercase alphanumeric characters (a-z and 0-9),
         #  hyphens, and underscores. It has a 64 character limit and must start and end with alphanumeric characters. (*Required*)
-        # @option arguments [Boolean] :force If this value is +true+, the transform is reset regardless of its current state. If it's +false+, the transform
+        # @option arguments [Boolean] :force If this value is `true`, the transform is reset regardless of its current state. If it's `false`, the transform
         #  must be stopped before it can be reset.
         # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers

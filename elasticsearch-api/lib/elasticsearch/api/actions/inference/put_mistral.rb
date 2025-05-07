@@ -23,10 +23,10 @@ module Elasticsearch
     module Inference
       module Actions
         # Create a Mistral inference endpoint.
-        # Creates an inference endpoint to perform an inference task with the +mistral+ service.
+        # Creates an inference endpoint to perform an inference task with the `mistral` service.
         #
         # @option arguments [String] :task_type The task type.
-        #  The only valid task type for the model to perform is +text_embedding+. (*Required*)
+        #  The only valid task type for the model to perform is `text_embedding`. (*Required*)
         # @option arguments [String] :mistral_inference_id The unique identifier of the inference endpoint. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body

@@ -37,7 +37,7 @@ module Elasticsearch
         # @option arguments [String] :level Indicates whether statistics are aggregated at the cluster, index, or shard level.
         # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Array<String>] :types A comma-separated list of document types for the indexing index metric.
-        # @option arguments [Boolean] :include_unloaded_segments If +true+, the response includes information from segments that are not loaded into memory.
+        # @option arguments [Boolean] :include_unloaded_segments If `true`, the response includes information from segments that are not loaded into memory.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-stats

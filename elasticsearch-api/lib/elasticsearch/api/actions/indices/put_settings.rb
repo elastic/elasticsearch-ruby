@@ -27,7 +27,7 @@ module Elasticsearch
         # For data streams, index setting changes are applied to all backing indices by default.
         # To revert a setting to the default value, use a null value.
         # The list of per-index settings that can be updated dynamically on live indices can be found in index module documentation.
-        # To preserve existing settings from being updated, set the +preserve_existing+ parameter to +true+.
+        # To preserve existing settings from being updated, set the `preserve_existing` parameter to `true`.
         # NOTE: You can only define new analyzers on closed indices.
         # To add an analyzer, you must close the index, define the analyzer, and reopen the index.
         # You cannot close the write index of a data stream.
@@ -38,25 +38,25 @@ module Elasticsearch
         # To change the analyzer for existing backing indices, you must create a new data stream and reindex your data into it.
         #
         # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and aliases used to limit
-        #  the request. Supports wildcards (+*+). To target all data streams and
-        #  indices, omit this parameter or use +*+ or +_all+.
-        # @option arguments [Boolean] :allow_no_indices If +false+, the request returns an error if any wildcard expression, index
-        #  alias, or +_all+ value targets only missing or closed indices. This
+        #  the request. Supports wildcards (`*`). To target all data streams and
+        #  indices, omit this parameter or use `*` or `_all`.
+        # @option arguments [Boolean] :allow_no_indices If `false`, the request returns an error if any wildcard expression, index
+        #  alias, or `_all` value targets only missing or closed indices. This
         #  behavior applies even if the request targets other open indices. For
-        #  example, a request targeting +foo*,bar*+ returns an error if an index
-        #  starts with +foo+ but no index starts with +bar+.
+        #  example, a request targeting `foo*,bar*` returns an error if an index
+        #  starts with `foo` but no index starts with `bar`.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match. If the request can target
         #  data streams, this argument determines whether wildcard expressions match
         #  hidden data streams. Supports comma-separated values, such as
-        #  +open,hidden+. Server default: open.
-        # @option arguments [Boolean] :flat_settings If +true+, returns settings in flat format.
-        # @option arguments [Boolean] :ignore_unavailable If +true+, returns settings in flat format.
+        #  `open,hidden`. Server default: open.
+        # @option arguments [Boolean] :flat_settings If `true`, returns settings in flat format.
+        # @option arguments [Boolean] :ignore_unavailable If `true`, returns settings in flat format.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is
         #  received before the timeout expires, the request fails and returns an
         #  error. Server default: 30s.
-        # @option arguments [Boolean] :preserve_existing If +true+, existing index settings remain unchanged.
+        # @option arguments [Boolean] :preserve_existing If `true`, existing index settings remain unchanged.
         # @option arguments [Boolean] :reopen Whether to close and reopen the index to apply non-dynamic settings.
-        #  If set to +true+ the indices to which the settings are being applied
+        #  If set to `true` the indices to which the settings are being applied
         #  will be closed temporarily and then reopened in order to apply the changes.
         # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the
         #   timeout expires, the request fails and returns an error. Server default: 30s.

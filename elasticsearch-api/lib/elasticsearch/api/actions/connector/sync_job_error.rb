@@ -23,7 +23,7 @@ module Elasticsearch
     module Connector
       module Actions
         # Set a connector sync job error.
-        # Set the +error+ field for a connector sync job and set its +status+ to +error+.
+        # Set the `error` field for a connector sync job and set its `status` to `error`.
         # To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
         # This service runs automatically on Elastic Cloud for Elastic managed connectors.
         # This functionality is Experimental and may be changed or removed

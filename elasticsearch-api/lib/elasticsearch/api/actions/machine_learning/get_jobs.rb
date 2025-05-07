@@ -26,7 +26,7 @@ module Elasticsearch
         # You can get information for multiple anomaly detection jobs in a single API
         # request by using a group name, a comma-separated list of jobs, or a wildcard
         # expression. You can get information for all anomaly detection jobs by using
-        # +_all+, by specifying +*+ as the +<job_id>+, or by omitting the +<job_id>+.
+        # `_all`, by specifying `*` as the `<job_id>`, or by omitting the `<job_id>`.
         #
         # @option arguments [String, Array] :job_id Identifier for the anomaly detection job. It can be a job identifier, a
         #  group name, or a wildcard expression. If you do not specify one of these
@@ -35,9 +35,9 @@ module Elasticsearch
         #  - Contains wildcard expressions and there are no jobs that match.
         #  - Contains the _all string or no identifiers and there are no matches.
         #  - Contains wildcard expressions and there are only partial matches.
-        #  The default value is +true+, which returns an empty +jobs+ array when
+        #  The default value is `true`, which returns an empty `jobs` array when
         #  there are no matches and the subset of results when there are partial
-        #  matches. If this parameter is +false+, the request returns a +404+ status
+        #  matches. If this parameter is `false`, the request returns a `404` status
         #  code when there are no matches or only partial matches. Server default: true.
         # @option arguments [Boolean] :exclude_generated Indicates if certain fields should be removed from the configuration on
         #  retrieval. This allows the configuration to be in an acceptable format to

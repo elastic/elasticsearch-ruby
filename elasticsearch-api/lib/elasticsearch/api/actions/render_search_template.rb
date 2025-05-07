@@ -25,7 +25,7 @@ module Elasticsearch
       # Render a search template as a search request body.
       #
       # @option arguments [String] :id The ID of the search template to render.
-      #  If no +source+ is specified, this or the +id+ request body parameter is required.
+      #  If no `source` is specified, this or the `id` request body parameter is required.
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body request body
       #

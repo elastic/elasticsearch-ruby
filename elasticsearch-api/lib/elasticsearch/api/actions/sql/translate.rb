@@ -24,7 +24,7 @@ module Elasticsearch
       module Actions
         # Translate SQL into Elasticsearch queries.
         # Translate an SQL search into a search API request containing Query DSL.
-        # It accepts the same request body parameters as the SQL search API, excluding +cursor+.
+        # It accepts the same request body parameters as the SQL search API, excluding `cursor`.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body

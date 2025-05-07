@@ -26,9 +26,9 @@ module Elasticsearch
         # Get information about one or more data streams.
         #
         # @option arguments [String, Array<String>] :name Comma-separated list of data stream names used to limit the request.
-        #  Wildcard (+*+) expressions are supported. If omitted, all data streams are returned.
+        #  Wildcard (`*`) expressions are supported. If omitted, all data streams are returned.
         # @option arguments [String, Array<String>] :expand_wildcards Type of data stream that wildcard patterns can match.
-        #  Supports comma-separated values, such as +open,hidden+. Server default: open.
+        #  Supports comma-separated values, such as `open,hidden`. Server default: open.
         # @option arguments [Boolean] :include_defaults If true, returns all relevant default configurations for the index template.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :verbose Whether the maximum timestamp for each data stream should be calculated and returned.

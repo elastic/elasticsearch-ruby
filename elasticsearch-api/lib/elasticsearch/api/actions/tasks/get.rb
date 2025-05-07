@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [String] :task_id The task identifier. (*Required*)
         # @option arguments [Time] :timeout The period to wait for a response.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
-        # @option arguments [Boolean] :wait_for_completion If +true+, the request blocks until the task has completed.
+        # @option arguments [Boolean] :wait_for_completion If `true`, the request blocks until the task has completed.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks

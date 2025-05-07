@@ -28,18 +28,18 @@ module Elasticsearch
         # a data frame). The ID for each document in the data frame is generated from a hash of the entity, so there is a
         # unique row per entity.
         # You must choose either the latest or pivot method for your transform; you cannot use both in a single transform. If
-        # you choose to use the pivot method for your transform, the entities are defined by the set of +group_by+ fields in
-        # the pivot object. If you choose to use the latest method, the entities are defined by the +unique_key+ field values
+        # you choose to use the pivot method for your transform, the entities are defined by the set of `group_by` fields in
+        # the pivot object. If you choose to use the latest method, the entities are defined by the `unique_key` field values
         # in the latest object.
-        # You must have +create_index+, +index+, and +read+ privileges on the destination index and +read+ and
-        # +view_index_metadata+ privileges on the source indices. When Elasticsearch security features are enabled, the
+        # You must have `create_index`, `index`, and `read` privileges on the destination index and `read` and
+        # `view_index_metadata` privileges on the source indices. When Elasticsearch security features are enabled, the
         # transform remembers which roles the user that created it had at the time of creation and uses those same roles. If
         # those roles do not have the required privileges on the source and destination indices, the transform fails when it
         # attempts unauthorized operations.
         # NOTE: You must use Kibana or this API to create a transform. Do not add a transform directly into any
-        # +.transform-internal*+ indices using the Elasticsearch index API. If Elasticsearch security features are enabled, do
-        # not give users any privileges on +.transform-internal*+ indices. If you used transforms prior to 7.5, also do not
-        # give users any privileges on +.data-frame-internal*+ indices.
+        # `.transform-internal*` indices using the Elasticsearch index API. If Elasticsearch security features are enabled, do
+        # not give users any privileges on `.transform-internal*` indices. If you used transforms prior to 7.5, also do not
+        # give users any privileges on `.data-frame-internal*` indices.
         #
         # @option arguments [String] :transform_id Identifier for the transform. This identifier can contain lowercase alphanumeric characters (a-z and 0-9),
         #  hyphens, and underscores. It has a 64 character limit and must start and end with alphanumeric characters. (*Required*)

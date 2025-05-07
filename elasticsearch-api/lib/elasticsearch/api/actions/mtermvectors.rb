@@ -25,26 +25,26 @@ module Elasticsearch
       # Get multiple term vectors with a single request.
       # You can specify existing documents by index and ID or provide artificial documents in the body of the request.
       # You can specify the index in the request body or request URI.
-      # The response contains a +docs+ array with all the fetched termvectors.
+      # The response contains a `docs` array with all the fetched termvectors.
       # Each element has the structure provided by the termvectors API.
       # **Artificial documents**
-      # You can also use +mtermvectors+ to generate term vectors for artificial documents provided in the body of the request.
-      # The mapping used is determined by the specified +_index+.
+      # You can also use `mtermvectors` to generate term vectors for artificial documents provided in the body of the request.
+      # The mapping used is determined by the specified `_index`.
       #
       # @option arguments [String] :index The name of the index that contains the documents.
       # @option arguments [Array<String>] :ids A comma-separated list of documents ids. You must define ids as parameter or set "ids" or "docs" in the request body
       # @option arguments [String, Array<String>] :fields A comma-separated list or wildcard expressions of fields to include in the statistics.
-      #  It is used as the default list unless a specific field list is provided in the +completion_fields+ or +fielddata_fields+ parameters.
-      # @option arguments [Boolean] :field_statistics If +true+, the response includes the document count, sum of document frequencies, and sum of total term frequencies. Server default: true.
-      # @option arguments [Boolean] :offsets If +true+, the response includes term offsets. Server default: true.
-      # @option arguments [Boolean] :payloads If +true+, the response includes term payloads. Server default: true.
-      # @option arguments [Boolean] :positions If +true+, the response includes term positions. Server default: true.
+      #  It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
+      # @option arguments [Boolean] :field_statistics If `true`, the response includes the document count, sum of document frequencies, and sum of total term frequencies. Server default: true.
+      # @option arguments [Boolean] :offsets If `true`, the response includes term offsets. Server default: true.
+      # @option arguments [Boolean] :payloads If `true`, the response includes term payloads. Server default: true.
+      # @option arguments [Boolean] :positions If `true`, the response includes term positions. Server default: true.
       # @option arguments [String] :preference The node or shard the operation should be performed on.
       #  It is random by default.
       # @option arguments [Boolean] :realtime If true, the request is real-time as opposed to near-real-time. Server default: true.
       # @option arguments [String] :routing A custom value used to route operations to a specific shard.
       # @option arguments [Boolean] :term_statistics If true, the response includes term frequency and document frequency.
-      # @option arguments [Integer] :version If +true+, returns the document version as part of a hit.
+      # @option arguments [Integer] :version If `true`, returns the document version as part of a hit.
       # @option arguments [String] :version_type The version type.
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body request body

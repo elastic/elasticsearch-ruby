@@ -26,12 +26,12 @@ module Elasticsearch
         # Get the data stream lifecycle configuration of one or more data streams.
         #
         # @option arguments [String, Array<String>] :name Comma-separated list of data streams to limit the request.
-        #  Supports wildcards (+*+).
-        #  To target all data streams, omit this parameter or use +*+ or +_all+. (*Required*)
+        #  Supports wildcards (`*`).
+        #  To target all data streams, omit this parameter or use `*` or `_all`. (*Required*)
         # @option arguments [String, Array<String>] :expand_wildcards Type of data stream that wildcard patterns can match.
-        #  Supports comma-separated values, such as +open,hidden+.
-        #  Valid values are: +all+, +open+, +closed+, +hidden+, +none+. Server default: open.
-        # @option arguments [Boolean] :include_defaults If +true+, return all default settings in the response.
+        #  Supports comma-separated values, such as `open,hidden`.
+        #  Valid values are: `all`, `open`, `closed`, `hidden`, `none`. Server default: open.
+        # @option arguments [Boolean] :include_defaults If `true`, return all default settings in the response.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #

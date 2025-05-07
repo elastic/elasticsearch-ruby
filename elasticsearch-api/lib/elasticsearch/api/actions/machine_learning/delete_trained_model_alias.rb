@@ -25,7 +25,7 @@ module Elasticsearch
         # Delete a trained model alias.
         # This API deletes an existing model alias that refers to a trained model. If
         # the model alias is missing or refers to a model other than the one identified
-        # by the +model_id+, this API returns an error.
+        # by the `model_id`, this API returns an error.
         #
         # @option arguments [String] :model_alias The model alias to delete. (*Required*)
         # @option arguments [String] :model_id The trained model ID to which the model alias refers. (*Required*)
