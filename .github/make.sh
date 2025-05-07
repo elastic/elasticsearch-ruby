@@ -124,17 +124,35 @@ echo -e "\033[34;1mINFO: running $product container\033[0m"
 args_string="${TASK_ARGS[*]}"
 args_string="${args_string// /,}"
 
-docker run \
-       -u "$(id -u)" \
+if [[ "$CMD" == "codegen" ]]; then
+  docker run \
+         -u "$(id -u):$(id -g)" \
+         --env "RUBY_VERSION=${RUBY_VERSION}" \
+         --env "WORKFLOW=${WORKFLOW}" \
+         --env "CLIENTS_GITHUB_TOKEN=${CLIENTS_GITHUB_TOKEN}" \
+         --env "ES_RUBY_CLIENT_PATH=/usr/src/app/elasticsearch-api/" \
+         --env "BRANCH=`git rev-parse --abbrev-ref HEAD`" \
+         --name test-runner \
+         --volume "${repo}:/usr/src/app" \
+         --rm \
+         "${product}" \
+         git clone https://$CLIENTS_GITHUB_TOKEN@github.com/elastic/elastic-client-generator-ruby.git \
+         && cd elastic-client-generator-ruby && bundle install \
+         && bundle exec rake update[$BRANCH] \
+         && bundle exec rake gen_es \
+         && cd - \
+         && rm -rf elastic-client-generator-ruby
+else
+  docker run \
+       -u "$(id -u):$(id -g)" \
        --env "RUBY_VERSION=${RUBY_VERSION}" \
        --env "WORKFLOW=${WORKFLOW}" \
-       --env "CLIENTS_GITHUB_TOKEN=${CLIENTS_GITHUB_TOKEN}" \
        --name test-runner \
        --volume "${repo}:/usr/src/app" \
        --rm \
        "${product}" \
        bundle exec rake automation:${TASK}["${args_string}"]
-
+fi
 # ------------------------------------------------------- #
 # Post Command tasks & checks
 # ------------------------------------------------------- #
