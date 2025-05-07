@@ -28,11 +28,6 @@ module Elasticsearch
         # * {https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#gpt-4-and-gpt-4-turbo-models GPT-4 and GPT-4 Turbo models}
         # * {https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#gpt-35 GPT-3.5}
         # The list of embeddings models that you can choose from in your deployment can be found in the {https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#embeddings Azure models documentation}.
-        # When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-        # After creating the endpoint, wait for the model deployment to complete before using it.
-        # To verify the deployment status, use the get trained model statistics API.
-        # Look for +"state": "fully_allocated"+ in the response and ensure that the +"allocation_count"+ matches the +"target_allocation_count"+.
-        # Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
         #
         # @option arguments [String] :task_type The type of the inference task that the model will perform.
         #  NOTE: The +chat_completion+ task type only supports streaming and only through the _stream API. (*Required*)
