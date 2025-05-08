@@ -1,0 +1,18 @@
+ARG RUBY_VERSION=${RUBY_VERSION:-3.4}
+ARG RUBY_SOURCE=${RUBY_SOURCE:-ruby}
+FROM $RUBY_SOURCE:$RUBY_VERSION
+
+ARG BRANCH=${BRANCH}
+ARG GITHUB_TOKEN=${GITHUB_TOKEN}
+# TODO: Debugging with main at the moment
+# ENV BRANCH=${BRANCH}
+ENV BRANCH='main'
+ENV ES_RUBY_CLIENT_PATH='/usr/src/app/elasticsearch-api/'
+
+# Install required tools
+RUN apt-get -q update && apt-get -y install zip curl git
+WORKDIR /usr/src/app
+COPY . .
+RUN git clone https://$GITHUB_TOKEN@github.com/elastic/elastic-client-generator-ruby.git \
+    && cd elastic-client-generator-ruby \
+    && bundle install

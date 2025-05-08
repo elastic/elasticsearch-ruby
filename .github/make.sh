@@ -33,7 +33,7 @@ VERSION=$2
 STACK_VERSION=$VERSION
 set -euo pipefail
 
-product="elastic/elasticsearch-ruby"
+product="elasticsearch-ruby"
 RUBY_VERSION=${RUBY_VERSION-3.3}
 WORKFLOW=${WORKFLOW-staging}
 
@@ -107,12 +107,6 @@ esac
 
 echo -e "\033[1m>>>>> Build [elastic/elasticsearch-ruby container] >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
 
-# ------------------------------------------------------- #
-# Build Container
-# ------------------------------------------------------- #
-
-echo -e "\033[34;1mINFO: building $product container\033[0m"
-docker build --no-cache --build-arg BUILDER_UID="$(id -u)" --file .buildkite/Dockerfile --tag ${product} .
 
 # ------------------------------------------------------- #
 # Run the Container
@@ -125,24 +119,32 @@ args_string="${TASK_ARGS[*]}"
 args_string="${args_string// /,}"
 
 if [[ "$CMD" == "codegen" ]]; then
+  docker build --no-cache \
+               --build-arg BUILDER_UID="$(id -u)" \
+               --build-arg GITHUB_TOKEN=${CLIENTS_GITHUB_TOKEN} \
+               --build-arg RUBY_VERSION=${RUBY_VERSION} \
+               --build-arg BRANCH=$BRANCH \
+               --file .github/workflows/Dockerfile-codegen --tag ${product} .
   docker run \
          -u "$(id -u):$(id -g)" \
          --env "RUBY_VERSION=${RUBY_VERSION}" \
-         --env "WORKFLOW=${WORKFLOW}" \
-         --env "CLIENTS_GITHUB_TOKEN=${CLIENTS_GITHUB_TOKEN}" \
-         --env "ES_RUBY_CLIENT_PATH=/usr/src/app/elasticsearch-api/" \
-         --env "BRANCH=`git rev-parse --abbrev-ref HEAD`" \
-         --name test-runner \
+         --env "GITHUB_TOKEN=${CLIENTS_GITHUB_TOKEN}" \
+         --name ${product} \
          --volume "${repo}:/usr/src/app" \
          --rm \
+         --workdir /usr/src/app/elastic-client-generator-ruby \
          "${product}" \
-         git clone https://$CLIENTS_GITHUB_TOKEN@github.com/elastic/elastic-client-generator-ruby.git \
-         && cd elastic-client-generator-ruby && bundle install \
-         && bundle exec rake update[$BRANCH] \
-         && bundle exec rake gen_es \
-         && cd - \
-         && rm -rf elastic-client-generator-ruby
+         rake --tasks \
+         rake update[$BRANCH] generate && \
+         rm -rf /usr/src/app/elastic-client-generator-ruby && git status
 else
+  # ------------------------------------------------------- #
+  # Build Container
+  # ------------------------------------------------------- #
+
+  echo -e "\033[34;1mINFO: building $product container\033[0m"
+  docker build --no-cache --build-arg BUILDER_UID="$(id -u)" --file .buildkite/Dockerfile --tag ${product} .
+
   docker run \
        -u "$(id -u):$(id -g)" \
        --env "RUBY_VERSION=${RUBY_VERSION}" \

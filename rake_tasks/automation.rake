@@ -48,7 +48,7 @@ namespace :automation do
        ' && cd elastic-client-generator-ruby ' \
        ' && bundle install ' \
        " && bundle exec rake update[#{branch}]" \
-       ' && bundle exec rake gen_es' \
+       ' && bundle exec rake generate' \
        ' && cd ../../ ' \
        ' && rm -rf elastic-client-generator-ruby '
   end
