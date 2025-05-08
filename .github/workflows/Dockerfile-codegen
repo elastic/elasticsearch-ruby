@@ -1,0 +1,25 @@
+ARG RUBY_VERSION=${RUBY_VERSION:-4.0}
+ARG RUBY_SOURCE=${RUBY_SOURCE:-ruby}
+FROM $RUBY_SOURCE:$RUBY_VERSION
+
+ARG BUILDER_UID=1000
+ARG BUILDER_GID=1000
+ENV BUILDER_USER=elastic
+ENV BUILDER_GROUP=elastic
+ENV PATH="${PATH}:/var/lib/elastic/.local/bin"
+
+ARG BRANCH=${BRANCH}
+ARG GITHUB_TOKEN=${GITHUB_TOKEN}
+ENV BRANCH=${BRANCH}
+
+RUN groupadd --system -g ${BUILDER_GID} ${BUILDER_GROUP} \
+&& useradd --system --shell /bin/bash -u ${BUILDER_UID} -g ${BUILDER_GROUP} -d /var/lib/elastic -m elastic 1>/dev/null 2>/dev/null
+
+# Install required tools
+RUN apt-get -q update && apt-get -y install zip curl git
+WORKDIR /usr/src/app
+COPY . .
+RUN git clone https://$GITHUB_TOKEN@github.com/elastic/elastic-client-generator-ruby.git /usr/src/app/generator \
+    && cd generator \
+    && bundle install
+RUN chown -R ${BUILDER_USER}:${BUILDER_GROUP} /usr/src/app/generator
