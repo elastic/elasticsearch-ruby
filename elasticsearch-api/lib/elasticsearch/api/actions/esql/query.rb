@@ -34,6 +34,17 @@ module Elasticsearch
         #  Defaults to `false`. If `true` then the response will include an extra section under the name `all_columns` which has the name of all columns.
         # @option arguments [Boolean] :allow_partial_results If `true`, partial results will be returned if there are shard failures, but the query can continue to execute on other clusters and shards.
         #  If `false`, the query will fail if there are any failures.To override the default behavior, you can set the `esql.query.allow_partial_results` cluster setting to `false`. Server default: true.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
