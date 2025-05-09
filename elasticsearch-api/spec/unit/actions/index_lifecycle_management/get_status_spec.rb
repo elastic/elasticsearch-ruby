@@ -22,7 +22,7 @@ describe 'client.index_lifecycle_management#get_status' do
     [
       'GET',
       '_ilm/status',
-      {},
+      { index: 'foo' },
       nil,
       {},
       { endpoint: 'ilm.get_status' }

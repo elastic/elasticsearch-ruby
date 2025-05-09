@@ -22,7 +22,7 @@ describe 'client.nodes#get_repositories_metering_info' do
     [
       'GET',
       '_nodes/foo/_repositories_metering',
-      {},
+      { max_archive_version: 'bar' },
       nil,
       {},
       { defined_params: {node_id: 'foo' },

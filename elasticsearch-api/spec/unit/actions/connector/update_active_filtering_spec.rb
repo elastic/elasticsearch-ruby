@@ -22,7 +22,7 @@ describe 'client.connector#update_active_filtering' do
     [
       'PUT',
       '_connector/foo/_filtering/_activate',
-      {},
+      { body: {} },
       nil,
       {},
       {

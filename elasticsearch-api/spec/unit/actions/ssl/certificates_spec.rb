@@ -22,7 +22,7 @@ describe 'client#ssl.certificates' do
     [
       'GET',
       '_ssl/certificates',
-      {},
+      { index: 'foo' },
       nil,
       {},
       { endpoint: 'ssl.certificates' }
