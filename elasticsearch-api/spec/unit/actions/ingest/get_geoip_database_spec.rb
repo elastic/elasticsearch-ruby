@@ -22,7 +22,7 @@ describe 'client.ingest#get_geoip_database' do
     [
       'GET',
       '_ingest/geoip/database/foo',
-      {},
+      { body: {} },
       nil,
       {},
       { defined_params: { id: 'foo' }, endpoint: 'ingest.get_geoip_database' }
