@@ -137,6 +137,17 @@ module Elasticsearch
       #  The default is `1`, which waits for each primary shard to be active. Server default: 1.
       # @option arguments [Boolean] :require_alias If `true`, the request's actions must target an index alias.
       # @option arguments [Boolean] :require_data_stream If `true`, the request's actions must target a data stream (existing or to be created).
+      # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+      #  when they occur.
+      # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+      #  returned by Elasticsearch.
+      # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+      #  For example `"exists_time": "1h"` for humans and
+      #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+      #  readable values will be omitted. This makes sense for responses being consumed
+      #  only by machines.
+      # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+      #  this option for debugging only.
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [String|Array] :body operations. Array of Strings, Header/Data pairs, or the conveniency "combined" format can be passed, refer to Elasticsearch::API::Utils.bulkify documentation.
       #

@@ -34,6 +34,17 @@ module Elasticsearch
         # @option arguments [Boolean] :force Use to close a failed job, or to forcefully close a job which has not responded to its initial close request; the request returns without performing the associated actions such as flushing buffers and persisting the model snapshots.
         #  If you want the job to be in a consistent state after the close job API returns, do not set to `true`. This parameter should be used only in situations where the job has already failed or where you are not interested in results the job might have recently produced or might produce in the future.
         # @option arguments [Time] :timeout Controls the time to wait until a job has closed. Server default: 30m.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

@@ -36,6 +36,17 @@ module Elasticsearch
         # @option arguments [Boolean] :allow_no_indices If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
         #  This behavior applies even if the request targets other open indices.
         #  For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. Server default: true.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-resolve-index

@@ -36,6 +36,17 @@ module Elasticsearch
         # @option arguments [Time] :wait_for_completion_timeout Specifies to wait for the search to be completed up until the provided timeout.
         #  Final results will be returned if available before the timeout expires, otherwise the currently available results will be returned once the timeout expires.
         #  By default no timeout is set meaning that the currently available results will be returned without any additional wait.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-async-search-submit

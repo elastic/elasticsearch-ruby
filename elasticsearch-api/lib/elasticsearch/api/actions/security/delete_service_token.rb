@@ -29,6 +29,17 @@ module Elasticsearch
         # @option arguments [String] :service The service name. (*Required*)
         # @option arguments [String] :name The name of the service account token. (*Required*)
         # @option arguments [String] :refresh If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-service-token

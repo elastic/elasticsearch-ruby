@@ -22,7 +22,7 @@ describe 'client.connector#post' do
     [
       'POST',
       '_connector',
-      {},
+      {connector_id: 'foo'},
       {},
       {},
       { endpoint: 'connector.post' }

@@ -40,6 +40,17 @@ module Elasticsearch
         #  this argument determines whether wildcard expressions match hidden data streams. Server default: open.
         # @option arguments [Boolean] :ignore_unavailable If true, missing or closed indices are not included in the response.
         # @option arguments [Shardstorestatus] :status List of shard health statuses used to limit the request.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-shard-stores

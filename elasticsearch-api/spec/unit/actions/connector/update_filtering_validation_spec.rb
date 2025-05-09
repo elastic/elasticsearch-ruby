@@ -26,7 +26,7 @@ describe 'client.connector#update_filtering_validation' do
       {},
       {},
       {
-        :defined_params=>{ connector_id: 'foo' },
+        defined_params: { connector_id: 'foo' },
         endpoint: 'connector.update_filtering_validation'
       }
     ]
