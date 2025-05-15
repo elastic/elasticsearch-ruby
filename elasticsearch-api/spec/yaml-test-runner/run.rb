@@ -63,8 +63,8 @@ if serverless?
   options.merge!(
     {
       retry_on_status: [409, 400, 503],
-      retry_on_failure: 10,
-      delay_on_retry: 5_000,
+      retry_on_failure: 20,
+      delay_on_retry: 10_000,
       request_timeout: 120
     }
   )
