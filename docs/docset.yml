@@ -1,4 +1,6 @@
 project: 'Ruby client'
+products:
+  - id: elasticsearch-client
 exclude:
   - examples/**
 cross_links:
