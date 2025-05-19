@@ -16,5 +16,5 @@
 # under the License.
 
 module Elasticsearch
-  VERSION = '9.0.2'.freeze
+  VERSION = '9.0.3'.freeze
 end
