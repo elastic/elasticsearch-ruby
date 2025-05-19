@@ -110,6 +110,8 @@ module Elasticsearch
 
     alias ml machine_learning
     alias ilm index_lifecycle_management
+    alias ccr cross_cluster_replication
+    alias slm snapshot_lifecycle_management
 
     # The serializer class
     #
