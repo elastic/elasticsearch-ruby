@@ -1,5 +1,11 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.0.3
+
+- Adds `ccr` alias for `cross_cluster_replication` and `slm` alias for `snapshot_lifecycle_management`.
+- Tested for JRuby 10.0.0.
+- General updates in source code docs.
+
 # 9.0.2
 
 - Udpates setting 'Accept' and 'Content-Type' headers as to not duplicate or overwrite set headers [#2666](https://github.com/elastic/elasticsearch-ruby/pull/2666).
