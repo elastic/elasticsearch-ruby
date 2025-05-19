@@ -20,6 +20,14 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-ruby-client-next-fixes]
 % *
 
+## 9.0.3 [elasticsearch-ruby-client-9.0.3-release-notes]
+
+### Fixes [elasticsearch-ruby-client-9.0.3-fixes]
+
+- Adds `ccr` alias for `cross_cluster_replication` and `slm` alias for `snapshot_lifecycle_management`.
+- Tested for JRuby 10.0.0.
+- General updates in source code docs.
+
 ## 9.0.2 [elasticsearch-ruby-client-9.0.2-release-notes]
 
 ### Fixes [elasticsearch-ruby-client-9.0.2-fixes]
