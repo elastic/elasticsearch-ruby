@@ -39,4 +39,26 @@ describe 'API Client' do
       expect(client.respond_to?(:bulk)).to be(true)
     end
   end
+
+  describe 'aliases' do
+    it 'uses ml alias' do
+      expect(client.machine_learning).to be_a MachineLearningClient
+      expect(client.ml).to be_a MachineLearningClient
+    end
+
+    it 'uses ilm alias' do
+      expect(client.index_lifecycle_management).to be_a IndexLifecycleManagementClient
+      expect(client.ilm).to be_a IndexLifecycleManagementClient
+    end
+
+    it 'uses ccr alias' do
+      expect(client.cross_cluster_replication).to be_a CrossClusterReplicationClient
+      expect(client.ccr).to be_a CrossClusterReplicationClient
+    end
+
+    it 'uses slm alias' do
+      expect(client.snapshot_lifecycle_management).to be_a SnapshotLifecycleManagementClient
+      expect(client.slm).to be_a SnapshotLifecycleManagementClient
+    end
+  end
 end
