@@ -243,3 +243,6 @@
 -
   :file: 'nodes.stats/11_indices_metrics.yml'
   :description: 'indices mappings exact count test for indices level'
+-
+  :file: 'tsdb/160_nested_fields.yml'
+  :description: '*'
