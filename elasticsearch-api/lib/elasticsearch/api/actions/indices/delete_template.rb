@@ -23,6 +23,7 @@ module Elasticsearch
     module Indices
       module Actions
         # Delete a legacy index template.
+        # IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
         #
         # @option arguments [String] :name The name of the legacy index template to delete.
         #  Wildcard (`*`) expressions are supported. (*Required*)

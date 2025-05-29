@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Create or update an index template.
+        # Create or update a legacy index template.
         # Index templates define settings, mappings, and aliases that can be applied automatically to new indices.
         # Elasticsearch applies templates to new indices based on an index pattern that matches the index name.
         # IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
