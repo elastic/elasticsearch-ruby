@@ -56,19 +56,13 @@ end
 options = {
   host: host,
   transport_options: transport_options,
+  retry_on_status: [409, 400, 503],
+  retry_on_failure: 30,
+  delay_on_retry: 10_000,
+  request_timeout: 120
 }
 options.merge!({ api_key: ENV['ES_API_KEY'] }) if ENV['ES_API_KEY']
 
-if serverless?
-  options.merge!(
-    {
-      retry_on_status: [409, 400, 503],
-      retry_on_failure: 30,
-      delay_on_retry: 10_000,
-      request_timeout: 120
-    }
-  )
-end
 CLIENT = Elasticsearch::Client.new(options)
 
 tests_path = File.expand_path('./tmp', __dir__)
