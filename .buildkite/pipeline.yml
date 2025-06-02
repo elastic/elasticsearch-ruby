@@ -69,7 +69,7 @@ steps:
       - label: 'Destroy :elasticsearch: Serverless projects'
         depends_on:
           - step: run-serverless-tests
-            allow_failure: false
+            allow_failure: true
         agents:
           image: 'docker.elastic.co/appex-qa/qaf:latest'
         env:
