@@ -19,38 +19,48 @@
 # @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
 #
 module Elasticsearch
-  module API
-    module Esql
-      module Actions
-        # Executes an ESQL request asynchronously
-        #
-        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [String] :delimiter The character to use between values within a CSV row. Only valid for the csv format.
-        # @option arguments [Boolean] :drop_null_columns Should entirely null columns be removed from the results? Their name and type will be returning in a new `all_columns` section.
-        # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Use the `query` element to start a query. Use `columnar` to format the answer. (*Required*)
-        #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/esql-async-query-api.html
-        #
-        def async_query(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'esql.async_query' }
+module API
+  module Esql
+module Actions
 
-          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+  # Executes an ESQL request asynchronously
+#
+  # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml 
+  # @option arguments [String] :delimiter The character to use between values within a CSV row. Only valid for the csv format. 
+  # @option arguments [Boolean] :drop_null_columns Should entirely null columns be removed from the results? Their name and type will be returning in a new `all_columns` section. 
+  # @option arguments [Boolean] :allow_partial_results If `true`, partial results will be returned if there are shard failures, but
+the query can continue to execute on other clusters and shards.
+If `false`, the entire query will fail if there are
+any failures. 
+# @option arguments [Hash] :headers Custom HTTP headers
+    # @option arguments [Hash] :body Use the `query` element to start a query. Use `columnar` to format the answer. (*Required*)
+#
+# @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/esql-async-query-api.html
+#
+def async_query(arguments = {})
+  request_opts = { endpoint: arguments[:endpoint] || "esql.async_query" }
 
-          arguments = arguments.clone
-          headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+      raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+    arguments = arguments.clone
+    headers = arguments.delete(:headers) || {}
 
-          method = Elasticsearch::API::HTTP_POST
-          path   = '_query/async'
-          params = Utils.process_params(arguments)
+  body   = arguments.delete(:body)
 
-          Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, request_opts)
-          )
-        end
-      end
+    
+
+method = Elasticsearch::API::HTTP_POST
+path   = "_query/async"
+  params = Utils.process_params(arguments)
+
+    
+    Elasticsearch::API::Response.new(
+      perform_request(method, path, params, body, headers, request_opts)
+    )
+end
+
+  end
+
     end
   end
 end
