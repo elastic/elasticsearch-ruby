@@ -23,7 +23,7 @@ module Elasticsearch
         info['type'] = 'String' if info['type'] == 'enum' # Rename 'enums' to 'strings'
         info['type'] = 'Integer' if info['type'] == 'int' # Rename 'int' to 'Integer'
         tipo = info['type'] ? info['type'].capitalize : 'String'
-        description = info['description'] ? info['description'].strip : '[TODO]'
+        description = info['description'] ? info['description'].strip.gsub("\n", ' ') : '[TODO]'
         options = info['options'] ? "(options: #{info['options'].join(', ').strip})" : nil
         required = info['required'] ? '(*Required*)' : ''
         deprecated = info['deprecated'] ? '*Deprecated*' : ''
