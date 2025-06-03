@@ -62,7 +62,7 @@ steps:
           RUBY_VERSION: '3.4'
           RUBY_SOURCE: ruby
           TEST_SUITE: serverless
-          ES_YAML_TESTS_BRANCH: main
+          ES_YAML_TESTS_BRANCH: 'stop-updating-allocations-serverless'
           QUIET: false
         command: ./.buildkite/run-yaml-tests.sh
         artifact_paths: elasticsearch-api/tmp/*
