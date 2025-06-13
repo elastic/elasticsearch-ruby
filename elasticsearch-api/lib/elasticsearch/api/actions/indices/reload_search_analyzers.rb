@@ -26,8 +26,8 @@ module Elasticsearch
         # Reload an index's search analyzers and their resources.
         # For data streams, the API reloads search analyzers and resources for the stream's backing indices.
         # IMPORTANT: After reloading the search analyzers you should clear the request cache to make sure it doesn't contain responses derived from the previous versions of the analyzer.
-        # You can use the reload search analyzers API to pick up changes to synonym files used in the +synonym_graph+ or +synonym+ token filter of a search analyzer.
-        # To be eligible, the token filter must have an +updateable+ flag of +true+ and only be used in search analyzers.
+        # You can use the reload search analyzers API to pick up changes to synonym files used in the `synonym_graph` or `synonym` token filter of a search analyzer.
+        # To be eligible, the token filter must have an `updateable` flag of `true` and only be used in search analyzers.
         # NOTE: This API does not perform a reload for each shard of an index.
         # Instead, it performs a reload for each node containing index shards.
         # As a result, the total shard count returned by the API can differ from the number of index shards.
@@ -35,10 +35,21 @@ module Elasticsearch
         # This ensures the synonym file is updated everywhere in the cluster in case shards are relocated in the future.
         #
         # @option arguments [String, Array] :index A comma-separated list of index names to reload analyzers for (*Required*)
-        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes +_all+ string or when no indices have been specified)
+        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
         # @option arguments [String, Array<String>] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
         # @option arguments [String] :resource Changed resource to reload analyzers from if applicable
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-reload-search-analyzers

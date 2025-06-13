@@ -23,17 +23,28 @@ module Elasticsearch
     module Watcher
       module Actions
         # Update Watcher index settings.
-        # Update settings for the Watcher internal index (+.watches+).
+        # Update settings for the Watcher internal index (`.watches`).
         # Only a subset of settings can be modified.
-        # This includes +index.auto_expand_replicas+, +index.number_of_replicas+, +index.routing.allocation.exclude.*+,
-        # +index.routing.allocation.include.*+ and +index.routing.allocation.require.*+.
-        # Modification of +index.routing.allocation.include._tier_preference+ is an exception and is not allowed as the
-        # Watcher shards must always be in the +data_content+ tier.
+        # This includes `index.auto_expand_replicas`, `index.number_of_replicas`, `index.routing.allocation.exclude.*`,
+        # `index.routing.allocation.include.*` and `index.routing.allocation.require.*`.
+        # Modification of `index.routing.allocation.include._tier_preference` is an exception and is not allowed as the
+        # Watcher shards must always be in the `data_content` tier.
         #
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error.
         # @option arguments [Time] :timeout The period to wait for a response.
         #  If no response is received before the timeout expires, the request fails and returns an error.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

@@ -34,14 +34,9 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
+          body = nil
 
-          method = if body
-                     Elasticsearch::API::HTTP_POST
-                   else
-                     Elasticsearch::API::HTTP_GET
-                   end
-
+          method = Elasticsearch::API::HTTP_GET
           path   = '_transform/_node_stats'
           params = {}
 

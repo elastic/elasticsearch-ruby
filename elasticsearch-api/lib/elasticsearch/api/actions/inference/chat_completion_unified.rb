@@ -23,9 +23,26 @@ module Elasticsearch
     module Inference
       module Actions
         # Perform chat completion inference
+        # The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation.
+        # It only works with the `chat_completion` task type for `openai` and `elastic` inference services.
+        # NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming.
+        # The Chat completion inference API and the Stream inference API differ in their response structure and capabilities.
+        # The Chat completion inference API provides more comprehensive customization options through more fields and function calling support.
+        # If you use the `openai` service or the `elastic` service, use the Chat completion inference API.
         #
         # @option arguments [String] :inference_id The inference Id (*Required*)
         # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference request to complete. Server default: 30s.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body chat_completion_request
         #

@@ -22,11 +22,11 @@ module Elasticsearch
   module API
     module Actions
       # Run a scrolling search.
-      # IMPORTANT: The scroll API is no longer recommend for deep pagination. If you need to preserve the index state while paging through more than 10,000 hits, use the +search_after+ parameter with a point in time (PIT).
+      # IMPORTANT: The scroll API is no longer recommend for deep pagination. If you need to preserve the index state while paging through more than 10,000 hits, use the `search_after` parameter with a point in time (PIT).
       # The scroll API gets large sets of results from a single scrolling search request.
-      # To get the necessary scroll ID, submit a search API request that includes an argument for the +scroll+ query parameter.
-      # The +scroll+ parameter indicates how long Elasticsearch should retain the search context for the request.
-      # The search response returns a scroll ID in the +_scroll_id+ response body parameter.
+      # To get the necessary scroll ID, submit a search API request that includes an argument for the `scroll` query parameter.
+      # The `scroll` parameter indicates how long Elasticsearch should retain the search context for the request.
+      # The search response returns a scroll ID in the `_scroll_id` response body parameter.
       # You can then use the scroll ID with the scroll API to retrieve the next batch of results for the request.
       # If the Elasticsearch security features are enabled, the access to the results of a specific scroll ID is restricted to the user or API key that submitted the search.
       # You can also use the scroll API to specify a new scroll parameter that extends or shortens the retention period for the search context.
@@ -35,6 +35,17 @@ module Elasticsearch
       # @option arguments [String] :scroll_id The scroll ID
       # @option arguments [Time] :scroll The period to retain the search context for scrolling. Server default: 1d.
       # @option arguments [Boolean] :rest_total_hits_as_int If true, the API response’s hit.total property is returned as an integer. If false, the API response’s hit.total property is returned as an object.
+      # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+      #  when they occur.
+      # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+      #  returned by Elasticsearch.
+      # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+      #  For example `"exists_time": "1h"` for humans and
+      #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+      #  readable values will be omitted. This makes sense for responses being consumed
+      #  only by machines.
+      # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+      #  this option for debugging only.
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body request body
       #

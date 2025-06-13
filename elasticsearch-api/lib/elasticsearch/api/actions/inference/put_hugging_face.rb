@@ -23,26 +23,32 @@ module Elasticsearch
     module Inference
       module Actions
         # Create a Hugging Face inference endpoint.
-        # Create an inference endpoint to perform an inference task with the +hugging_face+ service.
+        # Create an inference endpoint to perform an inference task with the `hugging_face` service.
         # You must first create an inference endpoint on the Hugging Face endpoint page to get an endpoint URL.
-        # Select the model you want to use on the new endpoint creation page (for example +intfloat/e5-small-v2+), then select the sentence embeddings task under the advanced configuration section.
+        # Select the model you want to use on the new endpoint creation page (for example `intfloat/e5-small-v2`), then select the sentence embeddings task under the advanced configuration section.
         # Create the endpoint and copy the URL after the endpoint initialization has been finished.
         # The following models are recommended for the Hugging Face service:
-        # * +all-MiniLM-L6-v2+
-        # * +all-MiniLM-L12-v2+
-        # * +all-mpnet-base-v2+
-        # * +e5-base-v2+
-        # * +e5-small-v2+
-        # * +multilingual-e5-base+
-        # * +multilingual-e5-small+
-        # When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
-        # After creating the endpoint, wait for the model deployment to complete before using it.
-        # To verify the deployment status, use the get trained model statistics API.
-        # Look for +"state": "fully_allocated"+ in the response and ensure that the +"allocation_count"+ matches the +"target_allocation_count"+.
-        # Avoid creating multiple endpoints for the same model unless required, as each endpoint consumes significant resources.
+        # * `all-MiniLM-L6-v2`
+        # * `all-MiniLM-L12-v2`
+        # * `all-mpnet-base-v2`
+        # * `e5-base-v2`
+        # * `e5-small-v2`
+        # * `multilingual-e5-base`
+        # * `multilingual-e5-small`
         #
         # @option arguments [String] :task_type The type of the inference task that the model will perform. (*Required*)
         # @option arguments [String] :huggingface_inference_id The unique identifier of the inference endpoint. (*Required*)
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
@@ -74,7 +80,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_inference/#{Utils.listify(_task_type)}/#{Utils.listify(_huggingface_inference_id)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

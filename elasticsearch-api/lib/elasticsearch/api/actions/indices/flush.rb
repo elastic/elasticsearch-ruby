@@ -33,18 +33,29 @@ module Elasticsearch
         # If you call the flush API after indexing some documents then a successful response indicates that Elasticsearch has flushed all the documents that were indexed before the flush API was called.
         #
         # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and aliases to flush.
-        #  Supports wildcards (+*+).
-        #  To flush all data streams and indices, omit this parameter or use +*+ or +_all+.
-        # @option arguments [Boolean] :allow_no_indices If +false+, the request returns an error if any wildcard expression, index alias, or +_all+ value targets only missing or closed indices.
+        #  Supports wildcards (`*`).
+        #  To flush all data streams and indices, omit this parameter or use `*` or `_all`.
+        # @option arguments [Boolean] :allow_no_indices If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
         #  This behavior applies even if the request targets other open indices. Server default: true.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
         #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-        #  Supports comma-separated values, such as +open,hidden+.
-        #  Valid values are: +all+, +open+, +closed+, +hidden+, +none+. Server default: open.
-        # @option arguments [Boolean] :force If +true+, the request forces a flush even if there are no changes to commit to the index. Server default: true.
-        # @option arguments [Boolean] :ignore_unavailable If +false+, the request returns an error if it targets a missing or closed index.
-        # @option arguments [Boolean] :wait_if_ongoing If +true+, the flush operation blocks until execution when another flush operation is running.
-        #  If +false+, Elasticsearch returns an error if you request a flush when another flush operation is running. Server default: true.
+        #  Supports comma-separated values, such as `open,hidden`.
+        #  Valid values are: `all`, `open`, `closed`, `hidden`, `none`. Server default: open.
+        # @option arguments [Boolean] :force If `true`, the request forces a flush even if there are no changes to commit to the index. Server default: true.
+        # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a missing or closed index.
+        # @option arguments [Boolean] :wait_if_ongoing If `true`, the flush operation blocks until execution when another flush operation is running.
+        #  If `false`, Elasticsearch returns an error if you request a flush when another flush operation is running. Server default: true.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-flush

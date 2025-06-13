@@ -25,14 +25,25 @@ module Elasticsearch
         # Invalidate a token.
         # The access tokens returned by the get token API have a finite period of time for which they are valid.
         # After that time period, they can no longer be used.
-        # The time period is defined by the +xpack.security.authc.token.timeout+ setting.
+        # The time period is defined by the `xpack.security.authc.token.timeout` setting.
         # The refresh tokens returned by the get token API are only valid for 24 hours.
         # They can also be used exactly once.
         # If you want to invalidate one or more access or refresh tokens immediately, use this invalidate token API.
         # NOTE: While all parameters are optional, at least one of them is required.
-        # More specifically, either one of +token+ or +refresh_token+ parameters is required.
-        # If none of these two are specified, then +realm_name+ and/or +username+ need to be specified.
+        # More specifically, either one of `token` or `refresh_token` parameters is required.
+        # If none of these two are specified, then `realm_name` and/or `username` need to be specified.
         #
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
@@ -50,7 +61,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = '_security/oauth2/token'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

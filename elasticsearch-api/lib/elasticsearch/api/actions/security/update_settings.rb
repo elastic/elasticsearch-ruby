@@ -23,8 +23,8 @@ module Elasticsearch
     module Security
       module Actions
         # Update security index settings.
-        # Update the user-configurable settings for the security internal index (+.security+ and associated indices). Only a subset of settings are allowed to be modified. This includes +index.auto_expand_replicas+ and +index.number_of_replicas+.
-        # NOTE: If +index.auto_expand_replicas+ is set, +index.number_of_replicas+ will be ignored during updates.
+        # Update the user-configurable settings for the security internal index (`.security` and associated indices). Only a subset of settings are allowed to be modified. This includes `index.auto_expand_replicas` and `index.number_of_replicas`.
+        # NOTE: If `index.auto_expand_replicas` is set, `index.number_of_replicas` will be ignored during updates.
         # If a specific index is not in use on the system and settings are provided for it, the request will be rejected.
         # This API does not yet support configuring the settings for indices before they are in use.
         #
@@ -32,6 +32,17 @@ module Elasticsearch
         #  If no response is received before the timeout expires, the request fails and returns an error.
         # @option arguments [Time] :timeout The period to wait for a response.
         #  If no response is received before the timeout expires, the request fails and returns an error.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

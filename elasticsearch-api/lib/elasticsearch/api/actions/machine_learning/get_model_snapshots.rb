@@ -26,8 +26,8 @@ module Elasticsearch
         #
         # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
         # @option arguments [String] :snapshot_id A numerical character string that uniquely identifies the model snapshot. You can get information for multiple
-        #  snapshots by using a comma-separated list or a wildcard expression. You can get all snapshots by using +_all+,
-        #  by specifying +*+ as the snapshot ID, or by omitting the snapshot ID.
+        #  snapshots by using a comma-separated list or a wildcard expression. You can get all snapshots by using `_all`,
+        #  by specifying `*` as the snapshot ID, or by omitting the snapshot ID.
         # @option arguments [Boolean] :desc If true, the results are sorted in descending order.
         # @option arguments [String, Time] :end Returns snapshots with timestamps earlier than this time.
         # @option arguments [Integer] :from Skips the specified number of snapshots. Server default: 0.
@@ -35,6 +35,17 @@ module Elasticsearch
         # @option arguments [String] :sort Specifies the sort field for the requested snapshots. By default, the
         #  snapshots are sorted by their timestamp.
         # @option arguments [String, Time] :start Returns snapshots with timestamps after this time.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

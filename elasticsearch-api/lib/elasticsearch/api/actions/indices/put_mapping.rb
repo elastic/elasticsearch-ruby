@@ -33,7 +33,7 @@ module Elasticsearch
         # You can populate the new multi-field with the update by query API.
         # **Change supported mapping parameters for an existing field**
         # The documentation for each mapping parameter indicates whether you can update it for an existing field using this API.
-        # For example, you can use the update mapping API to update the +ignore_above+ parameter.
+        # For example, you can use the update mapping API to update the `ignore_above` parameter.
         # **Change the mapping of an existing field**
         # Except for supported mapping parameters, you can't change the mapping or field type of an existing field.
         # Changing an existing field could invalidate data that's already indexed.
@@ -43,19 +43,30 @@ module Elasticsearch
         # Renaming a field would invalidate data already indexed under the old field name.
         # Instead, add an alias field to create an alternate field name.
         #
-        # @option arguments [String, Array] :index A comma-separated list of index names the mapping should be added to (supports wildcards); use +_all+ or omit to add the mapping on all indices. (*Required*)
-        # @option arguments [Boolean] :allow_no_indices If +false+, the request returns an error if any wildcard expression, index alias, or +_all+ value targets only missing or closed indices.
+        # @option arguments [String, Array] :index A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices. (*Required*)
+        # @option arguments [Boolean] :allow_no_indices If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
         #  This behavior applies even if the request targets other open indices. Server default: true.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
         #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-        #  Supports comma-separated values, such as +open,hidden+.
-        #  Valid values are: +all+, +open+, +closed+, +hidden+, +none+. Server default: open.
-        # @option arguments [Boolean] :ignore_unavailable If +false+, the request returns an error if it targets a missing or closed index.
+        #  Supports comma-separated values, such as `open,hidden`.
+        #  Valid values are: `all`, `open`, `closed`, `hidden`, `none`. Server default: open.
+        # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a missing or closed index.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Time] :timeout Period to wait for a response.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
-        # @option arguments [Boolean] :write_index_only If +true+, the mappings are applied only to the current write index for the target.
+        # @option arguments [Boolean] :write_index_only If `true`, the mappings are applied only to the current write index for the target.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

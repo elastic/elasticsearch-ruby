@@ -29,11 +29,11 @@ module Elasticsearch
         # The API adds an entry for each specified node to the cluster’s voting configuration exclusions list.
         # It then waits until the cluster has reconfigured its voting configuration to exclude the specified nodes.
         # Clusters should have no voting configuration exclusions in normal operation.
-        # Once the excluded nodes have stopped, clear the voting configuration exclusions with +DELETE /_cluster/voting_config_exclusions+.
+        # Once the excluded nodes have stopped, clear the voting configuration exclusions with `DELETE /_cluster/voting_config_exclusions`.
         # This API waits for the nodes to be fully removed from the cluster before it returns.
-        # If your cluster has voting configuration exclusions for nodes that you no longer intend to remove, use +DELETE /_cluster/voting_config_exclusions?wait_for_removal=false+ to clear the voting configuration exclusions without waiting for the nodes to leave the cluster.
-        # A response to +POST /_cluster/voting_config_exclusions+ with an HTTP status code of 200 OK guarantees that the node has been removed from the voting configuration and will not be reinstated until the voting configuration exclusions are cleared by calling +DELETE /_cluster/voting_config_exclusions+.
-        # If the call to +POST /_cluster/voting_config_exclusions+ fails or returns a response with an HTTP status code other than 200 OK then the node may not have been removed from the voting configuration.
+        # If your cluster has voting configuration exclusions for nodes that you no longer intend to remove, use `DELETE /_cluster/voting_config_exclusions?wait_for_removal=false` to clear the voting configuration exclusions without waiting for the nodes to leave the cluster.
+        # A response to `POST /_cluster/voting_config_exclusions` with an HTTP status code of 200 OK guarantees that the node has been removed from the voting configuration and will not be reinstated until the voting configuration exclusions are cleared by calling `DELETE /_cluster/voting_config_exclusions`.
+        # If the call to `POST /_cluster/voting_config_exclusions` fails or returns a response with an HTTP status code other than 200 OK then the node may not have been removed from the voting configuration.
         # In that case, you may safely retry the call.
         # NOTE: Voting exclusions are required only when you remove at least half of the master-eligible nodes from a cluster in a short time period.
         # They are not required when removing master-ineligible nodes or when removing fewer than half of the master-eligible nodes.
@@ -47,6 +47,17 @@ module Elasticsearch
         #  specified nodes to be excluded from the voting configuration before
         #  returning. If the timeout expires before the appropriate condition
         #  is satisfied, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cluster-post-voting-config-exclusions

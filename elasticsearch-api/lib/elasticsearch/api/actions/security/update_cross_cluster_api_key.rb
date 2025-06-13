@@ -24,17 +24,28 @@ module Elasticsearch
       module Actions
         # Update a cross-cluster API key.
         # Update the attributes of an existing cross-cluster API key, which is used for API key based remote cluster access.
-        # To use this API, you must have at least the +manage_security+ cluster privilege.
+        # To use this API, you must have at least the `manage_security` cluster privilege.
         # Users can only update API keys that they created.
-        # To update another user's API key, use the +run_as+ feature to submit a request on behalf of another user.
+        # To update another user's API key, use the `run_as` feature to submit a request on behalf of another user.
         # IMPORTANT: It's not possible to use an API key as the authentication credential for this API.
         # To update an API key, the owner user's credentials are required.
         # It's not possible to update expired API keys, or API keys that have been invalidated by the invalidate API key API.
         # This API supports updates to an API key's access scope, metadata, and expiration.
-        # The owner user's information, such as the +username+ and +realm+, is also updated automatically on every call.
+        # The owner user's information, such as the `username` and `realm`, is also updated automatically on every call.
         # NOTE: This API cannot update REST API keys, which should be updated by either the update API key or bulk update API keys API.
         #
         # @option arguments [String] :id The ID of the cross-cluster API key to update. (*Required*)
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
@@ -60,7 +71,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_security/cross_cluster/api_key/#{Utils.listify(_id)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

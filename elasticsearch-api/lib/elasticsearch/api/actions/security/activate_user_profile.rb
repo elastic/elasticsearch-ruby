@@ -26,13 +26,24 @@ module Elasticsearch
         # Create or update a user profile on behalf of another user.
         # NOTE: The user profile feature is designed only for use by Kibana and Elastic's Observability, Enterprise Search, and Elastic Security solutions.
         # Individual users and external applications should not call this API directly.
-        # The calling application must have either an +access_token+ or a combination of +username+ and +password+ for the user that the profile document is intended for.
+        # The calling application must have either an `access_token` or a combination of `username` and `password` for the user that the profile document is intended for.
         # Elastic reserves the right to change or remove this feature in future releases without prior notice.
-        # This API creates or updates a profile document for end users with information that is extracted from the user's authentication object including +username+, +full_name,+ +roles+, and the authentication realm.
-        # For example, in the JWT +access_token+ case, the profile user's +username+ is extracted from the JWT token claim pointed to by the +claims.principal+ setting of the JWT realm that authenticated the token.
+        # This API creates or updates a profile document for end users with information that is extracted from the user's authentication object including `username`, `full_name,` `roles`, and the authentication realm.
+        # For example, in the JWT `access_token` case, the profile user's `username` is extracted from the JWT token claim pointed to by the `claims.principal` setting of the JWT realm that authenticated the token.
         # When updating a profile document, the API enables the document if it was disabled.
-        # Any updates do not change existing content for either the +labels+ or +data+ fields.
+        # Any updates do not change existing content for either the `labels` or `data` fields.
         #
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
@@ -50,7 +61,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_security/profile/_activate'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

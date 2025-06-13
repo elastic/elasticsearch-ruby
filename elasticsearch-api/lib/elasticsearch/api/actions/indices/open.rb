@@ -32,32 +32,43 @@ module Elasticsearch
         # The data of opened or closed indices is automatically replicated by the cluster to ensure that enough shard copies are safely kept around at all times.
         # You can open and close multiple indices.
         # An error is thrown if the request explicitly refers to a missing index.
-        # This behavior can be turned off by using the +ignore_unavailable=true+ parameter.
+        # This behavior can be turned off by using the `ignore_unavailable=true` parameter.
         # By default, you must explicitly name the indices you are opening or closing.
-        # To open or close indices with +_all+, +*+, or other wildcard expressions, change the +action.destructive_requires_name+ setting to +false+.
+        # To open or close indices with `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to `false`.
         # This setting can also be changed with the cluster update settings API.
         # Closed indices consume a significant amount of disk-space which can cause problems in managed environments.
-        # Closing indices can be turned off with the cluster settings API by setting +cluster.indices.close.enable+ to +false+.
-        # Because opening or closing an index allocates its shards, the +wait_for_active_shards+ setting on index creation applies to the +_open+ and +_close+ index actions as well.
+        # Closing indices can be turned off with the cluster settings API by setting `cluster.indices.close.enable` to `false`.
+        # Because opening or closing an index allocates its shards, the `wait_for_active_shards` setting on index creation applies to the `_open` and `_close` index actions as well.
         #
         # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and aliases used to limit the request.
-        #  Supports wildcards (+*+).
+        #  Supports wildcards (`*`).
         #  By default, you must explicitly name the indices you using to limit the request.
-        #  To limit a request using +_all+, +*+, or other wildcard expressions, change the +action.destructive_requires_name+ setting to false.
-        #  You can update this setting in the +elasticsearch.yml+ file or using the cluster update settings API. (*Required*)
-        # @option arguments [Boolean] :allow_no_indices If +false+, the request returns an error if any wildcard expression, index alias, or +_all+ value targets only missing or closed indices.
+        #  To limit a request using `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to false.
+        #  You can update this setting in the `elasticsearch.yml` file or using the cluster update settings API. (*Required*)
+        # @option arguments [Boolean] :allow_no_indices If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
         #  This behavior applies even if the request targets other open indices. Server default: true.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
         #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-        #  Supports comma-separated values, such as +open,hidden+.
-        #  Valid values are: +all+, +open+, +closed+, +hidden+, +none+. Server default: open.
-        # @option arguments [Boolean] :ignore_unavailable If +false+, the request returns an error if it targets a missing or closed index.
+        #  Supports comma-separated values, such as `open,hidden`.
+        #  Valid values are: `all`, `open`, `closed`, `hidden`, `none`. Server default: open.
+        # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a missing or closed index.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Time] :timeout Period to wait for a response.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Integer, String] :wait_for_active_shards The number of shard copies that must be active before proceeding with the operation.
-        #  Set to +all+ or any positive integer up to the total number of shards in the index (+number_of_replicas+1+). Server default: 1.
+        #  Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). Server default: 1.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-open

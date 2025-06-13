@@ -32,7 +32,7 @@ module Elasticsearch
         # snapshot after Black Friday or a critical system failure.
         #
         # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
-        # @option arguments [String] :snapshot_id You can specify +empty+ as the <snapshot_id>. Reverting to the empty
+        # @option arguments [String] :snapshot_id You can specify `empty` as the <snapshot_id>. Reverting to the empty
         #  snapshot means the anomaly detection job starts learning a new model from
         #  scratch when it is started. (*Required*)
         # @option arguments [Boolean] :delete_intervening_results If true, deletes the results in the time period between the latest
@@ -41,6 +41,17 @@ module Elasticsearch
         #  intervening results when reverting a snapshot, the job will not accept
         #  input data that is older than the current time. If you want to resend
         #  data, then delete the intervening results.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

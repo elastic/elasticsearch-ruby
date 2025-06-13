@@ -37,12 +37,23 @@ module Elasticsearch
         #  and the model is updated for data from the specified time interval.
         # @option arguments [Boolean] :calc_interim If true, calculates the interim results for the most recent bucket or all
         #  buckets within the latency period.
-        # @option arguments [String, Time] :end When used in conjunction with +calc_interim+ and +start+, specifies the
+        # @option arguments [String, Time] :end When used in conjunction with `calc_interim` and `start`, specifies the
         #  range of buckets on which to calculate interim results.
         # @option arguments [String, Time] :skip_time Specifies to skip to a particular time value. Results are not generated
         #  and the model is not updated for data from the specified time interval.
-        # @option arguments [String, Time] :start When used in conjunction with +calc_interim+, specifies the range of
+        # @option arguments [String, Time] :start When used in conjunction with `calc_interim`, specifies the range of
         #  buckets on which to calculate interim results.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

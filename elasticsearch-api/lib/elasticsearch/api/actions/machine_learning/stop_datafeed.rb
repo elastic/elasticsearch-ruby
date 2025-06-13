@@ -27,17 +27,28 @@ module Elasticsearch
         # multiple times throughout its lifecycle.
         #
         # @option arguments [String] :datafeed_id Identifier for the datafeed. You can stop multiple datafeeds in a single API request by using a comma-separated
-        #  list of datafeeds or a wildcard expression. You can close all datafeeds by using +_all+ or by specifying +*+ as
+        #  list of datafeeds or a wildcard expression. You can close all datafeeds by using `_all` or by specifying `*` as
         #  the identifier. (*Required*)
         # @option arguments [Boolean] :allow_no_match Specifies what to do when the request:
         #  - Contains wildcard expressions and there are no datafeeds that match.
-        #  - Contains the +_all+ string or no identifiers and there are no matches.
+        #  - Contains the `_all` string or no identifiers and there are no matches.
         #  - Contains wildcard expressions and there are only partial matches.
-        #  If +true+, the API returns an empty datafeeds array when there are no matches and the subset of results when
-        #  there are partial matches. If +false+, the API returns a 404 status code when there are no matches or only
+        #  If `true`, the API returns an empty datafeeds array when there are no matches and the subset of results when
+        #  there are partial matches. If `false`, the API returns a 404 status code when there are no matches or only
         #  partial matches. Server default: true.
-        # @option arguments [Boolean] :force If +true+, the datafeed is stopped forcefully.
+        # @option arguments [Boolean] :force If `true`, the datafeed is stopped forcefully.
         # @option arguments [Time] :timeout Specifies the amount of time to wait until a datafeed stops. Server default: 20s.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

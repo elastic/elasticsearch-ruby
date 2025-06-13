@@ -27,7 +27,7 @@ module Elasticsearch
         # throughout its lifecycle.
         # If the destination index does not exist, it is created automatically the
         # first time you start the data frame analytics job. The
-        # +index.number_of_shards+ and +index.number_of_replicas+ settings for the
+        # `index.number_of_shards` and `index.number_of_replicas` settings for the
         # destination index are copied from the source index. If there are multiple
         # source indices, the destination index copies the highest setting values. The
         # mappings for the destination index are also copied from the source indices.
@@ -40,6 +40,17 @@ module Elasticsearch
         #  underscores. It must start and end with alphanumeric characters. (*Required*)
         # @option arguments [Time] :timeout Controls the amount of time to wait until the data frame analytics job
         #  starts. Server default: 20s.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-start-data-frame-analytics

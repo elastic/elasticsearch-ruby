@@ -34,34 +34,45 @@ module Elasticsearch
         # TIP: Prior to Elasticsearch 7.9, you'd typically use an index alias with a write index to manage time series data.
         # Data streams replace this functionality, require less maintenance, and automatically integrate with data tiers.
         # If an index alias points to multiple indices, one of the indices must be a write index.
-        # The rollover API creates a new write index for the alias with +is_write_index+ set to +true+.
-        # The API also +sets is_write_index+ to +false+ for the previous write index.
+        # The rollover API creates a new write index for the alias with `is_write_index` set to `true`.
+        # The API also `sets is_write_index` to `false` for the previous write index.
         # **Roll over an index alias with one index**
         # If you roll over an index alias that points to only one index, the API creates a new index for the alias and removes the original index from the alias.
-        # NOTE: A rollover creates a new index and is subject to the +wait_for_active_shards+ setting.
+        # NOTE: A rollover creates a new index and is subject to the `wait_for_active_shards` setting.
         # **Increment index names for an alias**
         # When you roll over an index alias, you can specify a name for the new index.
-        # If you don't specify a name and the current index ends with +-+ and a number, such as +my-index-000001+ or +my-index-3+, the new index name increments that number.
-        # For example, if you roll over an alias with a current index of +my-index-000001+, the rollover creates a new index named +my-index-000002+.
+        # If you don't specify a name and the current index ends with `-` and a number, such as `my-index-000001` or `my-index-3`, the new index name increments that number.
+        # For example, if you roll over an alias with a current index of `my-index-000001`, the rollover creates a new index named `my-index-000002`.
         # This number is always six characters and zero-padded, regardless of the previous index's name.
         # If you use an index alias for time series data, you can use date math in the index name to track the rollover date.
-        # For example, you can create an alias that points to an index named +<my-index-{now/d}-000001>+.
-        # If you create the index on May 6, 2099, the index's name is +my-index-2099.05.06-000001+.
-        # If you roll over the alias on May 7, 2099, the new index's name is +my-index-2099.05.07-000002+.
+        # For example, you can create an alias that points to an index named `<my-index-{now/d}-000001>`.
+        # If you create the index on May 6, 2099, the index's name is `my-index-2099.05.06-000001`.
+        # If you roll over the alias on May 7, 2099, the new index's name is `my-index-2099.05.07-000002`.
         #
         # @option arguments [String] :alias Name of the data stream or index alias to roll over. (*Required*)
         # @option arguments [String] :new_index Name of the index to create.
         #  Supports date math.
         #  Data streams do not support this parameter.
-        # @option arguments [Boolean] :dry_run If +true+, checks whether the current index satisfies the specified conditions but does not perform a rollover.
+        # @option arguments [Boolean] :dry_run If `true`, checks whether the current index satisfies the specified conditions but does not perform a rollover.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Time] :timeout Period to wait for a response.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Integer, String] :wait_for_active_shards The number of shard copies that must be active before proceeding with the operation.
-        #  Set to all or any positive integer up to the total number of shards in the index (+number_of_replicas+1+). Server default: 1.
+        #  Set to all or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). Server default: 1.
         # @option arguments [Boolean] :lazy If set to true, the rollover action will only mark a data stream to signal that it needs to be rolled over at the next write.
         #  Only allowed on data streams.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

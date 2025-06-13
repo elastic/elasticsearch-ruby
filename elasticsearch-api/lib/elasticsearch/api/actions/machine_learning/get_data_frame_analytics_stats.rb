@@ -30,15 +30,26 @@ module Elasticsearch
         # @option arguments [Boolean] :allow_no_match Specifies what to do when the request:
         #  - Contains wildcard expressions and there are no data frame analytics
         #  jobs that match.
-        #  - Contains the +_all+ string or no identifiers and there are no matches.
+        #  - Contains the `_all` string or no identifiers and there are no matches.
         #  - Contains wildcard expressions and there are only partial matches.
         #  The default value returns an empty data_frame_analytics array when there
         #  are no matches and the subset of results when there are partial matches.
-        #  If this parameter is +false+, the request returns a 404 status code when
+        #  If this parameter is `false`, the request returns a 404 status code when
         #  there are no matches or only partial matches. Server default: true.
         # @option arguments [Integer] :from Skips the specified number of data frame analytics jobs. Server default: 0.
         # @option arguments [Integer] :size Specifies the maximum number of data frame analytics jobs to obtain. Server default: 100.
         # @option arguments [Boolean] :verbose Defines whether the stats response should be verbose.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-get-data-frame-analytics-stats

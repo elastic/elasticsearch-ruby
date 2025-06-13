@@ -30,8 +30,19 @@ module Elasticsearch
         #
         # @option arguments [String] :format A short version of the Accept header, e.g. json, yaml.
         # @option arguments [String] :delimiter The character to use between values within a CSV row. Only valid for the CSV format.
-        # @option arguments [Boolean] :drop_null_columns Should columns that are entirely +null+ be removed from the +columns+ and +values+ portion of the results?
-        #  Defaults to +false+. If +true+ then the response will include an extra section under the name +all_columns+ which has the name of all columns.
+        # @option arguments [Boolean] :drop_null_columns Should columns that are entirely `null` be removed from the `columns` and `values` portion of the results?
+        #  Defaults to `false`. If `true` then the response will include an extra section under the name `all_columns` which has the name of all columns.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

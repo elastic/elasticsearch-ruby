@@ -24,13 +24,24 @@ module Elasticsearch
       module Actions
         # Import a dangling index.
         # If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling.
-        # For example, this can happen if you delete more than +cluster.indices.tombstones.size+ indices while an Elasticsearch node is offline.
+        # For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
         #
         # @option arguments [String] :index_uuid The UUID of the index to import. Use the get dangling indices API to locate the UUID. (*Required*)
         # @option arguments [Boolean] :accept_data_loss This parameter must be set to true to import a dangling index.
         #  Because Elasticsearch cannot know where the dangling index data came from or determine which shard copies are fresh and which are stale, it cannot guarantee that the imported data represents the latest state of the index when it was last in the cluster. (*Required*)
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-dangling-indices-import-dangling-index

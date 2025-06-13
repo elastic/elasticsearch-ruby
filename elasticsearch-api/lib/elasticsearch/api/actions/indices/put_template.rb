@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Create or update an index template.
+        # Create or update a legacy index template.
         # Index templates define settings, mappings, and aliases that can be applied automatically to new indices.
         # Elasticsearch applies templates to new indices based on an index pattern that matches the index name.
         # IMPORTANT: This documentation is about legacy index templates, which are deprecated and will be replaced by the composable templates introduced in Elasticsearch 7.8.
@@ -31,7 +31,7 @@ module Elasticsearch
         # Index templates are only applied during index creation.
         # Changes to index templates do not affect existing indices.
         # Settings and mappings specified in create index API requests override any settings or mappings specified in an index template.
-        # You can use C-style +/* *\/+ block comments in index templates.
+        # You can use C-style `/* *\/` block comments in index templates.
         # You can include comments anywhere in the request body, except before the opening curly bracket.
         # **Indices matching multiple templates**
         # Multiple index templates can potentially match an index, in this case, both the settings and mappings are merged into the final configuration of the index.
@@ -46,6 +46,17 @@ module Elasticsearch
         #  matches multiple templates.Templates with lower 'order' values are merged first. Templates with higher
         #  'order' values are merged later, overriding templates with lower values.
         # @option arguments [String] :cause User defined reason for creating/updating the index template
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

@@ -23,7 +23,7 @@ module Elasticsearch
     module Features
       module Actions
         # Get the features.
-        # Get a list of features that can be included in snapshots using the +feature_states+ field when creating a snapshot.
+        # Get a list of features that can be included in snapshots using the `feature_states` field when creating a snapshot.
         # You can use this API to determine which feature states to include when taking a snapshot.
         # By default, all feature states are included in a snapshot if that snapshot includes the global state, or none if it does not.
         # A feature state includes one or more system indices necessary for a given feature to function.
@@ -32,6 +32,17 @@ module Elasticsearch
         # In order for a feature state to be listed in this API and recognized as a valid feature state by the create snapshot API, the plugin that defines that feature must be installed on the master node.
         #
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-features-get-features

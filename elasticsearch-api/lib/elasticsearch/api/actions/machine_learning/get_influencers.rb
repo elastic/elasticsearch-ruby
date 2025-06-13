@@ -25,7 +25,7 @@ module Elasticsearch
         # Get anomaly detection job results for influencers.
         # Influencers are the entities that have contributed to, or are to blame for,
         # the anomalies. Influencer results are available only if an
-        # +influencer_field_name+ is specified in the job configuration.
+        # `influencer_field_name` is specified in the job configuration.
         #
         # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
         # @option arguments [Boolean] :desc If true, the results are sorted in descending order.
@@ -39,9 +39,20 @@ module Elasticsearch
         # @option arguments [Integer] :from Skips the specified number of influencers. Server default: 0.
         # @option arguments [Integer] :size Specifies the maximum number of influencers to obtain. Server default: 100.
         # @option arguments [String] :sort Specifies the sort field for the requested influencers. By default, the
-        #  influencers are sorted by the +influencer_score+ value.
+        #  influencers are sorted by the `influencer_score` value.
         # @option arguments [String, Time] :start Returns influencers with timestamps after this time. The default value
         #  means it is unset and results are not limited to specific timestamps. Server default: -1.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

@@ -25,7 +25,7 @@ module Elasticsearch
         # Run multiple Fleet searches.
         # Run several Fleet searches with a single API request.
         # The API follows the same structure as the multi search API.
-        # However, similar to the Fleet search API, it supports the +wait_for_checkpoints+ parameter.
+        # However, similar to the Fleet search API, it supports the `wait_for_checkpoints` parameter.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
@@ -48,7 +48,18 @@ module Elasticsearch
         #  Elasticsearch to immediately execute the search. Server default: [].
         # @option arguments [Boolean] :allow_partial_search_results If true, returns partial results if there are shard request timeouts or shard failures.
         #  If false, returns an error with no partial results.
-        #  Defaults to the configured cluster setting +search.default_allow_partial_results+, which is true by default.
+        #  Defaults to the configured cluster setting `search.default_allow_partial_results`, which is true by default.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body searches
         #

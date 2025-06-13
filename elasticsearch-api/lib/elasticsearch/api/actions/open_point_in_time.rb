@@ -26,17 +26,17 @@ module Elasticsearch
       # which is called point in time. Elasticsearch pit (point in time) is a lightweight view into the
       # state of the data as it existed when initiated. In some cases, it’s preferred to perform multiple
       # search requests using the same point in time. For example, if refreshes happen between
-      # +search_after+ requests, then the results of those requests might not be consistent as changes happening
+      # `search_after` requests, then the results of those requests might not be consistent as changes happening
       # between searches are only visible to the more recent point in time.
       # A point in time must be opened explicitly before being used in search requests.
-      # A subsequent search request with the +pit+ parameter must not specify +index+, +routing+, or +preference+ values as these parameters are copied from the point in time.
-      # Just like regular searches, you can use +from+ and +size+ to page through point in time search results, up to the first 10,000 hits.
-      # If you want to retrieve more hits, use PIT with +search_after+.
+      # A subsequent search request with the `pit` parameter must not specify `index`, `routing`, or `preference` values as these parameters are copied from the point in time.
+      # Just like regular searches, you can use `from` and `size` to page through point in time search results, up to the first 10,000 hits.
+      # If you want to retrieve more hits, use PIT with `search_after`.
       # IMPORTANT: The open point in time request and each subsequent search request can return different identifiers; always use the most recently received ID for the next search request.
-      # When a PIT that contains shard failures is used in a search request, the missing are always reported in the search response as a +NoShardAvailableActionException+ exception.
+      # When a PIT that contains shard failures is used in a search request, the missing are always reported in the search response as a `NoShardAvailableActionException` exception.
       # To get rid of these exceptions, a new PIT needs to be created so that shards missing from the previous PIT can be handled, assuming they become available in the meantime.
       # **Keeping point in time alive**
-      # The +keep_alive+ parameter, which is passed to a open point in time request and search request, extends the time to live of the corresponding point in time.
+      # The `keep_alive` parameter, which is passed to a open point in time request and search request, extends the time to live of the corresponding point in time.
       # The value does not need to be long enough to process all data — it just needs to be long enough for the next request.
       # Normally, the background merge process optimizes the index by merging together smaller segments to create new, bigger segments.
       # Once the smaller segments are no longer needed they are deleted.
@@ -48,19 +48,30 @@ module Elasticsearch
       # Note that a point-in-time doesn't prevent its associated indices from being deleted.
       # You can check how many point-in-times (that is, search contexts) are open with the nodes stats API.
       #
-      # @option arguments [String, Array] :index A comma-separated list of index names to open point in time; use +_all+ or empty string to perform the operation on all indices (*Required*)
+      # @option arguments [String, Array] :index A comma-separated list of index names to open point in time; use `_all` or empty string to perform the operation on all indices (*Required*)
       # @option arguments [Time] :keep_alive Extend the length of time that the point in time persists. (*Required*)
-      # @option arguments [Boolean] :ignore_unavailable If +false+, the request returns an error if it targets a missing or closed index.
+      # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a missing or closed index.
       # @option arguments [String] :preference The node or shard the operation should be performed on.
       #  By default, it is random.
       # @option arguments [String] :routing A custom value that is used to route operations to a specific shard.
       # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
       #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-      #  It supports comma-separated values, such as +open,hidden+. Valid values are: +all+, +open+, +closed+, +hidden+, +none+. Server default: open.
+      #  It supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. Server default: open.
       # @option arguments [Boolean] :allow_partial_search_results Indicates whether the point in time tolerates unavailable shards or shard failures when initially creating the PIT.
-      #  If +false+, creating a point in time request when a shard is missing or unavailable will throw an exception.
-      #  If +true+, the point in time will contain all the shards that are available at the time of the request.
+      #  If `false`, creating a point in time request when a shard is missing or unavailable will throw an exception.
+      #  If `true`, the point in time will contain all the shards that are available at the time of the request.
       # @option arguments [Integer] :max_concurrent_shard_requests Maximum number of concurrent shard requests that each sub-search request executes per node. Server default: 5.
+      # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+      #  when they occur.
+      # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+      #  returned by Elasticsearch.
+      # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+      #  For example `"exists_time": "1h"` for humans and
+      #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+      #  readable values will be omitted. This makes sense for responses being consumed
+      #  only by machines.
+      # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+      #  this option for debugging only.
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body request body
       #

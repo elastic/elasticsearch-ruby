@@ -26,9 +26,9 @@ module Elasticsearch
         # Get a detailed description of the current state for each shard participating in the snapshot.
         # Note that this API should be used only to obtain detailed shard-level information for ongoing snapshots.
         # If this detail is not needed or you want to obtain information about one or more existing snapshots, use the get snapshot API.
-        # If you omit the +<snapshot>+ request path parameter, the request retrieves information only for currently running snapshots.
+        # If you omit the `<snapshot>` request path parameter, the request retrieves information only for currently running snapshots.
         # This usage is preferred.
-        # If needed, you can specify +<repository>+ and +<snapshot>+ to retrieve information for specific snapshots, even if they're not currently running.
+        # If needed, you can specify `<repository>` and `<snapshot>` to retrieve information for specific snapshots, even if they're not currently running.
         # WARNING: Using the API to return the status of any snapshots other than currently running snapshots can be expensive.
         # The API requires a read from the repository for each shard in each snapshot.
         # For example, if you have 100 snapshots with 1,000 shards each, an API request that includes all snapshots will require 100,000 reads (100 snapshots x 1,000 shards).
@@ -36,15 +36,26 @@ module Elasticsearch
         # These requests can also tax machine resources and, when using cloud storage, incur high processing costs.
         #
         # @option arguments [String] :repository The snapshot repository name used to limit the request.
-        #  It supports wildcards (+*+) if +<snapshot>+ isn't specified.
+        #  It supports wildcards (`*`) if `<snapshot>` isn't specified.
         # @option arguments [String, Array<String>] :snapshot A comma-separated list of snapshots to retrieve status for.
         #  The default is currently running snapshots.
-        #  Wildcards (+*+) are not supported.
-        # @option arguments [Boolean] :ignore_unavailable If +false+, the request returns an error for any snapshots that are unavailable.
-        #  If +true+, the request ignores snapshots that are unavailable, such as those that are corrupted or temporarily cannot be returned.
+        #  Wildcards (`*`) are not supported.
+        # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error for any snapshots that are unavailable.
+        #  If `true`, the request ignores snapshots that are unavailable, such as those that are corrupted or temporarily cannot be returned.
         # @option arguments [Time] :master_timeout The period to wait for the master node.
         #  If the master node is not available before the timeout expires, the request fails and returns an error.
-        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
+        #  To indicate that the request should never timeout, set it to `-1`. Server default: 30s.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-snapshot-status

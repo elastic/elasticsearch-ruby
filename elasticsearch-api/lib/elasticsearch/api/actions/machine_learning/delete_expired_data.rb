@@ -29,14 +29,25 @@ module Elasticsearch
         # You can limit the request to a single or set of anomaly detection jobs by
         # using a job identifier, a group name, a comma-separated list of jobs, or a
         # wildcard expression. You can delete expired data for all anomaly detection
-        # jobs by using +_all+, by specifying +*+ as the +<job_id>+, or by omitting the
-        # +<job_id>+.
+        # jobs by using `_all`, by specifying `*` as the `<job_id>`, or by omitting the
+        # `<job_id>`.
         #
         # @option arguments [String] :job_id Identifier for an anomaly detection job. It can be a job identifier, a
         #  group name, or a wildcard expression.
         # @option arguments [Float] :requests_per_second The desired requests per second for the deletion processes. The default
         #  behavior is no throttling.
         # @option arguments [Time] :timeout How long can the underlying delete processes run until they are canceled. Server default: 8h.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

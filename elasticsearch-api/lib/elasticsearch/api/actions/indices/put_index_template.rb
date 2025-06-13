@@ -29,26 +29,37 @@ module Elasticsearch
         # For data streams, these settings and mappings are applied when the stream's backing indices are created.
         # Settings and mappings specified in a create index API request override any settings or mappings specified in an index template.
         # Changes to index templates do not affect existing indices, including the existing backing indices of a data stream.
-        # You can use C-style +/* *\/+ block comments in index templates.
+        # You can use C-style `/* *\/` block comments in index templates.
         # You can include comments anywhere in the request body, except before the opening curly bracket.
         # **Multiple matching templates**
         # If multiple index templates match the name of a new index or data stream, the template with the highest priority is used.
         # Multiple templates with overlapping index patterns at the same priority are not allowed and an error will be thrown when attempting to create a template matching an existing index template at identical priorities.
         # **Composing aliases, mappings, and settings**
-        # When multiple component templates are specified in the +composed_of+ field for an index template, they are merged in the order specified, meaning that later component templates override earlier component templates.
+        # When multiple component templates are specified in the `composed_of` field for an index template, they are merged in the order specified, meaning that later component templates override earlier component templates.
         # Any mappings, settings, or aliases from the parent index template are merged in next.
         # Finally, any configuration on the index request itself is merged.
         # Mapping definitions are merged recursively, which means that later mapping components can introduce new field mappings and update the mapping configuration.
         # If a field mapping is already contained in an earlier component, its definition will be completely overwritten by the later one.
-        # This recursive merging strategy applies not only to field mappings, but also root options like +dynamic_templates+ and +meta+.
-        # If an earlier component contains a +dynamic_templates+ block, then by default new +dynamic_templates+ entries are appended onto the end.
+        # This recursive merging strategy applies not only to field mappings, but also root options like `dynamic_templates` and `meta`.
+        # If an earlier component contains a `dynamic_templates` block, then by default new `dynamic_templates` entries are appended onto the end.
         # If an entry already exists with the same key, then it is overwritten by the new definition.
         #
         # @option arguments [String] :name Index or template name (*Required*)
-        # @option arguments [Boolean] :create If +true+, this request cannot replace or update existing index templates.
+        # @option arguments [Boolean] :create If `true`, this request cannot replace or update existing index templates.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [String] :cause User defined reason for creating/updating the index template
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

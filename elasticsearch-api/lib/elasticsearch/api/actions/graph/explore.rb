@@ -25,7 +25,7 @@ module Elasticsearch
         # Explore graph analytics.
         # Extract and summarize information about the documents and terms in an Elasticsearch data stream or index.
         # The easiest way to understand the behavior of this API is to use the Graph UI to explore connections.
-        # An initial request to the +_explore+ API contains a seed query that identifies the documents of interest and specifies the fields that define the vertices and connections you want to include in the graph.
+        # An initial request to the `_explore` API contains a seed query that identifies the documents of interest and specifies the fields that define the vertices and connections you want to include in the graph.
         # Subsequent requests enable you to spider out from one more vertices of interest.
         # You can exclude vertices that have already been returned.
         #
@@ -34,6 +34,17 @@ module Elasticsearch
         # @option arguments [Time] :timeout Specifies the period of time to wait for a response from each shard.
         #  If no response is received before the timeout expires, the request fails and returns an error.
         #  Defaults to no timeout.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
