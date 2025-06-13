@@ -28,12 +28,12 @@ module Elasticsearch
         # Individual users and external applications should not call this API directly.
         # Elastic reserves the right to change or remove this feature in future releases without prior notice.
         # To use this API, you must have one of the following privileges:
-        # * The +manage_user_profile+ cluster privilege.
-        # * The +update_profile_data+ global privilege for the namespaces that are referenced in the request.
-        # This API updates the +labels+ and +data+ fields of an existing user profile document with JSON objects.
+        # * The `manage_user_profile` cluster privilege.
+        # * The `update_profile_data` global privilege for the namespaces that are referenced in the request.
+        # This API updates the `labels` and `data` fields of an existing user profile document with JSON objects.
         # New keys and their values are added to the profile document and conflicting keys are replaced by data that's included in the request.
         # For both labels and data, content is namespaced by the top-level fields.
-        # The +update_profile_data+ global privilege grants privileges for updating only the allowed namespaces.
+        # The `update_profile_data` global privilege grants privileges for updating only the allowed namespaces.
         #
         # @option arguments [String] :uid A unique identifier for the user profile. (*Required*)
         # @option arguments [Integer] :if_seq_no Only perform the operation if the document has this sequence number.
@@ -42,6 +42,17 @@ module Elasticsearch
         #  visible to search.
         #  If 'wait_for', it waits for a refresh to make this operation visible to search.
         #  If 'false', nothing is done with refreshes. Server default: false.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

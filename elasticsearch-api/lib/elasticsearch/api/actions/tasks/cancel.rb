@@ -29,7 +29,7 @@ module Elasticsearch
         # It is also possible that Elasticsearch must complete its work on other tasks before it can process the cancellation.
         # The get task information API will continue to list these cancelled tasks until they complete.
         # The cancelled flag in the response indicates that the cancellation command has been processed and the task will stop as soon as possible.
-        # To troubleshoot why a cancelled task does not complete promptly, use the get task information API with the +?detailed+ parameter to identify the other tasks the system is running.
+        # To troubleshoot why a cancelled task does not complete promptly, use the get task information API with the `?detailed` parameter to identify the other tasks the system is running.
         # You can also use the node hot threads API to obtain detailed information about the work the system is doing instead of completing the cancelled task.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
@@ -41,6 +41,17 @@ module Elasticsearch
         # @option arguments [Array<String>] :nodes A comma-separated list of node IDs or names that is used to limit the request.
         # @option arguments [String] :parent_task_id A parent task ID that is used to limit the tasks.
         # @option arguments [Boolean] :wait_for_completion If true, the request blocks until all found tasks are complete.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-tasks

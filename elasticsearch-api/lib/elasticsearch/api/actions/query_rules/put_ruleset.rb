@@ -24,13 +24,24 @@ module Elasticsearch
       module Actions
         # Create or update a query ruleset.
         # There is a limit of 100 rules per ruleset.
-        # This limit can be increased by using the +xpack.applications.rules.max_rules_per_ruleset+ cluster setting.
-        # IMPORTANT: Due to limitations within pinned queries, you can only select documents using +ids+ or +docs+, but cannot use both in single rule.
+        # This limit can be increased by using the `xpack.applications.rules.max_rules_per_ruleset` cluster setting.
+        # IMPORTANT: Due to limitations within pinned queries, you can only select documents using `ids` or `docs`, but cannot use both in single rule.
         # It is advised to use one or the other in query rulesets, to avoid errors.
         # Additionally, pinned queries have a maximum limit of 100 pinned hits.
         # If multiple matching rules pin more than 100 documents, only the first 100 documents are pinned in the order they are specified in the ruleset.
         #
         # @option arguments [String] :ruleset_id The unique identifier of the query ruleset to be created or updated. (*Required*)
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
@@ -56,7 +67,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_query_rules/#{Utils.listify(_ruleset_id)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

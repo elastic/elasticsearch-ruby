@@ -25,13 +25,13 @@ module Elasticsearch
         # Predict future behavior of a time series.
         # Forecasts are not supported for jobs that perform population analysis; an
         # error occurs if you try to create a forecast for a job that has an
-        # +over_field_name+ in its configuration. Forcasts predict future behavior
+        # `over_field_name` in its configuration. Forcasts predict future behavior
         # based on historical data.
         #
         # @option arguments [String] :job_id Identifier for the anomaly detection job. The job must be open when you
         #  create a forecast; otherwise, an error occurs. (*Required*)
         # @option arguments [Time] :duration A period of time that indicates how far into the future to forecast. For
-        #  example, +30d+ corresponds to 30 days. The forecast starts at the last
+        #  example, `30d` corresponds to 30 days. The forecast starts at the last
         #  record that was processed. Server default: 1d.
         # @option arguments [Time] :expires_in The period of time that forecast results are retained. After a forecast
         #  expires, the results are deleted. If set to a value of 0, the forecast is
@@ -41,6 +41,17 @@ module Elasticsearch
         #  maximum is 500mb and minimum is 1mb. If set to 40% or more of the job’s
         #  configured memory limit, it is automatically reduced to below that
         #  amount. Server default: 20mb.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

@@ -25,13 +25,24 @@ module Elasticsearch
         # Get tokens from text analysis.
         # The analyze API performs analysis on a text string and returns the resulting tokens.
         # Generating excessive amount of tokens may cause a node to run out of memory.
-        # The +index.analyze.max_token_count+ setting enables you to limit the number of tokens that can be produced.
+        # The `index.analyze.max_token_count` setting enables you to limit the number of tokens that can be produced.
         # If more than this limit of tokens gets generated, an error occurs.
-        # The +_analyze+ endpoint without a specified index will always use +10000+ as its limit.
+        # The `_analyze` endpoint without a specified index will always use `10000` as its limit.
         #
         # @option arguments [String] :index Index used to derive the analyzer.
-        #  If specified, the +analyzer+ or field parameter overrides this value.
+        #  If specified, the `analyzer` or field parameter overrides this value.
         #  If no index is specified or the index does not have a default analyzer, the analyze API uses the standard analyzer.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

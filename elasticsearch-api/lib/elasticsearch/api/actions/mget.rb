@@ -26,29 +26,40 @@ module Elasticsearch
       # If you specify an index in the request URI, you only need to specify the document IDs in the request body.
       # To ensure fast responses, this multi get (mget) API responds with partial results if one or more shards fail.
       # **Filter source fields**
-      # By default, the +_source+ field is returned for every document (if stored).
-      # Use the +_source+ and +_source_include+ or +source_exclude+ attributes to filter what fields are returned for a particular document.
-      # You can include the +_source+, +_source_includes+, and +_source_excludes+ query parameters in the request URI to specify the defaults to use when there are no per-document instructions.
+      # By default, the `_source` field is returned for every document (if stored).
+      # Use the `_source` and `_source_include` or `source_exclude` attributes to filter what fields are returned for a particular document.
+      # You can include the `_source`, `_source_includes`, and `_source_excludes` query parameters in the request URI to specify the defaults to use when there are no per-document instructions.
       # **Get stored fields**
-      # Use the +stored_fields+ attribute to specify the set of stored fields you want to retrieve.
+      # Use the `stored_fields` attribute to specify the set of stored fields you want to retrieve.
       # Any requested fields that are not stored are ignored.
-      # You can include the +stored_fields+ query parameter in the request URI to specify the defaults to use when there are no per-document instructions.
+      # You can include the `stored_fields` query parameter in the request URI to specify the defaults to use when there are no per-document instructions.
       #
-      # @option arguments [String] :index Name of the index to retrieve documents from when +ids+ are specified, or when a document in the +docs+ array does not specify an index.
+      # @option arguments [String] :index Name of the index to retrieve documents from when `ids` are specified, or when a document in the `docs` array does not specify an index.
       # @option arguments [Boolean] :force_synthetic_source Should this request force synthetic _source?
       #  Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance.
       #  Fetches with this enabled will be slower the enabling synthetic source natively in the index.
       # @option arguments [String] :preference Specifies the node or shard the operation should be performed on. Random by default.
-      # @option arguments [Boolean] :realtime If +true+, the request is real-time as opposed to near-real-time. Server default: true.
-      # @option arguments [Boolean] :refresh If +true+, the request refreshes relevant shards before retrieving documents.
+      # @option arguments [Boolean] :realtime If `true`, the request is real-time as opposed to near-real-time. Server default: true.
+      # @option arguments [Boolean] :refresh If `true`, the request refreshes relevant shards before retrieving documents.
       # @option arguments [String] :routing Custom value used to route operations to a specific shard.
-      # @option arguments [Boolean, String, Array<String>] :_source True or false to return the +_source+ field or not, or a list of fields to return.
+      # @option arguments [Boolean, String, Array<String>] :_source True or false to return the `_source` field or not, or a list of fields to return.
       # @option arguments [String, Array<String>] :_source_excludes A comma-separated list of source fields to exclude from the response.
-      #  You can also use this parameter to exclude fields from the subset specified in +_source_includes+ query parameter.
+      #  You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter.
       # @option arguments [String, Array<String>] :_source_includes A comma-separated list of source fields to include in the response.
-      #  If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the +_source_excludes+ query parameter.
-      #  If the +_source+ parameter is +false+, this parameter is ignored.
-      # @option arguments [String, Array<String>] :stored_fields If +true+, retrieves the document fields stored in the index rather than the document +_source+. Server default: false.
+      #  If this parameter is specified, only these source fields are returned. You can exclude fields from this subset using the `_source_excludes` query parameter.
+      #  If the `_source` parameter is `false`, this parameter is ignored.
+      # @option arguments [String, Array<String>] :stored_fields If `true`, retrieves the document fields stored in the index rather than the document `_source`. Server default: false.
+      # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+      #  when they occur.
+      # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+      #  returned by Elasticsearch.
+      # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+      #  For example `"exists_time": "1h"` for humans and
+      #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+      #  readable values will be omitted. This makes sense for responses being consumed
+      #  only by machines.
+      # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+      #  this option for debugging only.
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body request body
       #

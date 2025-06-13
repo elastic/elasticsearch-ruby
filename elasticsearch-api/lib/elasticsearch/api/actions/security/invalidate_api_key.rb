@@ -25,15 +25,26 @@ module Elasticsearch
         # Invalidate API keys.
         # This API invalidates API keys created by the create API key or grant API key APIs.
         # Invalidated API keys fail authentication, but they can still be viewed using the get API key information and query API key information APIs, for at least the configured retention period, until they are automatically deleted.
-        # To use this API, you must have at least the +manage_security+, +manage_api_key+, or +manage_own_api_key+ cluster privileges.
-        # The +manage_security+ privilege allows deleting any API key, including both REST and cross cluster API keys.
-        # The +manage_api_key+ privilege allows deleting any REST API key, but not cross cluster API keys.
-        # The +manage_own_api_key+ only allows deleting REST API keys that are owned by the user.
-        # In addition, with the +manage_own_api_key+ privilege, an invalidation request must be issued in one of the three formats:
-        # - Set the parameter +owner=true+.
-        # - Or, set both +username+ and +realm_name+ to match the user's identity.
-        # - Or, if the request is issued by an API key, that is to say an API key invalidates itself, specify its ID in the +ids+ field.
+        # To use this API, you must have at least the `manage_security`, `manage_api_key`, or `manage_own_api_key` cluster privileges.
+        # The `manage_security` privilege allows deleting any API key, including both REST and cross cluster API keys.
+        # The `manage_api_key` privilege allows deleting any REST API key, but not cross cluster API keys.
+        # The `manage_own_api_key` only allows deleting REST API keys that are owned by the user.
+        # In addition, with the `manage_own_api_key` privilege, an invalidation request must be issued in one of the three formats:
+        # - Set the parameter `owner=true`.
+        # - Or, set both `username` and `realm_name` to match the user's identity.
+        # - Or, if the request is issued by an API key, that is to say an API key invalidates itself, specify its ID in the `ids` field.
         #
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
@@ -51,7 +62,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = '_security/api_key'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

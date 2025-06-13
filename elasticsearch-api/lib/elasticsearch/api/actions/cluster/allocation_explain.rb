@@ -27,10 +27,22 @@ module Elasticsearch
         # For unassigned shards, it provides an explanation for why the shard is unassigned.
         # For assigned shards, it provides an explanation for why the shard is remaining on its current node and has not moved or rebalanced to another node.
         # This API can be very useful when attempting to diagnose why a shard is unassigned or why a shard continues to remain on its current node when you might expect otherwise.
+        # Refer to the linked documentation for examples of how to troubleshoot allocation issues using this API.
         #
         # @option arguments [Boolean] :include_disk_info If true, returns information about disk usage and shard sizes.
         # @option arguments [Boolean] :include_yes_decisions If true, returns YES decisions in explanation.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

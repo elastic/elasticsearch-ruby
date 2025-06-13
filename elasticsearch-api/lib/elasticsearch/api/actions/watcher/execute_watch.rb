@@ -30,11 +30,22 @@ module Elasticsearch
         # You can use the run watch API to run watches that are not yet registered by specifying the watch definition inline.
         # This serves as great tool for testing and debugging your watches prior to adding them to Watcher.
         # When Elasticsearch security features are enabled on your cluster, watches are run with the privileges of the user that stored the watches.
-        # If your user is allowed to read index +a+, but not index +b+, then the exact same set of rules will apply during execution of a watch.
+        # If your user is allowed to read index `a`, but not index `b`, then the exact same set of rules will apply during execution of a watch.
         # When using the run watch API, the authorization data of the user that called the API will be used as a base, instead of the information who stored the watch.
         #
         # @option arguments [String] :id The watch identifier.
         # @option arguments [Boolean] :debug Defines whether the watch runs in debug mode.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

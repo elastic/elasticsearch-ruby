@@ -24,19 +24,19 @@ module Elasticsearch
       module Actions
         # Get index statistics.
         # For data streams, the API retrieves statistics for the stream's backing indices.
-        # By default, the returned statistics are index-level with +primaries+ and +total+ aggregations.
-        # +primaries+ are the values for only the primary shards.
-        # +total+ are the accumulated values for both primary and replica shards.
-        # To get shard-level statistics, set the +level+ parameter to +shards+.
+        # By default, the returned statistics are index-level with `primaries` and `total` aggregations.
+        # `primaries` are the values for only the primary shards.
+        # `total` are the accumulated values for both primary and replica shards.
+        # To get shard-level statistics, set the `level` parameter to `shards`.
         # NOTE: When moving to another node, the shard-level statistics for a shard are cleared.
         # Although the shard is no longer part of the node, that node retains any node-level statistics to which the shard contributed.
         #
         # @option arguments [String, Array<String>] :metric Limit the information returned the specific metrics.
-        # @option arguments [String, Array] :index A comma-separated list of index names; use +_all+ or empty string to perform the operation on all indices
+        # @option arguments [String, Array] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
         # @option arguments [String, Array<String>] :completion_fields Comma-separated list or wildcard expressions of fields to include in fielddata and suggest statistics.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match. If the request can target data streams, this argument
         #  determines whether wildcard expressions match hidden data streams. Supports comma-separated values,
-        #  such as +open,hidden+.
+        #  such as `open,hidden`.
         # @option arguments [String, Array<String>] :fielddata_fields Comma-separated list or wildcard expressions of fields to include in fielddata statistics.
         # @option arguments [String, Array<String>] :fields Comma-separated list or wildcard expressions of fields to include in the statistics.
         # @option arguments [Boolean] :forbid_closed_indices If true, statistics are not collected from closed indices. Server default: true.
@@ -44,6 +44,17 @@ module Elasticsearch
         # @option arguments [Boolean] :include_segment_file_sizes If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested).
         # @option arguments [Boolean] :include_unloaded_segments If true, the response includes information from segments that are not loaded into memory.
         # @option arguments [String] :level Indicates whether statistics are aggregated at the cluster, index, or shard level.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-stats

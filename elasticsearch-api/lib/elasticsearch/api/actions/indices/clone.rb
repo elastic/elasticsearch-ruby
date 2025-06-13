@@ -29,7 +29,7 @@ module Elasticsearch
         # The API also does not copy index metadata from the original index.
         # Index metadata includes aliases, index lifecycle management phase definitions, and cross-cluster replication (CCR) follower information.
         # For example, if you clone a CCR follower index, the resulting clone will not be a follower index.
-        # The clone API copies most index settings from the source index to the resulting index, with the exception of +index.number_of_replicas+ and +index.auto_expand_replicas+.
+        # The clone API copies most index settings from the source index to the resulting index, with the exception of `index.number_of_replicas` and `index.auto_expand_replicas`.
         # To set the number of replicas in the resulting index, configure these settings in the clone request.
         # Cloning works as follows:
         # * First, it creates a new target index with the same definition as the source index.
@@ -42,10 +42,10 @@ module Elasticsearch
         # * The node handling the clone process must have sufficient free disk space to accommodate a second copy of the existing index.
         # The current write index on a data stream cannot be cloned.
         # In order to clone the current write index, the data stream must first be rolled over so that a new write index is created and then the previous write index can be cloned.
-        # NOTE: Mappings cannot be specified in the +_clone+ request. The mappings of the source index will be used for the target index.
+        # NOTE: Mappings cannot be specified in the `_clone` request. The mappings of the source index will be used for the target index.
         # **Monitor the cloning process**
-        # The cloning process can be monitored with the cat recovery API or the cluster health API can be used to wait until all primary shards have been allocated by setting the +wait_for_status+ parameter to +yellow+.
-        # The +_clone+ API returns as soon as the target index has been added to the cluster state, before any shards have been allocated.
+        # The cloning process can be monitored with the cat recovery API or the cluster health API can be used to wait until all primary shards have been allocated by setting the `wait_for_status` parameter to `yellow`.
+        # The `_clone` API returns as soon as the target index has been added to the cluster state, before any shards have been allocated.
         # At this point, all shards are in the state unassigned.
         # If, for any reason, the target index can't be allocated, its primary shard will remain unassigned until it can be allocated on that node.
         # Once the primary shard is allocated, it moves to state initializing, and the clone process begins.
@@ -61,7 +61,18 @@ module Elasticsearch
         # @option arguments [Time] :timeout Period to wait for a response.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Integer, String] :wait_for_active_shards The number of shard copies that must be active before proceeding with the operation.
-        #  Set to +all+ or any positive integer up to the total number of shards in the index (+number_of_replicas+1+). Server default: 1.
+        #  Set to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`). Server default: 1.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

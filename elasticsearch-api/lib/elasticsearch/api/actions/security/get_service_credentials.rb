@@ -23,13 +23,24 @@ module Elasticsearch
     module Security
       module Actions
         # Get service account credentials.
-        # To use this API, you must have at least the +read_security+ cluster privilege (or a greater privilege such as +manage_service_account+ or +manage_security+).
+        # To use this API, you must have at least the `read_security` cluster privilege (or a greater privilege such as `manage_service_account` or `manage_security`).
         # The response includes service account tokens that were created with the create service account tokens API as well as file-backed tokens from all nodes of the cluster.
-        # NOTE: For tokens backed by the +service_tokens+ file, the API collects them from all nodes of the cluster.
+        # NOTE: For tokens backed by the `service_tokens` file, the API collects them from all nodes of the cluster.
         # Tokens with the same name from different nodes are assumed to be the same token and are only counted once towards the total number of service tokens.
         #
         # @option arguments [String] :namespace The name of the namespace. (*Required*)
         # @option arguments [String] :service The service name. (*Required*)
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-service-credentials
@@ -56,7 +67,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = "_security/service/#{Utils.listify(_namespace)}/#{Utils.listify(_service)}/credential"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

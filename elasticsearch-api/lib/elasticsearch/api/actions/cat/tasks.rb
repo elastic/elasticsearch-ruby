@@ -31,22 +31,33 @@ module Elasticsearch
         # support SLA of official GA features.
         #
         # @option arguments [Array<String>] :actions The task action names, which are used to limit the response.
-        # @option arguments [Boolean] :detailed If +true+, the response includes detailed information about shard recoveries.
+        # @option arguments [Boolean] :detailed If `true`, the response includes detailed information about shard recoveries.
         # @option arguments [Array<String>] :nodes Unique node identifiers, which are used to limit the response.
         # @option arguments [String] :parent_task_id The parent task identifier, which is used to limit the response.
         # @option arguments [String, Array<String>] :h List of columns to appear in the response. Supports simple wildcards.
         # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
-        #  Sorting defaults to ascending and can be changed by setting +:asc+
-        #  or +:desc+ as a suffix to the column name.
+        #  Sorting defaults to ascending and can be changed by setting `:asc`
+        #  or `:desc` as a suffix to the column name.
         # @option arguments [String] :time Unit used to display time values.
         # @option arguments [Time] :timeout Period to wait for a response.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
-        # @option arguments [Boolean] :wait_for_completion If +true+, the request blocks until the task has completed.
+        # @option arguments [Boolean] :wait_for_completion If `true`, the request blocks until the task has completed.
         # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
-        #  +text+, +json+, +cbor+, +yaml+, or +smile+. Server default: text.
-        # @option arguments [Boolean] :help When set to +true+ will output available columns. This option
+        #  `text`, `json`, `cbor`, `yaml`, or `smile`. Server default: text.
+        # @option arguments [Boolean] :help When set to `true` will output available columns. This option
         #  can't be combined with any other query string option.
-        # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
+        # @option arguments [Boolean] :v When set to `true` will enable verbose output.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-tasks

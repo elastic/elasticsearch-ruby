@@ -29,10 +29,21 @@ module Elasticsearch
         # The SAML message that is submitted can be:
         # * A response to a SAML authentication request that was previously created using the SAML prepare authentication API.
         # * An unsolicited SAML message in the case of an IdP-initiated single sign-on (SSO) flow.
-        # In either case, the SAML message needs to be a base64 encoded XML document with a root element of +<Response>+.
+        # In either case, the SAML message needs to be a base64 encoded XML document with a root element of `<Response>`.
         # After successful validation, Elasticsearch responds with an Elasticsearch internal access token and refresh token that can be subsequently used for authentication.
         # This API endpoint essentially exchanges SAML responses that indicate successful authentication in the IdP for Elasticsearch access and refresh tokens, which can be used for authentication against Elasticsearch.
         #
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
@@ -50,7 +61,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_security/saml/authenticate'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

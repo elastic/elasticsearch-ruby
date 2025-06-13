@@ -29,9 +29,11 @@ module Elasticsearch
         # The snapshot and cluster versions must be compatible.
         # To restore a snapshot, the cluster's global metadata must be writable. Ensure there are't any cluster blocks that prevent writes. The restore operation ignores index blocks.
         # Before you restore a data stream, ensure the cluster contains a matching index template with data streams enabled. To check, use the index management feature in Kibana or the get index template API:
-        # +
+        #
+        # ```
         # GET _index_template/*?filter_path=index_templates.name,index_templates.index_template.index_patterns,index_templates.index_template.data_stream
-        # +
+        # ```
+        #
         # If no such template exists, you can create one or restore a cluster state that contains one. Without a matching index template, a data stream can't roll over or create backing indices.
         # If your snapshot contains data from App Search or Workplace Search, you must restore the Enterprise Search encryption key before you restore the snapshot.
         #
@@ -39,10 +41,21 @@ module Elasticsearch
         # @option arguments [String] :snapshot The name of the snapshot to restore. (*Required*)
         # @option arguments [Time] :master_timeout The period to wait for the master node.
         #  If the master node is not available before the timeout expires, the request fails and returns an error.
-        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
-        # @option arguments [Boolean] :wait_for_completion If +true+, the request returns a response when the restore operation completes.
+        #  To indicate that the request should never timeout, set it to `-1`. Server default: 30s.
+        # @option arguments [Boolean] :wait_for_completion If `true`, the request returns a response when the restore operation completes.
         #  The operation is complete when it finishes all attempts to recover primary shards for restored indices.
-        #  This applies even if one or more of the recovery attempts fail.If +false+, the request returns a response when the restore operation initializes.
+        #  This applies even if one or more of the recovery attempts fail.If `false`, the request returns a response when the restore operation initializes.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

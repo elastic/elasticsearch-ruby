@@ -23,11 +23,22 @@ module Elasticsearch
     module Security
       module Actions
         # Logout of OpenID Connect.
-        # Invalidate an access token and a refresh token that were generated as a response to the +/_security/oidc/authenticate+ API.
+        # Invalidate an access token and a refresh token that were generated as a response to the `/_security/oidc/authenticate` API.
         # If the OpenID Connect authentication realm in Elasticsearch is accordingly configured, the response to this call will contain a URI pointing to the end session endpoint of the OpenID Connect Provider in order to perform single logout.
         # Elasticsearch exposes all the necessary OpenID Connect related functionality with the OpenID Connect APIs.
         # These APIs are used internally by Kibana in order to provide OpenID Connect based authentication, but can also be used by other, custom web applications or other clients.
         #
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
@@ -45,7 +56,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_security/oidc/logout'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

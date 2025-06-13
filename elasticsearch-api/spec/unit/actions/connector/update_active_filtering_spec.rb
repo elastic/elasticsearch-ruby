@@ -33,6 +33,6 @@ describe 'client.connector#update_active_filtering' do
   end
 
   it 'performs the request' do
-    expect(client_double.connector.update_active_filtering(body: {}, connector_id: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.connector.update_active_filtering(connector_id: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

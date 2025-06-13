@@ -30,10 +30,10 @@ module Elasticsearch
         # Roles can be created by using the create or update roles API or roles files.
         # **Role templates**
         # The most common use for role mappings is to create a mapping from a known value on the user to a fixed role name.
-        # For example, all users in the +cn=admin,dc=example,dc=com+ LDAP group should be given the superuser role in Elasticsearch.
-        # The +roles+ field is used for this purpose.
+        # For example, all users in the `cn=admin,dc=example,dc=com` LDAP group should be given the superuser role in Elasticsearch.
+        # The `roles` field is used for this purpose.
         # For more complex needs, it is possible to use Mustache templates to dynamically determine the names of the roles that should be granted to the user.
-        # The +role_templates+ field is used for this purpose.
+        # The `role_templates` field is used for this purpose.
         # NOTE: To use role templates successfully, the relevant scripting feature must be enabled.
         # Otherwise, all attempts to create a role mapping with role templates fail.
         # All of the user fields that are available in the role mapping rules are also available in the role templates.
@@ -43,7 +43,18 @@ module Elasticsearch
         #
         # @option arguments [String] :name The distinct name that identifies the role mapping.
         #  The name is used solely as an identifier to facilitate interaction via the API; it does not affect the behavior of the mapping in any way. (*Required*)
-        # @option arguments [String] :refresh If +true+ (the default) then refresh the affected shards to make this operation visible to search, if +wait_for+ then wait for a refresh to make this operation visible to search, if +false+ then do nothing with refreshes.
+        # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

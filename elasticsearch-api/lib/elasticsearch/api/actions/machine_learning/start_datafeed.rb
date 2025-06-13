@@ -36,21 +36,32 @@ module Elasticsearch
         #  alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric
         #  characters. (*Required*)
         # @option arguments [String, Time] :end The time that the datafeed should end, which can be specified by using one of the following formats:
-        #  - ISO 8601 format with milliseconds, for example +2017-01-22T06:00:00.000Z+
-        #  - ISO 8601 format without milliseconds, for example +2017-01-22T06:00:00+00:00+
-        #  - Milliseconds since the epoch, for example +1485061200000+
-        #  Date-time arguments using either of the ISO 8601 formats must have a time zone designator, where +Z+ is accepted
-        #  as an abbreviation for UTC time. When a URL is expected (for example, in browsers), the +++ used in time zone
-        #  designators must be encoded as +%2B+.
+        #  - ISO 8601 format with milliseconds, for example `2017-01-22T06:00:00.000Z`
+        #  - ISO 8601 format without milliseconds, for example `2017-01-22T06:00:00+00:00`
+        #  - Milliseconds since the epoch, for example `1485061200000`
+        #  Date-time arguments using either of the ISO 8601 formats must have a time zone designator, where `Z` is accepted
+        #  as an abbreviation for UTC time. When a URL is expected (for example, in browsers), the `+` used in time zone
+        #  designators must be encoded as `%2B`.
         #  The end time value is exclusive. If you do not specify an end time, the datafeed
         #  runs continuously.
-        # @option arguments [String, Time] :start The time that the datafeed should begin, which can be specified by using the same formats as the +end+ parameter.
+        # @option arguments [String, Time] :start The time that the datafeed should begin, which can be specified by using the same formats as the `end` parameter.
         #  This value is inclusive.
         #  If you do not specify a start time and the datafeed is associated with a new anomaly detection job, the analysis
         #  starts from the earliest time for which data is available.
         #  If you restart a stopped datafeed and specify a start value that is earlier than the timestamp of the latest
         #  processed record, the datafeed continues from 1 millisecond after the timestamp of the latest processed record.
         # @option arguments [Time] :timeout Specifies the amount of time to wait until a datafeed starts. Server default: 20s.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
