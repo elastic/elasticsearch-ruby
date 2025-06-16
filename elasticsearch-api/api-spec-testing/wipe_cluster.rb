@@ -414,24 +414,27 @@ module Elasticsearch
         def clear_ml_jobs(client)
           client.ml.close_job(job_id: '_all', force: true)
           client.ml.get_jobs['jobs'].each do |d|
-            client.ml.delete_job(job_id: d['job_id'])
+            client.ml.delete_job(job_id: d['job_id'], wait_for_completion: false, force: true)
           end
         end
 
         def clear_datafeeds(client)
           client.ml.stop_datafeed(datafeed_id: '_all', force: true)
           client.ml.get_datafeeds['datafeeds'].each do |d|
-            client.ml.delete_datafeed(datafeed_id: d['datafeed_id'])
+            client.ml.stop_datafeed(datafeed_id: d['datafeed_id'], force: true)
+            begin
+              client.ml.delete_datafeed(datafeed_id: d['datafeed_id'], force: true)
+            rescue StandardError => e
+              logger.info(e)
+            end
           end
         end
 
         def clear_tasks(client)
           tasks = client.tasks.get['nodes'].values.first['tasks'].values.select do |d|
             d['cancellable']
-          end.map do |d|
-            "#{d['node']}:#{d['id']}"
           end
-          tasks.each { |t| client.tasks.cancel task_id: t }
+          tasks.each { |d| client.tasks.cancel(task_id: "#{d['node']}:#{d['id']}") }
         end
 
         def clear_machine_learning_indices(client)
@@ -448,7 +451,7 @@ module Elasticsearch
 
         def clear_transforms(client)
           client.transform.get_transform(transform_id: '*')['transforms'].each do |transform|
-            client.transform.delete_transform(transform_id: transform['id'])
+            client.transform.delete_transform(transform_id: transform['id'], force: true)
           end
         end
 
@@ -482,7 +485,7 @@ module Elasticsearch
           return unless models['trained_model_configs']
 
           models['trained_model_configs'].each do |model|
-            client.ml.delete_trained_model(model_id: model['model_id'], force: true, ignore: 400)
+            client.ml.delete_trained_model(model_id: model['model_id'], force: true, ignore: 400, timeout: '120s')
           end
         end
       end
