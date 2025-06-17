@@ -28,7 +28,7 @@ module Elasticsearch
         # NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming.
         # The Chat completion inference API and the Stream inference API differ in their response structure and capabilities.
         # The Chat completion inference API provides more comprehensive customization options through more fields and function calling support.
-        # If you use the `openai` service or the `elastic` service, use the Chat completion inference API.
+        # If you use the `openai`, `hugging_face` or the `elastic` service, use the Chat completion inference API.
         #
         # @option arguments [String] :inference_id The inference Id (*Required*)
         # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference request to complete. Server default: 30s.
@@ -38,7 +38,7 @@ module Elasticsearch
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and
-        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  `"exists_time_in_millis": 3600000` for computers. When disabled the human
         #  readable values will be omitted. This makes sense for responses being consumed
         #  only by machines.
         # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use

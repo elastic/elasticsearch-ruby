@@ -28,7 +28,9 @@ module Elasticsearch
         # To revert a setting to the default value, use a null value.
         # The list of per-index settings that can be updated dynamically on live indices can be found in index settings documentation.
         # To preserve existing settings from being updated, set the `preserve_existing` parameter to `true`.
-        #  There are multiple valid ways to represent index settings in the request body. You can specify only the setting, for example:
+        # For performance optimization during bulk indexing, you can disable the refresh interval.
+        # Refer to {https://www.elastic.co/docs/deploy-manage/production-guidance/optimize-performance/indexing-speed#disable-refresh-interval disable refresh interval} for an example.
+        # There are multiple valid ways to represent index settings in the request body. You can specify only the setting, for example:
         #
         # ```
         # {
@@ -74,6 +76,7 @@ module Elasticsearch
         # This affects searches and any new data added to the stream after the rollover.
         # However, it does not affect the data stream's backing indices or their existing data.
         # To change the analyzer for existing backing indices, you must create a new data stream and reindex your data into it.
+        # Refer to {https://www.elastic.co/docs/manage-data/data-store/text-analysis/specify-an-analyzer#update-analyzers-on-existing-indices updating analyzers on existing indices} for step-by-step examples.
         #
         # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and aliases used to limit
         #  the request. Supports wildcards (`*`). To target all data streams and
@@ -104,7 +107,7 @@ module Elasticsearch
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and
-        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  `"exists_time_in_millis": 3600000` for computers. When disabled the human
         #  readable values will be omitted. This makes sense for responses being consumed
         #  only by machines.
         # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use

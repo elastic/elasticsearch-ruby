@@ -109,6 +109,8 @@ module Elasticsearch
       # Imagine a `_bulk?refresh=wait_for` request with three documents in it that happen to be routed to different shards in an index with five shards.
       # The request will only wait for those three shards to refresh.
       # The other two shards that make up the index do not participate in the `_bulk` request at all.
+      # You might want to disable the refresh interval temporarily to improve indexing throughput for large bulk requests.
+      # Refer to the linked documentation for step-by-step instructions using the index settings API.
       #
       # @option arguments [String] :index The name of the data stream, index, or index alias to perform bulk actions on.
       # @option arguments [Boolean] :include_source_on_error True or false if to include the document source in the error message in case of parsing errors. Server default: true.
@@ -143,7 +145,7 @@ module Elasticsearch
       #  returned by Elasticsearch.
       # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
       #  For example `"exists_time": "1h"` for humans and
-      #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+      #  `"exists_time_in_millis": 3600000` for computers. When disabled the human
       #  readable values will be omitted. This makes sense for responses being consumed
       #  only by machines.
       # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use

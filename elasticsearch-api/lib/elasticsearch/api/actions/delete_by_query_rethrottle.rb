@@ -25,7 +25,7 @@ module Elasticsearch
       # Change the number of requests per second for a particular delete by query operation.
       # Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
       #
-      # @option arguments [String, Integer] :task_id The ID for the task. (*Required*)
+      # @option arguments [String] :task_id The ID for the task. (*Required*)
       # @option arguments [Float] :requests_per_second The throttle for this request in sub-requests per second.
       #  To disable throttling, set it to `-1`.
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
@@ -34,7 +34,7 @@ module Elasticsearch
       #  returned by Elasticsearch.
       # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
       #  For example `"exists_time": "1h"` for humans and
-      #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+      #  `"exists_time_in_millis": 3600000` for computers. When disabled the human
       #  readable values will be omitted. This makes sense for responses being consumed
       #  only by machines.
       # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use

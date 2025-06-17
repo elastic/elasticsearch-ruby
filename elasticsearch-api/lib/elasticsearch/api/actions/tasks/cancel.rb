@@ -36,7 +36,7 @@ module Elasticsearch
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String, Integer] :task_id The task identifier.
+        # @option arguments [String] :task_id The task identifier.
         # @option arguments [String] :actions A comma-separated list or wildcard expression of actions that is used to limit the request.
         # @option arguments [Array<String>] :nodes A comma-separated list of node IDs or names that is used to limit the request.
         # @option arguments [String] :parent_task_id A parent task ID that is used to limit the tasks.
@@ -47,7 +47,7 @@ module Elasticsearch
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and
-        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  `"exists_time_in_millis": 3600000` for computers. When disabled the human
         #  readable values will be omitted. This makes sense for responses being consumed
         #  only by machines.
         # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
