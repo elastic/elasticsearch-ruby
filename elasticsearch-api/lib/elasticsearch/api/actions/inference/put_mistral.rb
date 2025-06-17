@@ -23,10 +23,9 @@ module Elasticsearch
     module Inference
       module Actions
         # Create a Mistral inference endpoint.
-        # Creates an inference endpoint to perform an inference task with the `mistral` service.
+        # Create an inference endpoint to perform an inference task with the `mistral` service.
         #
-        # @option arguments [String] :task_type The task type.
-        #  The only valid task type for the model to perform is `text_embedding`. (*Required*)
+        # @option arguments [String] :task_type The type of the inference task that the model will perform. (*Required*)
         # @option arguments [String] :mistral_inference_id The unique identifier of the inference endpoint. (*Required*)
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
@@ -34,7 +33,7 @@ module Elasticsearch
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and
-        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  `"exists_time_in_millis": 3600000` for computers. When disabled the human
         #  readable values will be omitted. This makes sense for responses being consumed
         #  only by machines.
         # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use

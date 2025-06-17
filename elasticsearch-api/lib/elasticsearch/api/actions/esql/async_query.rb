@@ -33,23 +33,13 @@ module Elasticsearch
         # @option arguments [Boolean] :drop_null_columns Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
         #  If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
         # @option arguments [String] :format A short version of the Accept header, for example `json` or `yaml`.
-        # @option arguments [Time] :keep_alive The period for which the query and its results are stored in the cluster.
-        #  The default period is five days.
-        #  When this period expires, the query and its results are deleted, even if the query is still ongoing.
-        #  If the `keep_on_completion` parameter is false, Elasticsearch only stores async queries that do not complete within the period set by the `wait_for_completion_timeout` parameter, regardless of this value. Server default: 5d.
-        # @option arguments [Boolean] :keep_on_completion Indicates whether the query and its results are stored in the cluster.
-        #  If false, the query and its results are stored in the cluster only if the request does not complete during the period set by the `wait_for_completion_timeout` parameter.
-        # @option arguments [Time] :wait_for_completion_timeout The period to wait for the request to finish.
-        #  By default, the request waits for 1 second for the query results.
-        #  If the query completes during this period, results are returned
-        #  Otherwise, a query ID is returned that can later be used to retrieve the results. Server default: 1s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and
-        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  `"exists_time_in_millis": 3600000` for computers. When disabled the human
         #  readable values will be omitted. This makes sense for responses being consumed
         #  only by machines.
         # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
