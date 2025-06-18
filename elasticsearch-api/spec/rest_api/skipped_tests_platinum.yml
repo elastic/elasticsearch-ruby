@@ -239,3 +239,92 @@
 -
   :file: 'esql/60_usage.yml'
   :description: 'Basic ESQL usage output (telemetry) snapshot version'
+# TODO: 8.19 - June 2025
+-
+  :file: 'ml/datafeeds_crud.yml'
+  :description: '*'
+-
+  :file: 'ml/delete_job_force.yml'
+  :description: '*'
+-
+  :file: 'ml/filter_crud.yml'
+  :description: '*'
+-
+  :file: 'ml/get_datafeed_stats.yml'
+  :description: '*'
+-
+  :file: 'ml/get_datafeeds.yml'
+  :description: '*'
+-
+  :file: 'ml/get_trained_model_stats.yml'
+  :description: '*'
+-
+  :file: 'ml/inference_crud.yml'
+  :description: '*'
+-
+  :file: 'ml/job_groups.yml'
+  :description: '*'
+-
+  :file: 'ml/jobs_crud.yml'
+  :description: '*'
+-
+  :file: 'ml/jobs_get.yml'
+  :description: '*'
+-
+  :file: 'ml/jobs_get_stats.yml'
+  :description: '*'
+-
+  :file: 'ml/preview_data_frame_analytics.yml'
+  :description: '*'
+-
+  :file: 'ml/preview_datafeed.yml'
+  :description: '*'
+-
+  :file: 'ml/search_knn_query_vector_builder.yml'
+  :description: '*'
+-
+  :file: 'ml/set_upgrade_mode.yml'
+  :description: '*'
+-
+  :file: 'ml/sparse_vector_search.yml'
+  :description: '*'
+-
+  :file: 'ml/start_data_frame_analytics.yml'
+  :description: '*'
+-
+  :file: 'ml/start_stop_datafeed.yml'
+  :description: '*'
+-
+  :file: 'ml/stop_data_frame_analytics.yml'
+  :description: '*'
+-
+  :file: 'ml/text_embedding_search.yml'
+  :description: '*'
+-
+  :file: 'ml/text_expansion_search.yml'
+  :description: '*'
+-
+  :file: 'ml/text_expansion_search_rank_features.yml'
+  :description: '*'
+-
+  :file: 'ml/text_expansion_search_sparse_vector.yml'
+  :description: '*'
+-
+  :file: 'ml/trained_model_cat_apis.yml'
+  :description: '*'
+-
+  :file: 'transform/transforms_crud.yml'
+  :description: '*'
+-
+  :file: 'transform/transforms_start_stop.yml'
+  :description: '*'
+-
+  :file: 'transform/transforms_stats.yml'
+  :description: '*'
+-
+  :file: 'transform/transforms_update.yml'
+  :description: '*'
+-
+  :file: 'transform/transforms_upgrade.yml'
+  :description: '*'
+# ENDS TODO: 8.19 - June 2025
