@@ -39,8 +39,7 @@ module Elasticsearch
         #  This parameter can only be used when the `q` query string parameter is specified.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
         #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-        #  Supports comma-separated values, such as `open,hidden`.
-        #  Valid values are: `all`, `open`, `closed`, `hidden`, `none`. Server default: open.
+        #  Supports comma-separated values, such as `open,hidden`. Server default: open.
         # @option arguments [Boolean] :explain If `true`, the response returns detailed information if an error has occurred.
         # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a missing or closed index.
         # @option arguments [Boolean] :lenient If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
@@ -48,7 +47,7 @@ module Elasticsearch
         # @option arguments [String] :q Query in the Lucene query string syntax.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and

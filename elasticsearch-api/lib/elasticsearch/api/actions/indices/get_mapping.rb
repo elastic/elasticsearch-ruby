@@ -32,15 +32,14 @@ module Elasticsearch
         #  This behavior applies even if the request targets other open indices. Server default: true.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
         #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-        #  Supports comma-separated values, such as `open,hidden`.
-        #  Valid values are: `all`, `open`, `closed`, `hidden`, `none`. Server default: open.
+        #  Supports comma-separated values, such as `open,hidden`. Server default: open.
         # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a missing or closed index.
         # @option arguments [Boolean] :local If `true`, the request retrieves information from the local node only.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and

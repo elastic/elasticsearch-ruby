@@ -33,10 +33,10 @@ module Elasticsearch
         # @option arguments [Integer] :size Specifies a max number of results to get
         # @option arguments [String] :status A sync job status to fetch connector sync jobs for
         # @option arguments [String] :connector_id A connector id to fetch connector sync jobs for
-        # @option arguments [Syncjobtype] :job_type A comma-separated list of job types to fetch the sync jobs for
+        # @option arguments [String, Array<String>] :job_type A comma-separated list of job types to fetch the sync jobs for
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and
