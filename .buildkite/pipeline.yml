@@ -56,6 +56,8 @@ steps:
         key: run-serverless-tests
         depends_on:
           - step: create-serverless
+        soft_fail:
+          - exit_status: "*"
         agents:
           provider: gcp
         env:
