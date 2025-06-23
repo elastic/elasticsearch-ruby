@@ -26,11 +26,11 @@ module Elasticsearch
         # This API always returns basic metrics.
         # You retrieve more metrics by using the metric parameter.
         #
-        # @option arguments [Watchermetric] :metric Defines which additional metrics are included in the response.
+        # @option arguments [String, Array<String>] :metric Defines which additional metrics are included in the response.
         # @option arguments [Boolean] :emit_stacktraces Defines whether stack traces are generated for each watch that is running.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and

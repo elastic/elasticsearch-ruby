@@ -35,13 +35,13 @@ module Elasticsearch
       # NOTE: The health indicators perform root cause analysis of non-green health statuses. This can be computationally expensive when called frequently.
       # When setting up automated polling of the API for health status, set verbose to false to disable the more expensive analysis logic.
       #
-      # @option arguments [String] :feature A feature of the cluster, as returned by the top-level health report API.
+      # @option arguments [String, Array<String>] :feature A feature of the cluster, as returned by the top-level health report API.
       # @option arguments [Time] :timeout Explicit operation timeout.
       # @option arguments [Boolean] :verbose Opt-in for more information about the health of the system. Server default: true.
       # @option arguments [Integer] :size Limit the number of affected resources the health report API returns. Server default: 1000.
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
       #  when they occur.
-      # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+      # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
       #  returned by Elasticsearch.
       # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
       #  For example `"exists_time": "1h"` for humans and

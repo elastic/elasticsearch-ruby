@@ -40,13 +40,13 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :fielddata_fields Comma-separated list or wildcard expressions of fields to include in fielddata statistics.
         # @option arguments [String, Array<String>] :fields Comma-separated list or wildcard expressions of fields to include in the statistics.
         # @option arguments [Boolean] :forbid_closed_indices If true, statistics are not collected from closed indices. Server default: true.
-        # @option arguments [String] :groups Comma-separated list of search groups to include in the search statistics.
+        # @option arguments [String, Array<String>] :groups Comma-separated list of search groups to include in the search statistics.
         # @option arguments [Boolean] :include_segment_file_sizes If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested).
         # @option arguments [Boolean] :include_unloaded_segments If true, the response includes information from segments that are not loaded into memory.
         # @option arguments [String] :level Indicates whether statistics are aggregated at the cluster, index, or shard level.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and

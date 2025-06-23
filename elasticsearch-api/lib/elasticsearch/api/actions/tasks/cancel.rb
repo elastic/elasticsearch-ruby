@@ -37,13 +37,13 @@ module Elasticsearch
         # support SLA of official GA features.
         #
         # @option arguments [String] :task_id The task identifier.
-        # @option arguments [String] :actions A comma-separated list or wildcard expression of actions that is used to limit the request.
+        # @option arguments [String, Array<String>] :actions A comma-separated list or wildcard expression of actions that is used to limit the request.
         # @option arguments [Array<String>] :nodes A comma-separated list of node IDs or names that is used to limit the request.
         # @option arguments [String] :parent_task_id A parent task ID that is used to limit the tasks.
         # @option arguments [Boolean] :wait_for_completion If true, the request blocks until all found tasks are complete.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and

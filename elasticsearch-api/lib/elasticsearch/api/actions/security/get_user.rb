@@ -25,11 +25,11 @@ module Elasticsearch
         # Get users.
         # Get information about users in the native realm and built-in users.
         #
-        # @option arguments [Username] :username An identifier for the user. You can specify multiple usernames as a comma-separated list. If you omit this parameter, the API retrieves information about all users.
+        # @option arguments [String, Array<String>] :username An identifier for the user. You can specify multiple usernames as a comma-separated list. If you omit this parameter, the API retrieves information about all users.
         # @option arguments [Boolean] :with_profile_uid Determines whether to retrieve the user profile UID, if it exists, for the users.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and

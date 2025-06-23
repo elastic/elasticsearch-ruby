@@ -74,10 +74,10 @@ module Elasticsearch
         # @option arguments [String] :q Query in the Lucene query string syntax
         # @option arguments [Integer] :size Number of hits to return (default: 10)
         # @option arguments [Integer] :from Starting offset (default: 0)
-        # @option arguments [String] :sort A comma-separated list of <field>:<direction> pairs
+        # @option arguments [String, Array<String>] :sort A comma-separated list of <field>:<direction> pairs
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and
