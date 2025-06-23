@@ -448,11 +448,11 @@ module Elasticsearch
         def clear_datafeeds(client)
           client.ml.stop_datafeed(datafeed_id: '_all', force: true)
           client.ml.get_datafeeds['datafeeds'].each do |d|
-            client.ml.stop_datafeed(datafeed_id: d['datafeed_id'], force: true)
-            begin
+            Thread.new do
+              client.ml.stop_datafeed(datafeed_id: d['datafeed_id'], force: true)
               client.ml.delete_datafeed(datafeed_id: d['datafeed_id'], force: true)
-            rescue StandardError => e
-              logger.info(e)
+            rescue StandardError
+              logger.info('Exception deleting datafeed')
             end
           end
         end
@@ -512,7 +512,7 @@ module Elasticsearch
           return unless models['trained_model_configs']
 
           models['trained_model_configs'].each do |model|
-            client.ml.delete_trained_model(model_id: model['model_id'], force: true, ignore: 400, timeout: '120s')
+            client.ml.delete_trained_model(model_id: model['model_id'], force: true, ignore: 400)
           end
         end
       end
