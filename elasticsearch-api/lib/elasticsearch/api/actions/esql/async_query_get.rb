@@ -31,6 +31,7 @@ module Elasticsearch
         #  A query ID is also provided when the request was submitted with the `keep_on_completion` parameter set to `true`. (*Required*)
         # @option arguments [Boolean] :drop_null_columns Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
         #  If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
+        # @option arguments [String] :format A short version of the Accept header, for example `json` or `yaml`.
         # @option arguments [Time] :keep_alive The period for which the query and its results are stored in the cluster.
         #  When this period expires, the query and its results are deleted, even if the query is still ongoing.
         # @option arguments [Time] :wait_for_completion_timeout The period to wait for the request to finish.
