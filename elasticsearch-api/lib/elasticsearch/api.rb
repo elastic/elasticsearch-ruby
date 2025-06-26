@@ -80,6 +80,7 @@ module Elasticsearch
                       :snapshot,
                       :sql,
                       :ssl,
+                      :streams,
                       :synonyms,
                       :tasks,
                       :text_structure,
