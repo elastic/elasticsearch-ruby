@@ -29,7 +29,7 @@ describe 'Perform request args' do
             spec.module_namespace.flatten.first == 'rollup' ||
             [
               'scroll', 'clear_scroll', 'connector.last_sync', 'knn_search',
-              'indices.put_data_stream_settings', 'indices.get_data_stream_settings'
+              'indices.remove_block'
             ].include?(spec.endpoint_name)
 
     # These are the path parts defined by the user in the method argument
