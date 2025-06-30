@@ -143,13 +143,13 @@ module Elasticsearch
       # @option arguments [Integer] :from The starting document offset, which must be non-negative.
       #  By default, you cannot page through more than 10,000 hits using the `from` and `size` parameters.
       #  To page through more hits, use the `search_after` parameter. Server default: 0.
-      # @option arguments [String] :sort A comma-separated list of `<field>:<direction>` pairs.
+      # @option arguments [String, Array<String>] :sort A comma-separated list of `<field>:<direction>` pairs.
       # @option arguments [Boolean] :force_synthetic_source Should this request force synthetic _source?
       #  Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance.
       #  Fetches with this enabled will be slower the enabling synthetic source natively in the index.
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
       #  when they occur.
-      # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+      # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
       #  returned by Elasticsearch.
       # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
       #  For example `"exists_time": "1h"` for humans and

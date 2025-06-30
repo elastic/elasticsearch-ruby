@@ -30,54 +30,6 @@ module Elasticsearch
       # * A `geotile_grid` or `geohex_grid` aggregation on the `<field>`. The `grid_agg` parameter determines the aggregation type. The aggregation uses the `<zoom>/<x>/<y>` tile as a bounding box.
       # * Optionally, a `geo_bounds` aggregation on the `<field>`. The search only includes this aggregation if the `exact_bounds` parameter is `true`.
       # * If the optional parameter `with_labels` is `true`, the internal search will include a dynamic runtime field that calls the `getLabelPosition` function of the geometry doc value. This enables the generation of new point features containing suggested geometry labels, so that, for example, multi-polygons will have only one label.
-      # For example, Elasticsearch may translate a vector tile search API request with a `grid_agg` argument of `geotile` and an `exact_bounds` argument of `true` into the following search
-      #
-      # ```
-      # GET my-index/_search
-      # {
-      #   "size": 10000,
-      #   "query": {
-      #     "geo_bounding_box": {
-      #       "my-geo-field": {
-      #         "top_left": {
-      #           "lat": -40.979898069620134,
-      #           "lon": -45
-      #         },
-      #         "bottom_right": {
-      #           "lat": -66.51326044311186,
-      #           "lon": 0
-      #         }
-      #       }
-      #     }
-      #   },
-      #   "aggregations": {
-      #     "grid": {
-      #       "geotile_grid": {
-      #         "field": "my-geo-field",
-      #         "precision": 11,
-      #         "size": 65536,
-      #         "bounds": {
-      #           "top_left": {
-      #             "lat": -40.979898069620134,
-      #             "lon": -45
-      #           },
-      #           "bottom_right": {
-      #             "lat": -66.51326044311186,
-      #             "lon": 0
-      #           }
-      #         }
-      #       }
-      #     },
-      #     "bounds": {
-      #       "geo_bounds": {
-      #         "field": "my-geo-field",
-      #         "wrap_longitude": false
-      #       }
-      #     }
-      #   }
-      # }
-      # ```
-      #
       # The API returns results as a binary Mapbox vector tile.
       # Mapbox vector tiles are encoded as Google Protobufs (PBF). By default, the tile contains three layers:
       # * A `hits` layer containing a feature for each `<field>` value matching the `geo_bounding_box` query.
@@ -142,6 +94,7 @@ module Elasticsearch
       # Some cells may intersect more than one vector tile.
       # To compute the H3 resolution for each precision, Elasticsearch compares the average density of hexagonal bins at each resolution with the average density of tile bins at each zoom level.
       # Elasticsearch uses the H3 resolution that is closest to the corresponding geotile density.
+      # Learn how to use the vector tile search API with practical examples in the {https://www.elastic.co/docs/reference/elasticsearch/rest-apis/vector-tile-search Vector tile search examples} guide.
       #
       # @option arguments [String, Array] :index Comma-separated list of data streams, indices, or aliases to search (*Required*)
       # @option arguments [String] :field Field containing geospatial data to return (*Required*)
@@ -174,7 +127,7 @@ module Elasticsearch
       #  In addition, the new features will be distinguishable using the tag `_mvt_label_position`.
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
       #  when they occur.
-      # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+      # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
       #  returned by Elasticsearch.
       # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
       #  For example `"exists_time": "1h"` for humans and
