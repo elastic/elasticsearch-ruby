@@ -239,7 +239,7 @@
 -
   :file: 'esql/60_usage.yml'
   :description: 'Basic ESQL usage output (telemetry) snapshot version'
-# TODO: 8.19 - June 2025
+# TODO: 8.19 - 19 June 2025
 -
   :file: 'ml/datafeeds_crud.yml'
   :description: '*'
@@ -327,4 +327,61 @@
 -
   :file: 'transform/transforms_upgrade.yml'
   :description: '*'
-# ENDS TODO: 8.19 - June 2025
+# ENDS TODO: 8.19 - 19 June 2025
+
+# TODO: 8.19 - 30 June 2025
+-
+  :file: 'inference/10_semantic_text_field_mapping.yml'
+  :description: '*'
+-
+  :file: 'inference/10_semantic_text_field_mapping_bwc.yml'
+  :description: '*'
+-
+  :file: 'inference/25_semantic_text_field_mapping_chunking.yml'
+  :description: '*'
+-
+  :file: 'inference/25_semantic_text_field_mapping_chunking_bwc.yml'
+  :description: '*'
+-
+  :file: 'inference/30_semantic_text_inference.yml'
+  :description: '*'
+-
+  :file: 'inference/30_semantic_text_inference_bwc.yml'
+  :description: '*'
+-
+  :file: 'inference/40_semantic_text_query.yml'
+  :description: '*'
+-
+  :file: 'inference/45_semantic_text_match.yml'
+  :description: '*'
+-
+  :file: 'inference/46_semantic_text_sparse_vector.yml'
+  :description: '*'
+-
+  :file: 'inference/47_semantic_text_knn.yml'
+  :description: '*'
+-
+  :file: 'inference/50_semantic_text_query_inference_endpoint_changes.yml'
+  :description: '*'
+-
+  :file: 'inference/60_semantic_text_inference_update.yml'
+  :description: '*'
+-
+  :file: 'inference/60_semantic_text_inference_update_bwc.yml'
+  :description: '*'
+-
+  :file: 'inference/70_semantic_text_exists_query.yml'
+  :description: '*'
+-
+  :file: 'inference/70_text_similarity_rank_retriever.yml'
+  :description: '*'
+-
+  :file: 'inference/80_random_rerank_retriever.yml'
+  :description: '*'
+-
+  :file: 'inference/90_semantic_text_highlighter.yml'
+  :description: '*'
+-
+  :file: 'inference/90_semantic_text_highlighter_bwc.yml'
+  :description: '*'
+# ENDS TODO: 8.19 - 30 June 2025
