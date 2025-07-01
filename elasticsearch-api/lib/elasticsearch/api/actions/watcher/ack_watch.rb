@@ -29,13 +29,14 @@ module Elasticsearch
         # The reason for this behavior is to prevent overwriting the watch status from a watch execution.
         # Acknowledging an action throttles further executions of that action until its `ack.state` is reset to `awaits_successful_execution`.
         # This happens when the condition of the watch is not met (the condition evaluates to false).
+        # To demonstrate how throttling works in practice and how it can be configured for individual actions within a watch, refer to External documentation.
         #
         # @option arguments [String] :watch_id The watch identifier. (*Required*)
         # @option arguments [String, Array<String>] :action_id A comma-separated list of the action identifiers to acknowledge.
         #  If you omit this parameter, all of the actions of the watch are acknowledged.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and

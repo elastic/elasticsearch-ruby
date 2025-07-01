@@ -32,7 +32,6 @@ module Elasticsearch
       # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
       #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
       #  Supports comma-separated values, such as `open,hidden`.
-      #  Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
       # @option arguments [Boolean] :explain If `true`, the response includes additional details about score computation as part of a hit.
       # @option arguments [Boolean] :ignore_throttled If `true`, specified concrete, expanded, or aliased indices are not included in the response when throttled. Server default: true.
       # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a missing or closed index.
@@ -48,7 +47,7 @@ module Elasticsearch
       # @option arguments [Boolean] :typed_keys If `true`, the response prefixes aggregation and suggester names with their respective types.
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
       #  when they occur.
-      # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+      # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
       #  returned by Elasticsearch.
       # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
       #  For example `"exists_time": "1h"` for humans and

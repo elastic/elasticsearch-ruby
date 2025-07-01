@@ -39,10 +39,10 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match. If the request can target data streams,
         #  this argument determines whether wildcard expressions match hidden data streams. Server default: open.
         # @option arguments [Boolean] :ignore_unavailable If true, missing or closed indices are not included in the response.
-        # @option arguments [Shardstorestatus] :status List of shard health statuses used to limit the request.
+        # @option arguments [String, Array<String>] :status List of shard health statuses used to limit the request.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and

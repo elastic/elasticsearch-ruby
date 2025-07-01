@@ -56,14 +56,14 @@ module Elasticsearch
       # @option arguments [String] :routing A custom value that is used to route operations to a specific shard.
       # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
       #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-      #  It supports comma-separated values, such as `open,hidden`. Valid values are: `all`, `open`, `closed`, `hidden`, `none`. Server default: open.
+      #  It supports comma-separated values, such as `open,hidden`. Server default: open.
       # @option arguments [Boolean] :allow_partial_search_results Indicates whether the point in time tolerates unavailable shards or shard failures when initially creating the PIT.
       #  If `false`, creating a point in time request when a shard is missing or unavailable will throw an exception.
       #  If `true`, the point in time will contain all the shards that are available at the time of the request.
       # @option arguments [Integer] :max_concurrent_shard_requests Maximum number of concurrent shard requests that each sub-search request executes per node. Server default: 5.
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
       #  when they occur.
-      # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+      # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
       #  returned by Elasticsearch.
       # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
       #  For example `"exists_time": "1h"` for humans and

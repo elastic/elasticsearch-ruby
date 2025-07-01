@@ -31,6 +31,7 @@ module Elasticsearch
         #  A query ID is also provided when the request was submitted with the `keep_on_completion` parameter set to `true`. (*Required*)
         # @option arguments [Boolean] :drop_null_columns Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
         #  If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
+        # @option arguments [String] :format A short version of the Accept header, for example `json` or `yaml`.
         # @option arguments [Time] :keep_alive The period for which the query and its results are stored in the cluster.
         #  When this period expires, the query and its results are deleted, even if the query is still ongoing.
         # @option arguments [Time] :wait_for_completion_timeout The period to wait for the request to finish.
@@ -39,7 +40,7 @@ module Elasticsearch
         #  Otherwise, the response returns an `is_running` value of `true` and no results.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and

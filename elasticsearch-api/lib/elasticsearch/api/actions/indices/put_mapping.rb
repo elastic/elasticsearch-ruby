@@ -24,32 +24,22 @@ module Elasticsearch
       module Actions
         # Update field mappings.
         # Add new fields to an existing data stream or index.
-        # You can also use this API to change the search settings of existing fields and add new properties to existing object fields.
-        # For data streams, these changes are applied to all backing indices by default.
-        # **Add multi-fields to an existing field**
-        # Multi-fields let you index the same field in different ways.
-        # You can use this API to update the fields mapping parameter and enable multi-fields for an existing field.
-        # WARNING: If an index (or data stream) contains documents when you add a multi-field, those documents will not have values for the new multi-field.
-        # You can populate the new multi-field with the update by query API.
-        # **Change supported mapping parameters for an existing field**
-        # The documentation for each mapping parameter indicates whether you can update it for an existing field using this API.
-        # For example, you can use the update mapping API to update the `ignore_above` parameter.
-        # **Change the mapping of an existing field**
-        # Except for supported mapping parameters, you can't change the mapping or field type of an existing field.
-        # Changing an existing field could invalidate data that's already indexed.
-        # If you need to change the mapping of a field in a data stream's backing indices, refer to documentation about modifying data streams.
-        # If you need to change the mapping of a field in other indices, create a new index with the correct mapping and reindex your data into that index.
-        # **Rename a field**
-        # Renaming a field would invalidate data already indexed under the old field name.
-        # Instead, add an alias field to create an alternate field name.
+        # You can use the update mapping API to:
+        # - Add a new field to an existing index
+        # - Update mappings for multiple indices in a single request
+        # - Add new properties to an object field
+        # - Enable multi-fields for an existing field
+        # - Update supported mapping parameters
+        # - Change a field's mapping using reindexing
+        # - Rename a field using a field alias
+        # Learn how to use the update mapping API with practical examples in the {https://www.elastic.co/docs//manage-data/data-store/mapping/update-mappings-examples Update mapping API examples} guide.
         #
         # @option arguments [String, Array] :index A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices. (*Required*)
         # @option arguments [Boolean] :allow_no_indices If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
         #  This behavior applies even if the request targets other open indices. Server default: true.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
         #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-        #  Supports comma-separated values, such as `open,hidden`.
-        #  Valid values are: `all`, `open`, `closed`, `hidden`, `none`. Server default: open.
+        #  Supports comma-separated values, such as `open,hidden`. Server default: open.
         # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a missing or closed index.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
@@ -58,7 +48,7 @@ module Elasticsearch
         # @option arguments [Boolean] :write_index_only If `true`, the mappings are applied only to the current write index for the target.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and

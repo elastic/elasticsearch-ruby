@@ -30,7 +30,7 @@ module Elasticsearch
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [Indexname, Indexalias] :index A single target to search. If the target is an index alias, it must resolve to a single index. (*Required*)
+        # @option arguments [String] :index A single target to search. If the target is an index alias, it must resolve to a single index. (*Required*)
         # @option arguments [Boolean] :allow_no_indices [TODO]
         # @option arguments [String] :analyzer [TODO]
         # @option arguments [Boolean] :analyze_wildcard [TODO]
@@ -71,7 +71,7 @@ module Elasticsearch
         # @option arguments [String] :q [TODO]
         # @option arguments [Integer] :size [TODO]
         # @option arguments [Integer] :from [TODO]
-        # @option arguments [String] :sort [TODO]
+        # @option arguments [String, Array<String>] :sort [TODO]
         # @option arguments [Array<Integer>] :wait_for_checkpoints A comma separated list of checkpoints. When configured, the search API will only be executed on a shard
         #  after the relevant checkpoint has become visible for search. Defaults to an empty list which will cause
         #  Elasticsearch to immediately execute the search. Server default: [].
@@ -80,7 +80,7 @@ module Elasticsearch
         #  Defaults to the configured cluster setting `search.default_allow_partial_results`, which is true by default.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and
