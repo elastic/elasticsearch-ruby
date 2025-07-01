@@ -83,7 +83,7 @@ module Elasticsearch
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :actions A comma-separated list or wildcard expression of actions used to limit the request.
+        # @option arguments [String, Array<String>] :actions A comma-separated list or wildcard expression of actions used to limit the request.
         #  For example, you can use `cluser:*` to retrieve all cluster-related tasks.
         # @option arguments [Boolean] :detailed If `true`, the response includes detailed information about the running tasks.
         #  This information is useful to distinguish tasks from each other but is more costly to run.
@@ -99,7 +99,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_completion If `true`, the request blocks until the operation is complete.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and

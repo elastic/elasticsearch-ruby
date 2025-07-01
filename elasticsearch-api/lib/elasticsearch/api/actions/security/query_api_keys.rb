@@ -28,6 +28,7 @@ module Elasticsearch
         # To use this API, you must have at least the `manage_own_api_key` or the `read_security` cluster privileges.
         # If you have only the `manage_own_api_key` privilege, this API returns only the API keys that you own.
         # If you have the `read_security`, `manage_api_key`, or greater privileges (including `manage_security`), this API returns all API keys regardless of ownership.
+        # Refer to the linked documentation for examples of how to find API keys:
         #
         # @option arguments [Boolean] :with_limited_by Return the snapshot of the owner user's role descriptors associated with the API key.
         #  An API key's actual permission is the intersection of its assigned role descriptors and the owner user's role descriptors (effectively limited by it).
@@ -37,7 +38,7 @@ module Elasticsearch
         # @option arguments [Boolean] :typed_keys Determines whether aggregation names are prefixed by their respective types in the response.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and

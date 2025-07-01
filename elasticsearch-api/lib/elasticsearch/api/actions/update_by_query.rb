@@ -102,7 +102,6 @@ module Elasticsearch
       # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
       #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
       #  It supports comma-separated values, such as `open,hidden`.
-      #  Valid values are: `all`, `open`, `closed`, `hidden`, `none`.
       # @option arguments [Integer] :from Skips the specified number of documents. Server default: 0.
       # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a missing or closed index.
       # @option arguments [Boolean] :lenient If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
@@ -151,7 +150,7 @@ module Elasticsearch
       #  Elasticsearch creates a record of this task as a document at `.tasks/task/${taskId}`. Server default: true.
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
       #  when they occur.
-      # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+      # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
       #  returned by Elasticsearch.
       # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
       #  For example `"exists_time": "1h"` for humans and

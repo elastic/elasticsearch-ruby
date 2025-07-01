@@ -59,14 +59,14 @@ module Elasticsearch
         #  the optional `bucket_span` parameter.
         # @option arguments [String, Time] :end Returns overall buckets with timestamps earlier than this time.
         # @option arguments [Boolean] :exclude_interim If `true`, the output excludes interim results.
-        # @option arguments [Double, String] :overall_score Returns overall buckets with overall scores greater than or equal to this
+        # @option arguments [Float, String] :overall_score Returns overall buckets with overall scores greater than or equal to this
         #  value.
         # @option arguments [String, Time] :start Returns overall buckets with timestamps after this time.
         # @option arguments [Integer] :top_n The number of top anomaly detection job bucket scores to be used in the
         #  `overall_score` calculation. Server default: 1.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and

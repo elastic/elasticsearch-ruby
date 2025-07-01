@@ -33,11 +33,12 @@ module Elasticsearch
         # This API supports updates to an API key's access scope, metadata, and expiration.
         # The owner user's information, such as the `username` and `realm`, is also updated automatically on every call.
         # NOTE: This API cannot update REST API keys, which should be updated by either the update API key or bulk update API keys API.
+        # To learn more about how to use this API, refer to the {https://www.elastic.co/docs/reference/elasticsearch/rest-apis/update-cc-api-key-examples Update cross cluter API key API examples page}.
         #
         # @option arguments [String] :id The ID of the cross-cluster API key to update. (*Required*)
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
-        # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
         #  returned by Elasticsearch.
         # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
         #  For example `"exists_time": "1h"` for humans and

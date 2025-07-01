@@ -73,7 +73,7 @@ module Elasticsearch
       # @option arguments [String] :id A unique document identifier. (*Required*)
       # @option arguments [String] :index The name of the index that contains the document. (*Required*)
       # @option arguments [Boolean] :force_synthetic_source Indicates whether the request forces synthetic `_source`.
-      #  Use this paramater to test if the mapping supports synthetic `_source` and to get a sense of the worst case performance.
+      #  Use this parameter to test if the mapping supports synthetic `_source` and to get a sense of the worst case performance.
       #  Fetches with this parameter enabled will be slower than enabling synthetic source natively in the index.
       # @option arguments [String] :preference The node or shard the operation should be performed on.
       #  By default, the operation is randomized between the shard replicas.If it is set to `_local`, the operation will prefer to be run on a local allocated shard when possible.
@@ -95,14 +95,14 @@ module Elasticsearch
       # @option arguments [String, Array<String>] :stored_fields A comma-separated list of stored fields to return as part of a hit.
       #  If no fields are specified, no stored fields are included in the response.
       #  If this field is specified, the `_source` parameter defaults to `false`.
-      #  Only leaf fields can be retrieved with the `stored_field` option.
-      #  Object fields can't be returned;​if specified, the request fails.
+      #  Only leaf fields can be retrieved with the `stored_fields` option.
+      #  Object fields can't be returned; if specified, the request fails.
       # @option arguments [Integer] :version The version number for concurrency control.
       #  It must match the current version of the document for the request to succeed.
       # @option arguments [String] :version_type The version type.
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
       #  when they occur.
-      # @option arguments [String] :filter_path Comma-separated list of filters in dot notation which reduce the response
+      # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
       #  returned by Elasticsearch.
       # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
       #  For example `"exists_time": "1h"` for humans and
