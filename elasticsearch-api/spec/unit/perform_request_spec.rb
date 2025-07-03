@@ -15,8 +15,9 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require 'spec_helper'
 require 'elastic-transport'
+require 'spec_helper'
+
 require_relative File.expand_path('../../utils/thor/endpoint_spec', __dir__)
 require_relative File.expand_path('../../utils/thor/generator/files_helper', __dir__)
 
@@ -28,9 +29,22 @@ describe 'Perform request args' do
             # TODO: Once the test suite is migrated to elasticsearch-specification, these should be removed
             spec.module_namespace.flatten.first == 'rollup' ||
             [
-              'scroll', 'clear_scroll', 'connector.last_sync', 'knn_search',
-              'indices.remove_block'
+              'scroll', 'clear_scroll', 'connector.last_sync', 'knn_search'
             ].include?(spec.endpoint_name)
+
+    # Skip testing if the method hasn't been added to the client yet:
+    client = Elasticsearch::Client.new
+    implemented = if spec.module_namespace.empty?
+                    client.public_methods.include?(spec.method_name.to_sym)
+                  else
+                    client.public_methods.include?(spec.module_namespace[0].to_sym) &&
+                      client.send(spec.module_namespace[0]).methods.include?(spec.method_name.to_sym)
+                  end
+    unless implemented
+      name = spec.module_namespace.empty? ? spec.method_name : "#{spec.module_namespace[0]}.#{spec.method_name}"
+      Logger.new($stdout).info("Method #{name} not implemented yet")
+      next
+    end
 
     # These are the path parts defined by the user in the method argument
     defined_path_parts = spec.path_params.inject({}) do |params, part|
@@ -68,7 +82,7 @@ describe 'Perform request args' do
       end
 
       if spec.path_parts.empty?
-        it "passes the endpoint id to the request" do
+        it 'passes the endpoint id to the request' do
           if spec.module_namespace.empty?
             client_double.send(spec.method_name, required_params)
           else
@@ -81,7 +95,9 @@ describe 'Perform request args' do
             client_double.send(spec.method_name, required_params.merge(defined_path_parts))
           else
             client_double.send(
-              spec.module_namespace[0]).send(spec.method_name, required_params.merge(defined_path_parts)
+              spec.module_namespace[0]
+            ).send(
+              spec.method_name, required_params.merge(defined_path_parts)
             )
           end
         end
