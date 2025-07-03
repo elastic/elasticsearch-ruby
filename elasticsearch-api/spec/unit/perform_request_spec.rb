@@ -18,12 +18,55 @@
 require 'elastic-transport'
 require 'spec_helper'
 
-require_relative File.expand_path('../../utils/thor/endpoint_spec', __dir__)
-require_relative File.expand_path('../../utils/thor/generator/files_helper', __dir__)
+# Helper Class to replace the EndpointSpec class from the old code generator. The created object
+# will store some relevant data to the endpoint specification so that it can be used to test
+# OpenTelemetry.
+class EndpointSpec
+  attr_reader :module_namespace,
+              :method_name,
+              :endpoint_name,
+              :visibility
+
+  def initialize(filepath)
+    @path = Pathname(filepath)
+    json = MultiJson.load(File.read(@path))
+    @endpoint_name = json.keys.first
+
+    full_namespace = parse_full_namespace
+    @namespace_depth = full_namespace.size.positive? ? full_namespace.size - 1 : 0
+    @module_namespace = full_namespace[0, @namespace_depth]
+    @visivility = json.values.first['visibility']
+  end
+
+  def parse_full_namespace
+    names = @endpoint_name.split('.')
+    # Return an array to expand 'ccr', 'ilm', 'ml' and 'slm'
+    names.map do |name|
+      name
+        .gsub(/^ml$/, 'machine_learning')
+        .gsub(/^ilm$/, 'index_lifecycle_management')
+        .gsub(/^ccr/, 'cross_cluster_replication')
+        .gsub(/^slm/, 'snapshot_lifecycle_management')
+    end
+  end
+end
+
+# JSON spec files to test
+# This is a helper which used to be in the FilesHelper module in the old code generator. It goes
+# through the files in the Elasticsearch JSON specification to see which methods need to be tested
+# and how.
+def files
+  src_path = File.expand_path('../../../tmp/rest-api-spec/api/', __dir__)
+
+  Dir.entries(src_path).reject do |file|
+    File.extname(file) != '.json' ||
+      File.basename(file) == '_common.json'
+  end.map { |file| "#{src_path}/#{file}" }
+end
 
 describe 'Perform request args' do
-  Elasticsearch::API::FilesHelper.files.each do |filepath|
-    spec = Elasticsearch::API::EndpointSpec.new(filepath)
+  files.each do |filepath|
+    spec = EndpointSpec.new(filepath)
     next if spec.module_namespace.flatten.first == '_internal' ||
             spec.visibility != 'public' ||
             # TODO: Once the test suite is migrated to elasticsearch-specification, these should be removed
