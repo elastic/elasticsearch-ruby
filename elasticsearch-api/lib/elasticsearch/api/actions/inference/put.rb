@@ -33,6 +33,7 @@ module Elasticsearch
         # * Azure AI Studio (`completion`, `text_embedding`)
         # * Azure OpenAI (`completion`, `text_embedding`)
         # * Cohere (`completion`, `rerank`, `text_embedding`)
+        # * DeepSeek (`completion`, `chat_completion`)
         # * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland)
         # * ELSER (`sparse_embedding`)
         # * Google AI Studio (`completion`, `text_embedding`)
