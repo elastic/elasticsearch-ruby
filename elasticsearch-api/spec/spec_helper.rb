@@ -18,7 +18,6 @@ if ENV['COVERAGE']
   require 'simplecov'
   SimpleCov.start do
     add_filter %r{^/test|spec/}
-    add_filter 'utils/thor'
   end
 end
 
@@ -27,14 +26,13 @@ if defined?(JRUBY_VERSION)
 else
   require 'debug'
 end
-require 'yaml'
-# require 'active_support/isolated_execution_state' unless RUBY_VERSION < '2.7.0'
-require 'jbuilder'
-require 'jsonify'
 require 'elasticsearch'
 require 'elasticsearch-api'
-require 'openssl'
+require 'jbuilder'
+require 'jsonify'
 require 'logger'
+require 'openssl'
+require 'yaml'
 
 tracer = ::Logger.new(STDERR)
 tracer.formatter = lambda { |s, d, p, m| "#{m.gsub(/^.*$/) { |n| '   ' + n } }\n" }
