@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.cluster#segments' do
+describe 'client.indices#segments' do
 
   let(:expected_args) do
     [

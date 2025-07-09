@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.cluster#validate_query' do
+describe 'client.indices#validate_query' do
   let(:expected_args) do
     [
       method,

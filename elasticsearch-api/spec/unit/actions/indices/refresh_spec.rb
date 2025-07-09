@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.cluster#refresh' do
+describe 'client.indices#refresh' do
 
   let(:expected_args) do
     [

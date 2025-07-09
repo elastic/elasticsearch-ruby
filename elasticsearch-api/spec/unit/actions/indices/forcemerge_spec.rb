@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.cluster#forcemerge' do
+describe 'client.indices#forcemerge' do
 
   let(:expected_args) do
     [

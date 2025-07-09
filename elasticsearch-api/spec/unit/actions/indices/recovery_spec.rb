@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.cluster#recovery' do
+describe 'client.indices#recovery' do
 
   let(:expected_args) do
     [
