@@ -129,6 +129,7 @@ module Elasticsearch
       # @option arguments [String, Array<String>] :_source_excludes A comma-separated list of source fields to exclude from the response.
       #  You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter.
       #  If the `_source` parameter is `false`, this parameter is ignored.
+      # @option arguments [Boolean] :_source_exclude_vectors Whether vectors should be excluded from _source
       # @option arguments [String, Array<String>] :_source_includes A comma-separated list of source fields to include in the response.
       #  If this parameter is specified, only these source fields are returned.
       #  You can exclude fields from this subset using the `_source_excludes` query parameter.
