@@ -27,9 +27,6 @@ module Elasticsearch
         # @option arguments [String, Array] :id Comma-separated list of database configuration IDs to retrieve.
         #  Wildcard (`*`) expressions are supported.
         #  To get all database configurations, omit this parameter or use `*`.
-        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
-        #  If no response is received before the timeout expires, the request fails and returns an error.
-        #  A value of `-1` indicates that the request should never time out. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

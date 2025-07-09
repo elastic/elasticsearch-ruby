@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Perform rereanking inference on the service
+        # Perform reranking inference on the service
         #
         # @option arguments [String] :inference_id The unique identifier for the inference endpoint. (*Required*)
         # @option arguments [Time] :timeout The amount of time to wait for the inference request to complete. Server default: 30s.
