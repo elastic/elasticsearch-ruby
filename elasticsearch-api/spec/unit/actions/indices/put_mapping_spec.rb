@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.cluster#put_mapping' do
+describe 'client.indices#put_mapping' do
   let(:expected_args) do
     [
         'PUT',

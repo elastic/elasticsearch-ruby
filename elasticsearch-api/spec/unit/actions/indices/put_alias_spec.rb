@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.cluster#put_alias' do
+describe 'client.indices#put_alias' do
 
   let(:expected_args) do
     [

@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.cluster#shrink' do
+describe 'client.indices#shrink' do
 
   let(:expected_args) do
     [

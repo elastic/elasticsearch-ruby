@@ -17,8 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.cluster#rollover' do
-
+describe 'client.indices#rollover' do
   let(:expected_args) do
     [
         'POST',

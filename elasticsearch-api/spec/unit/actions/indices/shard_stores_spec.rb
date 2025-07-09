@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.cluster#shard_stores' do
+describe 'client.indices#shard_stores' do
 
   let(:expected_args) do
     [

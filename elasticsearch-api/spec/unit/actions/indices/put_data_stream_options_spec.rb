@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.cluster#put_data_stream_options' do
+describe 'client.indices#put_data_stream_options' do
   let(:expected_args) do
     [
       'PUT',

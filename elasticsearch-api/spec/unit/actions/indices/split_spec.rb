@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.cluster#split' do
+describe 'client.indices#split' do
 
   let(:expected_args) do
     [

@@ -17,8 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.cluster#get_field_mapping' do
-
+describe 'client.indices#get_field_mapping' do
   let(:expected_args) do
     [
         'GET',
