@@ -20,40 +20,44 @@
 #
 module Elasticsearch
   module API
-    module Cluster
+    module Inference
       module Actions
-        # Creates or updates a component template
+        # Configure a Amazon SageMaker inference endpoint
         #
-        # @option arguments [String] :name The name of the template
-        # @option arguments [Boolean] :create Whether the index template should only be added if new or can also replace an existing one
-        # @option arguments [String] :cause User defined reason for create the component template
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [String] :task_type The task type
+        # @option arguments [String] :amazonsagemaker_inference_id The inference Id
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The template definition (*Required*)
+        # @option arguments [Hash] :body The inference endpoint's task and service settings
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/indices-component-template.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/infer-service-amazon-sagemaker.html
         #
-        def put_component_template(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'cluster.put_component_template' }
+        def put_amazonsagemaker(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.put_amazonsagemaker' }
 
-          defined_params = [:name].each_with_object({}) do |variable, set_variables|
+          defined_params = %i[task_type amazonsagemaker_inference_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+          raise ArgumentError, "Required argument 'task_type' missing" unless arguments[:task_type]
+
+          unless arguments[:amazonsagemaker_inference_id]
+            raise ArgumentError,
+                  "Required argument 'amazonsagemaker_inference_id' missing"
+          end
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
 
-          _name = arguments.delete(:name)
+          _task_type = arguments.delete(:task_type)
+
+          _amazonsagemaker_inference_id = arguments.delete(:amazonsagemaker_inference_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_component_template/#{Utils.__listify(_name)}"
-          params = Utils.process_params(arguments)
+          path   = "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_amazonsagemaker_inference_id)}"
+          params = {}
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
