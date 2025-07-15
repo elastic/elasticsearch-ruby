@@ -44,7 +44,7 @@ module Elasticsearch
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master Server default: 30s.
+        # @option arguments [Time] :master_timeout Timeout for waiting for new cluster state in case it is blocked Server default: 30s.
         # @option arguments [Integer] :wait_for_metadata_version Wait for the metadata version to be equal or greater than the specified metadata version
         # @option arguments [Time] :wait_for_timeout The maximum time to wait for wait_for_metadata_version before timing out
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
