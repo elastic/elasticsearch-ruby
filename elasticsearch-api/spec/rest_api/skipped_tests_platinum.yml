@@ -385,3 +385,34 @@
   :file: 'inference/90_semantic_text_highlighter_bwc.yml'
   :description: '*'
 # ENDS TODO: 8.19 - 30 June 2025
+# Issue with regexp parsing on test runner:
+-
+  :file: 'esql/60_enrich.yml'
+  :description: 'Enrich with brackets in policy name'
+-
+  :file: 'mustache/10_webhook.yml'
+  :description: '*'
+-
+  :file: 'mustache/50_webhook_url_escaping.yml'
+  :description: '*'
+-
+  :file: 'watcher/execute_watch/10_basic.yml'
+  :description: '*'
+-
+  :file: 'watcher/execute_watch/60_http_input.yml'
+  :description: '*'
+-
+  :file: 'watcher/settings_endpoints/10_watcher_settings.yml'
+  :description: '*'
+-
+  :file: 'watcher/execute_watch/30_throttled.yml'
+  :description: '*'
+-
+  :file: 'watcher/execute_watch/40_ignore_condition.yml'
+  :description: '*'
+-
+  :file: 'watcher/execute_watch/50_action_mode.yml'
+  :description: '*'
+-
+  :file: 'watcher/put_watch/90_auto_create_index.yml'
+  :description: '*'
