@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [String] :name The name of the template
         # @option arguments [Boolean] :create Whether the index template should only be added if new or can also replace an existing one
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String] :cause User defined reason for create the component template
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The template definition (*Required*)
