@@ -28,6 +28,8 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Boolean] :include_defaults Return all default configurations for the component template (default: false)
+        # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
+        # @option arguments [String] :settings_filter Filter out results, for example to filter out sensitive information. Supports wildcards or full settings keys
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/indices-component-template.html
