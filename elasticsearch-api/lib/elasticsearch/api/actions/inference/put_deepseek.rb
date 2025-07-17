@@ -22,10 +22,12 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Perform reranking inference on the service
+        # Create a DeepSeek inference endpoint.
+        # Create an inference endpoint to perform an inference task with the `deepseek` service.
         #
-        # @option arguments [String] :inference_id The unique identifier for the inference endpoint. (*Required*)
-        # @option arguments [Time] :timeout The amount of time to wait for the inference request to complete. Server default: 30s.
+        # @option arguments [String] :task_type The type of the inference task that the model will perform. (*Required*)
+        # @option arguments [String] :deepseek_inference_id The unique identifier of the inference endpoint. (*Required*)
+        # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference endpoint to be created. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
@@ -40,27 +42,34 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-deepseek
         #
-        def rerank(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'inference.rerank' }
+        def put_deepseek(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.put_deepseek' }
 
-          defined_params = [:inference_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:task_type, :deepseek_inference_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          raise ArgumentError, "Required argument 'inference_id' missing" unless arguments[:inference_id]
+          raise ArgumentError, "Required argument 'task_type' missing" unless arguments[:task_type]
+
+          unless arguments[:deepseek_inference_id]
+            raise ArgumentError,
+                  "Required argument 'deepseek_inference_id' missing"
+          end
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
 
-          _inference_id = arguments.delete(:inference_id)
+          _task_type = arguments.delete(:task_type)
 
-          method = Elasticsearch::API::HTTP_POST
-          path   = "_inference/rerank/#{Utils.listify(_inference_id)}"
+          _deepseek_inference_id = arguments.delete(:deepseek_inference_id)
+
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_inference/#{Utils.listify(_task_type)}/#{Utils.listify(_deepseek_inference_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
