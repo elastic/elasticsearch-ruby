@@ -34,6 +34,7 @@ module Elasticsearch
       # The document must still be reindexed, but using this API removes some network roundtrips and reduces chances of version conflicts between the GET and the index operation.
       # The `_source` field must be enabled to use this API.
       # In addition to `_source`, you can access the following variables through the `ctx` map: `_index`, `_type`, `_id`, `_version`, `_routing`, and `_now` (the current timestamp).
+      # For usage examples such as partial updates, upserts, and scripted updates, see the External documentation.
       #
       # @option arguments [String] :id A unique identifier for the document to be updated. (*Required*)
       # @option arguments [String] :index The name of the target index.

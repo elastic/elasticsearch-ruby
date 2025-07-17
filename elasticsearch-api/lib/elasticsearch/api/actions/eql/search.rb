@@ -27,11 +27,12 @@ module Elasticsearch
         # EQL assumes each document in a data stream or index corresponds to an event.
         #
         # @option arguments [String, Array] :index The name of the index to scope the operation (*Required*)
-        # @option arguments [Boolean] :allow_no_indices [TODO] Server default: true.
+        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) Server default: true.
         # @option arguments [Boolean] :allow_partial_search_results If true, returns partial results if there are shard failures. If false, returns an error with no partial results. Server default: true.
         # @option arguments [Boolean] :allow_partial_sequence_results If true, sequence queries will return partial results in case of shard failures. If false, they will return no results at all.
         #  This flag has effect only if allow_partial_search_results is true.
-        # @option arguments [String, Array<String>] :expand_wildcards [TODO] Server default: open.
+        # @option arguments [String, Array<String>] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. Server default: open.
+        # @option arguments [Boolean] :ccs_minimize_roundtrips Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution Server default: true.
         # @option arguments [Boolean] :ignore_unavailable If true, missing or closed indices are not included in the response. Server default: true.
         # @option arguments [Time] :keep_alive Period for which the search and its results are stored on the cluster. Server default: 5d.
         # @option arguments [Boolean] :keep_on_completion If true, the search and its results are stored on the cluster.

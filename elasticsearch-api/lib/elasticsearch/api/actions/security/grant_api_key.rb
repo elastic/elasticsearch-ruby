@@ -39,6 +39,10 @@ module Elasticsearch
         # If applicable, it also returns expiration information for the API key in milliseconds.
         # By default, API keys never expire. You can specify expiration information when you create the API keys.
         #
+        # @option arguments [String] :refresh If 'true', Elasticsearch refreshes the affected shards to make this operation
+        #  visible to search.
+        #  If 'wait_for', it waits for a refresh to make this operation visible to search.
+        #  If 'false', nothing is done with refreshes. Server default: false.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
