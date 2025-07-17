@@ -28,6 +28,7 @@ module Elasticsearch
         # @option arguments [String] :task_type The task type.
         #  The only valid task type for the model to perform is `completion`. (*Required*)
         # @option arguments [String] :anthropic_inference_id The unique identifier of the inference endpoint. (*Required*)
+        # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference endpoint to be created. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
