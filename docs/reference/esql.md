@@ -14,7 +14,7 @@ There are two ways to use ES|QL in the Ruby client:
 * Use the Elasticsearch [ES|QL API](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-esql) directly: This is the most flexible approach, but it’s also the most complex because you must handle results in their raw form. You can choose the precise format of results, such as JSON, CSV, or text.
 * Use the Ruby ES|QL helper: The helper maps the raw response to an object that’s more readily usable by your application.
 
-There is also a gem which can help you build ES|QL queries with Ruby code, [elastic-esql](#esql-ruby).
+You can also try the [`elastic-esql`](#esql-ruby) gem, which helps you build ES|QL queries with Ruby.
 
 ## ES|QL API [esql-how-to]
 
@@ -111,9 +111,7 @@ puts response
 
 ## ES|QL Query Builder [esql-ruby]
 
-The [elastic-esql](https://github.com/elastic/esql-ruby) gem allows you to build ES|QL queries to use with Elastic's ES|QL `query` API. The library doesn't depend on an Elasticsearch client - its sole purpose is to facilitate building ES|QL queries in Ruby. This makes it possible to use it with any Elasticsearch client.
-
-It allows you to build queries in Ruby like this:
+The [`elastic-esql`](https://github.com/elastic/esql-ruby) gem helps you build queries for use with the [ES|QL query API](docs-content://explore-analyze/query-filter/languages/esql-rest.md). Here's an example:
 
 ```ruby
 query = Elastic::ESQL.from('sample')
@@ -130,4 +128,5 @@ query.to_s
 => "FROM sample | SORT @timestamp DESC | WHERE event_duration > 5000000 | LIMIT 3"
 ```
 
-See [the README](https://github.com/elastic/esql-ruby?tab=readme-ov-file#ruby-esql-query-builder) for more information.
+The `elastic-esql` library works independently of the {{es}} client, so you can use it alongside any client &mdash; not just `elasticsearch-ruby`.
+For more information, see the gem [README](https://github.com/elastic/esql-ruby?tab=readme-ov-file#ruby-esql-query-builder).
