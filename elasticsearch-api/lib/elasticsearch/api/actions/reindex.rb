@@ -33,6 +33,7 @@ module Elasticsearch
       # @option arguments [Time] :scroll Control how long to keep the search context alive
       # @option arguments [Number|string] :slices The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`.
       # @option arguments [Number] :max_docs Maximum number of documents to process (default: all documents)
+      # @option arguments [Boolean] :require_alias When true, requires destination to be an alias.
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition using the Query DSL and the prototype for the index request. (*Required*)
       #

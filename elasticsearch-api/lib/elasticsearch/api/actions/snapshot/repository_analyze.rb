@@ -27,6 +27,7 @@ module Elasticsearch
         # @option arguments [String] :repository A repository name
         # @option arguments [Number] :blob_count Number of blobs to create during the test. Defaults to 100.
         # @option arguments [Number] :concurrency Number of operations to run concurrently during the test. Defaults to 10.
+        # @option arguments [Number] :register_operation_count The minimum number of linearizable register operations to perform in total. Defaults to 10.
         # @option arguments [Number] :read_node_count Number of nodes on which to read a blob after writing. Defaults to 10.
         # @option arguments [Number] :early_read_node_count Number of nodes on which to perform an early read on a blob, i.e. before writing has completed. Early reads are rare actions so the 'rare_action_probability' parameter is also relevant. Defaults to 2.
         # @option arguments [Number] :seed Seed for the random number generator used to create the test workload. Defaults to a random value.
