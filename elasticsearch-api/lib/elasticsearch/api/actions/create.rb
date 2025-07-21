@@ -35,6 +35,8 @@ module Elasticsearch
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte)
       # @option arguments [String] :pipeline The pipeline id to preprocess incoming documents with
       # @option arguments [Boolean] :include_source_on_error True or false if to include the document source in the error message in case of parsing errors. Defaults to true.
+      # @option arguments [Boolean] :require_alias When true, requires destination to be an alias. Default is false
+      # @option arguments [Boolean] :require_data_stream When true, requires destination to be a data stream (existing or to be created). Default is false
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The document (*Required*)
       #

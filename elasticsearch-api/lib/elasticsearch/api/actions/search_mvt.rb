@@ -36,6 +36,7 @@ module Elasticsearch
       # @option arguments [Integer] :extent Size, in pixels, of a side of the vector tile.
       # @option arguments [Integer] :grid_precision Additional zoom levels available through the aggs layer. Accepts 0-8.
       # @option arguments [String] :grid_type Determines the geometry type for features in the aggs layer. (options: grid, point, centroid)
+      # @option arguments [String] :grid_agg Aggregation used to create a grid for `field`. (options: geotile, geohex)
       # @option arguments [Integer] :size Maximum number of features to return in the hits layer. Accepts 0-10000.
       # @option arguments [Boolean|long] :track_total_hits Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
       # @option arguments [Boolean] :with_labels If true, the hits and aggs layers will contain additional point features with suggested label positions for the original features.
