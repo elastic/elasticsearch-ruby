@@ -24,11 +24,16 @@ module Elasticsearch
       module Actions
         # Explain the shard allocations.
         # Get explanations for shard allocations in the cluster.
+        # This API accepts the current_node, index, primary and shard parameters in the request body or in query parameters, but not in both at the same time.
         # For unassigned shards, it provides an explanation for why the shard is unassigned.
         # For assigned shards, it provides an explanation for why the shard is remaining on its current node and has not moved or rebalanced to another node.
         # This API can be very useful when attempting to diagnose why a shard is unassigned or why a shard continues to remain on its current node when you might expect otherwise.
         # Refer to the linked documentation for examples of how to troubleshoot allocation issues using this API.
         #
+        # @option arguments [String] :index The name of the index that you would like an explanation for.
+        # @option arguments [Integer] :shard An identifier for the shard that you would like an explanation for.
+        # @option arguments [Boolean] :primary If true, returns an explanation for the primary shard for the specified shard ID.
+        # @option arguments [String] :current_node Explain a shard only if it is currently located on the specified node name or node ID.
         # @option arguments [Boolean] :include_disk_info If true, returns information about disk usage and shard sizes.
         # @option arguments [Boolean] :include_yes_decisions If true, returns YES decisions in explanation.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
