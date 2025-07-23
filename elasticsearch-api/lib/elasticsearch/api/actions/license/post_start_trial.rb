@@ -29,7 +29,7 @@ module Elasticsearch
         # To check the status of your trial, use the get trial status API.
         #
         # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)
-        # @option arguments [String] :type_query_string [TODO]
+        # @option arguments [String] :type The type of trial license to generate (default: "trial")
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.

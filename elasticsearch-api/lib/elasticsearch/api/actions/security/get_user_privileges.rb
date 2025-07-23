@@ -28,9 +28,6 @@ module Elasticsearch
         # To check the privileges of other users, you must use the run as feature.
         # To check whether a user has a specific list of privileges, use the has privileges API.
         #
-        # @option arguments [String] :application The name of the application. Application privileges are always associated with exactly one application. If you do not specify this parameter, the API returns information about all privileges for all applications.
-        # @option arguments [String] :priviledge The name of the privilege. If you do not specify this parameter, the API returns information about all privileges for the requested application.
-        # @option arguments [String, nil] :username [TODO]
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

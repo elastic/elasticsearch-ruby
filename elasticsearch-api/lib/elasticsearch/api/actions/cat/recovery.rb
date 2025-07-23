@@ -33,11 +33,12 @@ module Elasticsearch
         # @option arguments [Boolean] :active_only If `true`, the response only includes ongoing shard recoveries.
         # @option arguments [String] :bytes The unit used to display byte values.
         # @option arguments [Boolean] :detailed If `true`, the response includes detailed information about shard recoveries.
-        # @option arguments [String, Array<String>] :h List of columns to appear in the response. Supports simple wildcards.
-        # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
+        # @option arguments [String, Array<String>] :h A comma-separated list of columns names to display.
+        #  It supports simple wildcards. Server default: ip,hp,rp,r,m,n,cpu,l.
+        # @option arguments [String, Array<String>] :s A comma-separated list of column names or aliases that determines the sort order.
         #  Sorting defaults to ascending and can be changed by setting `:asc`
         #  or `:desc` as a suffix to the column name.
-        # @option arguments [String] :time Unit used to display time values.
+        # @option arguments [String] :time The unit used to display time values.
         # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
         #  `text`, `json`, `cbor`, `yaml`, or `smile`. Server default: text.
         # @option arguments [Boolean] :help When set to `true` will output available columns. This option

@@ -46,7 +46,6 @@ module Elasticsearch
       # @option arguments [Boolean, String, Array<String>] :_source Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
       # @option arguments [String, Array<String>] :_source_excludes A comma-separated list of source fields to exclude in the response.
       # @option arguments [String, Array<String>] :_source_includes A comma-separated list of source fields to include in the response.
-      # @option arguments [String, Array<String>] :stored_fields A comma-separated list of stored fields to return as part of a hit.
       # @option arguments [Integer] :version The version number for concurrency control.
       #  It must match the current version of the document for the request to succeed.
       # @option arguments [String] :version_type The version type.

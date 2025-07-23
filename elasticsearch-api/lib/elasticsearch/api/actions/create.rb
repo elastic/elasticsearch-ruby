@@ -77,15 +77,7 @@ module Elasticsearch
       # @option arguments [String] :index The name of the data stream or index to target.
       #  If the target doesn't exist and matches the name or wildcard (`*`) pattern of an index template with a `data_stream` definition, this request creates the data stream.
       #  If the target doesn't exist and doesn’t match a data stream template, this request creates the index. (*Required*)
-      # @option arguments [Integer] :if_primary_term Only perform the operation if the document has this primary term.
-      # @option arguments [Integer] :if_seq_no Only perform the operation if the document has this sequence number.
       # @option arguments [Boolean] :include_source_on_error True or false if to include the document source in the error message in case of parsing errors. Server default: true.
-      # @option arguments [String] :op_type Set to `create` to only index the document if it does not already exist (put if absent).
-      #  If a document with the specified `_id` already exists, the indexing operation will fail.
-      #  The behavior is the same as using the `<index>/_create` endpoint.
-      #  If a document ID is specified, this paramater defaults to `index`.
-      #  Otherwise, it defaults to `create`.
-      #  If the request targets a data stream, an `op_type` of `create` is required.
       # @option arguments [String] :pipeline The ID of the pipeline to use to preprocess incoming documents.
       #  If the index has a default ingest pipeline specified, setting the value to `_none` turns off the default ingest pipeline for this request.
       #  If a final pipeline is configured, it will always run regardless of the value of this parameter.
