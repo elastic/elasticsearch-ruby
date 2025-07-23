@@ -62,6 +62,9 @@ module Elasticsearch
       #  This parallelization can improve efficiency and provide a convenient way to break the request down into smaller parts.NOTE: Reindexing from remote clusters does not support manual or automatic slicing.If set to `auto`, Elasticsearch chooses the number of slices to use.
       #  This setting will use one slice per shard, up to a certain limit.
       #  If there are multiple sources, it will choose the number of slices based on the index or backing index with the smallest number of shards. Server default: 1.
+      # @option arguments [Integer] :max_docs The maximum number of documents to reindex.
+      #  By default, all documents are reindexed.
+      #  If it is a value less then or equal to `scroll_size`, a scroll will not be used to retrieve the results for the operation.If `conflicts` is set to `proceed`, the reindex operation could attempt to reindex more documents from the source than `max_docs` until it has successfully indexed `max_docs` documents into the target or it has gone through every document in the source query.
       # @option arguments [Time] :timeout The period each indexing waits for automatic index creation, dynamic mapping updates, and waiting for active shards.
       #  By default, Elasticsearch waits for at least one minute before failing.
       #  The actual wait time could be longer, particularly when multiple waits occur. Server default: 1m.

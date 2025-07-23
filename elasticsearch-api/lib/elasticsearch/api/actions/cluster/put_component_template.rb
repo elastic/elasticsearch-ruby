@@ -43,6 +43,7 @@ module Elasticsearch
         #  If you use Elastic Agent and want to overwrite one of these templates, set the `version` for your replacement template higher than the current version.
         #  If you don’t use Elastic Agent and want to disable all built-in component and index templates, set `stack.templates.enabled` to `false` using the cluster update settings API. (*Required*)
         # @option arguments [Boolean] :create If `true`, this request cannot replace or update existing component templates.
+        # @option arguments [String] :cause User defined reason for create the component template. Server default: api.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

@@ -138,6 +138,7 @@ module Elasticsearch
       #  You can set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
       #  The default value of `1` means it waits for each primary shard to be active. Server default: 1.
       # @option arguments [Boolean] :require_alias If `true`, the destination must be an index alias.
+      # @option arguments [Boolean] :require_data_stream If `true`, the request's actions must target a data stream (existing or to be created).
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
       #  when they occur.
       # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

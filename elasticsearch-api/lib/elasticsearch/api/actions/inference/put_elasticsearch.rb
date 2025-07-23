@@ -28,6 +28,7 @@ module Elasticsearch
         # @option arguments [String] :task_type The type of the inference task that the model will perform. (*Required*)
         # @option arguments [String] :elasticsearch_inference_id The unique identifier of the inference endpoint.
         #  The must not match the `model_id`. (*Required*)
+        # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference endpoint to be created. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

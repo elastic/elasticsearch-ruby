@@ -117,6 +117,9 @@ module Elasticsearch
       #  of the cell. Server default: grid.
       # @option arguments [Integer] :size Maximum number of features to return in the hits layer. Accepts 0-10000.
       #  If 0, results don't include the hits layer. Server default: 10000.
+      # @option arguments [Boolean, Integer] :track_total_hits The number of hits matching the query to count accurately.
+      #  If `true`, the exact number of hits is returned at the cost of some performance.
+      #  If `false`, the response does not include the total number of hits matching the query. Server default: 10000.
       # @option arguments [Boolean] :with_labels If `true`, the hits and aggs layers will contain additional point features representing
       #  suggested label positions for the original features.
       #  - `Point` and `MultiPoint` features will have one of the points selected.

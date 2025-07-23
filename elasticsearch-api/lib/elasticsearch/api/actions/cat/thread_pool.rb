@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :thread_pool_patterns A comma-separated list of thread pool names used to limit the request.
         #  Accepts wildcard expressions.
         # @option arguments [String, Array<String>] :h List of columns to appear in the response. Supports simple wildcards.
-        # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
+        # @option arguments [String, Array<String>] :s A comma-separated list of column names or aliases that determines the sort order.
         #  Sorting defaults to ascending and can be changed by setting `:asc`
         #  or `:desc` as a suffix to the column name.
         # @option arguments [String] :time The unit used to display time values.
@@ -38,7 +38,7 @@ module Elasticsearch
         #  local cluster state. If `false` the list of selected nodes are computed
         #  from the cluster state of the master node. In both cases the coordinating
         #  node will send requests for further information to each selected node.
-        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
         #  `text`, `json`, `cbor`, `yaml`, or `smile`. Server default: text.
         # @option arguments [Boolean] :help When set to `true` will output available columns. This option

@@ -32,11 +32,11 @@ module Elasticsearch
         #  To target all data streams and indices, omit this parameter or use `*` or `_all`.
         # @option arguments [String] :bytes The unit used to display byte values.
         # @option arguments [String, Array<String>] :h List of columns to appear in the response. Supports simple wildcards.
-        # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
+        # @option arguments [String, Array<String>] :s A comma-separated list of column names or aliases that determines the sort order.
         #  Sorting defaults to ascending and can be changed by setting `:asc`
         #  or `:desc` as a suffix to the column name.
-        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
-        # @option arguments [String] :time Unit used to display time values.
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node. Server default: 30s.
+        # @option arguments [String] :time The unit used to display time values.
         # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
         #  `text`, `json`, `cbor`, `yaml`, or `smile`. Server default: text.
         # @option arguments [Boolean] :help When set to `true` will output available columns. This option

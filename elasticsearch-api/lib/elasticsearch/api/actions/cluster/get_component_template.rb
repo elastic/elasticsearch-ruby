@@ -28,6 +28,7 @@ module Elasticsearch
         # @option arguments [String] :name Comma-separated list of component template names used to limit the request.
         #  Wildcard (`*`) expressions are supported.
         # @option arguments [Boolean] :flat_settings If `true`, returns settings in flat format.
+        # @option arguments [String, Array<String>] :settings_filter Filter out results, for example to filter out sensitive information. Supports wildcards or full settings keys
         # @option arguments [Boolean] :include_defaults Return all default configurations for the component template (default: false)
         # @option arguments [Boolean] :local If `true`, the request retrieves information from the local node only.
         #  If `false`, information is retrieved from the master node.
