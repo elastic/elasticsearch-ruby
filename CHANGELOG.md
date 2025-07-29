@@ -1,5 +1,36 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.1.0
+
+## Gem
+
+Tested versions of Ruby for 9.1.0: Ruby (MRI) 3.2, 3.3, 3.4, `head`, JRuby 9.3, JRuby 9.4 and JRuby 10.
+
+## Elasticsearch API
+
+- Source code documentation and code has been updated with better formatting, updated links. It's also been updated to support common parameters and common cat parameters in APIs that support it (`error_trace`, `filter_path`, `human`, `pretty`). The API reference documentation can be generated with `rake doc`.
+
+- `esql.async_query`, `esql.query` - adds `allow_partial_results` boolean parameter. If `true`, partial results will be returned if there are shard failures, but the query can continue to execute on other clusters and shards. If `false`, the query will fail if there are any failures. To override the default behavior, you can set the `esql.query.allow_partial_results` cluster setting to `false`. Server default: true.
+- `indices.get_field_mapping` - removes `local` parameter.
+- `synonyms.put_synonym`, `synonyms.put_synonym_rule` - add `refresh` boolean parameter. If `true`, the request will refresh the analyzers with the new synonym rule and wait for the new synonyms to be available before returning.
+
+New APIs
+
+- `esql.get_query` (Experimental) - Get a specific running ES|QL query information.
+- `esql.list_queries` (Experimental) - Get running ES|QL queries information.
+- `indices.delete_data_stream_options` - Removes the data stream options from a data stream.
+- `indices.get_data_stream_options` - Get the data stream options configuration of one or more data streams.
+- `indices.get_data_stream_settings` - Get setting information for one or more data streams.
+- `indices.put_data_stream_options` - Update the data stream options of the specified data streams.
+- `indices.put_data_stream_settings` - Update data stream settings.
+- `indices.remove_block` - Remove an index block from an index.
+- `inference.put_custom` - Create a custom inference endpoint.
+- `inference.put_deepseek` - Create a DeepSeek inference endpoint.
+- `snapshot.repository_verify_integrity` (Experimental) - Verify the integrity of the contents of a snapshot repository. NOTE: This API is intended for exploratory use by humans. You should expect the request parameters and the response format to vary in future versions.
+- `streams.logs_disable` - Disable the Logs Streams feature for this cluster.
+- `streams.logs_enable` - Enable the Logs Streams feature for this cluster.
+- `streams.status` - Return the current status of the streams feature for each streams type.
+
 # 9.0.2
 
 - Udpates setting 'Accept' and 'Content-Type' headers as to not duplicate or overwrite user set headers [#2666](https://github.com/elastic/elasticsearch-ruby/pull/2666).
