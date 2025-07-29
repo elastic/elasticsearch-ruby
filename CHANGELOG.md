@@ -2,13 +2,6 @@
 
 ## 8.19.0 Release notes
 
-[[release_notes_8_19]]
-=== 8.19 Release notes
-
-[discrete]
-[[release_notes_8_19_0]]
-## 8.19.0 Release notes
-
 #### Client
 
 Tested versions of Ruby for 8.19.0: Ruby (MRI) 3.1, 3.2, 3.3, 3.4. JRuby 9.3, JRuby 9.4 and JRuby 10.
@@ -32,18 +25,18 @@ Tested versions of Ruby for 8.19.0: Ruby (MRI) 3.1, 3.2, 3.3, 3.4. JRuby 9.3, JR
 Time parameters `master_timeout` and `timeout` have been added to the following APIs:
 
 * `index_lifecycle_management`:
-** `delete_lifecycle`
-** `get_lifecycle`
-** `put_lifecycle`
-** `start`
-** `stop`
-** `explain_lifecycle` - Only `master_timeout`
+  * `delete_lifecycle`
+  *  `get_lifecycle`
+  * `put_lifecycle`
+  * `start`
+  * `stop`
+  * `explain_lifecycle` - Only `master_timeout`
 
 * `ingest`:
-** `delete_geoip_database`
-** `delete_ip_location_database`
-** `put_geoip_database`
-** `put_ip_location_database`
+  * `delete_geoip_database`
+  * `delete_ip_location_database`
+  * `put_geoip_database`
+  * `put_ip_location_database`
 
 #### New APIs
 
