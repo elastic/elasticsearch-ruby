@@ -1,5 +1,10 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.0.4
+
+- Source code documentation and code has been updated to support common parameters and common cat parameters in APIs that support it (`error_trace`, `filter_path`, `human`, `pretty`). The API reference documentation can be generated with `rake doc`.
+- New API: `inference.put_custom`
+
 # 9.0.3
 
 - Adds `ccr` alias for `cross_cluster_replication` and `slm` alias for `snapshot_lifecycle_management`.
