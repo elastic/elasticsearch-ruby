@@ -1,0 +1,59 @@
+[[release_notes_8_19]]
+=== 8.19 Release notes
+
+[discrete]
+[[release_notes_8_19_0]]
+=== 8.19.0 Release notes
+
+[discrete]
+==== Client
+
+Tested versions of Ruby for 8.19.0: Ruby (MRI) 3.1, 3.2, 3.3, 3.4. JRuby 9.3, JRuby 9.4 and JRuby 10.
+
+[discrete]
+==== API
+
+[discrete]
+===== API changes
+
+* `cluster.get_component_template` - Adds `flat_settings` boolean parameter, return settings in flat format (default: false). Adds `settings_filter` String parameter, filter out results, for example to filter out sensitive information.
+* `cluster.put_component_template` - Removes `timeout` parameter, adds `cause` String parameter, used defined reason for creation.
+* `create` - Adds `require_alias` and `require_data_stream` boolean parameters, to specify required type to be created.
+* `eql.search` - Adds `ccs_minimize_roundtrips`, `ignore_unavailable`, `allow_no_indices` boolean parameters and `expand_wildcards` String parameter.
+* `esql.async_query` - Adds `allow_partial_results` boolean parameter.
+* `esql.async_query_get` - Adds `format` String parameter (e.g. json, yaml).
+* `esql.query` -  Adds `allow_partial_results` boolean parameter.
+* `indices.recovery` - Adds `ignore_unavailable`, `allow_no_indices` boolean parameters and `expand_wildcards` String parameter.
+* `msearch` - Adds `ignore_unavailable`, `ignore_throttled`, `allow_no_indices`, `include_named_queries_score` boolean parameters, `expand_wildcards` String parameter and `routing`, a comma-separated list of specific routing values.
+* `open_point_in_time` - Adds `max_concurrent_shard_requests` parameter, the number of concurrent shard requests per node executed concurrently when opening this point-in-time
+* `reindex` - Adds `require_alias` boolean parameter.
+* `search_mvt` - Adds `grid_agg` String parameter, aggregation used to create a grid for `field`.
+* `snapshot.repository_analyze` - Adds `register_operation_count` parameter, the minimum number of linearizable register operations to perform in total.
+
+Time parameters `master_timeout` and `timeout` have been added to the following APIs:
+
+* `index_lifecycle_management`:
+** `delete_lifecycle`
+** `get_lifecycle`
+** `put_lifecycle`
+** `start`
+** `stop`
+** `explain_lifecycle` - Only `master_timeout`
+
+* `ingest`:
+** `delete_geoip_database`
+** `delete_ip_location_database`
+** `put_geoip_database`
+** `put_ip_location_database`
+
+[discrete]
+===== New APIs
+
+* `indices.delete_data_stream_options` - Deletes the data stream options of the selected data streams.
+* `indices.get_data_stream_options` - Returns the data stream options of the selected data streams.
+* `indices.get_data_stream_settings` - Gets a data stream's settings.
+* `indices.put_data_stream_options` - Updates the data stream options of the selected data streams.
+* `indices.put_data_stream_settings` - Updates a data stream's settings.
+* `inference.put_amazonsagemaker` - Configure an Amazon SageMaker inference endpoint.
+* `inference.put_custom` - Configure a custom inference endpoint.
+* `inference.put_deepseek` - Configure a DeepSeek inference endpoint.
