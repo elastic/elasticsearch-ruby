@@ -15,9 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 
-module Elasticsearch
-  module API
-    VERSION = '9.1.0'.freeze
-    ES_SPECIFICATION_COMMIT = 'e585438d116b00ff34643179e6286e402c0bcaaf'.freeze
+require 'spec_helper'
+
+describe 'client#inference.put_amazonsagemaker' do
+  let(:expected_args) do
+    [
+      'PUT',
+      '_inference/foo/bar',
+      {},
+      nil,
+      {},
+      { defined_params: { amazonsagemaker_inference_id: 'bar', task_type: 'foo' },
+        endpoint: 'inference.put_amazonsagemaker' }
+    ]
+  end
+
+  it 'performs the request' do
+    expect(client_double.inference.put_amazonsagemaker(task_type: 'foo', amazonsagemaker_inference_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end
