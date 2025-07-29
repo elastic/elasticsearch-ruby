@@ -20,6 +20,11 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-ruby-client-next-fixes]
 % *
 
+## 9.0.4 [elasticsearch-ruby-client-9.0.4-release-notes]
+
+- Source code documentation and code has been updated to support common parameters and common cat parameters in APIs that support it (`error_trace`, `filter_path`, `human`, `pretty`). The API reference documentation can be generated with `rake doc`.
+- New API: `inference.put_custom`
+
 ## 9.0.3 [elasticsearch-ruby-client-9.0.3-release-notes]
 
 ### Fixes [elasticsearch-ruby-client-9.0.3-fixes]
