@@ -85,3 +85,6 @@ Please make sure you have signed the [Contributor License Agreement](https://www
 
 4. Submit a pull request.
 Push your local changes to your forked copy of the repository and submit a pull request. In the pull request, describe what your changes do and mention the number of the issue where discussion has taken place, eg “Closes #123″.
+
+
+Let me know if you'd like a version optimized for a README file, website docs, or to convert this into a CLI tool helper!
