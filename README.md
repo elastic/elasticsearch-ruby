@@ -14,7 +14,7 @@ This repository contains the official [Elasticsearch](https://www.elastic.co/pro
 ## Documentation
 
 Please refer to 
-[the full documentation on elastic.co](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/index.html) 
+[the full documentation on elastic.co](https://www.elastic.co/docs/reference/elasticsearch/clients/ruby) 
 for comprehensive information.
 
 Both `elastic-transport` and `elasticsearch-api` are documented. You can check 
