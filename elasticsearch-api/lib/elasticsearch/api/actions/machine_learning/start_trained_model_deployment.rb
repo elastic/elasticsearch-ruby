@@ -36,7 +36,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The settings for the trained model deployment
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/start-trained-model-deployment.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/start-trained-model-deployment.html
         #
         def start_trained_model_deployment(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.start_trained_model_deployment' }

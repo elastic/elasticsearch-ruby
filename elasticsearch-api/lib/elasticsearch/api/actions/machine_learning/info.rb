@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/get-ml-info.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-ml-info.html
         #
         def info(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.info' }

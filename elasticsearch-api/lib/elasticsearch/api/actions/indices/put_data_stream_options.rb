@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data stream options configuration that consist of the failure store configuration
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/index.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index.html
         #
         def put_data_stream_options(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.put_data_stream_options' }

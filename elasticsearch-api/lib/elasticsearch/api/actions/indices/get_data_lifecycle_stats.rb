@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/data-streams-get-lifecycle-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams-get-lifecycle-stats.html
         #
         def get_data_lifecycle_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.get_data_lifecycle_stats' }

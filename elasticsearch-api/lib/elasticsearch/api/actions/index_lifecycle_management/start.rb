@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/ilm-start.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ilm-start.html
         #
         def start(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ilm.start' }

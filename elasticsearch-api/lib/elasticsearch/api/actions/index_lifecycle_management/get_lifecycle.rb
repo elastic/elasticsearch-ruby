@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/ilm-get-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ilm-get-lifecycle.html
         #
         def get_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ilm.get_lifecycle' }
