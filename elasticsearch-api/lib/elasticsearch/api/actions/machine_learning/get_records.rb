@@ -36,7 +36,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Record selection criteria
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/ml-get-record.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-get-record.html
         #
         def get_records(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_records' }

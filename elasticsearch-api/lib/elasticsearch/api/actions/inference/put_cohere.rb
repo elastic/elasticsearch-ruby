@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference endpoint's task and service settings
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/infer-service-cohere.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-cohere.html
         #
         def put_cohere(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.put_cohere' }

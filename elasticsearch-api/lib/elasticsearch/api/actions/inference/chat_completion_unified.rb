@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference payload
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/chat-completion-inference.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/chat-completion-inference.html
         #
         def chat_completion_unified(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.chat_completion_unified' }

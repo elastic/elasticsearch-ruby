@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference payload
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/post-inference-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/post-inference-api.html
         #
         def sparse_embedding(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.sparse_embedding' }

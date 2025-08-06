@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [String] :settings_filter Filter out results, for example to filter out sensitive information. Supports wildcards or full settings keys
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/indices-component-template.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-component-template.html
         #
         def get_component_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.get_component_template' }

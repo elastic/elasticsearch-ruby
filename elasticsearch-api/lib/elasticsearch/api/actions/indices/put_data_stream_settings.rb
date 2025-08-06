@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data stream settings to be updated (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/data-streams.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams.html
         #
         def put_data_stream_settings(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.put_data_stream_settings' }
