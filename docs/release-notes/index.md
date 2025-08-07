@@ -20,6 +20,15 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-ruby-client-next-fixes]
 % *
 
+## 9.1.1 [elasticsearch-ruby-client-9.1.1-release-notes]
+
+### Features and enhancements [elasticsearch-ruby-client-9.1.1-features-enhancements]
+
+## Elasticsearch API
+
+- Updates source code documentation to latest 9.1 specification.
+- New API: `inference.put_amazonsagemaker`.
+
 ## 9.1.0 [elasticsearch-ruby-client-9.1.0-release-notes]
 
 ### Features and enhancements [elasticsearch-ruby-client-9.1.0-features-enhancements]
