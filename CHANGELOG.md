@@ -1,5 +1,12 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.1.1
+
+## Elasticsearch API
+
+- Updates source code documentation to latest 9.1 specification.
+- Adds inference.put_amazonsagemaker.
+
 # 9.1.0
 
 ## Gem
