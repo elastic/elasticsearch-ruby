@@ -5,7 +5,7 @@ mapped_pages:
 
 # Elastic Common Schema (ECS) [ecs]
 
-The [Elastic Common Schema (ECS)][Elastic Common Schema (ECS)](ecs://reference/index.md)) is an open source format that defines a common set of fields to be used when storing event data like logs in Elasticsearch.
+The [Elastic Common Schema (ECS)](ecs://reference/index.md) is an open source format that defines a common set of fields to be used when storing event data like logs in Elasticsearch.
 
 You can use the library [ecs-logging](https://github.com/elastic/ecs-logging-ruby) which is a set of libraries that enables you to transform your application logs to structured logs that comply with the ECS format.
 
