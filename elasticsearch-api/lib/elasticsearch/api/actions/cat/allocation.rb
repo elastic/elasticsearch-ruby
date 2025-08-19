@@ -28,7 +28,7 @@ module Elasticsearch
         #
         # @option arguments [String, Array] :node_id A comma-separated list of node identifiers or names used to limit the returned information.
         # @option arguments [String] :bytes The unit used to display byte values.
-        # @option arguments [String, Array<String>] :h List of columns to appear in the response. Supports simple wildcards.
+        # @option arguments [String, Array<String>] :h A comma-separated list of columns names to display. It supports simple wildcards.
         # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
         #  Sorting defaults to ascending and can be changed by setting `:asc`
         #  or `:desc` as a suffix to the column name.
