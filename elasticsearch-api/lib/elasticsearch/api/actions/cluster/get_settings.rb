@@ -26,7 +26,12 @@ module Elasticsearch
         # By default, it returns only settings that have been explicitly defined.
         #
         # @option arguments [Boolean] :flat_settings If `true`, returns settings in flat format.
-        # @option arguments [Boolean] :include_defaults If `true`, returns default cluster settings from the local node.
+        # @option arguments [Boolean] :include_defaults If `true`, also returns default values for all other cluster settings, reflecting the values
+        #  in the `elasticsearch.yml` file of one of the nodes in the cluster. If the nodes in your
+        #  cluster do not all have the same values in their `elasticsearch.yml` config files then the
+        #  values returned by this API may vary from invocation to invocation and may not reflect the
+        #  values that Elasticsearch uses in all situations. Use the `GET _nodes/settings` API to
+        #  fetch the settings for each individual node in your cluster.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Time] :timeout Period to wait for a response.
