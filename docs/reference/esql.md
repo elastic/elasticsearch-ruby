@@ -128,5 +128,39 @@ query.to_s
 => "FROM sample | SORT @timestamp DESC | WHERE event_duration > 5000000 | LIMIT 3"
 ```
 
-The `elastic-esql` library works independently of the {{es}} client, so you can use it alongside any client &mdash; not just `elasticsearch-ruby`.
+The `elastic-esql` library works independently of the {{es}} client, so you can use it alongside any client &mdash; not just `elasticsearch-ruby`. But once you build a query object, you can pass it directly to the `esql.query` API in `elasticsearch-ruby`:
+
+```ruby
+require 'elasticsearch'
+require 'elastic/esql'
+
+client = Elasticsearch::Client.new
+index = 'sample_data'
+
+query = Elastic::ESQL.from(index)
+                     .sort('@timestamp')
+                     .desc
+                     .where('event_duration > 5000000')
+                     .limit(3)
+                     .eval({ duration_ms: 'ROUND(event_duration/1000000.0, 1)' })
+client.esql.query(body: { query: query })
+```
+
 For more information, see the gem [README](https://github.com/elastic/esql-ruby?tab=readme-ov-file#ruby-esql-query-builder).
+
+### Preventing injection attacks
+
+ES|QL, like most query languages, is vulnerable to [code injection attacks](https://en.wikipedia.org/wiki/Code_injection) if untrusted data provided by users is added to a query. To eliminate this risk, ES|QL allows untrusted data to be given separately from the query as parameters.
+
+Let's assume an application needs a `find_employee_by_name()` function that searches for the name given as an argument. If this argument is received by the application from users, then it is considered untrusted and should not be added to the query directly. Here is how to code the function in a secure manner:
+
+```ruby
+def find_employee_by_name(name)
+  query = Elastic::ESQL.from('employees')
+            .keep('first_name', 'last_name', 'height')
+            .where('first_name == ?')
+  @client.esql.query(body: { query: query, params: [name] })
+end
+```
+
+Here the part of the query in which the untrusted data needs to be inserted is replaced with a parameter, which in ES|QL is defined by the question mark. The list of values given in the `params` argument to the query endpoint are assigned in order to the parameters defined in the query.
