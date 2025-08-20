@@ -45,9 +45,10 @@ module Elasticsearch
         #  If you specify this parameter in the request path, it is used for any documents that do not explicitly specify an index argument.
         # @option arguments [String] :pipeline The pipeline to use as the default pipeline.
         #  This value can be used to override the default pipeline of the index.
-        # @option arguments [String] :merge_type The method to be used when merging mapping_additions existing mappings. Mappings can be merged in the way mapping changes are merged into an existing index, or in
-        #  the way mapping changes are merged into existing templates. Some changes are allowed to templates that are not allowed to indices. For example,
-        #  a field cannot be changed to an incompatible type in an index, but can in a template. Server default: index.
+        # @option arguments [String] :merge_type The mapping merge type if mapping overrides are being provided in mapping_addition.
+        #  The allowed values are one of index or template.
+        #  The index option merges mappings the way they would be merged into an existing index.
+        #  The template option merges mappings the way they would be merged into a template. Server default: index.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
