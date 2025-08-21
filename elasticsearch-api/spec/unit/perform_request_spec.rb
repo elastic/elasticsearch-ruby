@@ -112,6 +112,16 @@ describe 'Perform request args' do
       double('response', status: 200, body: {}, headers: {})
     end
 
+    let(:transport_double) do
+      Transport ||= Struct.new('Transport', :options)
+      Transport.new({ transport_options: { headers: {} } })
+    end
+
+    before do
+      allow(client_double).to receive(:transport).and_return transport_double
+      allow(Elasticsearch::API::Utils).to receive(:update_ndjson_headers!).and_return({})
+    end
+
     context("'#{spec.endpoint_name}'") do
       # The expected hash passed to perform_request contains the endpoint name and any defined path parts
       let(:expected_perform_request_params) do
