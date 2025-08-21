@@ -30,7 +30,8 @@ module Elasticsearch
         #  It is valid only for the CSV format.
         # @option arguments [Boolean] :drop_null_columns Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
         #  If `true`, the response will include an extra section under the name `all_columns` which has the name of all the columns.
-        # @option arguments [String] :format A short version of the Accept header, for example `json` or `yaml`.
+        # @option arguments [String] :format A short version of the Accept header, e.g. json, yaml.`csv`, `tsv`, and `txt` formats will return results in a tabular format, excluding other metadata fields from the response.For async requests, nothing will be returned if the async query doesn't finish within the timeout.
+        #  The query ID and running status are available in the `X-Elasticsearch-Async-Id` and `X-Elasticsearch-Async-Is-Running` HTTP headers of the response, respectively.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

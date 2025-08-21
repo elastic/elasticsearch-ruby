@@ -78,6 +78,7 @@ module Elasticsearch
       # * JavaScript: Check out `client.helpers.*`
       # * .NET: Check out `BulkAllObservable`
       # * PHP: Check out bulk indexing.
+      # * Ruby: Check out `Elasticsearch::Helpers::BulkHelper`
       # **Submitting bulk requests with cURL**
       # If you're providing text file input to `curl`, you must use the `--data-binary` flag instead of plain `-d`.
       # The latter doesn't preserve newlines. For example:

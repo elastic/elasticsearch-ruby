@@ -32,7 +32,7 @@ module Elasticsearch
         # - Update supported mapping parameters
         # - Change a field's mapping using reindexing
         # - Rename a field using a field alias
-        # Learn how to use the update mapping API with practical examples in the {https://www.elastic.co/docs//manage-data/data-store/mapping/update-mappings-examples Update mapping API examples} guide.
+        # Learn how to use the update mapping API with practical examples in the {https://www.elastic.co/docs/manage-data/data-store/mapping/update-mappings-examples Update mapping API examples} guide.
         #
         # @option arguments [String, Array] :index A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices. (*Required*)
         # @option arguments [Boolean] :allow_no_indices If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.

@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String, Array] :index A comma-separated list of data streams, indices, and aliases used to limit the request.
         #  It supports wildcards (`*`).
         #  To target all data streams and indices, omit this parameter or use `*` or `_all`.
-        # @option arguments [String, Array<String>] :h List of columns to appear in the response. Supports simple wildcards.
+        # @option arguments [String, Array<String>] :h A comma-separated list of columns names to display. It supports simple wildcards.
         # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
         #  Sorting defaults to ascending and can be changed by setting `:asc`
         #  or `:desc` as a suffix to the column name.
