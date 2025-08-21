@@ -51,6 +51,11 @@ module Elasticsearch
       # In this case, the response includes a count of the version conflicts that were encountered.
       # Note that the handling of other error types is unaffected by the `conflicts` property.
       # Additionally, if you opt to count version conflicts, the operation could attempt to reindex more documents from the source than `max_docs` until it has successfully indexed `max_docs` documents into the target or it has gone through every document in the source query.
+      # It's recommended to reindex on indices with a green status. Reindexing can fail when a node shuts down or crashes.
+      # * When requested with `wait_for_completion=true` (default), the request fails if the node shuts down.
+      # * When requested with `wait_for_completion=false`, a task id is returned, which can be used via the task management API to monitor, debug, or cancel the task. The task may disappear or fail if the node shuts down.
+      # When retrying a failed reindex operation, it might be necessary to set `conflicts=proceed` or to first delete the partial destination index.
+      # Additionally, dry runs, checking disk space, and fetching index recovery information can help address the root cause.
       # Refer to the linked documentation for examples of how to reindex documents.
       #
       # @option arguments [Boolean] :refresh If `true`, the request refreshes affected shards to make this operation visible to search.
