@@ -29,11 +29,12 @@ describe 'client#bulk' do
     ]
   end
 
-  let(:headers) {
-    {
-      'Content-Type' => 'application/vnd.elasticsearch+x-ndjson; compatible-with=9'
-    }
-  }
+  let(:headers) { {} }
+
+  # This test only cares about the body, there's another test for the ndjson headers.
+  before do
+    dummy_ndjson_headers
+  end
 
   let(:params) { {} }
   let(:url) { '_bulk' }
@@ -53,12 +54,16 @@ describe 'client#bulk' do
     end
 
     it 'performs the request' do
-      expect(client_double.bulk(:body => [
-          { :index =>  { :_index => 'myindexA', :_id => '1', :data => { :title => 'Test' } } },
-          { :update => { :_index => 'myindexB', :_id => '2', :data => { :doc => { :title => 'Update' } } } },
-          { :delete => { :_index => 'myindexC', :_id => '3' } },
-          { :index =>  { :_index => 'myindexD', :_id => '1', :data => { :data => 'MYDATA' } } },
-      ])).to be_a Elasticsearch::API::Response
+      expect(
+        client_double.bulk(
+          body: [
+            { index:  { _index: 'myindexA', _id: '1', data: { title: 'Test' } } },
+            { update: { _index: 'myindexB', _id: '2', data: { doc: { title: 'Update' } } } },
+            { delete: { _index: 'myindexC', _id: '3' } },
+            { index:  { _index: 'myindexD', _id: '1', data: { data: 'MYDATA' } } }
+          ]
+        )
+      ).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -72,7 +77,7 @@ describe 'client#bulk' do
         params,
         body,
         headers,
-        { defined_params: { index: 'myindex' }, :endpoint=>"bulk"}
+        { defined_params: { index: 'myindex' }, endpoint: 'bulk' }
       ]
     end
 
@@ -90,8 +95,14 @@ describe 'client#bulk' do
     end
 
     it 'performs the request' do
-      expect(client_double.bulk(body:[ { :update => { :_index => 'myindex', :_id => '1' } },
-                                       { :doc => { :data => { :title => 'Update' } } } ])).to be_a Elasticsearch::API::Response
+      expect(
+        client_double.bulk(
+          body: [
+            { update: { _index: 'myindex', _id: '1' } },
+            { doc: { data: { title: 'Update' } } }
+          ]
+        )
+      ).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -137,7 +148,7 @@ describe 'client#bulk' do
         params,
         body,
         headers,
-        { defined_params: { index: 'foo^bar' }, :endpoint=>"bulk"}
+        { defined_params: { index: 'foo^bar' }, endpoint: 'bulk'}
       ]
     end
 

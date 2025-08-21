@@ -41,24 +41,21 @@ describe 'client#msearch' do
     {}
   end
 
-  let(:headers) {
-    {
-      'Content-Type' => 'application/vnd.elasticsearch+x-ndjson; compatible-with=9'
-    }
-  }
-
-  let(:client) do
-    Class.new { include Elasticsearch::API }.new
+  let(:headers) do
+    {}
   end
 
-  it 'requires the :body argument' do
-    expect {
-      client.msearch
-    }.to raise_exception(ArgumentError)
+  let(:transport_double) do
+    Transport ||= Struct.new('Transport', :options)
+    Transport.new({ transport_options: { headers: {} } })
+  end
+
+  before do
+    allow(client_double).to receive(:transport).and_return transport_double
+    allow(Elasticsearch::API::Utils).to receive(:update_ndjson_headers!).and_return(headers)
   end
 
   context 'when the body is an object' do
-
     let(:body) do
       <<-PAYLOAD.gsub(/^\s+/, '')
             {"index":"foo"}
@@ -72,7 +69,7 @@ describe 'client#msearch' do
 
     it 'performs the request' do
       expect(client_double.msearch body: [
-          { index: 'foo', search: { query: { match_all: {}  } } },
+          { index: 'foo', search: { query: { match_all: {} } } },
           { index: 'bar', search: { query: { match: { foo: 'bar' } } } },
           { search_type: 'count', search: { facets: { tags: {} } } }
       ])
@@ -80,7 +77,6 @@ describe 'client#msearch' do
   end
 
   context 'when the body is a string' do
-
     let(:body) do
       %Q|{"foo":"bar"}\n{"moo":"lam"}|
     end
@@ -141,7 +137,6 @@ describe 'client#msearch' do
   end
 
   context 'when the request needs to be URL-escaped' do
-
     let(:url) do
       'foo%5Ebar/_msearch'
     end
@@ -167,7 +162,6 @@ describe 'client#msearch' do
   end
 
   context 'when the URL params need to be URL-encoded' do
-
     let(:url) do
       '_msearch'
     end

@@ -93,9 +93,7 @@ module Elasticsearch
           payload = body
         end
 
-        headers.merge!({
-                         'Content-Type' => 'application/vnd.elasticsearch+x-ndjson; compatible-with=9'
-                       })
+        Utils.update_ndjson_headers!(headers, transport.options.dig(:transport_options, :headers))
         Elasticsearch::API::Response.new(
           perform_request(method, path, params, payload, headers, request_opts)
         )
