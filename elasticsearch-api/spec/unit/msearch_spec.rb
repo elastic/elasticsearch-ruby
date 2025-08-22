@@ -16,7 +16,6 @@
 # under the License.
 
 require 'spec_helper'
-require 'elastic/transport'
 
 describe 'msearch custom' do
   context 'raise exception' do

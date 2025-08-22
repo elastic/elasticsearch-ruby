@@ -45,8 +45,9 @@ describe 'client#msearch' do
     {}
   end
 
+  # This test only cares about the body, there's another test for the ndjson headers.
   before do
-    ndjson_headers
+    dummy_ndjson_headers
   end
 
   context 'when the body is an object' do
