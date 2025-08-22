@@ -37,11 +37,12 @@ describe 'client#msearch_template' do
     {}
   end
 
-  let(:headers) {
-    {
-      'Content-Type' => 'application/vnd.elasticsearch+x-ndjson; compatible-with=9'
-    }
-  }
+  let(:headers) {{}}
+
+  # This test only cares about the body, there's another test for the ndjson headers.
+  before do
+    dummy_ndjson_headers
+  end
 
   let(:url) do
     '_msearch/template'

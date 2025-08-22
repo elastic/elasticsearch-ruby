@@ -59,6 +59,13 @@ module HelperModule
   end
 end
 
+Transport ||= Struct.new('Transport', :options)
+
+def dummy_ndjson_headers
+  allow(client_double).to receive(:transport).and_return Transport.new({ transport_options: { headers: {} } })
+  allow(Elasticsearch::API::Utils).to receive(:update_ndjson_headers!).and_return({})
+end
+
 RSpec.configure do |config|
   config.include(HelperModule)
   config.filter_run_excluding skip: true

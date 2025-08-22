@@ -16,17 +16,8 @@
 # under the License.
 
 require 'spec_helper'
-require 'elastic/transport'
 
-describe 'msearch custom' do
-  context 'raise exception' do
-    it 'requires the :body argument' do
-      expect do
-        Elasticsearch::Client.new.msearch
-      end.to raise_exception(ArgumentError)
-    end
-  end
-
+describe 'text_structure.find_structure headers test' do
   context 'when not setting headers' do
     let(:client) do
       Elasticsearch::Client.new
@@ -44,13 +35,13 @@ describe 'msearch custom' do
         .to receive(:perform_request)
               .with(
                 Elasticsearch::API::HTTP_POST,
-                '_msearch',
+                '_text_structure/find_structure',
                 {},
                 {},
                 expected_headers,
-                { endpoint: 'msearch' }
+                { endpoint: 'text_structure.find_structure' }
               )
-      expect(client.msearch(body: {})).to be_a Elasticsearch::API::Response
+      expect(client.text_structure.find_structure(body: {})).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -82,13 +73,13 @@ describe 'msearch custom' do
         .to receive(:perform_request)
         .with(
           Elasticsearch::API::HTTP_POST,
-          '_msearch',
+          '_text_structure/find_structure',
           {},
           {},
           expected_headers,
-          { endpoint: 'msearch' }
+          { endpoint: 'text_structure.find_structure' }
         )
-      expect(client.msearch(body: {})).to be_a Elasticsearch::API::Response
+      expect(client.text_structure.find_structure(body: {})).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -121,13 +112,13 @@ describe 'msearch custom' do
         .to receive(:perform_request)
               .with(
                 Elasticsearch::API::HTTP_POST,
-                '_msearch',
+                '_text_structure/find_structure',
                 {},
                 {},
                 expected_headers,
-                { endpoint: 'msearch' }
+                { endpoint: 'text_structure.find_structure' }
               )
-      expect(client.msearch(body: {}, headers: { x_custom: 'Custom header' })).to be_a Elasticsearch::API::Response
+      expect(client.text_structure.find_structure(body: {}, headers: { x_custom: 'Custom header' })).to be_a Elasticsearch::API::Response
     end
   end
 end
