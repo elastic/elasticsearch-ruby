@@ -183,7 +183,7 @@ module Elasticsearch
         current_content = client_headers.keys.find { |c| c.match?(/content-?_?type/i) }
         current_accept = client_headers.keys.find { |c| c.match?(/accept/i) }
 
-        version = client_headers[current_content].match(/compatible-with=([8-9]{1})/)[1]
+        version = client_headers[current_content].match(/compatible-with=([0-9]+)/)[1]
 
         headers.merge!(
           {
