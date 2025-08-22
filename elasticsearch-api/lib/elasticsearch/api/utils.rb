@@ -182,8 +182,7 @@ module Elasticsearch
       def update_ndjson_headers!(headers, client_headers)
         current_content = client_headers.keys.find { |c| c.match?(/content-?_?type/i) } || 'content-type'
         current_accept = client_headers.keys.find { |c| c.match?(/accept/i) } || 'accept'
-
-        version = client_headers[current_content].match(/compatible-with=([8-9]{1})/)[1] || 9
+        version = client_headers[current_content].match(/compatible-with=([0-9]+)/)[1] || 9
 
         headers.merge!(
           {
