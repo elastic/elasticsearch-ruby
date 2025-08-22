@@ -45,14 +45,8 @@ describe 'client#msearch' do
     {}
   end
 
-  let(:transport_double) do
-    Transport ||= Struct.new('Transport', :options)
-    Transport.new({ transport_options: { headers: {} } })
-  end
-
   before do
-    allow(client_double).to receive(:transport).and_return transport_double
-    allow(Elasticsearch::API::Utils).to receive(:update_ndjson_headers!).and_return(headers)
+    ndjson_headers
   end
 
   context 'when the body is an object' do
