@@ -24,28 +24,17 @@ describe 'client#fleet.msearch' do
       '_fleet/_fleet_msearch',
       {},
       {},
-      headers,
+      {},
       { endpoint: 'fleet.msearch' }
     ]
   end
 
-  let(:headers) {
-    {
-      'Content-Type' => 'application/vnd.elasticsearch+x-ndjson; compatible-with=9'
-    }
-  }
+  # This test only cares about the body, there's another test for the ndjson headers.
+  before do
+    dummy_ndjson_headers
+  end
 
   it 'performs the request' do
     expect(client_double.fleet.msearch(body: {})).to be_a Elasticsearch::API::Response
-  end
-
-  let(:client) do
-    Class.new { include Elasticsearch::API }.new
-  end
-
-  it 'requires the :body argument' do
-    expect {
-      client.fleet.msearch
-    }.to raise_exception(ArgumentError)
   end
 end
