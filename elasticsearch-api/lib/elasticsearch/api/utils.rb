@@ -177,6 +177,22 @@ module Elasticsearch
         end
       end
 
+      # Updates ndjson headers for msearch, bulk, and others
+      #
+      def update_ndjson_headers!(headers, client_headers)
+        current_content = client_headers.keys.find { |c| c.match?(/content-?_?type/i) }
+        current_accept = client_headers.keys.find { |c| c.match?(/accept/i) }
+
+        version = client_headers[current_content].match(/compatible-with=([0-9]+)/)[1]
+
+        headers.merge!(
+          {
+            current_content => "application/vnd.elasticsearch+x-ndjson; compatible-with=#{version}",
+            current_accept => "application/vnd.elasticsearch+x-ndjson; compatible-with=#{version}"
+          }
+        )
+      end
+
       extend self
     end
   end
