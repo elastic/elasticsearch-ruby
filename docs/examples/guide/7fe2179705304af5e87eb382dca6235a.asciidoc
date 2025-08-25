@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.indices.open(
-  index: 'logs-my_app-default'
-)
-puts response
-----

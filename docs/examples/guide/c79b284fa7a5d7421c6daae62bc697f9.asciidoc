@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.indices.delete(
-  index: 'kibana_sample_data_ecommerce'
-)
-puts response
-----

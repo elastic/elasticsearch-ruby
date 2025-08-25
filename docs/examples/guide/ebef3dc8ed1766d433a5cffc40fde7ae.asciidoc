@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.ilm.remove_policy(
-  index: 'logs-my_app-default'
-)
-puts response
-----

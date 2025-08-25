@@ -1,5 +1,0 @@
-[source, ruby]
-----
-response = client.cat.nodes
-puts response
-----

@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.indices.delete_template(
-  name: '.cloud-hot-warm-allocation-0'
-)
-puts response
-----

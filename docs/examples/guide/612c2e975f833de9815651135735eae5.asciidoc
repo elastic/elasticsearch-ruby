@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.tasks.cancel(
-  nodes: 'nodeId1,nodeId2',
-  actions: '*reindex'
-)
-puts response
-----

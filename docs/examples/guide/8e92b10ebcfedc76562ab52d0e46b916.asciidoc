@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.delete_script(
-  id: 'my-search-template'
-)
-puts response
-----
