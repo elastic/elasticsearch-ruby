@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.field_caps(
-  index: 'trips',
-  fields: 'route_*,transit_mode'
-)
-puts response
-----

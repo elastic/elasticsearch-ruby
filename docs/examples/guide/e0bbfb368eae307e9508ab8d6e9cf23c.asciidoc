@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.cat.fielddata(
-  v: true,
-  fields: 'body'
-)
-puts response
-----
