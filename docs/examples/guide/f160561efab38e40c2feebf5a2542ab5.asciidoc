@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.nodes.stats(
-  metric: 'ingest',
-  filter_path: 'nodes.*.ingest.pipelines'
-)
-puts response
-----

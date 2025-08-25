@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.cat.ml_jobs(
-  h: 'id,s,dpr,mb',
-  v: true
-)
-puts response
-----
