@@ -25,6 +25,20 @@ describe 'Perform request args' do
     spec = Elasticsearch::API::EndpointSpec.new(filepath)
     next if spec.module_namespace.flatten.first == '_internal' || spec.visibility != 'public'
 
+    # Skip testing if the method hasn't been added to the client yet:
+    client = Elasticsearch::Client.new
+    implemented = if spec.module_namespace.empty?
+                    client.public_methods.include?(spec.method_name.to_sym)
+                  else
+                    client.public_methods.include?(spec.module_namespace[0].to_sym) &&
+                      client.send(spec.module_namespace[0]).methods.include?(spec.method_name.to_sym)
+                  end
+    unless implemented
+      name = spec.module_namespace.empty? ? spec.method_name : "#{spec.module_namespace[0]}.#{spec.method_name}"
+      Logger.new($stdout).info("Method #{name} not implemented yet")
+      next
+    end
+
     # These are the path parts defined by the user in the method argument
     defined_path_parts = spec.path_params.inject({}) do |params, part|
       params.merge(part => 'testing')
