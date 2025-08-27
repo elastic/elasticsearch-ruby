@@ -1,5 +1,12 @@
 *See the full release notes on the official documentation website: https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/release_notes.html*
 
+## 8.19.1 Release notes
+
+#### API changes
+
+* Updated source code documentation links to Elasticsearch documentation to 8.19
+* Adds `transform.set_upgrade_mode` - Sets a cluster wide upgrade_mode setting that prepares transform indices for an upgrade.
+
 ## 8.19.0 Release notes
 
 #### Client
