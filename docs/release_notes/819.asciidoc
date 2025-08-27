@@ -2,6 +2,15 @@
 === 8.19 Release notes
 
 [discrete]
+[[release_notes_8_19_1]]
+=== 8.19.1 Release notes
+
+[discrete]
+==== API
+* Updated source code documentation links to Elasticsearch documentation to 8.19
+* Adds `transform.set_upgrade_mode` - Sets a cluster wide upgrade_mode setting that prepares transform indices for an upgrade.
+
+[discrete]
 [[release_notes_8_19_0]]
 === 8.19.0 Release notes
 
