@@ -1,5 +1,11 @@
 *See the full release notes on the official documentation website: https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/release_notes.html*
 
+## 8.18.1 Release notes
+
+- Updates API code to the latest Elasticsearch 8.18 specification.
+- Adds `inference.put_custom` - Configure a custom inference endpoint.
+- Adds `transform.set_upgrade_mode` - Sets a cluster wide upgrade_mode setting that prepares transform indices for an upgrade.
+
 ## 8.18.0 Release notes
 
 ### API

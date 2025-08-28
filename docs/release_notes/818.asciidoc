@@ -2,6 +2,14 @@
 === 8.18 Release notes
 
 [discrete]
+[[release_notes_8_18_1]]
+=== 8.18.1 Release notes
+
+- Updates API code to the latest Elasticsearch 8.18 specification.
+- Adds `inference.put_custom` - Configure a custom inference endpoint.
+- Adds `transform.set_upgrade_mode` - Sets a cluster wide upgrade_mode setting that prepares transform indices for an upgrade.
+
+[discrete]
 [[release_notes_8_18_0]]
 === 8.18.0 Release notes
 
