@@ -17,23 +17,23 @@
 
 require 'spec_helper'
 
-describe 'client.text_structure#test_grok_pattern' do
+describe 'client.text_structure#find_structure' do
   let(:expected_args) do
     [
       'POST',
       '_text_structure/find_structure',
       {},
       {},
-      headers,
+      {},
       { endpoint: 'text_structure.find_structure' }
     ]
   end
 
-  let(:headers) {
-    {
-      'Content-Type' => 'application/vnd.elasticsearch+x-ndjson; compatible-with=9'
-    }
-  }
+  # This test only cares about the body, there's another test for the ndjson headers.
+  before do
+    dummy_ndjson_headers
+    allow(client_double.text_structure.client).to receive(:transport).and_return Transport.new({ transport_options: { headers: {} } })
+  end
 
   it 'performs the request' do
     expect(client_double.text_structure.find_structure(body: {})).to be_a Elasticsearch::API::Response
