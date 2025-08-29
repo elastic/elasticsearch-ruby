@@ -42,7 +42,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-data-stream-options
         #
         def delete_data_stream_options(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.delete_data_stream_options' }
