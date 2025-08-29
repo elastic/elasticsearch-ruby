@@ -42,7 +42,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see [TODO]
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-list-queries
         #
         def list_queries(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.list_queries' }

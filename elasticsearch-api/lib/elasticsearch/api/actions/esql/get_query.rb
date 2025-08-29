@@ -43,7 +43,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see [TODO]
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-get-query
         #
         def get_query(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.get_query' }
