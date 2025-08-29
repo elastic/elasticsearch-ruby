@@ -68,6 +68,12 @@ if serverless?
       request_timeout: 60
     }
   )
+else
+  options.merge!(
+    retry_on_status: [409, 400],
+    retry_on_failure: 5,
+    delay_on_retry: 1_000
+  )
 end
 CLIENT = Elasticsearch::Client.new(options)
 
