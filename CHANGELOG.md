@@ -1,5 +1,9 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.0.5
+
+- Fixes [2758](https://github.com/elastic/elasticsearch-ruby/issues/2758) - `msearch`, `bulk` and other NDJSON endpoints overriding headers for `content-type` and `accept`. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2759)
+
 # 9.0.4
 
 - Source code documentation and code has been updated to support common parameters and common cat parameters in APIs that support it (`error_trace`, `filter_path`, `human`, `pretty`). The API reference documentation can be generated with `rake doc`.
