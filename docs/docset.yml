@@ -7,6 +7,7 @@ cross_links:
   - docs-content
   - ecs
   - ecs-logging-ruby
+  - elasticsearch
 toc:
   - toc: reference
   - toc: release-notes
