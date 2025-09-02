@@ -20,11 +20,20 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-ruby-client-next-fixes]
 % *
 
+## 9.1.2 [elasticsearch-ruby-client-9.1.2-release-notes]
+
+### Fixes [elasticsearch-ruby-client-9.1.2-fixes]
+
+- Fixes [2758](https://github.com/elastic/elasticsearch-ruby/issues/2758) - `msearch`, `bulk` and other NDJSON endpoints overriding headers for `content-type` and `accept`. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2759).
+
+### Features and enhancements [elasticsearch-ruby-client-9.1.2-features-enhancements]
+
+- Adds `transform.set_upgrade_mode`.
+- Updates source code documentation from latest 9.1 Elasticsearch specification.
+
 ## 9.1.1 [elasticsearch-ruby-client-9.1.1-release-notes]
 
 ### Features and enhancements [elasticsearch-ruby-client-9.1.1-features-enhancements]
-
-## Elasticsearch API
 
 - Updates source code documentation to latest 9.1 specification.
 - New API: `inference.put_amazonsagemaker`.
@@ -61,6 +70,16 @@ Tested versions of Ruby for 9.1.0: Ruby (MRI) 3.2, 3.3, 3.4, `head`, JRuby 9.3, 
 - `streams.logs_disable` - Disable the Logs Streams feature for this cluster.
 - `streams.logs_enable` - Enable the Logs Streams feature for this cluster.
 - `streams.status` - Return the current status of the streams feature for each streams type.
+
+## 9.0.5 [elasticsearch-ruby-client-9.0.5-release-notes]
+
+### Fixes [elasticsearch-ruby-client-9.0.5-fixes]
+
+- Fixes [2758](https://github.com/elastic/elasticsearch-ruby/issues/2758) - `msearch`, `bulk` and other NDJSON endpoints overriding headers for `content-type` and `accept`. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2759).
+
+### Features and enhancements [elasticsearch-ruby-client-9.0.5-features-enhancements]
+
+- Adds `transform.set_upgrade_mode`.
 
 ## 9.0.4 [elasticsearch-ruby-client-9.0.4-release-notes]
 
