@@ -1,9 +1,0 @@
-[source, ruby]
-----
-response = client.delete(
-  index: 'my-index-000001',
-  id: 1,
-  routing: 'shard-1'
-)
-puts response
-----
