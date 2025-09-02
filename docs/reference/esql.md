@@ -7,11 +7,11 @@ mapped_pages:
 # ES|QL in the Ruby client [esql]
 
 
-This page helps you understand and use [ES|QL](docs-content://explore-analyze/query-filter/languages/esql.md) in the Ruby client.
+This page helps you understand and use [ES|QL](elasticsearch://reference/query-languages/esql.md) in the Ruby client.
 
 There are two ways to use ES|QL in the Ruby client:
 
-* Use the Elasticsearch [ES|QL API](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-esql) directly: This is the most flexible approach, but it’s also the most complex because you must handle results in their raw form. You can choose the precise format of results, such as JSON, CSV, or text.
+* Use the Elasticsearch [ES|QL API](elasticsearch://reference/query-languages/esql/esql-rest.md) directly: This is the most flexible approach, but it’s also the most complex because you must handle results in their raw form. You can choose the precise format of results, such as JSON, CSV, or text.
 * Use the Ruby ES|QL helper: The helper maps the raw response to an object that’s more readily usable by your application.
 
 You can also try the [`elastic-esql`](#esql-ruby) gem, which helps you build ES|QL queries with Ruby.
@@ -111,7 +111,7 @@ puts response
 
 ## ES|QL Query Builder [esql-ruby]
 
-The [`elastic-esql`](https://github.com/elastic/esql-ruby) gem helps you build queries for use with the [ES|QL query API](docs-content://explore-analyze/query-filter/languages/esql-rest.md). Here's an example:
+The [`elastic-esql`](https://github.com/elastic/esql-ruby) gem helps you build queries for use with the [ES|QL query API](elasticsearch://reference/query-languages/esql/esql-rest.md). Here's an example:
 
 ```ruby
 query = Elastic::ESQL.from('sample')
