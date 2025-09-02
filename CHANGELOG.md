@@ -1,5 +1,11 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.1.2
+
+* Fixes [2758](https://github.com/elastic/elasticsearch-ruby/issues/2758) - `msearch`, `bulk` and other NDJSON endpoints overriding headers for `content-type` and `accept`. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2759).
+* Adds `transform.set_upgrade_mode`.
+* Updates source code documentation from latest 9.1 Elasticsearch specification.
+
 # 9.1.1
 
 ## Elasticsearch API
