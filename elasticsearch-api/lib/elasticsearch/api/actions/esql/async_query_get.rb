@@ -25,6 +25,7 @@ module Elasticsearch
         # Retrieves the results of a previously submitted async query request given its ID.
         #
         # @option arguments [String] :id The async query ID
+        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response
         # @option arguments [Time] :keep_alive Specify the time interval in which the results (partial or final) for this search will be available
         # @option arguments [Boolean] :drop_null_columns Should entirely null columns be removed from the results? Their name and type will be returning in a new `all_columns` section.
