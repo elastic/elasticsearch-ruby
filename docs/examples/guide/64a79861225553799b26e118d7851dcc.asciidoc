@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.ilm.explain_lifecycle(
-  index: 'my-index-000001'
-)
-puts response
-----

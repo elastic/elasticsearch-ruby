@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.cluster.stats(
-  human: true,
-  pretty: true
-)
-puts response
-----

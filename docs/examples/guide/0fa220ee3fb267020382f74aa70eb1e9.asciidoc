@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.cluster.state(
-  metric: '_all',
-  index: 'foo,bar'
-)
-puts response
-----
