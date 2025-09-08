@@ -108,26 +108,33 @@ module Elasticsearch
         #
         # @option arguments [String] :repository The name of the repository. (*Required*)
         # @option arguments [Integer] :blob_count The total number of blobs to write to the repository during the test.
-        #  For realistic experiments, you should set it to at least `2000`. Server default: 100.
-        # @option arguments [Integer] :concurrency The number of operations to run concurrently during the test. Server default: 10.
+        #  For realistic experiments, set this parameter to at least `2000`. Server default: 100.
+        # @option arguments [Integer] :concurrency The number of operations to run concurrently during the test.
+        #  For realistic experiments, leave this parameter unset. Server default: 10.
         # @option arguments [Boolean] :detailed Indicates whether to return detailed results, including timing information for every operation performed during the analysis.
         #  If false, it returns only a summary of the analysis.
         # @option arguments [Integer] :early_read_node_count The number of nodes on which to perform an early read operation while writing each blob.
-        #  Early read operations are only rarely performed. Server default: 2.
+        #  Early read operations are only rarely performed.
+        #  For realistic experiments, leave this parameter unset. Server default: 2.
         # @option arguments [Integer, String] :max_blob_size The maximum size of a blob to be written during the test.
-        #  For realistic experiments, you should set it to at least `2gb`. Server default: 10mb.
+        #  For realistic experiments, set this parameter to at least `2gb`. Server default: 10mb.
         # @option arguments [Integer, String] :max_total_data_size An upper limit on the total size of all the blobs written during the test.
-        #  For realistic experiments, you should set it to at least `1tb`. Server default: 1gb.
-        # @option arguments [Float] :rare_action_probability The probability of performing a rare action such as an early read, an overwrite, or an aborted write on each blob. Server default: 0.02.
-        # @option arguments [Boolean] :rarely_abort_writes Indicates whether to rarely cancel writes before they complete. Server default: true.
-        # @option arguments [Integer] :read_node_count The number of nodes on which to read a blob after writing. Server default: 10.
+        #  For realistic experiments, set this parameter to at least `1tb`. Server default: 1gb.
+        # @option arguments [Float] :rare_action_probability The probability of performing a rare action such as an early read, an overwrite, or an aborted write on each blob.
+        #  For realistic experiments, leave this parameter unset. Server default: 0.02.
+        # @option arguments [Boolean] :rarely_abort_writes Indicates whether to rarely cancel writes before they complete.
+        #  For realistic experiments, leave this parameter unset. Server default: true.
+        # @option arguments [Integer] :read_node_count The number of nodes on which to read a blob after writing.
+        #  For realistic experiments, leave this parameter unset. Server default: 10.
         # @option arguments [Integer] :register_operation_count The minimum number of linearizable register operations to perform in total.
-        #  For realistic experiments, you should set it to at least `100`. Server default: 10.
+        #  For realistic experiments, set this parameter to at least `100`. Server default: 10.
         # @option arguments [Integer] :seed The seed for the pseudo-random number generator used to generate the list of operations performed during the test.
         #  To repeat the same set of operations in multiple experiments, use the same seed in each experiment.
         #  Note that the operations are performed concurrently so might not always happen in the same order on each run.
+        #  For realistic experiments, leave this parameter unset.
         # @option arguments [Time] :timeout The period of time to wait for the test to complete.
-        #  If no response is received before the timeout expires, the test is cancelled and returns an error. Server default: 30s.
+        #  If no response is received before the timeout expires, the test is cancelled and returns an error.
+        #  For realistic experiments, set this parameter sufficiently long to allow the test to complete. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
