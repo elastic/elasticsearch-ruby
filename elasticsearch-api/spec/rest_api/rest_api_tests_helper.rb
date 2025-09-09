@@ -48,7 +48,13 @@ else
   transport_options = {}
 end
 
-ADMIN_CLIENT = Elasticsearch::Client.new(host: host, transport_options: transport_options)
+ADMIN_CLIENT = Elasticsearch::Client.new(
+  host: host,
+  transport_options: transport_options,
+  retry_on_status: [409, 400],
+  retry_on_failure: 5,
+  delay_on_retry: 1_000
+)
 
 DEFAULT_CLIENT = if ENV['QUIET'] == 'true'
                    Elasticsearch::Client.new(host: host, transport_options: transport_options)
