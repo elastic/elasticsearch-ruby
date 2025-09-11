@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Boolean] :detailed If `true`, the response includes detailed information about shard recoveries.
         # @option arguments [Array<String>] :nodes Unique node identifiers, which are used to limit the response.
         # @option arguments [String] :parent_task_id The parent task identifier, which is used to limit the response.
-        # @option arguments [String, Array<String>] :h List of columns to appear in the response. Supports simple wildcards.
+        # @option arguments [String, Array<String>] :h A comma-separated list of columns names to display. It supports simple wildcards.
         # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
         #  Sorting defaults to ascending and can be changed by setting `:asc`
         #  or `:desc` as a suffix to the column name.
