@@ -22,11 +22,38 @@ module Elasticsearch
   module API
     module Transform
       module Actions
-        # Sets a cluster wide upgrade_mode setting that prepares transform indices for an upgrade.
+        # Set upgrade_mode for transform indices.
+        # Sets a cluster wide upgrade_mode setting that prepares transform
+        # indices for an upgrade.
+        # When upgrading your cluster, in some circumstances you must restart your
+        # nodes and reindex your transform indices. In those circumstances,
+        # there must be no transforms running. You can close the transforms,
+        # do the upgrade, then open all the transforms again. Alternatively,
+        # you can use this API to temporarily halt tasks associated with the transforms
+        # and prevent new transforms from opening. You can also use this API
+        # during upgrades that do not require you to reindex your transform
+        # indices, though stopping transforms is not a requirement in that case.
+        # You can see the current value for the upgrade_mode setting by using the get
+        # transform info API.
         #
+        # @option arguments [Boolean] :enabled When `true`, it enables `upgrade_mode` which temporarily halts all
+        #  transform tasks and prohibits new transform tasks from
+        #  starting.
+        # @option arguments [Time] :timeout The time to wait for the request to be completed. Server default: 30s.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"eixsts_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/transform-set-upgrade-mode.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-set-upgrade-mode
         #
         def set_upgrade_mode(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'transform.set_upgrade_mode' }
@@ -38,7 +65,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_transform/set_upgrade_mode'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
