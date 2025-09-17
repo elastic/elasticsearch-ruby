@@ -22,8 +22,8 @@ module Elasticsearch
   module API
     module Streams
       module Actions
-        # Get the status of streams
-        # Gets the current status of all stream types
+        # Get the status of streams.
+        # Get the current status for all types of streams.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
