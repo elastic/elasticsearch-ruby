@@ -22,11 +22,34 @@ module Elasticsearch
   module API
     module Streams
       module Actions
-        # Enable the Logs Streams feature for this cluster
+        # Enable logs stream
+        # This enables the logs stream feature for this cluster.
+        # Note: To protect existing data, this feature can only be enabled on a cluster if
+        # it does not have existing indices or data streams matching the pattern `logs|logs.*`.
+        # If this is the case, a `409 - Conflict` response and error will be returned.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
         #
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout The period to wait for a response.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
+        #  when they occur.
+        # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
+        #  returned by Elasticsearch.
+        # @option arguments [Boolean] :human When set to `true` will return statistics in a format suitable for humans.
+        #  For example `"exists_time": "1h"` for humans and
+        #  `"exists_time_in_millis": 3600000` for computers. When disabled the human
+        #  readable values will be omitted. This makes sense for responses being consumed
+        #  only by machines.
+        # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
+        #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/streams-logs-enable.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch#TODO
         #
         def logs_enable(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'streams.logs_enable' }
@@ -38,7 +61,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_streams/logs/_enable'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
