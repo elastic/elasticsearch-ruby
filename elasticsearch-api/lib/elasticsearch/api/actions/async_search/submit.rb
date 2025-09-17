@@ -51,6 +51,13 @@ module Elasticsearch
         # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
         # @option arguments [Integer] :max_concurrent_shard_requests The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
         # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
+        # @option arguments [String] :project_routing Specifies a subset of projects to target for a search using project metadata
+        #  tags in a subset Lucene syntax. Allowed Lucene queries: the _alias tag
+        #  and a single value (possible wildcarded). Examples:
+        #   _alias:my-project
+        #   _alias:_origin
+        #   _alias:*pr*
+        #  Supported in serverless only.
         # @option arguments [Boolean] :request_cache Specify if request cache should be used for this request or not, defaults to true Server default: true.
         # @option arguments [String] :routing A comma-separated list of specific routing values
         # @option arguments [String] :search_type Search operation type
