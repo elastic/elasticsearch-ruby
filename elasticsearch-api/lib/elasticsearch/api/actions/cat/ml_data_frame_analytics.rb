@@ -30,16 +30,23 @@ module Elasticsearch
         #
         # @option arguments [String] :id The ID of the data frame analytics to fetch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no configs. (This includes `_all` string or when no configs have been specified)
-        # @option arguments [String] :bytes The unit in which to display byte values
         # @option arguments [String, Array<String>] :h Comma-separated list of column names to display. Server default: create_time,id,state,type.
         # @option arguments [String, Array<String>] :s Comma-separated list of column names or column aliases used to sort the
         #  response.
-        # @option arguments [String] :time Unit used to display time values.
         # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
         #  `text`, `json`, `cbor`, `yaml`, or `smile`. Server default: text.
         # @option arguments [Boolean] :help When set to `true` will output available columns. This option
         #  can't be combined with any other query string option.
         # @option arguments [Boolean] :v When set to `true` will enable verbose output.
+        # @option arguments [String] :bytes Sets the units for columns that contain a byte-size value.
+        #  Note that byte-size value units work in terms of powers of 1024. For instance `1kb` means 1024 bytes, not 1000 bytes.
+        #  If omitted, byte-size values are rendered with a suffix such as `kb`, `mb`, or `gb`, chosen such that the numeric value of the column is as small as possible whilst still being at least `1.0`.
+        #  If given, byte-size values are rendered as an integer with no suffix, representing the value of the column in the chosen unit.
+        #  Values that are not an exact multiple of the chosen unit are rounded down.
+        # @option arguments [String] :time Sets the units for columns that contain a time duration.
+        #  If omitted, time duration values are rendered with a suffix such as `ms`, `s`, `m` or `h`, chosen such that the numeric value of the column is as small as possible whilst still being at least `1.0`.
+        #  If given, time duration values are rendered as an integer with no suffix.
+        #  Values that are not an exact multiple of the chosen unit are rounded down.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

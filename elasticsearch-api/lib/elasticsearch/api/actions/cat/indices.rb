@@ -37,12 +37,10 @@ module Elasticsearch
         #
         # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and aliases used to limit the request.
         #  Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`.
-        # @option arguments [String] :bytes The unit used to display byte values.
         # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
         # @option arguments [String] :health The health status used to limit returned indices. By default, the response includes indices of any health status.
         # @option arguments [Boolean] :include_unloaded_segments If true, the response includes information from segments that are not loaded into memory.
         # @option arguments [Boolean] :pri If true, the response only includes information from primary shards.
-        # @option arguments [String] :time The unit used to display time values.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [String, Array<String>] :h A comma-separated list of columns names to display. It supports simple wildcards.
         # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
@@ -53,6 +51,15 @@ module Elasticsearch
         # @option arguments [Boolean] :help When set to `true` will output available columns. This option
         #  can't be combined with any other query string option.
         # @option arguments [Boolean] :v When set to `true` will enable verbose output.
+        # @option arguments [String] :bytes Sets the units for columns that contain a byte-size value.
+        #  Note that byte-size value units work in terms of powers of 1024. For instance `1kb` means 1024 bytes, not 1000 bytes.
+        #  If omitted, byte-size values are rendered with a suffix such as `kb`, `mb`, or `gb`, chosen such that the numeric value of the column is as small as possible whilst still being at least `1.0`.
+        #  If given, byte-size values are rendered as an integer with no suffix, representing the value of the column in the chosen unit.
+        #  Values that are not an exact multiple of the chosen unit are rounded down.
+        # @option arguments [String] :time Sets the units for columns that contain a time duration.
+        #  If omitted, time duration values are rendered with a suffix such as `ms`, `s`, `m` or `h`, chosen such that the numeric value of the column is as small as possible whilst still being at least `1.0`.
+        #  If given, time duration values are rendered as an integer with no suffix.
+        #  Values that are not an exact multiple of the chosen unit are rounded down.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
