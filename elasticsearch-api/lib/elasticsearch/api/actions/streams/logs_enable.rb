@@ -22,11 +22,11 @@ module Elasticsearch
   module API
     module Streams
       module Actions
-        # Enable logs stream
-        # This enables the logs stream feature for this cluster.
-        # Note: To protect existing data, this feature can only be enabled on a cluster if
-        # it does not have existing indices or data streams matching the pattern `logs|logs.*`.
-        # If this is the case, a `409 - Conflict` response and error will be returned.
+        # Enable logs stream.
+        # Turn on the logs stream feature for this cluster.
+        # NOTE: To protect existing data, this feature can be turned on only if the
+        # cluster does not have existing indices or data streams that match the pattern `logs|logs.*`.
+        # If those indices or data streams exist, a `409 - Conflict` response and error is returned.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
