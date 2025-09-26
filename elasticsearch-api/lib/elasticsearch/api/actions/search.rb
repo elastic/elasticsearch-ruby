@@ -84,9 +84,10 @@ module Elasticsearch
       #  - The request targets more than 128 shards.
       #  - The request targets one or more read-only index.
       #  - The primary sort of the query targets an indexed field.
-      # @option arguments [String] :project_routing Specifies a subset of projects to target for a search using project metadata
-      #  tags in a subset Lucene syntax. Allowed Lucene queries: the _alias tag
-      #  and a single value (possible wildcarded). Examples:
+      # @option arguments [String] :project_routing Specifies a subset of projects to target for the search using project
+      #  metadata tags in a subset of Lucene query syntax.
+      #  Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+      #  Examples:
       #   _alias:my-project
       #   _alias:_origin
       #   _alias:*pr*

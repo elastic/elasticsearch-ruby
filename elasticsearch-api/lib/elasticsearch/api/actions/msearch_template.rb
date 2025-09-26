@@ -40,6 +40,14 @@ module Elasticsearch
       #  To search all data streams and indices, omit this parameter or use `*`.
       # @option arguments [Boolean] :ccs_minimize_roundtrips If `true`, network round-trips are minimized for cross-cluster search requests. Server default: true.
       # @option arguments [Integer] :max_concurrent_searches The maximum number of concurrent searches the API can run.
+      # @option arguments [String] :project_routing Specifies a subset of projects to target for the search using project
+      #  metadata tags in a subset of Lucene query syntax.
+      #  Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+      #  Examples:
+      #   _alias:my-project
+      #   _alias:_origin
+      #   _alias:*pr*
+      #  Supported in serverless only.
       # @option arguments [String] :search_type The type of the search operation.
       # @option arguments [Boolean] :rest_total_hits_as_int If `true`, the response returns `hits.total` as an integer.
       #  If `false`, it returns `hits.total` as an object.

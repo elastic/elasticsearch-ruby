@@ -36,6 +36,14 @@ module Elasticsearch
         # @option arguments [Boolean] :ignore_unavailable If true, missing or closed indices are not included in the response. Server default: true.
         # @option arguments [Time] :keep_alive Period for which the search and its results are stored on the cluster. Server default: 5d.
         # @option arguments [Boolean] :keep_on_completion If true, the search and its results are stored on the cluster.
+        # @option arguments [String] :project_routing Specifies a subset of projects to target for the search using project
+        #  metadata tags in a subset of Lucene query syntax.
+        #  Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+        #  Examples:
+        #   _alias:my-project
+        #   _alias:_origin
+        #   _alias:*pr*
+        #  Supported in serverless only.
         # @option arguments [Time] :wait_for_completion_timeout Timeout duration to wait for the request to finish. Defaults to no timeout, meaning the request waits for complete search results.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.

@@ -40,6 +40,14 @@ module Elasticsearch
       #  Any fields that do not match one of these types will be excluded from the results.
       #  It defaults to empty, meaning that all field types are returned.
       # @option arguments [Boolean] :include_empty_fields If false, empty fields are not included in the response. Server default: true.
+      # @option arguments [String] :project_routing Specifies a subset of projects to target for the field-caps query using project
+      #  metadata tags in a subset of Lucene query syntax.
+      #  Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+      #  Examples:
+      #   _alias:my-project
+      #   _alias:_origin
+      #   _alias:*pr*
+      #  Supported in serverless only.
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
       #  when they occur.
       # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
