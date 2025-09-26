@@ -59,7 +59,7 @@ module Elasticsearch
         #  the optional `bucket_span` parameter.
         # @option arguments [String, Time] :end Returns overall buckets with timestamps earlier than this time.
         # @option arguments [Boolean] :exclude_interim If `true`, the output excludes interim results.
-        # @option arguments [Float, String] :overall_score Returns overall buckets with overall scores greater than or equal to this
+        # @option arguments [Float] :overall_score Returns overall buckets with overall scores greater than or equal to this
         #  value.
         # @option arguments [String, Time] :start Returns overall buckets with timestamps after this time.
         # @option arguments [Integer] :top_n The number of top anomaly detection job bucket scores to be used in the

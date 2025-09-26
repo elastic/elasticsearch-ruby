@@ -26,7 +26,7 @@ module Elasticsearch
         # Get information about the nodes in a cluster.
         # IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
         #
-        # @option arguments [Boolean, String] :full_id If `true`, return the full node ID. If `false`, return the shortened node ID. Server default: false.
+        # @option arguments [Boolean] :full_id If `true`, return the full node ID. If `false`, return the shortened node ID.
         # @option arguments [Boolean] :include_unloaded_segments If true, the response includes information from segments that are not loaded into memory.
         # @option arguments [String, Array<String>] :h A comma-separated list of columns names to display.
         #  It supports simple wildcards. Server default: ip,hp,rp,r,m,n,cpu,l.
