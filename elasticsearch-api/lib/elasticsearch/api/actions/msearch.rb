@@ -57,6 +57,13 @@ module Elasticsearch
       #  Defaults to `max(1, (# of data nodes * min(search thread pool size, 10)))`.
       # @option arguments [Integer] :max_concurrent_shard_requests Maximum number of concurrent shard requests that each sub-search request executes per node. Server default: 5.
       # @option arguments [Integer] :pre_filter_shard_size Defines a threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method i.e., if date filters are mandatory to match but the shard bounds and the query are disjoint.
+      # @option arguments [String] :project_routing Specifies a subset of projects to target for a search using project metadata
+      #  tags in a subset Lucene syntax. Allowed Lucene queries: the _alias tag
+      #  and a single value (possible wildcarded). Examples:
+      #   _alias:my-project
+      #   _alias:_origin
+      #   _alias:*pr*
+      #  Supported in serverless only.
       # @option arguments [Boolean] :rest_total_hits_as_int If true, hits.total are returned as an integer in the response. Defaults to false, which returns an object.
       # @option arguments [String] :routing Custom routing value used to route search operations to a specific shard.
       # @option arguments [String] :search_type Indicates whether global term and document frequencies should be used when scoring returned documents.

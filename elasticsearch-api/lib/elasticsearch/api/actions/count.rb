@@ -54,6 +54,14 @@ module Elasticsearch
       # @option arguments [Float] :min_score The minimum `_score` value that documents must have to be included in the result.
       # @option arguments [String] :preference The node or shard the operation should be performed on.
       #  By default, it is random.
+      # @option arguments [String] :project_routing Specifies a subset of projects to target for the search using project
+      #  metadata tags in a subset of Lucene query syntax.
+      #  Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+      #  Examples:
+      #   _alias:my-project
+      #   _alias:_origin
+      #   _alias:*pr*
+      #  Supported in serverless only.
       # @option arguments [String] :routing A custom value used to route operations to a specific shard.
       # @option arguments [Integer] :terminate_after The maximum number of documents to collect for each shard.
       #  If a query reaches this limit, Elasticsearch terminates the query early.

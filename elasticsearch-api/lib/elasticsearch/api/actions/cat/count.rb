@@ -32,6 +32,14 @@ module Elasticsearch
         #  It supports wildcards (`*`).
         #  To target all data streams and indices, omit this parameter or use `*` or `_all`.
         # @option arguments [String, Array<String>] :h A comma-separated list of columns names to display. It supports simple wildcards.
+        # @option arguments [String] :project_routing Specifies a subset of projects to target for the search using project
+        #  metadata tags in a subset of Lucene query syntax.
+        #  Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
+        #  Examples:
+        #   _alias:my-project
+        #   _alias:_origin
+        #   _alias:*pr*
+        #  Supported in serverless only.
         # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
         #  Sorting defaults to ascending and can be changed by setting `:asc`
         #  or `:desc` as a suffix to the column name.
