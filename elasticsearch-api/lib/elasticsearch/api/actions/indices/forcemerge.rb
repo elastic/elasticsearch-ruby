@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Performs the force merge operation on one or more indices.
+        # Force a merge
         #
         # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
         # @option arguments [Boolean] :flush Specify whether the index should be flushed after performing the operation (default: true)

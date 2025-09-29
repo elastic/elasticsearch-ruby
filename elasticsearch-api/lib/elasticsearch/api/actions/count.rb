@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Returns number of documents matching a query.
+      # Count search results
       #
       # @option arguments [List] :index A comma-separated list of indices to restrict the results
       # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)

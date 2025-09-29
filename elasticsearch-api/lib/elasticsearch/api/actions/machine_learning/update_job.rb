@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Updates certain properties of an anomaly detection job.
+        # Update an anomaly detection job
         #
         # @option arguments [String] :job_id The ID of the job to create
         # @option arguments [Hash] :headers Custom HTTP headers

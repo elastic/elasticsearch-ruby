@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module SnapshotLifecycleManagement
       module Actions
-        # Deletes any snapshots that are expired according to the policy's retention rules.
+        # Run a retention policy
         #
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout

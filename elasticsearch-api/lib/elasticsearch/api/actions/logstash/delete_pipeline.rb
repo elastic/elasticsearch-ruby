@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Logstash
       module Actions
-        # Deletes Logstash Pipelines used by Central Management
+        # Delete a Logstash pipeline
         #
         # @option arguments [String] :id The ID of the Pipeline
         # @option arguments [Hash] :headers Custom HTTP headers

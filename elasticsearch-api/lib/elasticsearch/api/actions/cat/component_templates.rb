@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Returns information about existing component_templates templates.
+        # Get component templates
         #
         # @option arguments [String] :name A pattern that returned component template names must match
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml

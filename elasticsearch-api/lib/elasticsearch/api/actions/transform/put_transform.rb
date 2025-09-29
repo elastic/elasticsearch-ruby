@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Transform
       module Actions
-        # Instantiates a transform.
+        # Create a transform
         #
         # @option arguments [String] :transform_id The id of the new transform.
         # @option arguments [Boolean] :defer_validation If validations should be deferred until transform starts, defaults to false.

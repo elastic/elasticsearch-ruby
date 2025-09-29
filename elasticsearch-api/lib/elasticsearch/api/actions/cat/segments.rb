@@ -22,13 +22,13 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Provides low-level information about the segments in the shards of an index.
+        # Get segment information
         #
         # @option arguments [List] :index A comma-separated list of index names to limit the returned information
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)
+        # @option arguments [String] :bytes The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)
         # @option arguments [List] :h Comma-separated list of column names to display
         # @option arguments [Boolean] :help Return help information
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by

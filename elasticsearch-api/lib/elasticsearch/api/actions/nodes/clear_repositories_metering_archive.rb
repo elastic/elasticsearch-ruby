@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Nodes
       module Actions
-        # Removes the archived repositories metering information present in the cluster.
+        # Clear the archived repositories metering
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the

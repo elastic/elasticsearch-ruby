@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module QueryRules
       module Actions
-        # Creates or updates a query rule within a ruleset.
+        # Create or update a query rule
         #
         # @option arguments [String] :ruleset_id The unique identifier of the ruleset this rule should be added to. The ruleset will be created if it does not exist.
         # @option arguments [String] :rule_id The unique identifier of the rule to be created or updated.

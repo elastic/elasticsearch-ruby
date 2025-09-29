@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Deletes a pipeline.
+        # Delete pipelines
         #
         # @option arguments [String] :id Pipeline ID
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

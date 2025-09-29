@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Migrates an alias to a data stream
+        # Convert an index alias to a data stream
         #
         # @option arguments [String] :name The name of the alias to migrate
         # @option arguments [Time] :timeout Specify timeout for acknowledging the cluster state update
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-migrate-to-data-stream
         #
         def migrate_to_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.migrate_to_data_stream' }

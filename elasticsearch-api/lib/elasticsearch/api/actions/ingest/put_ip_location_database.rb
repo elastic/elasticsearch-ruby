@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Puts the configuration for a ip location database to be downloaded
+        # Create or update an IP geolocation database configuration
         #
         # @option arguments [String] :id The id of the database configuration
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

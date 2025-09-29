@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Connector
       module Actions
-        # Retrieves a secret stored by Connectors.
+        # Retrieves a secret stored by Connectors
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Returns information about snapshot repositories registered in the cluster.
+        # Get snapshot repository information
         #
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node

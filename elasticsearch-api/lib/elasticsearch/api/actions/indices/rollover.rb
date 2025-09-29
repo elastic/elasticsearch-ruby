@@ -22,8 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Updates an alias to point to a new index when the existing index
-        # is considered to be too large or too old.
+        # Roll over to a new index
         #
         # @option arguments [String] :alias The name of the alias to rollover
         # @option arguments [String] :new_index The name of the rollover index

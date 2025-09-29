@@ -22,11 +22,11 @@ module Elasticsearch
   module API
     module DanglingIndices
       module Actions
-        # Returns all dangling indices.
+        # Get the dangling indices
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-gateway-dangling-indices.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/dangling-indices-list.html
         #
         def list_dangling_indices(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'dangling_indices.list_dangling_indices' }

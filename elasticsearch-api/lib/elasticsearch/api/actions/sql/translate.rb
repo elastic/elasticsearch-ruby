@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module SQL
       module Actions
-        # Translates SQL into Elasticsearch queries
+        # Translate SQL into Elasticsearch queries
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Specify the query in the `query` element. (*Required*)

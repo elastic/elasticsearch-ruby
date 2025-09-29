@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Updates attributes of an existing API key.
+        # Update an API key
         #
         # @option arguments [String] :id The ID of the API key to update
         # @option arguments [Hash] :headers Custom HTTP headers

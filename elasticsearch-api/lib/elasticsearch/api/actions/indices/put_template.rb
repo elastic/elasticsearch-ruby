@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Creates or updates an index template.
+        # Create or update a legacy index template
         #
         # @option arguments [String] :name The name of the template
         # @option arguments [Number] :order The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)

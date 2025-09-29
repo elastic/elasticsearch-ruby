@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module SnapshotLifecycleManagement
       module Actions
-        # Deletes an existing snapshot lifecycle policy.
+        # Delete a policy
         #
         # @option arguments [String] :policy_id The id of the snapshot lifecycle policy to remove
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

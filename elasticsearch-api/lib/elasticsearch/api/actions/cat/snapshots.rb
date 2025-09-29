@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Returns all snapshots in a specific repository.
+        # Get snapshot information
         #
         # @option arguments [List] :repository Name of repository from which to fetch the snapshot information
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml

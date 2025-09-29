@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Invalidates one or more access tokens or refresh tokens.
+        # Invalidate a token
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The token to invalidate (*Required*)

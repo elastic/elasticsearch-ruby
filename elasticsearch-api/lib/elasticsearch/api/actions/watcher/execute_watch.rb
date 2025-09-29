@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Watcher
       module Actions
-        # Forces the execution of a stored watch.
+        # Run a watch
         #
         # @option arguments [String] :id Watch ID
         # @option arguments [Boolean] :debug indicates whether the watch should execute in debug mode
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Execution control
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/watcher-api-execute-watch.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-execute-watch
         #
         def execute_watch(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.execute_watch' }

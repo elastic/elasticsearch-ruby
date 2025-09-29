@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Consumes a SAML LogoutRequest
+        # Invalidate SAML
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The LogoutRequest message (*Required*)

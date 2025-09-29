@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Creates a bearer token for access without requiring basic authentication.
+        # Get a token
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The token request to get (*Required*)

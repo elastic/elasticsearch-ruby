@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Transform
       module Actions
-        # Starts one or more transforms.
+        # Start a transform
         #
         # @option arguments [String] :transform_id The id of the transform to start
         # @option arguments [String] :from Restricts the set of transformed entities to those changed after this time

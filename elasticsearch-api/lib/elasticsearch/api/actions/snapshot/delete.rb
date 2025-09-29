@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Deletes one or more snapshots.
+        # Delete snapshots
         #
         # @option arguments [String] :repository A repository name
         # @option arguments [List] :snapshot A comma-separated list of snapshot names
@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_completion Should this request wait until the operation has completed before returning
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-snapshot-api.html
         #
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.delete' }

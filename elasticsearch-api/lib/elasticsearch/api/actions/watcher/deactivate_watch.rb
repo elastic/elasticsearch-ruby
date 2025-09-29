@@ -22,12 +22,12 @@ module Elasticsearch
   module API
     module Watcher
       module Actions
-        # Deactivates a currently active watch.
+        # Deactivate a watch
         #
         # @option arguments [String] :watch_id Watch ID
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/watcher-api-deactivate-watch.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-deactivate-watch
         #
         def deactivate_watch(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.deactivate_watch' }

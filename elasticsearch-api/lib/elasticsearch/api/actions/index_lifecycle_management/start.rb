@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module IndexLifecycleManagement
       module Actions
-        # Start the index lifecycle management (ILM) plugin.
+        # Start the ILM plugin
         #
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout

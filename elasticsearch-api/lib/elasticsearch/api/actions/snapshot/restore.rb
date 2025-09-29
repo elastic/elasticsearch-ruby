@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Restores a snapshot.
+        # Restore a snapshot
         #
         # @option arguments [String] :repository A repository name
         # @option arguments [String] :snapshot A snapshot name
@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Details of what to restore
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/restore-snapshot-api.html
         #
         def restore(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.restore' }

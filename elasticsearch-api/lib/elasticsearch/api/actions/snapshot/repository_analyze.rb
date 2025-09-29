@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Analyzes a repository for correctness and performance
+        # Analyze a snapshot repository
         #
         # @option arguments [String] :repository A repository name
         # @option arguments [Number] :blob_count Number of blobs to create during the test. Defaults to 100.
@@ -39,7 +39,7 @@ module Elasticsearch
         # @option arguments [Boolean] :rarely_abort_writes Whether to rarely abort writes before they complete. Defaults to 'true'.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/repo-analysis-api.html
         #
         def repository_analyze(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.repository_analyze' }

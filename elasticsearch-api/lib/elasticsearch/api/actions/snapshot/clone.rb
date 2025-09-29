@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Clones indices from one snapshot into another snapshot in the same repository.
+        # Clone a snapshot
         #
         # @option arguments [String] :repository A repository name
         # @option arguments [String] :snapshot The name of the snapshot to clone from
@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The snapshot clone definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/clone-snapshot-api.html
         #
         def clone(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.clone' }

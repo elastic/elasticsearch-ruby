@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Retrieves usage information for datafeeds.
+        # Get datafeed stats
         #
         # @option arguments [String] :datafeed_id The ID of the datafeeds stats to fetch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)

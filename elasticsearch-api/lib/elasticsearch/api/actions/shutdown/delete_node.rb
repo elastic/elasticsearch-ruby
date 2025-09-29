@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Shutdown
       module Actions
-        # Removes a node from the shutdown list. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+        # Cancel node shutdown preparations
         #
         # @option arguments [String] :node_id The node id of node to be removed from the shutdown state
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-shutdown.html
         #
         def delete_node(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'shutdown.delete_node' }

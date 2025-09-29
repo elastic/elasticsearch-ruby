@@ -21,11 +21,11 @@
 module Elasticsearch
   module API
     module Actions
-      # Returns available script types, languages and contexts
+      # Get script languages
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-scripting.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-script-languages-api.html
       #
       def get_script_languages(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'get_script_languages' }

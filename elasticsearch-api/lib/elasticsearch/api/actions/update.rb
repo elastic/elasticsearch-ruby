@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Updates a document with a script or partial document.
+      # Update a document
       #
       # @option arguments [String] :id Document ID
       # @option arguments [String] :index The name of the index

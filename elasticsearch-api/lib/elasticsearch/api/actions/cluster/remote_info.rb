@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Returns the information about configured remote clusters.
+        # Get remote cluster information
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #

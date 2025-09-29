@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Returns mappings for one or more indices.
+        # Get mapping definitions
         #
         # @option arguments [List] :index A comma-separated list of index names
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)

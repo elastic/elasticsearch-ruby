@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Deletes a geoip database configuration
+        # Delete GeoIP database configurations
         #
         # @option arguments [List] :id A comma-separated list of geoip database configurations to delete
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-geoip-database-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-ingest-delete-geoip-database
         #
         def delete_geoip_database(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.delete_geoip_database' }

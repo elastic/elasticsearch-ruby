@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Allows to use the Mustache language to pre-render a search definition.
+      # Run a search with a search template
       #
       # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
       # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -40,7 +40,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition template and its params (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/search-template.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/search-template-api.html
       #
       def search_template(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'search_template' }

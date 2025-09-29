@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Updates certain properties of a datafeed.
+        # Update a datafeed
         #
         # @option arguments [String] :datafeed_id The ID of the datafeed to update
         # @option arguments [Boolean] :ignore_unavailable Ignore unavailable indexes (default: false)

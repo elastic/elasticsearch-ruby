@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Shows information about currently configured aliases to indices including filter and routing infos.
+        # Get aliases
         #
         # @option arguments [List] :name A comma-separated list of alias names to return
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
