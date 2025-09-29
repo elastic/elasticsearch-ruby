@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Opens an index.
+        # Open a closed index
         #
         # @option arguments [List] :index A comma separated list of indices to open
         # @option arguments [Time] :timeout Explicit operation timeout

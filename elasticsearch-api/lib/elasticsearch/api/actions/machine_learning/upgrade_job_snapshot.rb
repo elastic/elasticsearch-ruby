@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Upgrades a given job snapshot to the current major version.
+        # Upgrade a snapshot
         #
         # @option arguments [String] :job_id The ID of the job
         # @option arguments [String] :snapshot_id The ID of the snapshot

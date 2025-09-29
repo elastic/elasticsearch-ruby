@@ -22,12 +22,12 @@ module Elasticsearch
   module API
     module Watcher
       module Actions
-        # Retrieve settings for the watcher system index
+        # Get Watcher index settings
         #
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/watcher-api-get-settings.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-get-settings
         #
         def get_settings(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.get_settings' }

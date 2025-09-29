@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Creates a cross-cluster API key for API key based remote cluster access.
+        # Create a cross-cluster API key
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The request to create a cross-cluster API key (*Required*)

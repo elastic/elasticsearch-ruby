@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Esql
       module Actions
-        # Delete an async query request given its ID.
+        # Delete an async ES|QL query
         #
         # @option arguments [String] :id The async query ID
         # @option arguments [Hash] :headers Custom HTTP headers

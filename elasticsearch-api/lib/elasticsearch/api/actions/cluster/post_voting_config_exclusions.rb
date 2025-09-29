@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Updates the cluster voting config exclusions by node ids or node names.
+        # Update voting configuration exclusions
         #
         # @option arguments [String] :node_ids A comma-separated list of the persistent ids of the nodes to exclude from the voting configuration. If specified, you may not also specify ?node_names.
         # @option arguments [String] :node_names A comma-separated list of the names of the nodes to exclude from the voting configuration. If specified, you may not also specify ?node_ids.
@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Timeout for submitting request to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/voting-config-exclusions.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-cluster-post-voting-config-exclusions
         #
         def post_voting_config_exclusions(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.post_voting_config_exclusions' }

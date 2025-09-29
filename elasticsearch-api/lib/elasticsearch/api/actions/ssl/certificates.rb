@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module SSL
       module Actions
-        # Retrieves information about the X.509 certificates used to encrypt communications in the cluster.
+        # Get SSL certificates
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #

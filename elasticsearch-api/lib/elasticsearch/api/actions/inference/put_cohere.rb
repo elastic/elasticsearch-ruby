@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure a Cohere inference endpoint
+        # Create a Cohere inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :cohere_inference_id The inference Id

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Creates or updates a pipeline.
+        # Create or update a pipeline
         #
         # @option arguments [String] :id Pipeline ID
         # @option arguments [Integer] :if_version Required version for optimistic concurrency control for pipeline updates
@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The ingest definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/put-pipeline-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ingest.html
         #
         def put_pipeline(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.put_pipeline' }

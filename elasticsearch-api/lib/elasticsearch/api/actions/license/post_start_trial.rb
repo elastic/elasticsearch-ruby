@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module License
       module Actions
-        # starts a limited time trial license.
+        # Start a trial
         #
         # @option arguments [String] :type The type of trial license to generate (default: "trial")
         # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)

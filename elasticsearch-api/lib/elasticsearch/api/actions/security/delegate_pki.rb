@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Delegate PKI authentication.
+        # Delegate PKI authentication
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The X509Certificate chain. (*Required*)

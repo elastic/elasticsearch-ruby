@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Determines whether the specified user has a specified list of privileges.
+        # Check user privileges
         #
         # @option arguments [String] :user Username
         # @option arguments [Hash] :headers Custom HTTP headers

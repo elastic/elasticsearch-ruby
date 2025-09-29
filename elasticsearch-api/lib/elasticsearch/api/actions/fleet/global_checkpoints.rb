@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Fleet
       module Actions
-        # Returns the current global checkpoints for an index. This API is design for internal use by the fleet server project.
+        # Get global checkpoints
         #
         # @option arguments [String] :index The name of the index.
         # @option arguments [Boolean] :wait_for_advance Whether to wait for the global checkpoint to advance past the specified current checkpoints

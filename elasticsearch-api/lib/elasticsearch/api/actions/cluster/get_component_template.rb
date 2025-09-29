@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Returns one or more component templates
+        # Get component templates
         #
         # @option arguments [List] :name The comma separated names of the component templates
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

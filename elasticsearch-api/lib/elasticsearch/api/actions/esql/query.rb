@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Esql
       module Actions
-        # Executes an ESQL request
+        # Run an ES|QL query
         #
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [String] :delimiter The character to use between values within a CSV row. Only valid for the csv format.
@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Use the `query` element to start a query. Use `columnar` to format the answer. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/esql-query-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/esql-rest.html
         #
         def query(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.query' }

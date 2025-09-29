@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module IndexLifecycleManagement
       module Actions
-        # Manually moves an index into the specified step and executes that step.
+        # Move to a lifecycle step
         #
         # @option arguments [String] :index The name of the index whose lifecycle step is to change
         # @option arguments [Hash] :headers Custom HTTP headers

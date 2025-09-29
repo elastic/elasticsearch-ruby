@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Starts one or more datafeeds.
+        # Start datafeeds
         #
         # @option arguments [String] :datafeed_id The ID of the datafeed to start
         # @option arguments [String] :start The start time from where the datafeed should begin

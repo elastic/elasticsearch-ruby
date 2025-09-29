@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
+        # Get builtin privileges
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #

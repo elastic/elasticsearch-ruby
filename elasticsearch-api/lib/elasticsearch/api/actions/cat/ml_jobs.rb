@@ -22,11 +22,11 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Gets configuration and usage information about anomaly detection jobs.
+        # Get anomaly detection jobs
         #
         # @option arguments [String] :job_id The ID of the jobs stats to fetch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-        # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)
+        # @option arguments [String] :bytes The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [List] :h Comma-separated list of column names to display
         # @option arguments [Boolean] :help Return help information
@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/8.19/cat-anomaly-detectors.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/cat-anomaly-detectors.html
         #
         def ml_jobs(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.ml_jobs' }

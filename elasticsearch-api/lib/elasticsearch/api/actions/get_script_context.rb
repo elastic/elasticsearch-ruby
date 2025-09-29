@@ -21,11 +21,11 @@
 module Elasticsearch
   module API
     module Actions
-      # Returns all script contexts.
+      # Get script contexts
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/painless/8.19/painless-contexts.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-script-contexts-api.html
       #
       def get_script_context(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'get_script_context' }

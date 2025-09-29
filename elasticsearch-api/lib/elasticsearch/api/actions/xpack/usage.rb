@@ -22,12 +22,12 @@ module Elasticsearch
   module API
     module XPack
       module Actions
-        # Retrieves usage information about the installed X-Pack features.
+        # Get usage information
         #
         # @option arguments [Time] :master_timeout Specify timeout for watch write operation
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/usage-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/group/endpoint-xpack
         #
         def usage(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'xpack.usage' }

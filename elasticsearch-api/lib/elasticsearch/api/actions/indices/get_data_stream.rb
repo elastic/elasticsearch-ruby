@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Returns data streams.
+        # Get data streams
         #
         # @option arguments [List] :name A comma-separated list of data streams to get; use `*` to get all data streams
         # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Boolean] :verbose Whether the maximum timestamp for each data stream should be calculated and returned (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-get-data-stream.html
         #
         def get_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.get_data_stream' }

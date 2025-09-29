@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Removes a document from the index.
+      # Delete a document
       #
       # @option arguments [String] :id The document ID
       # @option arguments [String] :index The name of the index

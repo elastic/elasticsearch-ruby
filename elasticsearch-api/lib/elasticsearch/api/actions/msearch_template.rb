@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Allows to execute several search template operations in one request.
+      # Run multiple templated searches
       #
       # @option arguments [List] :index A comma-separated list of index names to use as default
       # @option arguments [String] :search_type Search operation type (options: query_then_fetch, dfs_query_then_fetch)
@@ -32,7 +32,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The request definitions (metadata-search request definition pairs), separated by newlines (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/search-multi-search.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/multi-search-template.html
       #
       def msearch_template(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'msearch_template' }

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Updates the attributes of multiple existing API keys.
+        # Bulk update API keys
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The API key request to update the attributes of multiple API keys. (*Required*)

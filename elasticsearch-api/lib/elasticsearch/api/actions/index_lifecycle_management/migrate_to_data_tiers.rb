@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module IndexLifecycleManagement
       module Actions
-        # Migrates the indices and ILM policies away from custom node attribute allocation routing to data tiers routing
+        # Migrate to data tiers routing
         #
         # @option arguments [Boolean] :dry_run If set to true it will simulate the migration, providing a way to retrieve the ILM policies and indices that need to be migrated. The default is false
         # @option arguments [Hash] :headers Custom HTTP headers

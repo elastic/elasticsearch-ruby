@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Returns an index template.
+        # Get index templates
         #
         # @option arguments [String] :name A pattern that returned template names must match
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)

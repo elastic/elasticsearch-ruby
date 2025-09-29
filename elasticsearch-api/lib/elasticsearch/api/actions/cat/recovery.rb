@@ -22,12 +22,12 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Returns information about index shard recoveries, both on-going completed.
+        # Get shard recovery information
         #
         # @option arguments [List] :index Comma-separated list or wildcard expression of index names to limit the returned information
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Boolean] :active_only If `true`, the response only includes ongoing shard recoveries
-        # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)
+        # @option arguments [String] :bytes The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)
         # @option arguments [Boolean] :detailed If `true`, the response includes detailed information about shard recoveries
         # @option arguments [List] :h Comma-separated list of column names to display
         # @option arguments [Boolean] :help Return help information

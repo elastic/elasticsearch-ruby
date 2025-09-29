@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Enrich
       module Actions
-        # Creates a new enrich policy.
+        # Create an enrich policy
         #
         # @option arguments [String] :name The name of the enrich policy
         # @option arguments [Time] :master_timeout Timeout for processing on master node

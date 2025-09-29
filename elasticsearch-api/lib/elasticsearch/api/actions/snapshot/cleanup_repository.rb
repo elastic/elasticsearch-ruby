@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Removes stale data from repository.
+        # Clean up the snapshot repository
         #
         # @option arguments [String] :repository A repository name
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

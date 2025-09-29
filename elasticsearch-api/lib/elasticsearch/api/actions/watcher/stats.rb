@@ -22,13 +22,13 @@ module Elasticsearch
   module API
     module Watcher
       module Actions
-        # Retrieves the current Watcher metrics.
+        # Get Watcher statistics
         #
         # @option arguments [List] :metric Controls what additional stat metrics should be include in the response (options: _all, queued_watches, current_watches, pending_watches)
         # @option arguments [Boolean] :emit_stacktraces Emits stack traces of currently running watches
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/watcher-api-stats.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-stats
         #
         def stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.stats' }

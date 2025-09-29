@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Returns information about a repository.
+        # Get snapshot repository information
         #
         # @option arguments [List] :repository A comma-separated list of repository names
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-snapshot-repo-api.html
         #
         def get_repository(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.get_repository' }

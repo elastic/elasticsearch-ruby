@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Clones an index
+        # Clone an index
         #
         # @option arguments [String] :index The name of the source index to clone
         # @option arguments [String] :target The name of the target index to clone into

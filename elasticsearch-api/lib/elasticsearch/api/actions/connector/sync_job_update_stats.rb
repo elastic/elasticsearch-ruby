@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Connector
       module Actions
-        # Updates the stats fields in the connector sync job document.
+        # Set the connector sync job stats
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the

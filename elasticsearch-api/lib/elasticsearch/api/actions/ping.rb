@@ -21,11 +21,11 @@
 module Elasticsearch
   module API
     module Actions
-      # Returns whether the cluster is running.
+      # Ping the cluster
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/cluster.html
       #
       def ping(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'ping' }

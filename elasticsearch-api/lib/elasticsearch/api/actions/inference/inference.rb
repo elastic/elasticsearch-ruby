@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Perform inference
+        # Perform inference on the service
         #
         # @option arguments [String] :inference_id The inference Id
         # @option arguments [String] :task_type The task type

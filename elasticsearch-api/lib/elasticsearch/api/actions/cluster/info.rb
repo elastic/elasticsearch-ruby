@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Returns different information about the cluster.
+        # Get cluster info
         #
         # @option arguments [List] :target Limit the information returned to the specified target. (options: _all, http, ingest, thread_pool, script)
         # @option arguments [Hash] :headers Custom HTTP headers

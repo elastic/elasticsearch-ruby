@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Allows to retrieve a large numbers of results from a single search request.
+      # Run a scrolling search
       #
       # @option arguments [String] :scroll_id The scroll ID *Deprecated*
       # @option arguments [Time] :scroll Specify how long a consistent view of the index should be maintained for scrolled search
@@ -34,7 +34,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/search-request-body.html#request-body-search-scroll
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/scroll-api.html
       #
       def scroll(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'scroll' }

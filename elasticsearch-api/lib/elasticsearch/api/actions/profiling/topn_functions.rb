@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Profiling
       module Actions
-        # Extracts a list of topN functions from Universal Profiling.
+        # Extracts a list of topN functions from Universal Profiling
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The filter conditions for stacktraces (*Required*)

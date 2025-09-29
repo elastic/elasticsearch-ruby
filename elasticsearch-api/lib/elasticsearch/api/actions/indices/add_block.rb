@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Adds a block to an index.
+        # Add an index block
         #
         # @option arguments [List] :index A comma separated list of indices to add a block to
         # @option arguments [String] :block The block to add (one of read, write, read_only or metadata)
@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index-modules-blocks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index-modules-blocks.html#add-index-block
         #
         def add_block(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.add_block' }

@@ -21,13 +21,13 @@
 module Elasticsearch
   module API
     module Actions
-      # Changes the number of requests per second for a particular Delete By Query operation.
+      # Throttle a delete by query operation
       #
       # @option arguments [String] :task_id The task id to rethrottle
       # @option arguments [Number] :requests_per_second The throttle to set on this request in floating sub-requests per second. -1 means set no throttle. (*Required*)
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/docs-delete-by-query.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/docs-delete-by-query.html#docs-delete-by-query-rethrottle
       #
       def delete_by_query_rethrottle(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'delete_by_query_rethrottle' }

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module SQL
       module Actions
-        # Returns the current status and available results for an async SQL search or stored synchronous SQL search
+        # Get async SQL search results
         #
         # @option arguments [String] :id The async search ID
         # @option arguments [String] :delimiter Separator for CSV results

@@ -22,11 +22,11 @@ module Elasticsearch
   module API
     module Connector
       module Actions
-        # Returns the details about a connector sync job.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # Get a connector sync job
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
         #
         # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job to be returned.
         # @option arguments [Hash] :headers Custom HTTP headers

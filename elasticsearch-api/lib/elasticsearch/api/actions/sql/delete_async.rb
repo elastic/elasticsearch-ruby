@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module SQL
       module Actions
-        # Deletes an async SQL search or a stored synchronous SQL search. If the search is still running, the API cancels it.
+        # Delete an async SQL search
         #
         # @option arguments [String] :id The async search ID
         # @option arguments [Hash] :headers Custom HTTP headers

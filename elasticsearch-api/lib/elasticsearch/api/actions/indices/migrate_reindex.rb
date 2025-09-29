@@ -20,40 +20,27 @@
 #
 module Elasticsearch
   module API
-    module Connector
+    module Indices
       module Actions
-        # Updates the stats of last sync in the connector document.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # Reindex legacy backing indices
         #
-        # @option arguments [String] :connector_id The unique identifier of the connector to be updated.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Object with stats related to the last connector sync run. (*Required*)
+        # @option arguments [Hash] :body The body contains the fields `mode` and `source.index, where the only mode currently supported is `upgrade`, and the `source.index` must be a data stream name (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-last-sync-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/migrate-data-stream.html
         #
-        def last_sync(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'connector.last_sync' }
-
-          defined_params = [:connector_id].each_with_object({}) do |variable, set_variables|
-            set_variables[variable] = arguments[variable] if arguments.key?(variable)
-          end
-          request_opts[:defined_params] = defined_params unless defined_params.empty?
+        def migrate_reindex(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'indices.migrate_reindex' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          raise ArgumentError, "Required argument 'connector_id' missing" unless arguments[:connector_id]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
+          body   = arguments.delete(:body)
 
-          _connector_id = arguments.delete(:connector_id)
-
-          method = Elasticsearch::API::HTTP_PUT
-          path   = "_connector/#{Utils.__listify(_connector_id)}/_last_sync"
+          method = Elasticsearch::API::HTTP_POST
+          path   = '_migration/reindex'
           params = {}
 
           Elasticsearch::API::Response.new(

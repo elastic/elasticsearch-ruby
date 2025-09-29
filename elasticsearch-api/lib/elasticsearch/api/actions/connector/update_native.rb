@@ -22,17 +22,17 @@ module Elasticsearch
   module API
     module Connector
       module Actions
-        # Updates the is_native flag of the connector.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # Update the connector is_native flag
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
         #
         # @option arguments [String] :connector_id The unique identifier of the connector to be updated.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body An object containing the connector's is_native flag (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/connector-apis.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-connector-native-api.html
         #
         def update_native(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.update_native' }

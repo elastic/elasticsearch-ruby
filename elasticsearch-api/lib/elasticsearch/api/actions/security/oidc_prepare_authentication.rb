@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Creates an OAuth 2.0 authentication request as a URL string
+        # Prepare OpenID connect authentication
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The OpenID Connect authentication realm configuration (*Required*)

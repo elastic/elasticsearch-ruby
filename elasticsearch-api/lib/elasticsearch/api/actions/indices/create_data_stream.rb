@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Creates a data stream
+        # Create a data stream
         #
         # @option arguments [String] :name The name of the data stream
         # @option arguments [Time] :timeout Specify timeout for acknowledging the cluster state update
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-create-data-stream.html
         #
         def create_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.create_data_stream' }

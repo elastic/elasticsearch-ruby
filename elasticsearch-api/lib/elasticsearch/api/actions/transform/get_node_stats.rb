@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Transform
       module Actions
-        # Retrieves transform usage information for transform nodes.
+        # Retrieves transform usage information for transform nodes
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #

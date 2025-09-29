@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module AsyncSearch
       module Actions
-        # Executes a search request asynchronously.
+        # Run an async search
         #
         # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
         # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response

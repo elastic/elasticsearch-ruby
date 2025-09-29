@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Predicts the future behavior of a time series by using its historical behavior.
+        # Predict future behavior of a time series
         #
         # @option arguments [String] :job_id The ID of the job to forecast for
         # @option arguments [Time] :duration The duration of the forecast

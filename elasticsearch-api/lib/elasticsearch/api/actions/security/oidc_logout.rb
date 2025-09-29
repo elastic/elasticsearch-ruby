@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Invalidates a refresh token and access token that was generated from the OpenID Connect Authenticate API
+        # Logout of OpenID Connect
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Access token and refresh token to invalidate (*Required*)

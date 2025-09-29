@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Enrich
       module Actions
-        # Creates the enrich index for an existing enrich policy.
+        # Run an enrich policy
         #
         # @option arguments [String] :name The name of the enrich policy
         # @option arguments [Boolean] :wait_for_completion Should the request should block until the execution is complete.

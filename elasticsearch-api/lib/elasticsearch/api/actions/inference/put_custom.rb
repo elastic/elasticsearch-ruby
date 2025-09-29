@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure a custom inference endpoint
+        # Create a custom inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :custom_inference_id The inference Id

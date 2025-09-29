@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Retrieves information about the index's current data stream lifecycle, such as any potential encountered error, time since creation etc.
+        # Get the status for a data stream lifecycle
         #
         # @option arguments [String] :index The name of the index to explain
         # @option arguments [Boolean] :include_defaults indicates if the API should return the default values the system uses for the index's lifecycle

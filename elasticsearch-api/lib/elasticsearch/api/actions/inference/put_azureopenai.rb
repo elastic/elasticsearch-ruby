@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure an Azure OpenAI inference endpoint
+        # Create an Azure OpenAI inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :azureopenai_inference_id The inference Id

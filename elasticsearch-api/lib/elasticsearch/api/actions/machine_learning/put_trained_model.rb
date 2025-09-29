@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Creates an inference trained model.
+        # Create a trained model
         #
         # @option arguments [String] :model_id The ID of the trained models to store
         # @option arguments [Boolean] :defer_definition_decompression If set to `true` and a `compressed_definition` is provided, the request defers definition decompression and skips relevant validations.

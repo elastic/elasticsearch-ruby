@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # The terms enum API  can be used to discover terms in the index that begin with the provided string. It is designed for low-latency look-ups used in auto-complete scenarios.
+      # Get terms in an index
       #
       # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
       # @option arguments [Hash] :headers Custom HTTP headers

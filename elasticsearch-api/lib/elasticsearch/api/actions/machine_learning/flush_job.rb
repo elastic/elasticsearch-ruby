@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Forces any buffered data to be processed by the job.
+        # Force buffered data to be processed
         #
         # @option arguments [String] :job_id The name of the job to flush
         # @option arguments [Boolean] :calc_interim Calculates interim results for the most recent bucket or all buckets within the latency period

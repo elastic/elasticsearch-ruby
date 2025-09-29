@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Reloads an index's search analyzers and their resources.
+        # Reload search analyzers
         #
         # @option arguments [List] :index A comma-separated list of index names to reload analyzers for
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)

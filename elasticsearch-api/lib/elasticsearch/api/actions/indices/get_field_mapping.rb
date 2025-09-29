@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Returns mapping for one or more fields.
+        # Get mapping definitions
         #
         # @option arguments [List] :fields A comma-separated list of fields
         # @option arguments [List] :index A comma-separated list of index names

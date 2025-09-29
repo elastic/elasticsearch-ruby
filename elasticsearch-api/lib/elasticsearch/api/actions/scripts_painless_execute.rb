@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Allows an arbitrary script to be executed and a result to be returned
+      # Run a script
       # This functionality is Experimental and may be changed or removed
       # completely in a future release. Elastic will take a best effort approach
       # to fix any issues, but experimental features are not subject to the

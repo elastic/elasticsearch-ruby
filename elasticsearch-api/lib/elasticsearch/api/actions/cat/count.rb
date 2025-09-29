@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Provides quick access to the document count of the entire cluster, or individual indices.
+        # Get a document count
         #
         # @option arguments [List] :index A comma-separated list of index names to limit the returned information
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml

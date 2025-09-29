@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Clears all or specific caches for one or more indices.
+        # Clear the cache
         #
         # @option arguments [List] :index A comma-separated list of index name to limit the operation
         # @option arguments [Boolean] :fielddata Clear field data

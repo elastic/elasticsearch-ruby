@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module IndexLifecycleManagement
       module Actions
-        # Returns the specified policy definition. Includes the policy version and last modified date.
+        # Get lifecycle policies
         #
         # @option arguments [String] :policy The name of the index lifecycle policy
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

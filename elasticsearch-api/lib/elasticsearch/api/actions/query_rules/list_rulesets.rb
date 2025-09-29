@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module QueryRules
       module Actions
-        # Lists query rulesets.
+        # Get all query rulesets
         #
         # @option arguments [Integer] :from Starting offset (default: 0)
         # @option arguments [Integer] :size specifies a max number of results to get (default: 100)

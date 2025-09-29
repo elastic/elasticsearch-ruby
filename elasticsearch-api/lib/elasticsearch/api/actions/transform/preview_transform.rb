@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Transform
       module Actions
-        # Previews a transform.
+        # Preview a transform
         #
         # @option arguments [String] :transform_id The id of the transform to preview.
         # @option arguments [Time] :timeout Controls the time to wait for the preview

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Retrieves anomaly records for an anomaly detection job.
+        # Get anomaly records for an anomaly detection job
         #
         # @option arguments [String] :job_id The ID of the job
         # @option arguments [Boolean] :exclude_interim Exclude interim results

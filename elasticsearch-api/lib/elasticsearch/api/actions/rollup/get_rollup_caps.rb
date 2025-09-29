@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Rollup
       module Actions
-        # Returns the capabilities of any rollup jobs that have been configured for a specific index or index pattern.
+        # Get the rollup job capabilities
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the

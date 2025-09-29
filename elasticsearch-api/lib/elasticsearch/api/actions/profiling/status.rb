@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Profiling
       module Actions
-        # Returns basic information about the status of Universal Profiling.
+        # Returns basic information about the status of Universal Profiling
         #
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout

@@ -22,13 +22,13 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Performs the analysis process on a text and return the tokens breakdown of the text.
+        # Get tokens from text analysis
         #
         # @option arguments [String] :index The name of the index to scope the operation
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Define analyzer/tokenizer parameters and the text on which the analysis should be performed
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-analyze.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-analyze
         #
         def analyze(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.analyze' }

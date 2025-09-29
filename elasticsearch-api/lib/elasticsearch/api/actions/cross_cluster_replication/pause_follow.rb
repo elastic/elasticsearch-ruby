@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module CrossClusterReplication
       module Actions
-        # Pauses a follower index. The follower index will not fetch any additional operations from the leader index.
+        # Pause a follower
         #
         # @option arguments [String] :index The name of the follower index that should pause following its leader index.
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

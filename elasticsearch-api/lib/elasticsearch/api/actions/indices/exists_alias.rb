@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Returns information about whether a particular alias exists.
+        # Check aliases
         #
         # @option arguments [List] :name A comma-separated list of alias names to return
         # @option arguments [List] :index A comma-separated list of index names to filter aliases
@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-aliases.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-exists-alias
         #
         def exists_alias(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.exists_alias' }

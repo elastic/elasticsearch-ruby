@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure a Google AI Studio inference endpoint
+        # Create an Google AI Studio inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :googleaistudio_inference_id The inference Id

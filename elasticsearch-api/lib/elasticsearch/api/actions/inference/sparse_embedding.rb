@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Perform sparse embedding inference
+        # Perform sparse embedding inference on the service
         #
         # @option arguments [String] :inference_id The inference Id
         # @option arguments [Hash] :headers Custom HTTP headers

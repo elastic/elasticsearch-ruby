@@ -22,13 +22,13 @@ module Elasticsearch
   module API
     module Watcher
       module Actions
-        # Acknowledges a watch, manually throttling the execution of the watch's actions.
+        # Acknowledge a watch
         #
         # @option arguments [String] :watch_id Watch ID
         # @option arguments [List] :action_id A comma-separated list of the action ids to be acked
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/watcher-api-ack-watch.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-ack-watch
         #
         def ack_watch(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.ack_watch' }

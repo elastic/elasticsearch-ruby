@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module AsyncSearch
       module Actions
-        # Retrieves the results of a previously submitted async search request given its ID.
+        # Get async search results
         #
         # @option arguments [String] :id The async search ID
         # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response

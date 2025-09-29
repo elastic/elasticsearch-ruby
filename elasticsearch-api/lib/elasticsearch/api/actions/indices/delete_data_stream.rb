@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Deletes a data stream.
+        # Delete data streams
         #
         # @option arguments [List] :name A comma-separated list of data streams to delete; use `*` to delete all data streams
         # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-delete-data-stream.html
         #
         def delete_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.delete_data_stream' }

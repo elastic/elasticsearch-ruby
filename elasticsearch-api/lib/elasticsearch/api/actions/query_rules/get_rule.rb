@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module QueryRules
       module Actions
-        # Returns the details about an individual query rule within a ruleset.
+        # Get a query rule
         #
         # @option arguments [String] :ruleset_id The unique identifier of the query ruleset the rule exists within
         # @option arguments [String] :rule_id The unique identifier of the rule to be retrieved.

@@ -21,14 +21,14 @@
 module Elasticsearch
   module API
     module Actions
-      # Deletes a script.
+      # Delete a script or search template
       #
       # @option arguments [String] :id Script ID
       # @option arguments [Time] :timeout Explicit operation timeout
       # @option arguments [Time] :master_timeout Specify timeout for connection to master
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-scripting.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-stored-script-api.html
       #
       def delete_script(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'delete_script' }

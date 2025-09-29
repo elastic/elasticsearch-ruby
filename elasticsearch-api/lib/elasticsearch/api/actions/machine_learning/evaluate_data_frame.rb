@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Evaluates the data frame analytics for an annotated index.
+        # Evaluate data frame analytics
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The evaluation definition (*Required*)

@@ -22,12 +22,12 @@ module Elasticsearch
   module API
     module Watcher
       module Actions
-        # Retrieves stored watches.
+        # Query watches
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body From, size, query, sort and search_after
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/watcher-api-query-watches.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-query-watches
         #
         def query_watches(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.query_watches' }

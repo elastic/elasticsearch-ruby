@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Returns information about a snapshot.
+        # Get snapshot information
         #
         # @option arguments [String] :repository A repository name
         # @option arguments [List] :snapshot A comma-separated list of snapshot names
@@ -41,7 +41,7 @@ module Elasticsearch
         # @option arguments [Boolean] :verbose Whether to show verbose snapshot info or only show the basic info found in the repository index blob
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-snapshot-api.html
         #
         def get(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.get' }

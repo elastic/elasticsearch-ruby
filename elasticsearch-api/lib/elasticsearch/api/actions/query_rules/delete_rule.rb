@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module QueryRules
       module Actions
-        # Deletes an individual query rule within a ruleset.
+        # Delete a query rule
         #
         # @option arguments [String] :ruleset_id The unique identifier of the query ruleset this rule exists in
         # @option arguments [String] :rule_id The unique identifier of the rule to delete.

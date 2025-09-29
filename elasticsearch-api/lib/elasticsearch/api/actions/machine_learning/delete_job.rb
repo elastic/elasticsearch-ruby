@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes an existing anomaly detection job.
+        # Delete an anomaly detection job
         #
         # @option arguments [String] :job_id The ID of the job to delete
         # @option arguments [Boolean] :force True if the job should be forcefully deleted

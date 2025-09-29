@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Updates certain properties of trained model deployment.
+        # Update a trained model deployment
         #
         # @option arguments [String] :model_id The unique identifier of the trained model.
         # @option arguments [Integer] :number_of_allocations Update the model deployment to this number of allocations.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The updated trained model deployment settings
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-trained-model-deployment.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-ml-update-trained-model-deployment
         #
         def update_trained_model_deployment(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.update_trained_model_deployment' }

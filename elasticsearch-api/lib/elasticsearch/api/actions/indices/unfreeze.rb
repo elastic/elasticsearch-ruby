@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Unfreezes an index. When a frozen index is unfrozen, the index goes through the normal recovery process and becomes writeable again.
+        # Unfreeze an index
         #
         # @option arguments [String] :index The name of the index to unfreeze
         # @option arguments [Time] :timeout Explicit operation timeout

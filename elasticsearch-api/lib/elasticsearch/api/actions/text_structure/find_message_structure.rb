@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module TextStructure
       module Actions
-        # Finds the structure of a list of messages. The messages must contain data that is suitable to be ingested into Elasticsearch.
+        # Find the structure of text messages
         #
         # @option arguments [Time] :timeout Timeout after which the analysis will be aborted
         # @option arguments [String] :format Optional parameter to specify the high level file format (options: ndjson, xml, delimited, semi_structured_text)

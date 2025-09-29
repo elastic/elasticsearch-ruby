@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Updates the data stream options of the selected data streams.
+        # Updates the data stream options of the selected data streams
         #
         # @option arguments [List] :name A comma-separated list of data streams whose options will be updated; use `*` to set the options to all data streams
         # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)

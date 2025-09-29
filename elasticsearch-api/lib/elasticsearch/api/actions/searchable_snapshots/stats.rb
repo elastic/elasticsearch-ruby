@@ -22,13 +22,13 @@ module Elasticsearch
   module API
     module SearchableSnapshots
       module Actions
-        # Retrieve shard-level statistics about searchable snapshots.
+        # Get searchable snapshot statistics
         #
         # @option arguments [List] :index A comma-separated list of index names
         # @option arguments [String] :level Return stats aggregated at cluster, index or shard level (options: cluster, indices, shards)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/searchable-snapshots-apis.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/searchable-snapshots-api-stats.html
         #
         def stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'searchable_snapshots.stats' }

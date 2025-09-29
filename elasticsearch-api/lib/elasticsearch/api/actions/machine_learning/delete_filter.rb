@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes a filter.
+        # Delete a filter
         #
         # @option arguments [String] :filter_id The ID of the filter to delete
         # @option arguments [Hash] :headers Custom HTTP headers

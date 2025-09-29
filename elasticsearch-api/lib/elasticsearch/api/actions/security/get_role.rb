@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves roles in the native realm.
+        # Get roles
         #
         # @option arguments [List] :name A comma-separated list of role names
         # @option arguments [Hash] :headers Custom HTTP headers

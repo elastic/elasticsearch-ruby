@@ -22,12 +22,12 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Estimates the model memory
+        # Estimate job model memory usage
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The analysis config, plus cardinality estimates for fields it references (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-apis.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ml-estimate-model-memory.html
         #
         def estimate_model_memory(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.estimate_model_memory' }

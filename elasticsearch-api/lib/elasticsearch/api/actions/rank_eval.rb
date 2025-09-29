@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Allows to evaluate the quality of ranked search results over a set of typical search queries
+      # Evaluate ranked search results
       #
       # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
       # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)

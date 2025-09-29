@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Transform
       module Actions
-        # Updates certain properties of a transform.
+        # Update a transform
         #
         # @option arguments [String] :transform_id The id of the transform. (*Required*)
         # @option arguments [Boolean] :defer_validation If validations should be deferred until transform starts, defaults to false.
@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The update transform definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-transform.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-transform-update-transform
         #
         def update_transform(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'transform.update_transform' }

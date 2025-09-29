@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes scheduled events from a calendar.
+        # Delete events from a calendar
         #
         # @option arguments [String] :calendar_id The ID of the calendar to modify
         # @option arguments [String] :event_id The ID of the event to remove from the calendar

@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Performs a kNN search.
+      # Run a knn search
       # This functionality is Experimental and may be changed or removed
       # completely in a future release. Elastic will take a best effort approach
       # to fix any issues, but experimental features are not subject to the
@@ -32,7 +32,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/search-search.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/knn-search-api.html
       #
       def knn_search(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'knn_search' }

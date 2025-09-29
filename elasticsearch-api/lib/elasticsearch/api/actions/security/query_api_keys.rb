@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves information for API keys using a subset of query DSL
+        # Find API keys with a query
         #
         # @option arguments [Boolean] :with_limited_by flag to show the limited-by role descriptors of API Keys
         # @option arguments [Boolean] :with_profile_uid flag to also retrieve the API Key's owner profile uid, if it exists

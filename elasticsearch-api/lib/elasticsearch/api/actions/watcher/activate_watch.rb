@@ -22,12 +22,12 @@ module Elasticsearch
   module API
     module Watcher
       module Actions
-        # Activates a currently inactive watch.
+        # Activate a watch
         #
         # @option arguments [String] :watch_id Watch ID
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/watcher-api-activate-watch.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-activate-watch
         #
         def activate_watch(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.activate_watch' }

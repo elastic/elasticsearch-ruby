@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Get data stream lifecycle statistics.
+        # Get data stream lifecycle stats
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #

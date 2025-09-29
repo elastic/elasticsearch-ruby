@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Instantiates an anomaly detection job.
+        # Create an anomaly detection job
         #
         # @option arguments [String] :job_id The ID of the job to create
         # @option arguments [Boolean] :ignore_unavailable Ignore unavailable indexes (default: false). Only set if datafeed_config is provided.

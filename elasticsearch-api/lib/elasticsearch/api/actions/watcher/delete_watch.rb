@@ -22,12 +22,12 @@ module Elasticsearch
   module API
     module Watcher
       module Actions
-        # Removes a watch from Watcher.
+        # Delete a watch
         #
         # @option arguments [String] :id Watch ID
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/watcher-api-delete-watch.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-delete-watch
         #
         def delete_watch(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.delete_watch' }

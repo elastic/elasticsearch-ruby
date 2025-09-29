@@ -21,9 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Creates a new document in the index.
-      #
-      # Returns a 409 response when a document with a same ID already exists in the index.
+      # Create a new document in the index
       #
       # @option arguments [String] :id Document ID
       # @option arguments [String] :index The name of the index

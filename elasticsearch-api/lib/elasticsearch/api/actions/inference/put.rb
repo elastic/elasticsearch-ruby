@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure an inference endpoint for use in the Inference API
+        # Create an inference endpoint
         #
         # @option arguments [String] :inference_id The inference Id
         # @option arguments [String] :task_type The task type

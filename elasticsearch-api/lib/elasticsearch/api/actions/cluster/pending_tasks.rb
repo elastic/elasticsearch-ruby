@@ -22,8 +22,7 @@ module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Returns a list of any cluster-level changes (e.g. create index, update mapping,
-        # allocate or fail shard) which have not yet been executed.
+        # Get the pending cluster tasks
         #
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Time] :master_timeout Specify timeout for connection to master

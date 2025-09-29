@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Returns information about existing templates.
+        # Get index template information
         #
         # @option arguments [String] :name A pattern that returned template names must match
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml

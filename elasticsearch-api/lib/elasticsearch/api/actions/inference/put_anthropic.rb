@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure an Anthropic inference endpoint
+        # Create an Anthropic inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :anthropic_inference_id The inference Id

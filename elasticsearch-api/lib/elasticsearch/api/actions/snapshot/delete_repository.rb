@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Deletes a repository.
+        # Delete snapshot repositories
         #
         # @option arguments [List] :repository Name of the snapshot repository to unregister. Wildcard (`*`) patterns are supported.
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/delete-snapshot-repo-api.html
         #
         def delete_repository(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.delete_repository' }

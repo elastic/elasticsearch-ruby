@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Retrieves configuration information for a trained inference model.
+        # Get trained model configuration info
         #
         # @option arguments [String] :model_id The ID of the trained models to fetch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified)

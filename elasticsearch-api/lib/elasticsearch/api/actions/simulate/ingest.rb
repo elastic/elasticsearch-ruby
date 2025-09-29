@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Simulate
       module Actions
-        # Simulates running ingest with example documents.
+        # Simulate data ingestion
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the

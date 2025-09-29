@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Autoscaling
       module Actions
-        # Creates a new autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+        # Create or update an autoscaling policy
         #
         # @option arguments [String] :name the name of the autoscaling policy
         # @option arguments [Time] :master_timeout Timeout for processing on master node

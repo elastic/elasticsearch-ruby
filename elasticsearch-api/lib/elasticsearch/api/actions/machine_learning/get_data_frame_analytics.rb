@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Retrieves configuration information for data frame analytics jobs.
+        # Get data frame analytics job configuration info
         #
         # @option arguments [String] :id The ID of the data frame analytics to fetch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)

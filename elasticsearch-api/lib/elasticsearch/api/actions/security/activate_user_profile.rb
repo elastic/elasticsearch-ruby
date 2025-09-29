@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Creates or updates the user profile on behalf of another user.
+        # Activate a user profile
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The grant type and user's credential (*Required*)

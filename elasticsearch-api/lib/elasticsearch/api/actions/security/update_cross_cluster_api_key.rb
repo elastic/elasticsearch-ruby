@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Updates attributes of an existing cross-cluster API key.
+        # Update a cross-cluster API key
         #
         # @option arguments [String] :id The ID of the cross-cluster API key to update
         # @option arguments [Hash] :headers Custom HTTP headers

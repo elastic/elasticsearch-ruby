@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Returns a document.
+      # Get a document by its ID
       #
       # @option arguments [String] :id The document ID
       # @option arguments [String] :index The name of the index

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Performs the refresh operation in one or more indices.
+        # Refresh an index
         #
         # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)

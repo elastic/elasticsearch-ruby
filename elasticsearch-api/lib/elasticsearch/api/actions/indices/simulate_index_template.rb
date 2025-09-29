@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Simulate matching the given index name against the index templates in the system
+        # Simulate an index
         #
         # @option arguments [String] :name The name of the index (it must be a concrete index name)
         # @option arguments [Boolean] :create Whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Returns an index template.
+        # Get legacy index templates
         #
         # @option arguments [List] :name The comma separated names of the index templates
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)

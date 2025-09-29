@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes a model alias that refers to the trained model
+        # Delete a trained model alias
         #
         # @option arguments [String] :model_alias The trained model alias to delete
         # @option arguments [String] :model_id The trained model where the model alias is assigned

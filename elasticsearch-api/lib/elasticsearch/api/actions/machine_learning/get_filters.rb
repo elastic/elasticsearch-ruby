@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Retrieves filters.
+        # Get filters
         #
         # @option arguments [String] :filter_id The ID of the filter to fetch
         # @option arguments [Integer] :from skips a number of filters

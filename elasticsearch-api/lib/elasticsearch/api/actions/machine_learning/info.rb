@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Returns defaults and limits used by machine learning.
+        # Get machine learning information
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #

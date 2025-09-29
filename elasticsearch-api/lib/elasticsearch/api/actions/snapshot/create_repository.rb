@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Creates a repository.
+        # Create or update a snapshot repository
         #
         # @option arguments [String] :repository A repository name
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The repository definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/put-snapshot-repo-api.html
         #
         def create_repository(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.create_repository' }

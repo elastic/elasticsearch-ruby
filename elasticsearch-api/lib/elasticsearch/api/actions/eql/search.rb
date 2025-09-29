@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Eql
       module Actions
-        # Returns results matching a query expressed in Event Query Language (EQL)
+        # Get EQL search results
         #
         # @option arguments [String] :index The name of the index to scope the operation
         # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response

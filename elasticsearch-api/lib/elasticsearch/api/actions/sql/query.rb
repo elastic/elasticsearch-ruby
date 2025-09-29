@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module SQL
       module Actions
-        # Executes a SQL request
+        # Get SQL search results
         #
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Hash] :headers Custom HTTP headers

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Starts a data frame analytics job.
+        # Start a data frame analytics job
         #
         # @option arguments [String] :id The ID of the data frame analytics to start
         # @option arguments [Time] :timeout Controls the time to wait until the task has started. Defaults to 20 seconds

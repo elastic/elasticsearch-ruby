@@ -22,13 +22,13 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Updates certain properties of a data frame analytics job.
+        # Update a data frame analytics job
         #
         # @option arguments [String] :id The ID of the data frame analytics to update
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data frame analytics settings to update (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-dfanalytics.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-ml-update-data-frame-analytics
         #
         def update_data_frame_analytics(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.update_data_frame_analytics' }

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Reverts to a specific snapshot.
+        # Revert to a snapshot
         #
         # @option arguments [String] :job_id The ID of the job to fetch
         # @option arguments [String] :snapshot_id The ID of the snapshot to revert to

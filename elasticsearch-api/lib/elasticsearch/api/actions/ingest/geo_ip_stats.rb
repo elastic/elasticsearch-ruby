@@ -22,11 +22,11 @@ module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Returns statistical information about geoip databases
+        # Get GeoIP statistics
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/geoip-stats-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/geoip-processor.html
         #
         def geo_ip_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.geo_ip_stats' }

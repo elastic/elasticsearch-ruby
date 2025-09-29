@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module License
       module Actions
-        # Starts an indefinite basic license.
+        # Start a basic license
         #
         # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)
         # @option arguments [Time] :master_timeout Timeout for processing on master node

@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Creates or updates a document in an index.
+      # Create or update a document in an index
       #
       # @option arguments [String] :id Document ID
       # @option arguments [String] :index The name of the index

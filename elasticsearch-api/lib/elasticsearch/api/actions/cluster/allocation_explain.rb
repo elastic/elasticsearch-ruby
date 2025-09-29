@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Provides explanations for shard allocations in the cluster.
+        # Explain the shard allocations
         #
         # @option arguments [Time] :master_timeout Timeout for connection to master node
         # @option arguments [Boolean] :include_yes_decisions Return 'YES' decisions in explanation (default: false)

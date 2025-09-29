@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module DanglingIndices
       module Actions
-        # Deletes the specified dangling index
+        # Delete a dangling index
         #
         # @option arguments [String] :index_uuid The UUID of the dangling index
         # @option arguments [Boolean] :accept_data_loss Must be set to true in order to delete the dangling index
@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-gateway-dangling-indices.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/dangling-index-delete.html
         #
         def delete_dangling_index(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'dangling_indices.delete_dangling_index' }

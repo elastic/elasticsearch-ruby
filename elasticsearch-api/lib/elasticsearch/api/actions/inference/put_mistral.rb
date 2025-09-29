@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure a Mistral inference endpoint
+        # Create a Mistral inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :mistral_inference_id The inference Id

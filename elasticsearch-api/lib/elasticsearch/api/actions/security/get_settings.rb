@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieve settings for the security system indices
+        # Get security index settings
         #
         # @option arguments [Time] :master_timeout Timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers

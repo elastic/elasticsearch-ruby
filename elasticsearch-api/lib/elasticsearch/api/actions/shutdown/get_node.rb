@@ -22,13 +22,13 @@ module Elasticsearch
   module API
     module Shutdown
       module Actions
-        # Retrieve status of a node or nodes that are currently marked as shutting down. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+        # Get the shutdown status
         #
         # @option arguments [String] :node_id Which node for which to retrieve the shutdown status
         # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-shutdown.html
         #
         def get_node(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'shutdown.get_node' }

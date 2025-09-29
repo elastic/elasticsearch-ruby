@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module CrossClusterReplication
       module Actions
-        # Resumes an auto-follow pattern that has been paused
+        # Resume an auto-follow pattern
         #
         # @option arguments [String] :name The name of the auto follow pattern to resume discovering new indices to follow.
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Exchanges a SAML Response message for an Elasticsearch access token and refresh token pair
+        # Authenticate SAML
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The SAML response to authenticate (*Required*)

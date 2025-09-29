@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure a Watsonx inference endpoint
+        # Create a Watsonx inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :watsonx_inference_id The inference Id

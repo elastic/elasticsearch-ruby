@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Disables a user profile so it's not visible in user profile searches.
+        # Disable a user profile
         #
         # @option arguments [String] :uid Unique identifier for the user profile
         # @option arguments [String] :refresh If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)

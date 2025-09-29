@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Enables authentication as a user and retrieve information about the authenticated user.
+        # Authenticate a user
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #

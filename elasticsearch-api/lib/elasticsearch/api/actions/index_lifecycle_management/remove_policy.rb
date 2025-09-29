@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module IndexLifecycleManagement
       module Actions
-        # Removes the assigned lifecycle policy and stops managing the specified index
+        # Remove policies from an index
         #
         # @option arguments [String] :index The name of the index to remove policy on
         # @option arguments [Hash] :headers Custom HTTP headers

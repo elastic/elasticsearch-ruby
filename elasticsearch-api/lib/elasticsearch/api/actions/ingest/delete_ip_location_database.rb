@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Deletes an ip location database configuration
+        # Delete IP geolocation database configurations
         #
         # @option arguments [List] :id A comma-separated list of ip location database configurations to delete
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

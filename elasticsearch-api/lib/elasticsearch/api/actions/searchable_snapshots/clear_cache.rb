@@ -28,13 +28,13 @@ module Elasticsearch
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [List] :index A comma-separated list of index names
+        # @option arguments [List] :index Clear the cache
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
         # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/searchable-snapshots-apis.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/searchable-snapshots-api-clear-cache.html
         #
         def clear_cache(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'searchable_snapshots.clear_cache' }

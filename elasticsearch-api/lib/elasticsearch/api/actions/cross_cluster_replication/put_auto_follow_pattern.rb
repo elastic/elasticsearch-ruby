@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module CrossClusterReplication
       module Actions
-        # Creates a new named collection of auto-follow patterns against a specified remote cluster. Newly created indices on the remote cluster matching any of the specified patterns will be automatically configured as follower indices.
+        # Create or update auto-follow patterns
         #
         # @option arguments [String] :name The name of the auto follow pattern.
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

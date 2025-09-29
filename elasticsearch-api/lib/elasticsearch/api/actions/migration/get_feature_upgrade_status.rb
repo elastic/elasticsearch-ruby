@@ -22,11 +22,11 @@ module Elasticsearch
   module API
     module Migration
       module Actions
-        # Find out whether system features need to be upgraded or not
+        # Get feature migration information
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/migration-api-feature-upgrade.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/feature-migration-api.html
         #
         def get_feature_upgrade_status(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'migration.get_feature_upgrade_status' }

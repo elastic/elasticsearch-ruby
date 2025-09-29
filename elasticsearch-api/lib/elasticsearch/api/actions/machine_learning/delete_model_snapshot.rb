@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes an existing model snapshot.
+        # Delete a model snapshot
         #
         # @option arguments [String] :job_id The ID of the job to fetch
         # @option arguments [String] :snapshot_id The ID of the snapshot to delete

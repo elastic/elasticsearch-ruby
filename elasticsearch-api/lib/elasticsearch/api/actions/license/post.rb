@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module License
       module Actions
-        # Updates the license for the cluster.
+        # Update the license
         #
         # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)
         # @option arguments [Time] :master_timeout Timeout for processing on master node
@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body licenses to be installed
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/update-license.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-license-post
         #
         def post(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'license.post' }

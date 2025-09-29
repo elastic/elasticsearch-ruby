@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure a VoyageAI inference endpoint
+        # Create a VoyageAI inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :voyageai_inference_id The inference ID
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference endpoint's task and service settings
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/inference-apis.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-voyageai.html
         #
         def put_voyageai(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.put_voyageai' }

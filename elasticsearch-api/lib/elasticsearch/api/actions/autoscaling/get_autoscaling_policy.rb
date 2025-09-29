@@ -22,13 +22,13 @@ module Elasticsearch
   module API
     module Autoscaling
       module Actions
-        # Retrieves an autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+        # Get an autoscaling policy
         #
         # @option arguments [String] :name the name of the autoscaling policy
         # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/autoscaling-get-autoscaling-policy.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/autoscaling-get-autoscaling-capacity.html
         #
         def get_autoscaling_policy(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'autoscaling.get_autoscaling_policy' }

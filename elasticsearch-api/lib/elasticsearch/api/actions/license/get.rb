@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module License
       module Actions
-        # Retrieves licensing information for the cluster
+        # Get license information
         #
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Boolean] :accept_enterprise Supported for backwards compatibility with 7.x. If this param is used it must be set to true *Deprecated*

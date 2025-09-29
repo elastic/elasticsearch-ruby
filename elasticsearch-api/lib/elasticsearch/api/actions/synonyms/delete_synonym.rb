@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Synonyms
       module Actions
-        # Deletes a synonym set
+        # Delete a synonym set
         #
         # @option arguments [String] :id The id of the synonyms set to be deleted
         # @option arguments [Hash] :headers Custom HTTP headers

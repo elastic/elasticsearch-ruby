@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module SearchableSnapshots
       module Actions
-        # Retrieve node-level cache statistics about searchable snapshots.
+        # Get cache statistics
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/searchable-snapshots-apis.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/searchable-snapshots-api-cache-stats.html
         #
         def cache_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'searchable_snapshots.cache_stats' }

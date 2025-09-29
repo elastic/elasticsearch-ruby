@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Enrich
       module Actions
-        # Gets information about an enrich policy.
+        # Get an enrich policy
         #
         # @option arguments [List] :name A comma-separated list of enrich policy names
         # @option arguments [Time] :master_timeout Timeout for processing on master node

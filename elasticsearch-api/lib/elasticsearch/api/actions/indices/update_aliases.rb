@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Updates index aliases.
+        # Create or update an alias
         #
         # @option arguments [Time] :timeout Request timeout
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The definition of `actions` to perform (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-aliases.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-update-aliases
         #
         def update_aliases(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.update_aliases' }

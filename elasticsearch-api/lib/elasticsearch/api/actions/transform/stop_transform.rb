@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Transform
       module Actions
-        # Stops one or more transforms.
+        # Stop transforms
         #
         # @option arguments [String] :transform_id The id of the transform to stop
         # @option arguments [Boolean] :force Whether to force stop a failed transform or not. Default to false
