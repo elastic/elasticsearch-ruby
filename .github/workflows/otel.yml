@@ -19,7 +19,9 @@ jobs:
         ruby: ['3.4', 'jruby-9.4']
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.3.0
+        with:
+          persist-credentials: false
       - name: Increase system limits
         run: |
           sudo swapoff -a
@@ -29,7 +31,7 @@ jobs:
       - uses: elastic/elastic-github-actions/elasticsearch@master
         with:
           stack-version: 9.2.0-SNAPSHOT
-      - uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1.263.0
         with:
           ruby-version: ${{ matrix.ruby }}
       - name: Build
