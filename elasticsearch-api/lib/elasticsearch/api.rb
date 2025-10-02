@@ -71,6 +71,7 @@ module Elasticsearch
                       :migration,
                       :machine_learning,
                       :nodes,
+                      :project,
                       :query_rules,
                       :search_application,
                       :searchable_snapshots,
