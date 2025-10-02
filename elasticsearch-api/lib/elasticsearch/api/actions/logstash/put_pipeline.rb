@@ -26,7 +26,8 @@ module Elasticsearch
         # Create a pipeline that is used for Logstash Central Management.
         # If the specified pipeline exists, it is replaced.
         #
-        # @option arguments [String] :id An identifier for the pipeline. (*Required*)
+        # @option arguments [String] :id An identifier for the pipeline.
+        #  Pipeline IDs must begin with a letter or underscore and contain only letters, underscores, dashes, hyphens and numbers. (*Required*)
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
