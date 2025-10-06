@@ -19,7 +19,7 @@ jobs:
         ruby: ['3.4', 'jruby-9.4']
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.3.0
+      - uses: actions/checkout@v9.2.0-SNAPSHOT
         with:
           persist-credentials: false
       - name: Increase system limits

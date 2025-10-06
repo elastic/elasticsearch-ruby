@@ -4,7 +4,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4.3.0
+    - uses: actions/checkout@v9.2.0-SNAPSHOT
       with:
         persist-credentials: false
     - uses: ruby/setup-ruby@v1.263.0
