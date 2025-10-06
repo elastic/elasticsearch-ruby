@@ -105,37 +105,46 @@ namespace :automation do
   DESC
   task :bumpmatrix, :version do |_, args|
     abort('[!] Required argument [version] missing') unless (version = args[:version])
-    gh_actions = Dir.glob(File.expand_path('../.github/workflows/*.yml', __dir__))
+    gh_actions = [
+      File.expand_path('../.github/workflows/main.yml', __dir__),
+      File.expand_path('../.github/workflows/otel.yml', __dir__),
+    ]
 
     files = gh_actions + ['.buildkite/pipeline.yml']
-    regexp = Regexp.new(/([0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}?+(-SNAPSHOT)?)/)
     files.each do |file|
       content = File.read(file)
       if file == '.buildkite/pipeline.yml'
-        require 'yaml'
-        yaml = YAML.safe_load(content)
-        yaml_tests_branch = yaml['steps'][0]['env']['ES_YAML_TESTS_BRANCH']
-
-        if yaml_tests_branch == 'main'
-          old = content.match(/STACK_VERSION: (.*)/)[1]
-          new = "STACK_VERSION: #{version}"
-          content.gsub!(new, old)
-        else
-          branch = version.match(/([0-9]+\.[0-9]+)\.[0-9]+.*/)[1]
-          content.gsub!(yaml_tests_branch, branch)
-        end
-        puts "[#{yaml_tests_branch}] -> [#{branch}] in #{file.gsub('./', '')}"
+        pipeline(content, args[:version])
+      elsif file.include?('.github/workflows/')
+        workflows(content, args[:version])
       end
-      match = content.match(regexp)
-      next if match.nil?
-
-      old_version = match[1]
-      next if old_version == args[:version]
-
-      content.gsub!(old_version, args[:version])
-      puts "[#{old_version}] -> [#{version}] in #{file.gsub('./', '')}"
       File.open(file, 'w') { |f| f.puts content }
+      puts "[#{version}] in #{file.to_s.gsub('./','')}"
     end
+  end
+
+  def pipeline(content, version)
+    yaml = YAML.safe_load(content)
+    yaml_tests_branch = yaml['steps'][0]['env']['ES_YAML_TESTS_BRANCH']
+
+    if yaml_tests_branch == 'main'
+      branch = yaml_tests_branch
+      old = content.match(/STACK_VERSION: (.*)/)[0]
+      new = "STACK_VERSION: #{version}"
+      content.gsub!(old, new)
+    else
+      branch = version.match(/([0-9]+\.[0-9]+)\.[0-9]+.*/)[1]
+      content.gsub!(yaml_tests_branch, branch)
+    end
+  end
+
+  def workflows(content, version)
+    yaml = YAML.safe_load(content)
+    tests = yaml['name'] == 'opentelemetry' ? 'otel' : 'main'
+    old_version = yaml['jobs']["test-#{tests}"]['steps'][2]['with']['stack-version']
+    return if old_version == version
+
+    content.gsub!(old_version, version)
   end
 
   desc 'Show current client version'
