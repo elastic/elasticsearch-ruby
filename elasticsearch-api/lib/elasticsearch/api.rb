@@ -87,7 +87,8 @@ module Elasticsearch
                 Elasticsearch::API::Profiling,
                 Elasticsearch::API::Simulate,
                 Elasticsearch::API::Connector,
-                Elasticsearch::API::QueryRules
+                Elasticsearch::API::QueryRules,
+                Elasticsearch::API::Streams
     end
 
     # The serializer class
