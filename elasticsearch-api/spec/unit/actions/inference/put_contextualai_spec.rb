@@ -15,9 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 
-module Elasticsearch
-  module API
-    VERSION = '9.2.0'.freeze
-    ES_SPECIFICATION_COMMIT = 'de48a54136e1bdb201746ccfc03708ef0a31ec80'.freeze
+require 'spec_helper'
+
+describe 'client#inference.put_contextualai' do
+  let(:expected_args) do
+    [
+      'PUT',
+      '_inference/foo/bar',
+      {},
+      nil,
+      {},
+      { defined_params: { contextualai_inference_id: 'bar', task_type: 'foo' },
+        endpoint: 'inference.put_contextualai' }
+    ]
+  end
+
+  it 'performs the request' do
+    expect(client_double.inference.put_contextualai(task_type: 'foo', contextualai_inference_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end
