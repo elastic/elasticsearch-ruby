@@ -107,7 +107,7 @@ module Elasticsearch
       #  the <zoom>/<x>/<y> tile with wrap_longitude set to false. The resulting
       #  bounding box may be larger than the vector tile.
       # @option arguments [Integer] :extent The size, in pixels, of a side of the tile. Vector tiles are square with equal sides. Server default: 4096.
-      # @option arguments [String] :grid_agg Aggregation used to create a grid for `field`.
+      # @option arguments [String] :grid_agg Aggregation used to create a grid for `field`. Server default: geotile.
       # @option arguments [Integer] :grid_precision Additional zoom levels available through the aggs layer. For example, if <zoom> is 7
       #  and grid_precision is 8, you can zoom in up to level 15. Accepts 0-8. If 0, results
       #  don't include the aggs layer. Server default: 8.

@@ -35,13 +35,13 @@ module Elasticsearch
         #  Ongoing async searches and any saved search results are deleted after this period. Server default: 5d.
         # @option arguments [Boolean] :keep_on_completion If `true`, results are stored for later retrieval when the search completes within the `wait_for_completion_timeout`.
         # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-        # @option arguments [Boolean] :allow_partial_search_results Indicate if an error should be returned if there is a partial search failure or timeout
+        # @option arguments [Boolean] :allow_partial_search_results Indicate if an error should be returned if there is a partial search failure or timeout Server default: true.
         # @option arguments [String] :analyzer The analyzer to use for the query string
         # @option arguments [Boolean] :analyze_wildcard Specify whether wildcard and prefix queries should be analyzed (default: false)
         # @option arguments [Integer] :batched_reduce_size Affects how often partial results become available, which happens whenever shard results are reduced.
         #  A partial reduction is performed every time the coordinating node has received a certain number of new shard responses (5 by default). Server default: 5.
         # @option arguments [Boolean] :ccs_minimize_roundtrips The default value is the only supported value.
-        # @option arguments [String] :default_operator The default operator for query string query (AND or OR)
+        # @option arguments [String] :default_operator The default operator for query string query (AND or OR) Server default: or.
         # @option arguments [String] :df The field to use as default where no field prefix is given in the query string
         # @option arguments [String, Array<String>] :docvalue_fields A comma-separated list of fields to return as the docvalue representation of a field for each hit
         # @option arguments [String, Array<String>] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
@@ -49,7 +49,7 @@ module Elasticsearch
         # @option arguments [Boolean] :ignore_throttled Whether specified concrete, expanded or aliased indices should be ignored when throttled
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
         # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-        # @option arguments [Integer] :max_concurrent_shard_requests The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
+        # @option arguments [Integer] :max_concurrent_shard_requests The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests Server default: 5.
         # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
         # @option arguments [String] :project_routing Specifies a subset of projects to target for the search using project
         #  metadata tags in a subset of Lucene query syntax.
@@ -65,7 +65,7 @@ module Elasticsearch
         # @option arguments [Array<String>] :stats Specific 'tag' of the request for logging and statistical purposes
         # @option arguments [String, Array<String>] :stored_fields A comma-separated list of stored fields to return as part of a hit
         # @option arguments [String] :suggest_field Specifies which field to use for suggestions.
-        # @option arguments [String] :suggest_mode Specify suggest mode
+        # @option arguments [String] :suggest_mode Specify suggest mode Server default: missing.
         # @option arguments [Integer] :suggest_size How many suggestions to return in response
         # @option arguments [String] :suggest_text The source text for which the suggestions should be returned.
         # @option arguments [Integer] :terminate_after The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
