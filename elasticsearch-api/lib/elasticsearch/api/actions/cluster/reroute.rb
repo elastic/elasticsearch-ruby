@@ -59,6 +59,8 @@ module Elasticsearch
         def reroute(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.reroute' }
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 

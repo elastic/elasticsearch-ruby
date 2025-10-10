@@ -18,6 +18,6 @@
 module Elasticsearch
   module API
     VERSION = '9.2.0'.freeze
-    ES_SPECIFICATION_COMMIT = '88ed8664f1c6662d0a277627092255bde3259c5c'.freeze
+    ES_SPECIFICATION_COMMIT = '62d200f5597fbf3529686f7ae7063d6b0a77f1cb'.freeze
   end
 end

@@ -52,6 +52,8 @@ module Elasticsearch
         def post(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'license.post' }
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 

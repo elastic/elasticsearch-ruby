@@ -86,6 +86,7 @@ module Elasticsearch
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'alias' missing" unless arguments[:alias]
 
           arguments = arguments.clone

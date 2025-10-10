@@ -56,17 +56,14 @@ module Elasticsearch
         def allocation_explain(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.allocation_explain' }
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
 
-          method = if body
-                     Elasticsearch::API::HTTP_POST
-                   else
-                     Elasticsearch::API::HTTP_GET
-                   end
-
+          method = Elasticsearch::API::HTTP_POST
           path   = '_cluster/allocation/explain'
           params = Utils.process_params(arguments)
 

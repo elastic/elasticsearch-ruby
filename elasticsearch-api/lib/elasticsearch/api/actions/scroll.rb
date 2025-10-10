@@ -59,6 +59,8 @@ module Elasticsearch
       def scroll(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'scroll' }
 
+        raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
@@ -66,12 +68,7 @@ module Elasticsearch
 
         _scroll_id = arguments.delete(:scroll_id)
 
-        method = if body
-                   Elasticsearch::API::HTTP_POST
-                 else
-                   Elasticsearch::API::HTTP_GET
-                 end
-
+        method = Elasticsearch::API::HTTP_POST
         path   = '_search/scroll'
         params = Utils.process_params(arguments)
 

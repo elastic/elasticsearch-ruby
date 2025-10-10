@@ -72,6 +72,8 @@ module Elasticsearch
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+        raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
@@ -79,12 +81,7 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
-        method = if body
-                   Elasticsearch::API::HTTP_POST
-                 else
-                   Elasticsearch::API::HTTP_GET
-                 end
-
+        method = Elasticsearch::API::HTTP_POST
         path   = if _index
                    "#{Utils.listify(_index)}/_field_caps"
                  else

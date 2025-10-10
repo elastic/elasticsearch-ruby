@@ -51,6 +51,8 @@ module Elasticsearch
       def clear_scroll(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'clear_scroll' }
 
+        raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 

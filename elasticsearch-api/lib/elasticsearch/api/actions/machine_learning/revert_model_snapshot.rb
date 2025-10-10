@@ -65,6 +65,7 @@ module Elasticsearch
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
           raise ArgumentError, "Required argument 'snapshot_id' missing" unless arguments[:snapshot_id]
 
