@@ -21,13 +21,13 @@ describe 'client.indices#clone' do
 
   let(:expected_args) do
     [
-        'PUT',
-        url,
-        params,
-        body,
-        {},
-        { defined_params: { index: 'my_source_index', target: 'my_target_index' },
-         endpoint: 'indices.clone' }
+      'PUT',
+      url,
+      params,
+      body,
+      {},
+      { defined_params: { index: 'my_source_index', target: 'my_target_index' },
+        endpoint: 'indices.clone' }
     ]
   end
 
@@ -36,15 +36,14 @@ describe 'client.indices#clone' do
   end
 
   let(:body) do
-    nil
+    {}
   end
 
   let(:url) do
     'my_source_index/_clone/my_target_index'
   end
 
-  context 'when there is no index specified' do
-
+  context 'when there is no index or body specified' do
     let(:client) do
       Class.new { include Elasticsearch::API }.new
     end
@@ -72,12 +71,17 @@ describe 'client.indices#clone' do
   context 'when an index and target are specified' do
 
     it 'performs the request' do
-      expect(client_double.indices.clone(index: 'my_source_index', target: 'my_target_index')).to be_a Elasticsearch::API::Response
+      expect(
+        client_double.indices.clone(
+          index: 'my_source_index',
+          target: 'my_target_index',
+          body: {}
+        )
+      ).to be_a Elasticsearch::API::Response
     end
   end
 
   context 'when params are provided' do
-
     let(:params) do
       {
         timeout: '1s',
@@ -91,7 +95,8 @@ describe 'client.indices#clone' do
                                          target: 'my_target_index',
                                          timeout: '1s',
                                          master_timeout: '10s',
-                                         wait_for_active_shards: 1)).to be_a Elasticsearch::API::Response
+                                         wait_for_active_shards: 1,
+                                         body: {})).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -99,12 +104,12 @@ describe 'client.indices#clone' do
 
     let(:body) do
       {
-          settings: {
-              'index.number_of_shards' => 5
-          },
-          aliases: {
-              my_search_indices: {}
-          }
+        settings: {
+          'index.number_of_shards' => 5
+        },
+        aliases: {
+          my_search_indices: {}
+        }
       }
     end
 
@@ -112,12 +117,12 @@ describe 'client.indices#clone' do
       expect(client_double.indices.clone(index: 'my_source_index',
                                          target: 'my_target_index',
                                          body: {
-                                             settings: {
-                                                 'index.number_of_shards' => 5
-                                             },
-                                             aliases: {
-                                                 my_search_indices: {}
-                                             }
+                                           settings: {
+                                             'index.number_of_shards' => 5
+                                           },
+                                           aliases: {
+                                             my_search_indices: {}
+                                           }
                                          })).to be_a Elasticsearch::API::Response
     end
   end

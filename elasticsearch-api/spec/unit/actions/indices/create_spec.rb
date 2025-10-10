@@ -21,12 +21,12 @@ describe 'client.indices#create' do
 
   let(:expected_args) do
     [
-        'PUT',
-        url,
-        params,
-        nil,
-        {},
-        { defined_params: { index: 'foo' }, endpoint: 'indices.create' }
+      'PUT',
+      url,
+      params,
+      {},
+      {},
+      { defined_params: { index: 'foo' }, endpoint: 'indices.create' }
     ]
   end
 
@@ -35,7 +35,6 @@ describe 'client.indices#create' do
   end
 
   context 'when there is no index specified' do
-
     let(:client) do
       Class.new { include Elasticsearch::API }.new
     end
@@ -48,18 +47,16 @@ describe 'client.indices#create' do
   end
 
   context 'when an index is specified' do
-
     let(:url) do
       'foo'
     end
 
     it 'performs the request' do
-      expect(client_double.indices.create(index: 'foo')).to be_a Elasticsearch::API::Response
+      expect(client_double.indices.create(index: 'foo', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 
   context 'when params are specified' do
-
     let(:params) do
       { timeout: '1s' }
     end
@@ -69,12 +66,11 @@ describe 'client.indices#create' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.create(index: 'foo', timeout: '1s')).to be_a Elasticsearch::API::Response
+      expect(client_double.indices.create(index: 'foo', timeout: '1s', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 
   context 'when the path must be URL-escaped' do
-
     let(:url) do
       'foo%5Ebar'
     end
@@ -84,14 +80,14 @@ describe 'client.indices#create' do
         'PUT',
         url,
         params,
-        nil,
+        {},
         {},
         { defined_params: { index: 'foo^bar' }, endpoint: 'indices.create' }
       ]
     end
 
     it 'performs the request' do
-      expect(client_double.indices.create(index: 'foo^bar')).to be_a Elasticsearch::API::Response
+      expect(client_double.indices.create(index: 'foo^bar', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 end

@@ -18,36 +18,18 @@
 require 'spec_helper'
 
 describe 'client.cluster#reroute' do
-
   let(:expected_args) do
     [
       'POST',
       '_cluster/reroute',
       {},
-      nil,
+      { commands: [ move: { index: 'myindex', shard: 0 }] },
       {},
       { endpoint: 'cluster.reroute' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.cluster.reroute).to be_a Elasticsearch::API::Response
-  end
-
-  context 'when a body is specified' do
-    let(:expected_args) do
-      [
-        'POST',
-        '_cluster/reroute',
-        {},
-        { commands: [ move: { index: 'myindex', shard: 0 }] },
-        {},
-        { endpoint: 'cluster.reroute' }
-      ]
-    end
-
-    it 'performs the request' do
-      expect(client_double.cluster.reroute(body: { commands: [ move: { index: 'myindex', shard: 0 }] })).to be_a Elasticsearch::API::Response
-    end
+    expect(client_double.cluster.reroute(body: { commands: [ move: { index: 'myindex', shard: 0 }] })).to be_a Elasticsearch::API::Response
   end
 end

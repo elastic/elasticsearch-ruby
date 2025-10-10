@@ -23,7 +23,7 @@ describe 'client#inference.put_cohere' do
       'PUT',
       '_inference/foo/bar',
       {},
-      nil,
+      {},
       {},
       { defined_params: { cohere_inference_id: 'bar', task_type: 'foo' },
         endpoint: 'inference.put_cohere' }
@@ -31,6 +31,6 @@ describe 'client#inference.put_cohere' do
   end
 
   it 'performs the request' do
-    expect(client_double.inference.put_cohere(task_type: 'foo', cohere_inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.put_cohere(task_type: 'foo', body: {}, cohere_inference_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

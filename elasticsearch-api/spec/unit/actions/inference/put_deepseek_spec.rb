@@ -23,7 +23,7 @@ describe 'client#inference.put_deepseek' do
       'PUT',
       '_inference/foo/bar',
       {},
-      nil,
+      {},
       {},
       { defined_params: { deepseek_inference_id: 'bar', task_type: 'foo' },
         endpoint: 'inference.put_deepseek' }
@@ -31,6 +31,6 @@ describe 'client#inference.put_deepseek' do
   end
 
   it 'performs the request' do
-    expect(client_double.inference.put_deepseek(task_type: 'foo', deepseek_inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.put_deepseek(task_type: 'foo', body: {}, deepseek_inference_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

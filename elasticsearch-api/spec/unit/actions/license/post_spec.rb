@@ -23,13 +23,13 @@ describe 'client#license.post' do
       'PUT',
       '_license',
       { },
-      nil,
+      {},
       {},
       { endpoint: 'license.post' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.license.post).to be_a Elasticsearch::API::Response
+    expect(client_double.license.post(body: {})).to be_a Elasticsearch::API::Response
   end
 end

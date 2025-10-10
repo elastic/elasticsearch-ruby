@@ -20,12 +20,12 @@ require 'spec_helper'
 describe 'client.indices#rollover' do
   let(:expected_args) do
     [
-        'POST',
-        url,
-        params,
-        body,
-        {},
-        { defined_params: { alias: 'foo' }, endpoint: 'indices.rollover' }
+      'POST',
+      url,
+      params,
+      body,
+      {},
+      { defined_params: { alias: 'foo' }, endpoint: 'indices.rollover' }
     ]
   end
 
@@ -34,7 +34,7 @@ describe 'client.indices#rollover' do
   end
 
   let(:body) do
-    nil
+    {}
   end
 
   let(:params) do
@@ -42,11 +42,10 @@ describe 'client.indices#rollover' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.rollover(alias: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.indices.rollover(alias: 'foo', body: {})).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index is specified' do
-
     let(:url) do
       'foo/_rollover/bar'
     end
@@ -63,7 +62,7 @@ describe 'client.indices#rollover' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.rollover(alias: 'foo', new_index: 'bar')).to be_a Elasticsearch::API::Response
+      expect(client_double.indices.rollover(alias: 'foo', new_index: 'bar', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 end

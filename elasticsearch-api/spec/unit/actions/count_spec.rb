@@ -20,33 +20,33 @@ require 'spec_helper'
 describe 'client#count' do
   let(:expected_args) do
     [
-      'GET',
+      'POST',
       '_count',
       {},
-      nil,
+      {},
       {},
       { endpoint: 'count' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.count).to be_a Elasticsearch::API::Response
+    expect(client_double.count(body: {})).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index and type are specified' do
     let(:expected_args) do
       [
-        'GET',
+        'POST',
         'foo,bar/_count',
         {},
-        nil,
+        {},
         {},
         { defined_params: { index: ['foo', 'bar'] }, endpoint: 'count' }
       ]
     end
 
     it 'performs the request' do
-      expect(client_double.count(index: ['foo','bar'])).to be_a Elasticsearch::API::Response
+      expect(client_double.count(index: ['foo','bar'], body: {})).to be_a Elasticsearch::API::Response
     end
   end
 

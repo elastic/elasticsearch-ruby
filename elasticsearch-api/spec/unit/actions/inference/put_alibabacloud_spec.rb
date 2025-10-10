@@ -23,7 +23,7 @@ describe 'client#inference.put_alibabacloud' do
       'PUT',
       '_inference/foo/bar',
       {},
-      nil,
+      {},
       {},
       { defined_params: { alibabacloud_inference_id: 'bar', task_type: 'foo' },
         endpoint: 'inference.put_alibabacloud' }
@@ -31,6 +31,6 @@ describe 'client#inference.put_alibabacloud' do
   end
 
   it 'performs the request' do
-    expect(client_double.inference.put_alibabacloud(task_type: 'foo', alibabacloud_inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.put_alibabacloud(task_type: 'foo', body: {}, alibabacloud_inference_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

@@ -23,13 +23,13 @@ describe 'client#open_point_in_time' do
       'POST',
       'foo/_pit',
       {},
-      nil,
+      {},
       {},
       { defined_params: { index: 'foo' }, endpoint: 'open_point_in_time' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.open_point_in_time(index: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.open_point_in_time(index: 'foo', body: {})).to be_a Elasticsearch::API::Response
   end
 end

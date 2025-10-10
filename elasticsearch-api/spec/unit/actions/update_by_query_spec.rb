@@ -23,13 +23,13 @@ describe 'client#update_by_query' do
       'POST',
       'foo/_update_by_query',
       {},
-      nil,
+      {},
       {},
       { defined_params: { index: 'foo' }, endpoint: 'update_by_query' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.update_by_query(index: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.update_by_query(index: 'foo', body: {})).to be_a Elasticsearch::API::Response
   end
 end

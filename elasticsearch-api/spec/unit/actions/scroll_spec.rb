@@ -21,17 +21,17 @@ describe 'client#scroll' do
   context 'with scroll_id as a param' do
     let(:expected_args) do
       [
-        'GET',
+        'POST',
         '_search/scroll',
         {},
-        nil,
+        {},
         {},
         { endpoint: 'scroll' }
       ]
     end
 
     it 'performs the request' do
-      expect(client_double.scroll(scroll_id: 'cXVlcn...')).to be_a Elasticsearch::API::Response
+      expect(client_double.scroll(scroll_id: 'cXVlcn...', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 

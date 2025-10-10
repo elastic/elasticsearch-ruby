@@ -64,7 +64,7 @@ describe 'client#explain' do
   end
 
   context 'when a query is provided' do
-    let(:method) { 'GET' }
+    let(:method) { 'POST' }
     let(:params) do
       { q: 'abc123' }
     end
@@ -81,11 +81,11 @@ describe 'client#explain' do
     end
 
     let(:body) do
-      nil
+      {}
     end
 
     it 'passes the query' do
-      expect(client_double.explain(index: 'foo', id: '1', q: 'abc123')).to be_a Elasticsearch::API::Response
+      expect(client_double.explain(index: 'foo', id: '1', q: 'abc123', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 

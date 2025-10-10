@@ -21,16 +21,16 @@ describe 'client#field_caps' do
 
   let(:expected_args) do
     [
-        'GET',
-        'foo/_field_caps',
-        { fields: 'bar' },
-        nil,
-        {},
-        { defined_params: { index: 'foo' }, endpoint: 'field_caps' }
+      'POST',
+      'foo/_field_caps',
+      { fields: 'bar' },
+      {},
+      {},
+      { defined_params: { index: 'foo' }, endpoint: 'field_caps' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.field_caps(index: 'foo', fields: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.field_caps(index: 'foo', fields: 'bar', body: {})).to be_a Elasticsearch::API::Response
   end
 end

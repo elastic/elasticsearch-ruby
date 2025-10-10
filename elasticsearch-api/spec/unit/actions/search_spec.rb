@@ -28,10 +28,10 @@ describe 'client#search' do
       { endpoint: 'search' }
     ]
   end
-  let(:method) { 'GET' }
+  let(:method) { 'POST' }
 
   let(:body) do
-    nil
+    {}
   end
 
   let(:params) do
@@ -43,7 +43,7 @@ describe 'client#search' do
   end
 
   it 'has a default value for index' do
-    expect(client_double.search())
+    expect(client_double.search(body: {}))
   end
 
   context 'when a request definition is specified' do
@@ -78,7 +78,7 @@ describe 'client#search' do
     end
 
     it 'performs the request' do
-      expect(client_double.search(index: 'foo'))
+      expect(client_double.search(index: 'foo', body: {}))
     end
   end
 
@@ -99,7 +99,7 @@ describe 'client#search' do
     end
 
     it 'performs the request' do
-      expect(client_double.search(index: ['foo', 'bar']))
+      expect(client_double.search(index: ['foo', 'bar'], body: {}))
     end
   end
 
@@ -113,7 +113,7 @@ describe 'client#search' do
     end
 
     it 'performs the request' do
-      expect(client_double.search(search_type: 'count'))
+      expect(client_double.search(search_type: 'count', body: {}))
     end
   end
 end

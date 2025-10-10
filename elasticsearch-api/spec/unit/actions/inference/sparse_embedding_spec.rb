@@ -23,13 +23,13 @@ describe 'client#inference.sparse_embedding' do
       'POST',
       '_inference/sparse_embedding/foo',
       {},
-      nil,
+      {},
       {},
       { defined_params: { inference_id: 'foo' }, endpoint: 'inference.sparse_embedding' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.inference.sparse_embedding(inference_id: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.sparse_embedding(inference_id: 'foo', body: {})).to be_a Elasticsearch::API::Response
   end
 end

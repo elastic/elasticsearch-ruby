@@ -23,7 +23,7 @@ describe 'client#inference.put_amazonsagemaker' do
       'PUT',
       '_inference/foo/bar',
       {},
-      nil,
+      {},
       {},
       { defined_params: { amazonsagemaker_inference_id: 'bar', task_type: 'foo' },
         endpoint: 'inference.put_amazonsagemaker' }
@@ -31,6 +31,6 @@ describe 'client#inference.put_amazonsagemaker' do
   end
 
   it 'performs the request' do
-    expect(client_double.inference.put_amazonsagemaker(task_type: 'foo', amazonsagemaker_inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.put_amazonsagemaker(task_type: 'foo', body: {}, amazonsagemaker_inference_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

@@ -23,7 +23,7 @@ describe 'client#inference.put_amazonbedrock' do
       'PUT',
       '_inference/foo/bar',
       {},
-      nil,
+      {},
       {},
       { defined_params: { amazonbedrock_inference_id: 'bar', task_type: 'foo' },
         endpoint: 'inference.put_amazonbedrock' }
@@ -31,6 +31,6 @@ describe 'client#inference.put_amazonbedrock' do
   end
 
   it 'performs the request' do
-    expect(client_double.inference.put_amazonbedrock(task_type: 'foo', amazonbedrock_inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.put_amazonbedrock(task_type: 'foo', body: {}, amazonbedrock_inference_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

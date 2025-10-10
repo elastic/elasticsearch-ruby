@@ -29,14 +29,14 @@ describe 'client.indices#validate_query' do
     ]
   end
 
-  let(:method) { 'GET' }
+  let(:method) { 'POST' }
 
   let(:url) do
     '_validate/query'
   end
 
   let(:body) do
-    nil
+    {}
   end
 
   let(:params) do
@@ -44,7 +44,7 @@ describe 'client.indices#validate_query' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.validate_query).to be_a Elasticsearch::API::Response
+    expect(client_double.indices.validate_query(body: {})).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index is specified' do
@@ -64,7 +64,7 @@ describe 'client.indices#validate_query' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.validate_query(index: 'foo')).to be_a Elasticsearch::API::Response
+      expect(client_double.indices.validate_query(index: 'foo', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -85,7 +85,7 @@ describe 'client.indices#validate_query' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.validate_query(index: ['foo', 'bar'])).to be_a Elasticsearch::API::Response
+      expect(client_double.indices.validate_query(index: ['foo', 'bar'], body: {})).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -106,7 +106,7 @@ describe 'client.indices#validate_query' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.validate_query(index: 'foo,bar')).to be_a Elasticsearch::API::Response
+      expect(client_double.indices.validate_query(index: 'foo,bar', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -121,7 +121,7 @@ describe 'client.indices#validate_query' do
 
     let(:expected_args) do
       [
-        method,
+        'POST',
         url,
         params,
         body,
@@ -131,7 +131,7 @@ describe 'client.indices#validate_query' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.validate_query(explain: true, q: 'foo')).to be_a Elasticsearch::API::Response
+      expect(client_double.indices.validate_query(explain: true, q: 'foo', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -164,7 +164,7 @@ describe 'client.indices#validate_query' do
 
     let(:expected_args) do
       [
-        method,
+        'POST',
         url,
         params,
         body,
@@ -174,7 +174,7 @@ describe 'client.indices#validate_query' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.validate_query(index: 'foo^bar')).to be_a Elasticsearch::API::Response
+      expect(client_double.indices.validate_query(index: 'foo^bar', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 end

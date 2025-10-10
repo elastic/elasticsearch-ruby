@@ -21,16 +21,16 @@ describe 'client.cluster#allocation_explain' do
 
   let(:expected_args) do
     [
-        'GET',
+        'POST',
         '_cluster/allocation/explain',
         {},
-        nil,
+        {},
         {},
         { endpoint: 'cluster.allocation_explain' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.cluster.allocation_explain).to be_a Elasticsearch::API::Response
+    expect(client_double.cluster.allocation_explain(body: {})).to be_a Elasticsearch::API::Response
   end
 end
