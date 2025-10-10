@@ -21,11 +21,11 @@ require 'webmock/rspec'
 describe 'Elasticsearch: Validation' do
   let(:host) { 'http://localhost:9200' }
   let(:count_request_stub) do
-    stub_request(:get, "#{host}/_count")
-      .to_return(status: status, body: nil, headers: headers)
+    stub_request(:post, "#{host}/_count")
+      .to_return(status: status, body: '', headers: headers)
   end
   let(:status) { 200 }
-  let(:body) { nil }
+  let(:body) { '' }
   let(:headers) { {} }
   let(:client) { Elasticsearch::Client.new }
 
@@ -39,7 +39,7 @@ describe 'Elasticsearch: Validation' do
       expect(client.instance_variable_get('@verified')).to be false
       count_request_stub
       expect do
-        client.count
+        client.count(body: '')
       end.to raise_error Elastic::Transport::Transport::Errors::Unauthorized
       expect(client.instance_variable_get('@verified')).to be true
 
@@ -61,7 +61,7 @@ describe 'Elasticsearch: Validation' do
       expect(client.instance_variable_get('@verified')).to be false
       count_request_stub
       expect do
-        client.count
+        client.count(body: '')
       end.to raise_error Elastic::Transport::Transport::Errors::Forbidden
       expect(client.instance_variable_get('@verified')).to be true
 
@@ -83,7 +83,7 @@ describe 'Elasticsearch: Validation' do
       expect(client.instance_variable_get('@verified')).to be false
       count_request_stub
       expect do
-        client.count
+        client.count(body: '')
       end.to raise_error Elastic::Transport::Transport::Errors::RequestEntityTooLarge
       expect(client.instance_variable_get('@verified')).to be true
 
@@ -107,7 +107,7 @@ describe 'Elasticsearch: Validation' do
       expect(client.instance_variable_get('@verified')).to be false
       count_request_stub
       expect do
-        client.count
+        client.count(body: '')
       end.to raise_error Elastic::Transport::Transport::Errors::ServiceUnavailable
       expect(client.instance_variable_get('@verified')).to be false
 
@@ -131,7 +131,7 @@ describe 'Elasticsearch: Validation' do
     it 'Makes requests and passes validation' do
       expect(client.instance_variable_get('@verified')).to be false
       count_request_stub
-      client.count
+      client.count(body: '')
       expect(client.instance_variable_get('@verified')).to be true
     end
   end

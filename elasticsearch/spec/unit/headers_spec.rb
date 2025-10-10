@@ -24,9 +24,9 @@ describe Elasticsearch::Client do
 
     it 'performs the request with the header' do
       allow(client).to receive(:perform_request) { OpenStruct.new(body: '') }
-      expect { client.search(headers: headers) }.not_to raise_error
+      expect { client.search(headers: headers, body: '') }.not_to raise_error
       expect(client).to have_received(:perform_request)
-        .with('GET', '_search', {}, nil, headers, { endpoint: 'search' })
+        .with('POST', '_search', {}, '', headers, { endpoint: 'search' })
     end
   end
 
@@ -47,9 +47,9 @@ describe Elasticsearch::Client do
 
       expect_any_instance_of(Faraday::Connection)
         .to receive(:run_request)
-          .with(:get, 'http://localhost:9200/_search', nil, expected_headers) { OpenStruct.new(body: '') }
+          .with(:post, 'http://localhost:9200/_search', '', expected_headers) { OpenStruct.new(body: '') }
 
-      client.search(headers: param_headers)
+      client.search(headers: param_headers, body: '')
     end
   end
 
@@ -73,8 +73,8 @@ describe Elasticsearch::Client do
 
       expect_any_instance_of(Faraday::Connection)
         .to receive(:run_request)
-              .with(:get, 'http://localhost:9200/_search', nil, connection_headers) { OpenStruct.new(body: '') }
-      client.search
+              .with(:post, 'http://localhost:9200/_search', '', connection_headers) { OpenStruct.new(body: '') }
+      client.search(body: '')
     end
   end
 
@@ -98,8 +98,8 @@ describe Elasticsearch::Client do
 
       expect_any_instance_of(Faraday::Connection)
         .to receive(:run_request)
-              .with(:get, 'http://localhost:9200/_search', nil, connection_headers) { OpenStruct.new(body: '') }
-      client.search
+              .with(:post, 'http://localhost:9200/_search', '', connection_headers) { OpenStruct.new(body: '') }
+      client.search(body: '')
     end
   end
 
@@ -117,8 +117,8 @@ describe Elasticsearch::Client do
 
       expect_any_instance_of(Faraday::Connection)
         .to receive(:run_request)
-              .with(:get, 'http://localhost:9200/_search', nil, expected_headers) { OpenStruct.new(body: '') }
-      client.search
+              .with(:post, 'http://localhost:9200/_search', '', expected_headers) { OpenStruct.new(body: '') }
+      client.search(body: '')
     end
   end
 end
