@@ -22,12 +22,12 @@ module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Returns geoip database configuration.
+        # Get GeoIP database configurations
         #
         # @option arguments [List] :id A comma-separated list of geoip database configurations to get; use `*` to get all geoip database configurations
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-geoip-database-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-ingest-get-geoip-database
         #
         def get_geoip_database(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.get_geoip_database' }

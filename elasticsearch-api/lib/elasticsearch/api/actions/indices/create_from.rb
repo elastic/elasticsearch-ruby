@@ -22,39 +22,38 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Get data streams
+        # Create an index from a source index
         #
-        # @option arguments [List] :name A comma-separated list of data streams to get; use `*` to get all data streams
-        # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
-        # @option arguments [Boolean] :include_defaults Return all relevant default configurations for the data stream (default: false)
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
-        # @option arguments [Boolean] :verbose Whether the maximum timestamp for each data stream should be calculated and returned (default: false)
+        # @option arguments [String] :source The source index name
+        # @option arguments [String] :dest The destination index name
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The body contains the fields `mappings_override`, `settings_override`, and `remove_index_blocks`.
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-get-data-stream.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/migrate-data-stream.html
         #
-        def get_data_stream(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'indices.get_data_stream' }
+        def create_from(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'indices.create_from' }
 
-          defined_params = [:name].each_with_object({}) do |variable, set_variables|
+          defined_params = %i[source dest].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'source' missing" unless arguments[:source]
+          raise ArgumentError, "Required argument 'dest' missing" unless arguments[:dest]
+
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body = arguments.delete(:body)
 
-          _name = arguments.delete(:name)
+          _source = arguments.delete(:source)
 
-          method = Elasticsearch::API::HTTP_GET
-          path   = if _name
-                     "_data_stream/#{Utils.__listify(_name)}"
-                   else
-                     '_data_stream'
-                   end
-          params = Utils.process_params(arguments)
+          _dest = arguments.delete(:dest)
+
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_create_from/#{Utils.__listify(_source)}/#{Utils.__listify(_dest)}"
+          params = {}
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

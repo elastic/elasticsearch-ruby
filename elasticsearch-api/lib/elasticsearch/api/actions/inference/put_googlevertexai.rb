@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure a Google Vertex AI inference endpoint
+        # Create a Google Vertex AI inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :googlevertexai_inference_id The inference Id

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Determines whether the users associated with the specified profile IDs have all the requested privileges.
+        # Check user profile privileges
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The privileges to check and the list of profile IDs (*Required*)

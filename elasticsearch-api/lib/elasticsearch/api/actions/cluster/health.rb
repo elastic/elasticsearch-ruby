@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Returns basic information about the health of the cluster.
+        # Get the cluster health status
         #
         # @option arguments [List] :index Limit the information returned to a specific index
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)

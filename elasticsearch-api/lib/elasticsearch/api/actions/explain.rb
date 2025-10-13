@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Returns information about why a specific matches (or doesn't match) a query.
+      # Explain a document match result
       #
       # @option arguments [String] :id The document ID
       # @option arguments [String] :index The name of the index

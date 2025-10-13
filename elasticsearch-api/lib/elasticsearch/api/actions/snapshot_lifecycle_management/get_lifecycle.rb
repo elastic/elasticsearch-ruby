@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module SnapshotLifecycleManagement
       module Actions
-        # Retrieves one or more snapshot lifecycle policy definitions and information about the latest snapshot attempts.
+        # Get policy information
         #
         # @option arguments [List] :policy_id Comma-separated list of snapshot lifecycle policies to retrieve
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

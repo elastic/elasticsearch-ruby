@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module CrossClusterReplication
       module Actions
-        # Gets configured auto-follow patterns. Returns the specified auto-follow pattern collection.
+        # Get auto-follow patterns
         #
         # @option arguments [String] :name The name of the auto follow pattern.
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

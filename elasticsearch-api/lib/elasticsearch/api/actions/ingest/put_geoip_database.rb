@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Puts the configuration for a geoip database to be downloaded
+        # Create or update a GeoIP database configuration
         #
         # @option arguments [String] :id The id of the database configuration
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The database configuration definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/put-geoip-database-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-ingest-put-geoip-database
         #
         def put_geoip_database(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.put_geoip_database' }

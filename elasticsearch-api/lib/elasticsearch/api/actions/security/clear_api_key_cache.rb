@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Clear a subset or all entries from the API key cache.
+        # Clear the API key cache
         #
         # @option arguments [List] :ids A comma-separated list of IDs of API keys to clear from the cache
         # @option arguments [Hash] :headers Custom HTTP headers

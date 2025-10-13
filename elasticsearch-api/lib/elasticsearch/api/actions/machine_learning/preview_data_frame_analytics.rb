@@ -22,13 +22,13 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Previews that will be analyzed given a data frame analytics config.
+        # Preview features used by data frame analytics
         #
         # @option arguments [String] :id The ID of the data frame analytics to preview
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data frame analytics config to preview
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/8.19/preview-dfanalytics.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/preview-dfanalytics.html
         #
         def preview_data_frame_analytics(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.preview_data_frame_analytics' }

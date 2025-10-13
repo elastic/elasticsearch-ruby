@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module CrossClusterReplication
       module Actions
-        # Retrieves information about all follower indices, including parameters and status for each follower index
+        # Get follower information
         #
         # @option arguments [List] :index A comma-separated list of index patterns; use `_all` to perform the operation on all indices
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

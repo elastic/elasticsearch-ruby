@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure a DeepSeek inference endpoint
+        # Create a DeepSeek inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :deepseek_inference_id The inference Id

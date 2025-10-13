@@ -22,13 +22,13 @@ module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Clears cluster voting config exclusions.
+        # Clear cluster voting config exclusions
         #
         # @option arguments [Boolean] :wait_for_removal Specifies whether to wait for all excluded nodes to be removed from the cluster before clearing the voting configuration exclusions list.
         # @option arguments [Time] :master_timeout Timeout for submitting request to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/voting-config-exclusions.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-cluster-post-voting-config-exclusions
         #
         def delete_voting_config_exclusions(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.delete_voting_config_exclusions' }

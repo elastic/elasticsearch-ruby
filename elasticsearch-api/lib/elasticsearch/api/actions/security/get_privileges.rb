@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves application privileges.
+        # Get application privileges
         #
         # @option arguments [String] :application Application name
         # @option arguments [String] :name Privilege name

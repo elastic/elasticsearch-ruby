@@ -22,13 +22,13 @@ module Elasticsearch
   module API
     module Transform
       module Actions
-        # Upgrades all transforms.
+        # Upgrade all transforms
         #
         # @option arguments [Boolean] :dry_run Whether to only check for updates but don't execute
         # @option arguments [Time] :timeout Controls the time to wait for the upgrade
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/upgrade-transforms.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-transform-upgrade-transforms
         #
         def upgrade_transforms(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'transform.upgrade_transforms' }

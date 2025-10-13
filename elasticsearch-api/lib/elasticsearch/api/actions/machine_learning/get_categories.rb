@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Retrieves anomaly detection job results for one or more categories.
+        # Get anomaly detection job results for categories
         #
         # @option arguments [String] :job_id The name of the job
         # @option arguments [Long] :category_id The identifier of the category definition of interest

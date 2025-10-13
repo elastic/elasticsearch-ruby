@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Creates part of a trained model definition
+        # Create part of a trained model definition
         #
         # @option arguments [String] :model_id The ID of the trained model for this definition part
         # @option arguments [Integer] :part The part number

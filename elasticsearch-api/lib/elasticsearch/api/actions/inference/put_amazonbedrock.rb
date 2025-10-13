@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure an Amazon Bedrock inference endpoint
+        # Create an Amazon Bedrock inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :amazonbedrock_inference_id The inference Id

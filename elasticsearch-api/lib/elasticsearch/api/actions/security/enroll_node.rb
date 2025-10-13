@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Allows a new node to enroll to an existing cluster with security enabled.
+        # Enroll a node
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #

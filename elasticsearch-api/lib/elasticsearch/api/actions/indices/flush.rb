@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Performs the flush operation on one or more indices.
+        # Flush data streams or indices
         #
         # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string for all indices
         # @option arguments [Boolean] :force Whether a flush should be forced even if it is not necessarily needed ie. if no changes will be committed to the index. This is useful if transaction log IDs should be incremented even if no uncommitted changes are present. (This setting can be considered as internal)

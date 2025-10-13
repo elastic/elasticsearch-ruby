@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure a Amazon SageMaker inference endpoint
+        # Create an Amazon SageMaker inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :amazonsagemaker_inference_id The inference Id
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference endpoint's task and service settings
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-amazon-sagemaker.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-amazonsagemaker
         #
         def put_amazonsagemaker(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.put_amazonsagemaker' }

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Returns information on how ML is using memory.
+        # Get machine learning memory usage info
         #
         # @option arguments [String] :node_id Specifies the node or nodes to retrieve stats for.
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

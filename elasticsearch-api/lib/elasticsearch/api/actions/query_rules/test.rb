@@ -22,11 +22,7 @@ module Elasticsearch
   module API
     module QueryRules
       module Actions
-        # Tests a query ruleset to identify the rules that would match input criteria
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # Test a query ruleset
         #
         # @option arguments [String] :ruleset_id The unique identifier of the ruleset to test.
         # @option arguments [Hash] :headers Custom HTTP headers

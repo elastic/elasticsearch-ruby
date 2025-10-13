@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Gets stats for anomaly detection job model snapshot upgrades that are in progress.
+        # Get anomaly detection job model snapshot upgrade usage info
         #
         # @option arguments [String] :job_id The ID of the job. May be a wildcard, comma separated list or `_all`.
         # @option arguments [String] :snapshot_id The ID of the snapshot. May be a wildcard, comma separated list or `_all`.

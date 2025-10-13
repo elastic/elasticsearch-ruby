@@ -22,13 +22,13 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Promotes a data stream from a replicated data stream managed by CCR to a regular data stream
+        # Promote a data stream
         #
         # @option arguments [String] :name The name of the data stream
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-promote-data-stream
         #
         def promote_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.promote_data_stream' }

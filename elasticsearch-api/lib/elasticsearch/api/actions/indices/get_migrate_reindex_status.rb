@@ -15,29 +15,39 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash Unavailable
+# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
 # @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
 #
 module Elasticsearch
   module API
-    module Streams
+    module Indices
       module Actions
-        # Return the current status of the streams feature for each streams type
+        # Get the migration reindexing status
         #
+        # @option arguments [String] :index The index or data stream name
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/streams-status.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/migrate-data-stream.html
         #
-        def status(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'streams.status' }
+        def get_migrate_reindex_status(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'indices.get_migrate_reindex_status' }
+
+          defined_params = [:index].each_with_object({}) do |variable, set_variables|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
+          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body   = nil
 
+          _index = arguments.delete(:index)
+
           method = Elasticsearch::API::HTTP_GET
-          path   = '_streams/status'
+          path   = "_migration/reindex/#{Utils.__listify(_index)}/_status"
           params = {}
 
           Elasticsearch::API::Response.new(

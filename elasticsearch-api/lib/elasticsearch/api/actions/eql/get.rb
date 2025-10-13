@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Eql
       module Actions
-        # Returns async results from previously executed Event Query Language (EQL) search
+        # Get async EQL search results
         #
         # @option arguments [String] :id The async search ID
         # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response
         # @option arguments [Time] :keep_alive Update the time interval in which the results (partial or final) for this search will be available
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/eql-search-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-async-eql-search-api.html
         #
         def get(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'eql.get' }

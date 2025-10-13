@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves security privileges for the logged in user.
+        # Get user privileges
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #

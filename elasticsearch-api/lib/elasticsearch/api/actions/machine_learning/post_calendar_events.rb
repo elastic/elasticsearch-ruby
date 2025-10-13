@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Posts scheduled events in a calendar.
+        # Add scheduled events to the calendar
         #
         # @option arguments [String] :calendar_id The ID of the calendar to modify
         # @option arguments [Hash] :headers Custom HTTP headers

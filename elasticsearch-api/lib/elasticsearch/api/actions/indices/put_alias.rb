@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Creates or updates an alias.
+        # Create or update an alias
         #
         # @option arguments [List] :index A comma-separated list of index names the alias should point to (supports wildcards); use `_all` to perform the operation on all indices.
         # @option arguments [String] :name The name of the alias to be created or updated
@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The settings for the alias, such as `routing` or `filter`
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-aliases.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-put-alias
         #
         def put_alias(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.put_alias' }

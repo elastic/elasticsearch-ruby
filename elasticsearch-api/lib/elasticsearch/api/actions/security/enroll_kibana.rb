@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Allows a kibana instance to configure itself to communicate with a secured elasticsearch cluster.
+        # Enroll Kibana
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
