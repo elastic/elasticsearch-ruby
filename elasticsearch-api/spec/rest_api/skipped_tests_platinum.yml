@@ -416,3 +416,6 @@
 -
   :file: 'watcher/put_watch/90_auto_create_index.yml'
   :description: '*'
+-
+  :file: 'entsearch/connector/80_connector_update_last_sync_stats.yml'
+  :description: '*'
