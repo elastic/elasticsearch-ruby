@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Verifies a repository.
+        # Verify a snapshot repository
         #
         # @option arguments [String] :repository A repository name
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/verify-snapshot-repo-api.html
         #
         def verify_repository(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.verify_repository' }

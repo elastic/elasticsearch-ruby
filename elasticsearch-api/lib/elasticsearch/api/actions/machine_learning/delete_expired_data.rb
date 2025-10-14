@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes expired and unused machine learning data.
+        # Delete expired ML data
         #
         # @option arguments [String] :job_id The ID of the job(s) to perform expired data hygiene for
         # @option arguments [Number] :requests_per_second The desired requests per second for the deletion processes.

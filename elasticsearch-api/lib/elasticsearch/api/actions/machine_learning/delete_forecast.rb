@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes forecasts from a machine learning job.
+        # Delete forecasts from a job
         #
         # @option arguments [String] :job_id The ID of the job from which to delete forecasts
         # @option arguments [String] :forecast_id The ID of the forecast to delete, can be comma delimited list. Leaving blank implies `_all`

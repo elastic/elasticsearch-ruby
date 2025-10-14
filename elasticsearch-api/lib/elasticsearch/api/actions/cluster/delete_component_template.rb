@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Deletes a component template
+        # Delete component templates
         #
         # @option arguments [String] :name The name of the template
         # @option arguments [Time] :timeout Explicit operation timeout

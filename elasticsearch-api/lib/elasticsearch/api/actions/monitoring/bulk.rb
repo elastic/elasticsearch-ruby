@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Monitoring
       module Actions
-        # Used by the monitoring features to send monitoring data.
+        # Send monitoring data
         #
         # @option arguments [String] :type Default document type for items which don't provide one *Deprecated*
         # @option arguments [String] :system_id Identifier of the monitored system
@@ -37,7 +37,7 @@ module Elasticsearch
         # Deprecated since version 7.0.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/monitor-elasticsearch-cluster.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8
         #
         def bulk(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'monitoring.bulk' }

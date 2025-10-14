@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure a JinaAI inference endpoint
+        # Create an JinaAI inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :jinaai_inference_id The inference Id

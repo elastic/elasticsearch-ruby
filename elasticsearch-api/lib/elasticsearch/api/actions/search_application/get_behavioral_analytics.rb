@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module SearchApplication
       module Actions
-        # Returns the existing behavioral analytics collections.
+        # Get behavioral analytics collections
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Closes an index.
+        # Close an index
         #
         # @option arguments [List] :index A comma separated list of indices to close
         # @option arguments [Time] :timeout Explicit operation timeout
@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [String] :wait_for_active_shards Sets the number of active shards to wait for before the operation returns.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-open-close.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-close.html
         #
         def close(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.close' }

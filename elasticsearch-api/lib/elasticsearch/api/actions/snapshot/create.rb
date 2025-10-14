@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Creates a snapshot in a repository.
+        # Create a snapshot
         #
         # @option arguments [String] :repository A repository name
         # @option arguments [String] :snapshot A snapshot name
@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The snapshot definition
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/create-snapshot-api.html
         #
         def create(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.create' }

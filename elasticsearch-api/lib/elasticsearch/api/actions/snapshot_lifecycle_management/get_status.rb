@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module SnapshotLifecycleManagement
       module Actions
-        # Retrieves the status of snapshot lifecycle management (SLM).
+        # Get the snapshot lifecycle management status
         #
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout

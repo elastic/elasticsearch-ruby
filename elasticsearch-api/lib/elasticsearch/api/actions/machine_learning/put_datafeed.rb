@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Instantiates a datafeed.
+        # Create a datafeed
         #
         # @option arguments [String] :datafeed_id The ID of the datafeed to create
         # @option arguments [Boolean] :ignore_unavailable Ignore unavailable indexes (default: false)

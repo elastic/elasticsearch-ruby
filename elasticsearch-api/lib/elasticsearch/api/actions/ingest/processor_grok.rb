@@ -22,11 +22,11 @@ module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Returns a list of the built-in patterns.
+        # Run a grok processor
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/grok-processor.html#grok-processor-rest-get
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/grok-processor.html
         #
         def processor_grok(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.processor_grok' }

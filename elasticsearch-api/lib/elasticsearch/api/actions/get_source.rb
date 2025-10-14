@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Returns the source of a document.
+      # Get a document's source
       #
       # @option arguments [String] :id The document ID
       # @option arguments [String] :index The name of the index

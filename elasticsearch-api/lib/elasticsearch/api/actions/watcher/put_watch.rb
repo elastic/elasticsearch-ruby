@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Watcher
       module Actions
-        # Creates a new watch, or updates an existing one.
+        # Create or update a watch
         #
         # @option arguments [String] :id Watch ID
         # @option arguments [Boolean] :active Specify whether the watch is in/active by default
@@ -30,9 +30,9 @@ module Elasticsearch
         # @option arguments [Number] :if_seq_no only update the watch if the last operation that has changed the watch has the specified sequence number
         # @option arguments [Number] :if_primary_term only update the watch if the last operation that has changed the watch has the specified primary term
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The watch
+        # @option arguments [Hash] :body The watch (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/watcher-api-put-watch.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-watcher-put-watch
         #
         def put_watch(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.put_watch' }
@@ -42,6 +42,7 @@ module Elasticsearch
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
           arguments = arguments.clone

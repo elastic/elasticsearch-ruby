@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Deletes the data stream lifecycle of the selected data streams.
+        # Delete data stream lifecycles
         #
         # @option arguments [List] :name A comma-separated list of data streams of which the data stream lifecycle will be deleted; use `*` to get all data streams
         # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)

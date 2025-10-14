@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Returns information about installed plugins across nodes node.
+        # Get plugin information
         #
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
@@ -32,6 +32,8 @@ module Elasticsearch
         # @option arguments [Boolean] :include_bootstrap Include bootstrap plugins in the response
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [Boolean] :v Verbose mode. Display column headers
+        # @option arguments [String] :bytes The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)
+        # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/cat-plugins.html

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Creates or updates a component template
+        # Create or update a component template
         #
         # @option arguments [String] :name The name of the template
         # @option arguments [Boolean] :create Whether the index template should only be added if new or can also replace an existing one

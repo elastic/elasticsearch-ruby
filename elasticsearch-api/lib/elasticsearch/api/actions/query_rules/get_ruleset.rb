@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module QueryRules
       module Actions
-        # Returns the details about a query ruleset.
+        # Get a query ruleset
         #
         # @option arguments [String] :ruleset_id The unique identifier of the query ruleset
         # @option arguments [Hash] :headers Custom HTTP headers

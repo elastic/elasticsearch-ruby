@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Returns help for the Cat APIs.
+        # Get CAT help
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #

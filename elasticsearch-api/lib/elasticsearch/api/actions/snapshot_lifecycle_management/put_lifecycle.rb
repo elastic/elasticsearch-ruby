@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module SnapshotLifecycleManagement
       module Actions
-        # Creates or updates a snapshot lifecycle policy.
+        # Create or update a policy
         #
         # @option arguments [String] :policy_id The id of the snapshot lifecycle policy
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

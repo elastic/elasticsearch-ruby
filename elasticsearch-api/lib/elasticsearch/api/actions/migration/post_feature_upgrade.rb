@@ -22,11 +22,11 @@ module Elasticsearch
   module API
     module Migration
       module Actions
-        # Begin upgrades for system features
+        # Start the feature migration
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/migration-api-feature-upgrade.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/feature-migration-api.html
         #
         def post_feature_upgrade(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'migration.post_feature_upgrade' }

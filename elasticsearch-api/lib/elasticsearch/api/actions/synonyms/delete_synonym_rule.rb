@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Synonyms
       module Actions
-        # Deletes a synonym rule in a synonym set
+        # Delete a synonym rule
         #
         # @option arguments [String] :set_id The id of the synonym set to be updated
         # @option arguments [String] :rule_id The id of the synonym rule to be deleted

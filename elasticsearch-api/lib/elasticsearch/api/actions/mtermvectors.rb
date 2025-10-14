@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Returns multiple termvectors in one request.
+      # Get multiple term vectors
       #
       # @option arguments [String] :index The index in which the document resides.
       # @option arguments [List] :ids A comma-separated list of documents ids. You must define ids as parameter or set "ids" or "docs" in the request body

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Gets configuration and usage information about transforms.
+        # Get transform information
         #
         # @option arguments [String] :transform_id The id of the transform for which to get stats. '_all' or '*' implies all transforms
         # @option arguments [Integer] :from skips a number of transform configs, defaults to 0
@@ -34,6 +34,7 @@ module Elasticsearch
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
         # @option arguments [Boolean] :v Verbose mode. Display column headers
+        # @option arguments [String] :bytes The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/cat-transforms.html

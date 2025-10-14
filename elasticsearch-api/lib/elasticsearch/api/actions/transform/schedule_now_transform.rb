@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Transform
       module Actions
-        # Schedules now a transform.
+        # Schedule a transform to start now
         #
         # @option arguments [String] :transform_id The id of the transform. (*Required*)
         # @option arguments [Time] :timeout Controls the time to wait for the scheduling to take place

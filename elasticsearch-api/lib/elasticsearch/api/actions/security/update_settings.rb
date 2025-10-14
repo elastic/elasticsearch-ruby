@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Update settings for the security system index
+        # Update security index settings
         #
         # @option arguments [Time] :master_timeout Timeout for connection to master
         # @option arguments [Time] :timeout Timeout for acknowledgements from all nodes

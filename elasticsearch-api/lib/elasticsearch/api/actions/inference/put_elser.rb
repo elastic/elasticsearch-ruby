@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure an ELSER inference endpoint
+        # Create an ELSER inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :elser_inference_id The inference Id

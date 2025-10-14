@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Nodes
       module Actions
-        # Reloads secure settings.
+        # Reload the keystore on nodes in the cluster
         #
         # @option arguments [List] :node_id A comma-separated list of node IDs to span the reload/reinit call. Should stay empty because reloading usually involves all cluster nodes.
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body An object containing the password for the elasticsearch keystore
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/secure-settings.html#reloadable-secure-settings
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/cluster-nodes-reload-secure-settings.html
         #
         def reload_secure_settings(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'nodes.reload_secure_settings' }

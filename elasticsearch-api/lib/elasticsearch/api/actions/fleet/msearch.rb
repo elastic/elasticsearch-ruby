@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Fleet
       module Actions
-        # Multi Search API where the search will only be executed after specified checkpoints are available due to a refresh. This API is designed for internal use by the fleet server project.
+        # Executes several fleet searches with a single API request
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the

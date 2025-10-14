@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module IndexLifecycleManagement
       module Actions
-        # Retrieves the current index lifecycle management (ILM) status.
+        # Get the ILM status
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #

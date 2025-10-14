@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module SearchApplication
       module Actions
-        # Creates a behavioral analytics event for existing collection.
+        # Create a behavioral analytics collection event
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The event definition (*Required*)
         #
-        # @see http://todo.com/tbd
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/post-analytics-collection-event.html
         #
         def post_behavioral_analytics_event(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'search_application.post_behavioral_analytics_event' }

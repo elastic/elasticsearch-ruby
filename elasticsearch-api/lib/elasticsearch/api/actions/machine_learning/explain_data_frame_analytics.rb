@@ -22,13 +22,13 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Explains a data frame analytics config.
+        # Explain data frame analytics config
         #
         # @option arguments [String] :id The ID of the data frame analytics to explain
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data frame analytics config to explain
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/8.19/explain-dfanalytics.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/explain-dfanalytics.html
         #
         def explain_data_frame_analytics(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.explain_data_frame_analytics' }

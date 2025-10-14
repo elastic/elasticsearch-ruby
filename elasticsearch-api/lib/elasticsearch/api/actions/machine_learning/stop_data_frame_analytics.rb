@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Stops one or more data frame analytics jobs.
+        # Stop data frame analytics jobs
         #
         # @option arguments [String] :id The ID of the data frame analytics to stop
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)

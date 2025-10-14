@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Gets configuration and usage information about datafeeds.
+        # Get datafeeds
         #
         # @option arguments [String] :datafeed_id The ID of the datafeeds stats to fetch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
@@ -32,9 +32,10 @@ module Elasticsearch
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
         # @option arguments [Boolean] :v Verbose mode. Display column headers
+        # @option arguments [String] :bytes The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/8.19/cat-datafeeds.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/cat-datafeeds.html
         #
         def ml_datafeeds(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.ml_datafeeds' }

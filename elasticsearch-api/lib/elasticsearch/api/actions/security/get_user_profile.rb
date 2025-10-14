@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves user profiles for the given unique ID(s).
+        # Get a user profile
         #
         # @option arguments [List] :uid A comma-separated list of unique identifier for user profiles
         # @option arguments [List] :data A comma-separated list of keys for which the corresponding application data are retrieved.

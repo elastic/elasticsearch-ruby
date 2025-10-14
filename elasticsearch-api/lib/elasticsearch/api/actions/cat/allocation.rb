@@ -22,11 +22,12 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Provides a snapshot of how many shards are allocated to each data node and how much disk space they are using.
+        # Get shard allocation information
         #
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)
+        # @option arguments [String] :bytes The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)
+        # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [List] :h Comma-separated list of column names to display

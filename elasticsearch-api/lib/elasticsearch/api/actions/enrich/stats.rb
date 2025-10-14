@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Enrich
       module Actions
-        # Gets enrich coordinator statistics and information about enrich policies that are currently executing.
+        # Get enrich stats
         #
         # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Hash] :headers Custom HTTP headers

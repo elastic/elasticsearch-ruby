@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module License
       module Actions
-        # Retrieves information about the status of the trial license.
+        # Get the trial status
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #

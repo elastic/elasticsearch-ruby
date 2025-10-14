@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Esql
       module Actions
-        # Retrieves the results of a previously submitted async query request given its ID.
+        # Get async ES|QL query results
         #
         # @option arguments [String] :id The async query ID
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml

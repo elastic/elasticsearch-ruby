@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Deletes an alias.
+        # Delete an alias
         #
         # @option arguments [List] :index A comma-separated list of index names (supports wildcards); use `_all` for all indices
         # @option arguments [List] :name A comma-separated list of aliases to delete (supports wildcards); use `_all` to delete all aliases for the specified indices.
@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-delete-alias.html
         #
         def delete_alias(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.delete_alias' }

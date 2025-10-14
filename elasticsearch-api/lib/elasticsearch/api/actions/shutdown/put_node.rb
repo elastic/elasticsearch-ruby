@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Shutdown
       module Actions
-        # Adds a node to be shut down. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+        # Prepare a node to be shut down
         #
         # @option arguments [String] :node_id The node id of node to be shut down
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The shutdown type definition to register (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/put-shutdown.html
         #
         def put_node(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'shutdown.put_node' }

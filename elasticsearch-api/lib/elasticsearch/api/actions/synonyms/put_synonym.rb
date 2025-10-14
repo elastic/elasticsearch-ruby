@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Synonyms
       module Actions
-        # Creates or updates a synonyms set
+        # Create or update a synonym set
         #
         # @option arguments [String] :id The id of the synonyms set to be created or updated
         # @option arguments [Hash] :headers Custom HTTP headers

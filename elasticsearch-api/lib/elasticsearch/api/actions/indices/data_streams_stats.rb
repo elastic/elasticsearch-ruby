@@ -22,12 +22,12 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Provides statistics on operations happening in a data stream.
+        # Get data stream stats
         #
         # @option arguments [List] :name A comma-separated list of data stream names; use `_all` or empty string to perform the operation on all data streams
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-stream-stats-api.html
         #
         def data_streams_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.data_streams_stats' }

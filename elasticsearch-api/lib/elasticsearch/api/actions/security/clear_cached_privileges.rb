@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Evicts application privileges from the native application privileges cache.
+        # Clear the privileges cache
         #
         # @option arguments [List] :application A comma-separated list of application names
         # @option arguments [Hash] :headers Custom HTTP headers

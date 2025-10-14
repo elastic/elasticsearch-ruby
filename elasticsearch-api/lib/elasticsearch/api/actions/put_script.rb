@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Creates or updates a script.
+      # Create or update a script or search template
       #
       # @option arguments [String] :id Script ID
       # @option arguments [String] :context Script context
@@ -30,7 +30,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The document (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-scripting.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/create-stored-script-api.html
       #
       def put_script(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'put_script' }
