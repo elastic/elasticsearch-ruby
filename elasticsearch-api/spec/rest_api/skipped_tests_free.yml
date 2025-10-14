@@ -258,3 +258,6 @@
 -
   :file: 'data_stream/240_data_stream_settings.yml'
   :description: '*'
+-
+  :file: 'streams/logs/10_basic.yml'
+  :description: '*'
