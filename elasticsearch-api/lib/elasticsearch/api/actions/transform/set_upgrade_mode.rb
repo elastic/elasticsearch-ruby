@@ -22,13 +22,13 @@ module Elasticsearch
   module API
     module Transform
       module Actions
-        # Sets a cluster wide upgrade_mode setting that prepares transform indices for an upgrade.
+        # Set upgrade_mode for transform indices
         #
         # @option arguments [Boolean] :enabled Whether to enable upgrade_mode Transform setting or not. Defaults to false.
         # @option arguments [Time] :timeout Controls the time to wait before action times out. Defaults to 30 seconds
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/transform-set-upgrade-mode.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-set-upgrade-mode
         #
         def set_upgrade_mode(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'transform.set_upgrade_mode' }

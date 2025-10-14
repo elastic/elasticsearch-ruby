@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Invalidates an access token and a refresh token that were generated via the SAML Authenticate API
+        # Logout of SAML
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The tokens to invalidate (*Required*)

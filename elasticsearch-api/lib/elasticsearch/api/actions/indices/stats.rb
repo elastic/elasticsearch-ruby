@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Provides statistics on operations happening in an index.
+        # Get index statistics
         #
         # @option arguments [List] :metric Limit the information returned the specific metrics. (options: _all, completion, docs, fielddata, query_cache, flush, get, indexing, merge, request_cache, refresh, search, segments, store, warmer, bulk)
         # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure an Azure AI Studio inference endpoint
+        # Create an Azure AI studio inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :azureaistudio_inference_id The inference Id

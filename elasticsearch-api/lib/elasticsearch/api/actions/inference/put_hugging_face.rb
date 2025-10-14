@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure a HuggingFace inference endpoint
+        # Create a Hugging Face inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :huggingface_inference_id The inference Id

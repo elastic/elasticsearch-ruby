@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Esql
       module Actions
-        # Stops a previously submitted async query request given its ID and collects the results.
+        # Stop async ES|QL query
         #
         # @option arguments [String] :id The async query ID
         # @option arguments [Hash] :headers Custom HTTP headers

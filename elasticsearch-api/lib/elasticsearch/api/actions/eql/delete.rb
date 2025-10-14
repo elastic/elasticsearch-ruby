@@ -22,12 +22,12 @@ module Elasticsearch
   module API
     module Eql
       module Actions
-        # Deletes an async EQL search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
+        # Delete an async EQL search
         #
         # @option arguments [String] :id The async search ID
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/eql-search-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-eql-delete
         #
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'eql.delete' }

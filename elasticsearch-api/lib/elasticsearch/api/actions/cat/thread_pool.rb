@@ -22,8 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Returns cluster-wide thread pool statistics per node.
-        # By default the active, queue and rejected statistics are returned for all thread pools.
+        # Get thread pool statistics
         #
         # @option arguments [List] :thread_pool_patterns A comma-separated list of regular-expressions to filter the thread pools in the output
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
@@ -34,6 +33,7 @@ module Elasticsearch
         # @option arguments [Boolean] :help Return help information
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [Boolean] :v Verbose mode. Display column headers
+        # @option arguments [String] :bytes The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/cat-thread-pool.html

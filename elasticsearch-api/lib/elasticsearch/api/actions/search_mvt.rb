@@ -21,11 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Searches a vector tile for geospatial values. Returns results as a binary Mapbox vector tile.
-      # This functionality is Experimental and may be changed or removed
-      # completely in a future release. Elastic will take a best effort approach
-      # to fix any issues, but experimental features are not subject to the
-      # support SLA of official GA features.
+      # Search a vector tile
       #
       # @option arguments [List] :index Comma-separated list of data streams, indices, or aliases to search
       # @option arguments [String] :field Field containing geospatial data to return

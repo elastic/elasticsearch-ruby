@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Deletes an index template.
+        # Delete a legacy index template
         #
         # @option arguments [String] :name The name of the template
         # @option arguments [Time] :timeout Explicit operation timeout

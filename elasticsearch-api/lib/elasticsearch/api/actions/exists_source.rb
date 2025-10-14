@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Returns information about whether a document source exists in an index.
+      # Check for a document source
       #
       # @option arguments [String] :id The document ID
       # @option arguments [String] :index The name of the index

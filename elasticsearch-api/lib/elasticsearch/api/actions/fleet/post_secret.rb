@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Fleet
       module Actions
-        # Creates a secret stored by Fleet.
+        # Creates a secret stored by Fleet
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the

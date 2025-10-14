@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Get suggestions for user profiles that match specified search criteria.
+        # Suggest a user profile
         #
         # @option arguments [List] :data A comma-separated list of keys for which the corresponding application data are retrieved.
         # @option arguments [Hash] :headers Custom HTTP headers

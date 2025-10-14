@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Validates an anomaly detection job.
+        # Validate an anomaly detection job
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The job config (*Required*)

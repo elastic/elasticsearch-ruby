@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes anomaly detection jobs from a calendar.
+        # Delete anomaly jobs from a calendar
         #
         # @option arguments [String] :calendar_id The ID of the calendar to modify
         # @option arguments [String] :job_id The ID of the job to remove from the calendar

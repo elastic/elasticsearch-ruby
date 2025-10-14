@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Returns information about whether a particular component template exist
+        # Check component templates
         #
         # @option arguments [String] :name The name of the template
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

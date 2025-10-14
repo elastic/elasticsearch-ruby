@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Synonyms
       module Actions
-        # Creates or updates a synonym rule in a synonym set
+        # Create or update a synonym rule
         #
         # @option arguments [String] :set_id The id of the synonym set to be updated with the synonym rule
         # @option arguments [String] :rule_id The id of the synonym rule to be updated or created

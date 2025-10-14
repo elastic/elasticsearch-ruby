@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Profiling
       module Actions
-        # Extracts a UI-optimized structure to render flamegraphs from Universal Profiling.
+        # Extracts a UI-optimized structure to render flamegraphs from Universal Profiling
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The filter conditions for the flamegraph (*Required*)

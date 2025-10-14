@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Invalidates one or more API keys.
+        # Invalidate API keys
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The api key request to invalidate API key(s) (*Required*)

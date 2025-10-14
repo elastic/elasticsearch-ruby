@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Perform reranking inference
+        # Perform reranking inference on the service
         #
         # @option arguments [String] :inference_id The inference Id
         # @option arguments [Hash] :headers Custom HTTP headers

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Returns information about the tasks currently executing on one or more nodes in the cluster.
+        # Get task information
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
@@ -40,9 +40,10 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
         # @option arguments [Boolean] :wait_for_completion If `true`, the request blocks until the task has completed.
+        # @option arguments [String] :bytes The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/tasks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/cat-tasks.html
         #
         def tasks(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.tasks' }

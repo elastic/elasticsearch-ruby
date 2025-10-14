@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves information for one or more API keys.
+        # Get API key information
         #
         # @option arguments [String] :id API key id of the API key to be retrieved
         # @option arguments [String] :name API key name of the API key to be retrieved

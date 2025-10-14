@@ -21,7 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Allows to perform multiple index/update/delete operations in a single request.
+      # Bulk index or delete documents
       #
       # @option arguments [String] :index Default index for items which don't provide one
       # @option arguments [String] :wait_for_active_shards Sets the number of shard copies that must be active before proceeding with the bulk operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)

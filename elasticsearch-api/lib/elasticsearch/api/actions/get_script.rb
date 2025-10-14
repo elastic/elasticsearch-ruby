@@ -21,13 +21,13 @@
 module Elasticsearch
   module API
     module Actions
-      # Returns a script.
+      # Get a script or search template
       #
       # @option arguments [String] :id Script ID
       # @option arguments [Time] :master_timeout Specify timeout for connection to master
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/modules-scripting.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-stored-script-api.html
       #
       def get_script(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'get_script' }

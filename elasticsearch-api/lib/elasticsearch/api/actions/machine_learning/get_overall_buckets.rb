@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Retrieves overall bucket results that summarize the bucket results of multiple anomaly detection jobs.
+        # Get overall bucket results
         #
         # @option arguments [String] :job_id The job IDs for which to calculate overall bucket results
         # @option arguments [Integer] :top_n The number of top job bucket scores to be used in the overall_score calculation

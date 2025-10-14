@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Returns information about whether a particular index exists.
+        # Check indices
         #
         # @option arguments [List] :index A comma-separated list of index names
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Exchanges an OpenID Connection authentication response message for an Elasticsearch access token and refresh token pair
+        # Authenticate OpenID Connect
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The OpenID Connect response to authenticate (*Required*)

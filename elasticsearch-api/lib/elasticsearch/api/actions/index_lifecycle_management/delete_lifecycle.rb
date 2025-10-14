@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module IndexLifecycleManagement
       module Actions
-        # Deletes the specified lifecycle policy definition. A currently used policy cannot be deleted.
+        # Delete a lifecycle policy
         #
         # @option arguments [String] :policy The name of the index lifecycle policy
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

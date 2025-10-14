@@ -22,12 +22,12 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Modifies a data stream
+        # Update data streams
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data stream modifications (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-streams.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-modify-data-stream
         #
         def modify_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.modify_data_stream' }

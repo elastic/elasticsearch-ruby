@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Creates a SAML authentication request
+        # Prepare SAML authentication
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The realm for which to create the authentication request, identified by either its name or the ACS URL (*Required*)

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Verifies the logout response sent from the SAML IdP
+        # Logout of SAML completely
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The logout response to verify (*Required*)

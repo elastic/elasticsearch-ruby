@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes an existing data frame analytics job.
+        # Delete a data frame analytics job
         #
         # @option arguments [String] :id The ID of the data frame analytics to delete
         # @option arguments [Boolean] :force True if the job should be forcefully deleted

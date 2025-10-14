@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Deletes an index.
+        # Delete indices
         #
         # @option arguments [List] :index A comma-separated list of indices to delete; use `_all` or `*` string to delete all indices
         # @option arguments [Time] :timeout Explicit operation timeout

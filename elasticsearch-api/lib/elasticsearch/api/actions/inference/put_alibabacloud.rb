@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Configure an AlibabaCloud AI Search inference endpoint
+        # Create an AlibabaCloud AI Search inference endpoint
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :alibabacloud_inference_id The inference Id

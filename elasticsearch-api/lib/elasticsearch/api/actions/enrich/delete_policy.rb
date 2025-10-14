@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Enrich
       module Actions
-        # Deletes an existing enrich policy and its enrich index.
+        # Delete an enrich policy
         #
         # @option arguments [String] :name The name of the enrich policy
         # @option arguments [Time] :master_timeout Timeout for processing on master node

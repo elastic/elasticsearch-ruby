@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Returns the specified ip location database configuration
+        # Get IP geolocation database configurations
         #
         # @option arguments [List] :id A comma-separated list of ip location database configurations to get; use `*` to get all ip location database configurations
         # @option arguments [Hash] :headers Custom HTTP headers

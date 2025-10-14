@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Synonyms
       module Actions
-        # Retrieves a synonym set
+        # Get a synonym set
         #
         # @option arguments [String] :id The name of the synonyms set to be retrieved
         # @option arguments [Integer] :from Starting offset

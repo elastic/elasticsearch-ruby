@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Returns information about ongoing index shard recoveries.
+        # Get index recovery information
         #
         # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
         # @option arguments [Boolean] :detailed Whether to display detailed information about shard recovery

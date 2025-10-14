@@ -21,9 +21,7 @@
 module Elasticsearch
   module API
     module Actions
-      # Allows to copy documents from one index to another, optionally filtering the source
-      # documents by a query, changing the destination index settings, or fetching the
-      # documents from a remote cluster.
+      # Reindex documents
       #
       # @option arguments [Boolean] :refresh Should the affected indexes be refreshed?
       # @option arguments [Time] :timeout Time each individual bulk request should wait for shards that are unavailable.

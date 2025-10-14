@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Returns information about whether a particular index template exists.
+        # Check index templates
         #
         # @option arguments [String] :name The name of the template
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index-templates.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-exists-index-template
         #
         def exists_index_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.exists_index_template' }

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module XPack
       module Actions
-        # Retrieves information about the installed X-Pack features.
+        # Get information
         #
         # @option arguments [Boolean] :human Defines whether additional human-readable information is included in the response. In particular, it adds descriptions and a tag line. The default value is true.
         # @option arguments [List] :categories Comma-separated list of info categories. Can be any of: build, license, features

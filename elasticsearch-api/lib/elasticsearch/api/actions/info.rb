@@ -21,11 +21,11 @@
 module Elasticsearch
   module API
     module Actions
-      # Returns basic information about the cluster.
+      # Get cluster info
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/index.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/rest-api-root.html
       #
       def info(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'info' }

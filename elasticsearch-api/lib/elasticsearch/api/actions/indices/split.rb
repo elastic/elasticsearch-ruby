@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Allows you to split an existing index into a new index with more primary shards.
+        # Split an index
         #
         # @option arguments [String] :index The name of the source index to split
         # @option arguments [String] :target The name of the target index to split into

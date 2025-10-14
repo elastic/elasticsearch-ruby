@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module CrossClusterReplication
       module Actions
-        # Gets all stats related to cross-cluster replication.
+        # Get cross-cluster replication stats
         #
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

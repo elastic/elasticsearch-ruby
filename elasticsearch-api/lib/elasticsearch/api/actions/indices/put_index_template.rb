@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Creates or updates an index template.
+        # Create or update an index template
         #
         # @option arguments [String] :name The name of the template
         # @option arguments [Boolean] :create Whether the index template should only be added if new or can also replace an existing one
@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The template definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/indices-put-template.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-put-index-template
         #
         def put_index_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.put_index_template' }

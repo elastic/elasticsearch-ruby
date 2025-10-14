@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Returns all snapshots in a specific repository.
+        # Get snapshot information
         #
         # @option arguments [List] :repository Name of repository from which to fetch the snapshot information
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
@@ -33,6 +33,7 @@ module Elasticsearch
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
         # @option arguments [Boolean] :v Verbose mode. Display column headers
+        # @option arguments [String] :bytes The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/cat-snapshots.html

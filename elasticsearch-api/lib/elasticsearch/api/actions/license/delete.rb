@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module License
       module Actions
-        # Deletes licensing information for the cluster
+        # Delete the license
         #
         # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Time] :timeout Timeout for acknowledgement of update from all nodes in cluster
