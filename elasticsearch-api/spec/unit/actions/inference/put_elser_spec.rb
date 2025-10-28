@@ -23,7 +23,7 @@ describe 'client#inference.put_elser' do
       'PUT',
       '_inference/foo/bar',
       {},
-      nil,
+      {},
       {},
       { defined_params: { elser_inference_id: 'bar', task_type: 'foo' },
         endpoint: 'inference.put_elser' }
@@ -31,6 +31,6 @@ describe 'client#inference.put_elser' do
   end
 
   it 'performs the request' do
-    expect(client_double.inference.put_elser(task_type: 'foo', elser_inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.put_elser(task_type: 'foo', elser_inference_id: 'bar', body: {})).to be_a Elasticsearch::API::Response
   end
 end

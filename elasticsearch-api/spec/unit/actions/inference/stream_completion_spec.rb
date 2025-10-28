@@ -23,13 +23,13 @@ describe 'client#inference.stream_completion' do
       'POST',
       '_inference/completion/foo/_stream',
       {},
-      nil,
+      {},
       {},
       { defined_params: { inference_id: 'foo' }, endpoint: 'inference.stream_completion' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.inference.stream_completion(inference_id: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.stream_completion(inference_id: 'foo', body: {})).to be_a Elasticsearch::API::Response
   end
 end

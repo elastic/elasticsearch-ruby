@@ -21,17 +21,17 @@ describe 'client.indices#split' do
 
   let(:expected_args) do
     [
-        'PUT',
-        'foo/_split/bar',
-        {},
-        nil,
-        {},
-        { defined_params: { index: 'foo', target: 'bar' },
-          endpoint:'indices.split' }
+      'PUT',
+      'foo/_split/bar',
+      {},
+      {},
+      {},
+      { defined_params: { index: 'foo', target: 'bar' },
+        endpoint:'indices.split' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.indices.split(index: 'foo', target: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.indices.split(index: 'foo', target: 'bar', body: {})).to be_a Elasticsearch::API::Response
   end
 end

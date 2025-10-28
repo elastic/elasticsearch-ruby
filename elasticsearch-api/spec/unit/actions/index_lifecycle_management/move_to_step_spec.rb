@@ -23,7 +23,7 @@ describe 'client.index_lifecycle_management#move_to_step' do
       'POST',
       '_ilm/move/foo',
       {},
-      nil,
+      {},
       {},
       { defined_params: { index: 'foo' }, endpoint: 'ilm.move_to_step' }
     ]
@@ -32,6 +32,6 @@ describe 'client.index_lifecycle_management#move_to_step' do
   let(:index) { 'foo' }
 
   it 'performs the request' do
-    expect(client_double.index_lifecycle_management.move_to_step(index: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.index_lifecycle_management.move_to_step(index: 'foo', body: {})).to be_a Elasticsearch::API::Response
   end
 end
