@@ -22,7 +22,8 @@ module Elasticsearch
   module API
     module Project
       module Actions
-        # Return tags defined for the project
+        # Get tags.
+        # Get the tags that are defined for the project.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
@@ -41,7 +42,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch-serverless/operation/operation-project-tags
         #
         def tags(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'project.tags' }

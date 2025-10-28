@@ -51,8 +51,8 @@ module Elasticsearch
       # @option arguments [Integer] :batched_reduce_size The number of shard results that should be reduced at once on the coordinating node.
       #  If the potential number of shards in the request can be large, this value should be used as a protection mechanism to reduce the memory overhead per search request. Server default: 512.
       # @option arguments [Boolean] :ccs_minimize_roundtrips If `true`, network round-trips between the coordinating node and the remote clusters are minimized when running cross-cluster search (CCS) requests. Server default: true.
-      # @option arguments [String] :default_operator The default operator for the query string query: `AND` or `OR`.
-      #  This parameter can be used only when the `q` query string parameter is specified. Server default: OR.
+      # @option arguments [String] :default_operator The default operator for the query string query: `and` or `or`.
+      #  This parameter can be used only when the `q` query string parameter is specified. Server default: or.
       # @option arguments [String] :df The field to use as a default when no field prefix is given in the query string.
       #  This parameter can be used only when the `q` query string parameter is specified.
       # @option arguments [String, Array<String>] :docvalue_fields A comma-separated list of fields to return as the docvalue representation of a field for each hit.
