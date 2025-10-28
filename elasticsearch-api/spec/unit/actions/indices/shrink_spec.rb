@@ -21,22 +21,22 @@ describe 'client.indices#shrink' do
 
   let(:expected_args) do
     [
-        'PUT',
-        'foo/_shrink/bar',
-        {},
-        nil,
-        {},
-        { defined_params: { index: 'foo', target: 'bar' },
-          endpoint: 'indices.shrink' }
+      'PUT',
+      'foo/_shrink/bar',
+      {},
+      {},
+      {},
+      { defined_params: { index: 'foo', target: 'bar' },
+        endpoint: 'indices.shrink' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.indices.shrink(index: 'foo', target: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.indices.shrink(index: 'foo', target: 'bar', body: {})).to be_a Elasticsearch::API::Response
   end
 
   it 'does not mutate the arguments' do
-    arguments = { index: 'foo', target: 'bar' }
+    arguments = { index: 'foo', target: 'bar', body: {} }
     client_double.indices.shrink(arguments)
     expect(arguments[:index]).to eq('foo')
     expect(arguments[:target]).to eq('bar')

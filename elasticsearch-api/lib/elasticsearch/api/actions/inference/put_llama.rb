@@ -52,6 +52,7 @@ module Elasticsearch
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'task_type' missing" unless arguments[:task_type]
           raise ArgumentError, "Required argument 'llama_inference_id' missing" unless arguments[:llama_inference_id]
 

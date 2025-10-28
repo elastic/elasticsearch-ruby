@@ -23,13 +23,13 @@ describe 'client#close_point_in_time' do
       'DELETE',
       '_pit',
       {},
-      nil,
+      {},
       {},
       { endpoint: 'close_point_in_time' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.close_point_in_time).to be_a Elasticsearch::API::Response
+    expect(client_double.close_point_in_time(body: {})).to be_a Elasticsearch::API::Response
   end
 end

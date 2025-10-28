@@ -23,7 +23,7 @@ describe 'client#inference.inference' do
       'POST',
       '_inference/bar',
       {},
-      nil,
+      {},
       {},
       { defined_params: { inference_id: 'bar' },
         endpoint: 'inference.inference' }
@@ -31,6 +31,6 @@ describe 'client#inference.inference' do
   end
 
   it 'performs the request' do
-    expect(client_double.inference.inference(inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.inference(inference_id: 'bar', body: {})).to be_a Elasticsearch::API::Response
   end
 end
