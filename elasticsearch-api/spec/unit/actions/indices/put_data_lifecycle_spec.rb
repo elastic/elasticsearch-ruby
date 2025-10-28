@@ -23,13 +23,13 @@ describe 'client.indices#put_data_lifecycle' do
       'PUT',
       '_data_stream/foo/_lifecycle',
       {},
-      nil,
+      {},
       {},
       { defined_params: { name: 'foo' }, endpoint: 'indices.put_data_lifecycle' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.indices.put_data_lifecycle(name: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.indices.put_data_lifecycle(name: 'foo', body: {})).to be_a Elasticsearch::API::Response
   end
 end

@@ -20,17 +20,17 @@ require 'spec_helper'
 describe 'client#fleet.search' do
   let(:expected_args) do
     [
-      'GET',
+      'POST',
       'foo/_fleet/_fleet_search',
       {},
-      nil,
+      {},
       {},
       { defined_params: { index: 'foo' }, endpoint: 'fleet.search' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.fleet.search(index: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.fleet.search(index: 'foo', body: {})).to be_a Elasticsearch::API::Response
   end
 
   let(:client) do
@@ -39,7 +39,13 @@ describe 'client#fleet.search' do
 
   it 'requires the :index argument' do
     expect {
-      client.fleet.search
+      client.fleet.search(body: {})
+    }.to raise_exception(ArgumentError)
+  end
+
+  it 'requires the :body argument' do
+    expect {
+      client.fleet.search(index: 'foo')
     }.to raise_exception(ArgumentError)
   end
 end

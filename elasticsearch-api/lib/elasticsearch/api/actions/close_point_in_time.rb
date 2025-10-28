@@ -46,6 +46,8 @@ module Elasticsearch
       def close_point_in_time(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'close_point_in_time' }
 
+        raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 

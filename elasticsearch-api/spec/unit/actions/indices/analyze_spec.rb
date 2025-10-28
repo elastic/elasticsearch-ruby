@@ -28,10 +28,10 @@ describe 'client.indices#analyze' do
       { endpoint: 'indices.analyze' }
     ]
   end
-  let(:method) { 'GET' }
+  let(:method) { 'POST' }
 
   let(:body) do
-    nil
+    {}
   end
 
   let(:url) do
@@ -43,7 +43,7 @@ describe 'client.indices#analyze' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.analyze).to be_a Elasticsearch::API::Response
+    expect(client_double.indices.analyze(body: {})).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index is specified' do
@@ -63,18 +63,7 @@ describe 'client.indices#analyze' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.analyze(index: 'foo')).to be_a Elasticsearch::API::Response
-    end
-  end
-
-  context 'when a body is specified' do
-    let(:body) do
-      'foo'
-    end
-    let(:method) { 'POST' }
-
-    it 'performs the request' do
-      expect(client_double.indices.analyze(body: 'foo')).to be_a Elasticsearch::API::Response
+      expect(client_double.indices.analyze(index: 'foo', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 end

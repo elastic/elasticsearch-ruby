@@ -23,7 +23,7 @@ describe 'client#inference.put_googlevertexai' do
       'PUT',
       '_inference/foo/bar',
       {},
-      nil,
+      {},
       {},
       { defined_params: { googlevertexai_inference_id: 'bar', task_type: 'foo' },
         endpoint: 'inference.put_googlevertexai' }
@@ -31,6 +31,6 @@ describe 'client#inference.put_googlevertexai' do
   end
 
   it 'performs the request' do
-    expect(client_double.inference.put_googlevertexai(task_type: 'foo', googlevertexai_inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.put_googlevertexai(task_type: 'foo', googlevertexai_inference_id: 'bar', body: {})).to be_a Elasticsearch::API::Response
   end
 end

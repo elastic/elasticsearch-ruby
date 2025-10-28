@@ -23,7 +23,7 @@ describe 'client#inference.put_mistral' do
       'PUT',
       '_inference/foo/bar',
       {},
-      nil,
+      {},
       {},
       { defined_params: { mistral_inference_id: 'bar', task_type: 'foo' },
         endpoint: 'inference.put_mistral' }
@@ -31,6 +31,6 @@ describe 'client#inference.put_mistral' do
   end
 
   it 'performs the request' do
-    expect(client_double.inference.put_mistral(task_type: 'foo', mistral_inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.put_mistral(task_type: 'foo', mistral_inference_id: 'bar', body: {})).to be_a Elasticsearch::API::Response
   end
 end
