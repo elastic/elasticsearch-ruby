@@ -103,8 +103,8 @@ module Elasticsearch
       # @option arguments [Boolean] :analyze_wildcard If `true`, wildcard and prefix queries are analyzed.
       #  This parameter can be used only when the `q` query string parameter is specified.
       # @option arguments [String] :conflicts The preferred behavior when update by query hits version conflicts: `abort` or `proceed`. Server default: abort.
-      # @option arguments [String] :default_operator The default operator for query string query: `AND` or `OR`.
-      #  This parameter can be used only when the `q` query string parameter is specified. Server default: OR.
+      # @option arguments [String] :default_operator The default operator for query string query: `and` or `or`.
+      #  This parameter can be used only when the `q` query string parameter is specified. Server default: or.
       # @option arguments [String] :df The field to use as default where no field prefix is given in the query string.
       #  This parameter can be used only when the `q` query string parameter is specified.
       # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.

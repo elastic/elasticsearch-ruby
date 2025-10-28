@@ -29,7 +29,7 @@ module Elasticsearch
         # library is upgraded.
         #
         # @option arguments [String] :format A short version of the Accept header, e.g. json, yaml.`csv`, `tsv`, and `txt` formats will return results in a tabular format, excluding other metadata fields from the response.
-        # @option arguments [String] :delimiter The character to use between values within a CSV row. Only valid for the CSV format.
+        # @option arguments [String] :delimiter The character to use between values within a CSV row. Only valid for the CSV format. Server default: ,.
         # @option arguments [Boolean] :drop_null_columns Should columns that are entirely `null` be removed from the `columns` and `values` portion of the results?
         #  Defaults to `false`. If `true` then the response will include an extra section under the name `all_columns` which has the name of all columns.
         # @option arguments [Boolean] :allow_partial_results If `true`, partial results will be returned if there are shard failures, but the query can continue to execute on other clusters and shards.
