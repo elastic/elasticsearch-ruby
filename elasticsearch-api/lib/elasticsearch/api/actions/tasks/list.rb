@@ -88,7 +88,7 @@ module Elasticsearch
         # @option arguments [Boolean] :detailed If `true`, the response includes detailed information about the running tasks.
         #  This information is useful to distinguish tasks from each other but is more costly to run.
         # @option arguments [String] :group_by A key that is used to group tasks in the response.
-        #  The task lists can be grouped either by nodes or by parent tasks.
+        #  The task lists can be grouped either by nodes or by parent tasks. Server default: nodes.
         # @option arguments [String, Array] :nodes A comma-separated list of node IDs or names that is used to limit the returned information.
         # @option arguments [String] :parent_task_id A parent task identifier that is used to limit returned information.
         #  To return all tasks, omit this parameter or use a value of `-1`.

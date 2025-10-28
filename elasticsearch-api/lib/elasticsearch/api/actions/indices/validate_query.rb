@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [String] :analyzer Analyzer to use for the query string.
         #  This parameter can only be used when the `q` query string parameter is specified.
         # @option arguments [Boolean] :analyze_wildcard If `true`, wildcard and prefix queries are analyzed.
-        # @option arguments [String] :default_operator The default operator for query string query: `AND` or `OR`. Server default: OR.
+        # @option arguments [String] :default_operator The default operator for query string query: `and` or `or`. Server default: or.
         # @option arguments [String] :df Field to use as default where no field prefix is given in the query string.
         #  This parameter can only be used when the `q` query string parameter is specified.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
