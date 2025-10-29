@@ -7,12 +7,56 @@ Breaking changes can impact your Elastic applications, potentially disrupting no
 
 % ## Next version [elasticsearch-ruby-client-nextversion-breaking-changes]
 
-% ::::{dropdown} Title of breaking change 
+% ::::{dropdown} Title of breaking change
 % Description of the breaking change.
 % For more information, check [PR #](PR link).
 % **Impact**<br> Impact of the breaking change.
 % **Action**<br> Steps for mitigating deprecation impact.
 % ::::
+
+## 9.2.0 [elasticsearch-ruby-client-9.2.0-breaking-changes]
+
+The request body, `:body` parameter, is now required in the following APIs:
+
+* `close_point_in_time`
+* `fleet.search`
+* `graph.explore`
+* `index_lifecycle_management.move_to_step`
+* `index_lifecycle_management.put_lifecycle`
+* `indices.analyze`
+* `indices.put_data_lifecycle`
+* `indices.put_data_stream_options`
+* `indices.shrink`
+* `indices.split`
+* `inference.completion`
+* `inference.inference`
+* `inference.put_alibabacloud`
+* `inference.put_amazonbedrock`
+* `inference.put_amazonsagemaker`
+* `inference.put_anthropic`
+* `inference.put_azureaistudio`
+* `inference.put_azureopenai`
+* `inference.put_cohere`
+* `inference.put_custom`
+* `inference.put_deepseek`
+* `inference.put_elasticsearch`
+* `inference.put_elser`
+* `inference.put_googleaistudio`
+* `inference.put_googlevertexai`
+* `inference.put_hugging_face`
+* `inference.put_jinaai`
+* `inference.put_mistral`
+* `inference.put_openai`
+* `inference.put_voyageai`
+* `inference.put_watsonx`
+* `inference.rerank`
+* `inference.sparse_embedding`
+* `inference.stream_completion`
+* `inference.text_embedding`
+* `render_search_template`
+* `scripts_painless_execute`
+* `snapshot_lifecycle_management.put_lifecycle`
+* `terms_enum`
 
 ## 9.0.1 [elasticsearch-ruby-client-9.0.1-breaking-changes]
 
