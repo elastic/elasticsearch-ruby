@@ -1,5 +1,93 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.2.0
+
+## Gem
+
+* Tested versions of Ruby for 9.2.0: Ruby (MRI) 3.2, 3.3, 3.4, head, JRuby 9.3, JRuby 9.4 and JRuby 10.
+* Cleaned up deprecated code for code generation in `elasticsearch-api/utils`.
+
+## Elasticsearch API
+
+Code updated to the latest Elasticsearch 9.2 specification.
+
+### API Updates
+
+* `async_search.submit`, `cat.count`, `count`, `eql.search`, `field_caps`, `indices.resolve_index`. `msearch`, `msearch_template`, `open_point_in_time`, `search`, `search_mvt`, `search_template`, `sql.query` - New parameter:
+  * `:project_routing`. Specifies a subset of projects to target for the search using project metadata tags in a subset of Lucene query syntax. Supported in serverless only.
+* `cluster.allocation_explain` - New parameters:
+  * [String] `:index` The name of the index that you would like an explanation for.
+  * [Integer] `:shard` An identifier for the shard that you would like an explanation for.
+  * [Boolean] `:primary` If true, returns an explanation for the primary shard for the specified shard ID.
+  * [String] `:current_node` Explain a shard only if it is currently located on the specified node name or node ID.
+* `get` - New parameter:
+  * [Boolean] `:_source_exclude_vectors` Whether vectors should be excluded from _source
+* `indices.resolve_index` - New parameter:
+  * [String, Array<String>] `:mode` Filter indices by index mode - standard, lookup, time_series, etc. Comma-separated list of IndexMode. Empty means no filter.
+* `search` - New parameter:
+  * [Boolean] `:_source_exclude_vectors` Whether vectors should be excluded from _source.
+* `security.update_settings` - New parameter:
+  *  [String] `:merge_type` The mapping merge type if mapping overrides are being provided in mapping_addition.
+
+### Breaking change - request body required
+
+The `:body` parameter is now required in the following APIs:
+* `close_point_in_time`
+* `fleet.search`
+* `graph.explore`
+* `index_lifecycle_management.move_to_step`
+* `index_lifecycle_management.put_lifecycle`
+* `indices.analyze`
+* `indices.put_data_lifecycle`
+* `indices.put_data_stream_options`
+* `indices.shrink`
+* `indices.split`
+* `inference.completion`
+* `inference.inference`
+* `inference.put_alibabacloud`
+* `inference.put_amazonbedrock`
+* `inference.put_amazonsagemaker`
+* `inference.put_anthropic`
+* `inference.put_azureaistudio`
+* `inference.put_azureopenai`
+* `inference.put_cohere`
+* `inference.put_custom`
+* `inference.put_deepseek`
+* `inference.put_elasticsearch`
+* `inference.put_elser`
+* `inference.put_googleaistudio`
+* `inference.put_googlevertexai`
+* `inference.put_hugging_face`
+* `inference.put_jinaai`
+* `inference.put_mistral`
+* `inference.put_openai`
+* `inference.put_voyageai`
+* `inference.put_watsonx`
+* `inference.rerank`
+* `inference.sparse_embedding`
+* `inference.stream_completion`
+* `inference.text_embedding`
+* `render_search_template`
+* `scripts_painless_execute`
+* `snapshot_lifecycle_management.put_lifecycle`
+* `terms_enum`
+
+### New APIs
+
+* `indices.get_data_stream_mappings` - Get mapping information for one or more data streams. [Documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-stream-mappings).
+* `indices.put_data_stream_mappings` - Update data stream mappings. [Documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-stream-mappings).
+* `inference.put_ai21` - Create an inference endpoint to perform an inference task with the `ai21` service. [Documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-ai21)
+* `inference.put_contextualai` - Create an inference endpoint to perform an inference task with the `contexualai` service. [Documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-contextualai)
+* `inference.put_llama` - Create an inference endpoint to perform an inference task with the `llama` service. [Documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-llama)
+* `project.tags` (Experimental) -  Return tags defined for the project.
+* `security.get_stats` - Gather security usage statistics from all node(s) within the cluster. [Documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-stats)
+
+# 9.1.2
+
+* Fixes [2758](https://github.com/elastic/elasticsearch-ruby/issues/2758) - `msearch`, `bulk` and other NDJSON endpoints overriding headers for `content-type` and `accept`. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2759).
+* Adds `transform.set_upgrade_mode`.
+* Updates source code documentation from latest 9.1 Elasticsearch specification.
+
 # 9.1.1
 
 ## Elasticsearch API

@@ -20,6 +20,49 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-ruby-client-next-fixes]
 % *
 
+## 9.2.0 [elasticsearch-ruby-client-9.2.0-release-notes]
+
+Check out [breaking changes](breaking-changes.md#elasticsearch-ruby-client-9.2.0-breaking-changes) for this update.
+
+### Features and enhancements [elasticsearch-ruby-client-9.2.0-features-enhancements]
+
+#### Gem
+
+* Tested versions of Ruby for 9.2.0: Ruby (MRI) 3.2, 3.3, 3.4, head, JRuby 9.3, JRuby 9.4 and JRuby 10.
+* Cleaned up deprecated code for code generation in `elasticsearch-api/utils`.
+
+#### Elasticsearch API
+
+Code updated to the latest Elasticsearch 9.2 specification.
+
+##### API Updates
+
+* `async_search.submit`, `cat.count`, `count`, `eql.search`, `field_caps`, `indices.resolve_index`. `msearch`, `msearch_template`, `open_point_in_time`, `search`, `search_mvt`, `search_template`, `sql.query` - New parameter:
+  * `:project_routing`. Specifies a subset of projects to target for the search using project metadata tags in a subset of Lucene query syntax. Supported in serverless only.
+* `cluster.allocation_explain` - New parameters:
+  * [String] `:index` The name of the index that you would like an explanation for.
+  * [Integer] `:shard` An identifier for the shard that you would like an explanation for.
+  * [Boolean] `:primary` If true, returns an explanation for the primary shard for the specified shard ID.
+  * [String] `:current_node` Explain a shard only if it is currently located on the specified node name or node ID.
+* `get` - New parameter:
+  * [Boolean] `:_source_exclude_vectors` Whether vectors should be excluded from _source
+* `indices.resolve_index` - New parameter:
+  * [String, Array<String>] `:mode` Filter indices by index mode - standard, lookup, time_series, etc. Comma-separated list of IndexMode. Empty means no filter.
+* `search` - New parameter:
+  * [Boolean] `:_source_exclude_vectors` Whether vectors should be excluded from _source.
+* `security.update_settings` - New parameter:
+  *  [String] `:merge_type` The mapping merge type if mapping overrides are being provided in mapping_addition.
+
+##### New APIs
+
+* `indices.get_data_stream_mappings` - Get mapping information for one or more data streams. [Documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-stream-mappings).
+* `indices.put_data_stream_mappings` - Update data stream mappings. [Documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-data-stream-mappings).
+* `inference.put_ai21` - Create an inference endpoint to perform an inference task with the `ai21` service. [Documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-ai21)
+* `inference.put_contextualai` - Create an inference endpoint to perform an inference task with the `contexualai` service. [Documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-contextualai)
+* `inference.put_llama` - Create an inference endpoint to perform an inference task with the `llama` service. [Documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-llama)
+* `project.tags` (Experimental) -  Return tags defined for the project.
+* `security.get_stats` - Gather security usage statistics from all node(s) within the cluster. [Documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-stats)
+
 ## 9.1.2 [elasticsearch-ruby-client-9.1.2-release-notes]
 
 ### Fixes [elasticsearch-ruby-client-9.1.2-fixes]
