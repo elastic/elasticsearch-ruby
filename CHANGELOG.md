@@ -1,5 +1,83 @@
 *See the full release notes on the official documentation website: https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/release_notes.html*
 
+## 8.19.2 Release notes
+
+#### API changes
+
+Code updated to the latest Elasticsearch 8.19.6 specification.
+
+* General: Better type documentation in source code for `Number` types.
+* `esql.async_query_stop`: New parameter:
+  * [Boolean] `:drop_null_columns` Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
+* 🐈 Cat APIs update: The following parameters are now accepted in all the CAT APIs:
+  * [String] `:bytes` The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)
+  * [String] `:time` The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
+* New parameters in `cat.segments` :
+  * [String, Array<String>] `:expand_wildcards` Type of index that wildcard expressions can match.
+  * [Boolean] `:allow_no_indices` If `false`, the request returns an error if any wildcard expression, index alias, or _all value targets only.
+  * [Boolean] `:ignore_throttled` If `true`, concrete, expanded or aliased indices are ignored when frozen.
+  * [Boolean] `:ignore_unavailable` If true, missing or closed indices are not included in the response.
+  * [Boolean] `:allow_closed` If true, allow closed indices to be returned in the response otherwise if false, keep the legacy behaviour.
+* These Connector APIs have been promoted from Experimental to Beta: `connector.delete`, `connector.get`, `connector.list`, `connector.post`, `connector.put`, `connector.sync_job_cancel`, `connector.sync_job_delete`, `connector.sync_job_get`, `connector.sync_job_list`, `connector.sync_job_post`, `connector.update_api_key_id`, `connector.update_configuration`, `connector.update_filtering`, `connector.update_index_name`, `connector.update_name`, `connector.update_native`, `connector.update_pipeline`, `connector.update_scheduling`, `connector.udpate_service_type`.
+* `indices.create_from` - Create an index from a source index. Migrated from Experimental to Stable. [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/8.19/migrate-data-stream.html
+)
+* `query_rules.test` - Test a query ruleset. Migrated from Experimental to Stable.
+* `search_application.delete`, `search_application.get`, `search_application.list`, `search_application.put`, `search_application.search** - Migrated from Experimental to Beta.
+
+**Breaking change - request body required**
+
+The `:body` parameter is now required in the following APIs:
+
+* `close_point_in_time`
+* `fleet.search`
+* `graph.explore`
+* `index_lifecycle_management.move_to_step`
+* `index_lifecycle_management.put_lifecycle`
+* `indices.analyze`
+* `indices.put_data_lifecycle`
+* `indices.put_data_stream_options`
+* `indices.shrink`
+* `indices.split`
+* `inference.completion`
+* `inference.inference`
+* `inference.put`
+* `inference.put_alibabacloud`
+* `inference.put_amazonbedrock`
+* `inference.put_amazonsagemaker`
+* `inference.put_anthropic`
+* `inference.put_azureaistudio`
+* `inference.put_azureopenai`
+* `inference.put_cohere`
+* `inference.put_custom`
+* `inference.put_deepseek`
+* `inference.put_elasticsearch`
+* `inference.put_elser`
+* `inference.put_googleaistudio`
+* `inference.put_googlevertexai`
+* `inference.put_hugging_face`
+* `inference.put_jinaai`
+* `inference.put_mistral`
+* `inference.put_openai`
+* `inference.put_voyageai`
+* `inference.put_watsonx`
+* `inference.rerank`
+* `inference.sparse_embedding`
+* `inference.stream_completion`
+* `inference.text_embedding`
+* `inference.update`
+* `knn_search`
+* `render_search_template`
+* `scripts_painless_execute`
+* `snapshot_lifecycle_management.put_lifecycle`
+* `terms_enum`
+
+#### New APIs
+
+* `indices.cancel_migrate_reindex` - Cancel a migration reindex operation.
+* `indices.get_migrate_reindex_status` - Get the migration reindexing status.
+* `indices.migrate_reindex` - Reindex legacy backing indices
+[Migrate data stream documentation](https://www.elastic.co/guide/en/elasticsearch/reference/8.19/migrate-data-stream.html)
+
 ## 8.19.1 Release notes
 
 #### API changes
