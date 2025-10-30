@@ -1,5 +1,27 @@
 *See the full release notes on the official documentation website: https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/release_notes.html*
 
+## 8.19.2 Release notes
+
+#### API changes
+
+Code updated to the latest Elasticsearch 8.19 specification.
+
+* 🐈 Cat APIs update: The following parameters are now accepted in all the CAT APIs:
+  * [String] `:bytes` The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)
+  * [String] `:time` The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
+* These Connector APIs have been promoted from Experimental to Beta: `connector.delete`, `connector.get`, `connector.list`, `connector.post`, `connector.put`, `connector.sync_job_cancel`, `connector.sync_job_delete`, `connector.sync_job_get`, `connector.sync_job_list`, `connector.sync_job_post`, `connector.update_api_key_id`, `connector.update_configuration`, `connector.update_filtering`, `connector.update_index_name`, `connector.update_name`, `connector.update_native`, `connector.update_pipeline`, `connector.update_scheduling`, `connector.udpate_service_type`.
+* `indices.create_from` - Create an index from a source index. Migrated from Experimental to Stable. [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/8.19/migrate-data-stream.html
+)
+* `query_rules.test` - Test a query ruleset. Migrated from Experimental to Stable.
+* `search_application.delete`, `search_application.get`, `search_application.list`, `search_application.put`, `search_application.search` - Migrated from Experimental to Beta.
+
+#### New APIs
+
+* `indices.cancel_migrate_reindex` - Cancel a migration reindex operation.
+* `indices.get_migrate_reindex_status` - Get the migration reindexing status.
+* `indices.migrate_reindex` - Reindex legacy backing indices
+[Migrate data stream documentation](https://www.elastic.co/guide/en/elasticsearch/reference/8.19/migrate-data-stream.html)
+
 ## 8.19.1 Release notes
 
 #### API changes
