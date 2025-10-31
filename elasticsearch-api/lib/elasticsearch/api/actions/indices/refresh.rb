@@ -27,6 +27,7 @@ module Elasticsearch
         # For data streams, the API runs the refresh operation on the stream’s backing indices.
         # By default, Elasticsearch periodically refreshes indices every second, but only on indices that have received one search request or more in the last 30 seconds.
         # You can change this default interval with the `index.refresh_interval` setting.
+        # In Elastic Cloud Serverless, the default refresh interval is 5 seconds across all indices.
         # Refresh requests are synchronous and do not return a response until the refresh operation completes.
         # Refreshes are resource-intensive.
         # To ensure good cluster performance, it's recommended to wait for Elasticsearch's periodic refresh rather than performing an explicit refresh when possible.

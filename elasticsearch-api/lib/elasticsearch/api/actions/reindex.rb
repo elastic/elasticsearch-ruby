@@ -61,7 +61,7 @@ module Elasticsearch
       # @option arguments [Boolean] :refresh If `true`, the request refreshes affected shards to make this operation visible to search.
       # @option arguments [Float] :requests_per_second The throttle for this request in sub-requests per second.
       #  By default, there is no throttle. Server default: -1.
-      # @option arguments [Time] :scroll The period of time that a consistent view of the index should be maintained for scrolled search.
+      # @option arguments [Time] :scroll The period of time that a consistent view of the index should be maintained for scrolled search. Server default: 5m.
       # @option arguments [Integer, String] :slices The number of slices this task should be divided into.
       #  It defaults to one slice, which means the task isn't sliced into subtasks.Reindex supports sliced scroll to parallelize the reindexing process.
       #  This parallelization can improve efficiency and provide a convenient way to break the request down into smaller parts.NOTE: Reindexing from remote clusters does not support manual or automatic slicing.If set to `auto`, Elasticsearch chooses the number of slices to use.

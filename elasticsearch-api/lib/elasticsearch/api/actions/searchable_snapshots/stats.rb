@@ -25,7 +25,7 @@ module Elasticsearch
         # Get searchable snapshot statistics.
         #
         # @option arguments [String, Array] :index A comma-separated list of data streams and indices to retrieve statistics for.
-        # @option arguments [String] :level Return stats aggregated at cluster, index or shard level
+        # @option arguments [String] :level Return stats aggregated at cluster, index or shard level Server default: indices.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

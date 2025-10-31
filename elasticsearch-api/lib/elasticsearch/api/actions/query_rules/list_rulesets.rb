@@ -26,7 +26,7 @@ module Elasticsearch
         # Get summarized information about the query rulesets.
         #
         # @option arguments [Integer] :from The offset from the first result to fetch. Server default: 0.
-        # @option arguments [Integer] :size The maximum number of results to retrieve.
+        # @option arguments [Integer] :size The maximum number of results to retrieve. Server default: 100.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
