@@ -63,6 +63,37 @@ Code updated to the latest Elasticsearch 9.2 specification.
 * `project.tags` (Experimental) -  Return tags defined for the project.
 * `security.get_stats` - Gather security usage statistics from all node(s) within the cluster. [Documentation](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-stats)
 
+## 9.1.3 [elasticsearch-ruby-client-9.1.3-release-notes]
+
+### Features and enhancements [elasticsearch-ruby-client-9.1.3-features-enhancements]
+
+Updates API code to the latest Elasticsearch 9.1 specification.
+
+Updates `:bytes` and `:time` parameters in **Cat** endpoints:
+* `cat.aliases`, `cat.allocation`, `cat.component_templates`, `cat.count`, `cat.fielddata`, `cat.health`, `cat.indices`, `cat.master`, `cat.ml_data_frame_analytics`, `cat.ml_datafeeds`, `cat.ml_jobs`, `cat.ml_trained_models`, `cat.nodeattrs`, `cat.nodes`, `cat.pending_tasks`, `cat.plugins`, `cat.recovery`, `cat.repositories`, `cat.segments`, `cat.shards`, `cat.snapshots`, `cat.tasks`, `cat.templates`, `cat.thread_pool`, `cat.transforms`:
+  * Adds `:bytes` [String] - Sets the units for columns that contain a byte-size value
+  * Adds `:time` [String] - Sets the units for columns that contain a time duration.
+* `cat.allocation`, `cat.fielddata`, `cat.health`, `cat.indices`, `cat.ml_data_frame_analytics`, `cat.ml_jobs`, `cat.ml_trained_models`, `cat.nodes`, `cat.recovery`, `cat.segments`, `cat.shards`:
+  * Removes `:bytes` parameter.
+* `cat.indices`, `cat.ml_data_frame_analytics`, `cat.ml_datafeeds`, `cat.ml_jobs`, `cat.ml_trained_models`, `cat.nodes`, `cat.pending_tasks`, `cat.recovery`, `cat.shards`, `cat.snapshots`, `cat.tasks`, `cat.thread_pool`, `cat.transforms`:
+  * Removes `:time` parameter.
+
+Adds available parameters to experimental **Stream** namespace APIs. Updates `streams.logs_disable`, `streams.logs_enable`, `streams.status`.
+* [Time] `:master_timeout` The period to wait for a connection to the master node.
+* [Time] `:timeout` The period to wait for a response.
+* [Boolean] `:error_trace` When set to `true` Elasticsearch will include the full stack trace of errors when they occur.
+* [String, Array<String>] `:filter_path` Comma-separated list of filters in dot notation which reduce the response returned by Elasticsearch.
+* [Boolean] `:human` When set to `true` will return statistics in a format suitable for humans.
+* [Boolean] `:pretty` If set to `true` the returned JSON will be "pretty-formatted". Only use this option for debugging.
+
+* `cat.segments` - New parameters:
+  * [String, Array<String>] `:expand_wildcards` Type of index that wildcard expressions can match.
+  * [Boolean] `:allow_no_indices` If `false`, the request returns an error if any wildcard expression, index alias, or _all value targets only.
+  * [Boolean] `:ignore_throttled` If `true`, concrete, expanded or aliased indices are ignored when frozen.
+  * [Boolean] `:ignore_unavailable` If true, missing or closed indices are not included in the response.
+  * [Boolean] `:allow_closed` If true, allow closed indices to be returned in the response otherwise if false, keep the legacy behaviour
+* `watcher.put_watch` - body is now required
+
 ## 9.1.2 [elasticsearch-ruby-client-9.1.2-release-notes]
 
 ### Fixes [elasticsearch-ruby-client-9.1.2-fixes]
