@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Integer, String] :wait_for_active_shards Specifies the number of shards to wait on being active before responding. This defaults to waiting on none of the shards to be
         #  active.
         #  A shard must be restored from the leader index before being active. Restoring a follower shard requires transferring all the
-        #  remote Lucene segment files to the follower index.
+        #  remote Lucene segment files to the follower index. Server default: 0.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

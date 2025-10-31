@@ -29,8 +29,8 @@ module Elasticsearch
         # as-is with no warranties. Beta features are not subject to the support
         # SLA of official GA features.
         #
-        # @option arguments [Integer] :from Starting offset (default: 0)
-        # @option arguments [Integer] :size Specifies a max number of results to get
+        # @option arguments [Integer] :from Starting offset Server default: 0.
+        # @option arguments [Integer] :size Specifies a max number of results to get Server default: 100.
         # @option arguments [String, Array] :index_name A comma-separated list of connector index names to fetch connector documents for
         # @option arguments [String, Array<String>] :connector_name A comma-separated list of connector names to fetch connector documents for
         # @option arguments [String, Array<String>] :service_type A comma-separated list of connector service types to fetch connector documents for

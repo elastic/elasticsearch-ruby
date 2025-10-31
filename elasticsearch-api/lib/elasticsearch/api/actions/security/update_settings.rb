@@ -29,7 +29,7 @@ module Elasticsearch
         # This API does not yet support configuring the settings for indices before they are in use.
         #
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
-        #  If no response is received before the timeout expires, the request fails and returns an error.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Time] :timeout The period to wait for a response.
         #  If no response is received before the timeout expires, the request fails and returns an error.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

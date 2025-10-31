@@ -33,7 +33,7 @@ module Elasticsearch
         # SLA of official GA features.
         #
         # @option arguments [String] :connector_id The unique identifier of the connector to be deleted (*Required*)
-        # @option arguments [Boolean] :delete_sync_jobs A flag indicating if associated sync jobs should be also removed. Defaults to false.
+        # @option arguments [Boolean] :delete_sync_jobs A flag indicating if associated sync jobs should be also removed.
         # @option arguments [Boolean] :hard A flag indicating if the connector should be hard deleted.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.

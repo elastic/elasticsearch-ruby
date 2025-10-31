@@ -27,7 +27,7 @@ module Elasticsearch
       # @option arguments [String] :id The identifier for the stored script or search template. (*Required*)
       # @option arguments [Time] :master_timeout The period to wait for the master node.
       #  If the master node is not available before the timeout expires, the request fails and returns an error.
-      #  It can also be set to `-1` to indicate that the request should never timeout. Server default: .
+      #  It can also be set to `-1` to indicate that the request should never timeout. Server default: 30s.
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
       #  when they occur.
       # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

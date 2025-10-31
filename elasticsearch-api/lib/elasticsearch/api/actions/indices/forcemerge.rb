@@ -70,7 +70,7 @@ module Elasticsearch
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
         # @option arguments [Integer] :max_num_segments The number of segments the index should be merged into (default: dynamic)
         # @option arguments [Boolean] :only_expunge_deletes Specify whether the operation should only expunge deleted documents
-        # @option arguments [Boolean] :wait_for_completion Should the request wait until the force merge is completed.
+        # @option arguments [Boolean] :wait_for_completion Should the request wait until the force merge is completed. Server default: true.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

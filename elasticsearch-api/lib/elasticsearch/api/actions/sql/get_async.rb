@@ -33,7 +33,7 @@ module Elasticsearch
         #  You must specify a format using this parameter or the `Accept` HTTP header.
         #  If you specify both, the API uses this parameter.
         # @option arguments [Time] :keep_alive The retention period for the search and its results.
-        #  It defaults to the `keep_alive` period for the original SQL search.
+        #  It defaults to the `keep_alive` period for the original SQL search. Server default: 5d.
         # @option arguments [Time] :wait_for_completion_timeout The period to wait for complete results.
         #  It defaults to no timeout, meaning the request waits for complete search results.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

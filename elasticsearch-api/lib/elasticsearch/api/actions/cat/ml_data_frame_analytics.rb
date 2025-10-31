@@ -29,7 +29,8 @@ module Elasticsearch
         # application consumption, use the get data frame analytics jobs statistics API.
         #
         # @option arguments [String] :id The ID of the data frame analytics to fetch
-        # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no configs. (This includes `_all` string or when no configs have been specified)
+        # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no configs.
+        #  (This includes `_all` string or when no configs have been specified.)
         # @option arguments [String, Array<String>] :h Comma-separated list of column names to display. Server default: create_time,id,state,type.
         # @option arguments [String, Array<String>] :s Comma-separated list of column names or column aliases used to sort the
         #  response.

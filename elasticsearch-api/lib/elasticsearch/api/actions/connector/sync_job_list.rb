@@ -29,8 +29,8 @@ module Elasticsearch
         # as-is with no warranties. Beta features are not subject to the support
         # SLA of official GA features.
         #
-        # @option arguments [Integer] :from Starting offset (default: 0)
-        # @option arguments [Integer] :size Specifies a max number of results to get
+        # @option arguments [Integer] :from Starting offset Server default: 0.
+        # @option arguments [Integer] :size Specifies a max number of results to get Server default: 100.
         # @option arguments [String] :status A sync job status to fetch connector sync jobs for
         # @option arguments [String] :connector_id A connector id to fetch connector sync jobs for
         # @option arguments [String, Array<String>] :job_type A comma-separated list of job types to fetch the sync jobs for

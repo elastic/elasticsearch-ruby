@@ -27,7 +27,7 @@ module Elasticsearch
         #
         # @option arguments [String, Array] :index The name of the index to explain (*Required*)
         # @option arguments [Boolean] :include_defaults indicates if the API should return the default values the system uses for the index's lifecycle
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

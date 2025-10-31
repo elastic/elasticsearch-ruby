@@ -48,7 +48,7 @@ module Elasticsearch
         # @option arguments [Boolean] :create If `true`, this request cannot replace or update existing index templates.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
-        # @option arguments [String] :cause User defined reason for creating/updating the index template
+        # @option arguments [String] :cause User defined reason for creating/updating the index template Server default: api.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

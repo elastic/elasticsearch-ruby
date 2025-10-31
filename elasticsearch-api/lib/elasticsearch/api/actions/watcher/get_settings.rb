@@ -27,7 +27,7 @@ module Elasticsearch
         # Only a subset of settings are shown, for example `index.auto_expand_replicas` and `index.number_of_replicas`.
         #
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
-        #  If no response is received before the timeout expires, the request fails and returns an error.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
