@@ -27,7 +27,7 @@ module Elasticsearch
         #
         # @option arguments [String] :id Identifier for the search. (*Required*)
         # @option arguments [Time] :keep_alive Period for which the search and its results are stored on the cluster.
-        #  Defaults to the keep_alive value set by the search’s EQL search API request.
+        #  Defaults to the keep_alive value set by the search’s EQL search API request. Server default: 5d.
         # @option arguments [Time] :wait_for_completion_timeout Timeout duration to wait for the request to finish.
         #  Defaults to no timeout, meaning the request waits for complete search results.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

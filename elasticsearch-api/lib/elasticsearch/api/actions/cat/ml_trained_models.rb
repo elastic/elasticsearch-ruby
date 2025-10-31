@@ -34,8 +34,8 @@ module Elasticsearch
         #  If `false`, the API returns a 404 status code when there are no matches or only partial matches. Server default: true.
         # @option arguments [String, Array<String>] :h A comma-separated list of column names to display.
         # @option arguments [String, Array<String>] :s A comma-separated list of column names or aliases used to sort the response.
-        # @option arguments [Integer] :from Skips the specified number of transforms.
-        # @option arguments [Integer] :size The maximum number of transforms to display.
+        # @option arguments [Integer] :from Skips the specified number of transforms. Server default: 0.
+        # @option arguments [Integer] :size The maximum number of transforms to display. Server default: 100.
         # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
         #  `text`, `json`, `cbor`, `yaml`, or `smile`. Server default: text.
         # @option arguments [Boolean] :help When set to `true` will output available columns. This option
