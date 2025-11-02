@@ -102,3 +102,5 @@ See [CONTRIBUTING](https://github.com/elastic/elasticsearch-ruby/blob/main/CONTR
 ## License
 
 This software is licensed under the [Apache 2 license](./LICENSE). See [NOTICE](./NOTICE).
+
+
