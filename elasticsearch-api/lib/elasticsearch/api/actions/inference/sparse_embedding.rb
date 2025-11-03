@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [String] :inference_id The inference Id
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The inference payload
+        # @option arguments [Hash] :body The inference payload (*Required*)
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/post-inference-api.html
         #
@@ -38,6 +38,7 @@ module Elasticsearch
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'inference_id' missing" unless arguments[:inference_id]
 
           arguments = arguments.clone

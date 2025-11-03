@@ -29,9 +29,9 @@ module Elasticsearch
       # @option arguments [String] :refresh If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes. (options: true, false, wait_for)
       # @option arguments [String] :routing Specific routing value
       # @option arguments [Time] :timeout Explicit operation timeout
-      # @option arguments [Number] :if_seq_no only perform the delete operation if the last operation that has changed the document has the specified sequence number
-      # @option arguments [Number] :if_primary_term only perform the delete operation if the last operation that has changed the document has the specified primary term
-      # @option arguments [Number] :version Explicit version number for concurrency control
+      # @option arguments [Long] :if_seq_no only perform the delete operation if the last operation that has changed the document has the specified sequence number
+      # @option arguments [Long] :if_primary_term only perform the delete operation if the last operation that has changed the document has the specified primary term
+      # @option arguments [Long] :version Explicit version number for concurrency control
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte)
       # @option arguments [Hash] :headers Custom HTTP headers
       #

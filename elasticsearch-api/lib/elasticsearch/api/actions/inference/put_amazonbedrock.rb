@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :amazonbedrock_inference_id The inference Id
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The inference endpoint's task and service settings
+        # @option arguments [Hash] :body The inference endpoint's task and service settings (*Required*)
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-service-amazon-bedrock.html
         #
@@ -39,6 +39,7 @@ module Elasticsearch
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'task_type' missing" unless arguments[:task_type]
 
           unless arguments[:amazonbedrock_inference_id]

@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :routing Specific routing value
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Graph Query DSL
+        # @option arguments [Hash] :body Graph Query DSL (*Required*)
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/graph-explore-api.html
         #
@@ -40,22 +40,18 @@ module Elasticsearch
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
+          body   = arguments.delete(:body)
 
           _index = arguments.delete(:index)
 
-          method = if body
-                     Elasticsearch::API::HTTP_POST
-                   else
-                     Elasticsearch::API::HTTP_GET
-                   end
-
-          path = "#{Utils.__listify(_index)}/_graph/explore"
+          method = Elasticsearch::API::HTTP_POST
+          path   = "#{Utils.__listify(_index)}/_graph/explore"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

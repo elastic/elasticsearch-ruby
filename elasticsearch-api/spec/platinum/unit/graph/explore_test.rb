@@ -26,14 +26,14 @@ module Elasticsearch
 
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'GET', method
+            assert_equal 'POST', method
             assert_equal 'my_index/_graph/explore', url
             assert_equal Hash.new, params
-            assert_nil body
+
             true
           end.returns(FakeResponse.new)
 
-          subject.graph.explore(index: 'my_index')
+          subject.graph.explore(index: 'my_index', body: {})
         end
 
       end

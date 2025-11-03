@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :custom_inference_id The inference Id
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The inference endpoint's task and service settings
+        # @option arguments [Hash] :body The inference endpoint's task and service settings (*Required*)
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-custom
         #
@@ -39,6 +39,7 @@ module Elasticsearch
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'task_type' missing" unless arguments[:task_type]
           raise ArgumentError, "Required argument 'custom_inference_id' missing" unless arguments[:custom_inference_id]
 

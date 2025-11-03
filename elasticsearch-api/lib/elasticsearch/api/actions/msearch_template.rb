@@ -26,7 +26,7 @@ module Elasticsearch
       # @option arguments [List] :index A comma-separated list of index names to use as default
       # @option arguments [String] :search_type Search operation type (options: query_then_fetch, dfs_query_then_fetch)
       # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-      # @option arguments [Number] :max_concurrent_searches Controls the maximum number of concurrent searches the multi search api will execute
+      # @option arguments [Long] :max_concurrent_searches Controls the maximum number of concurrent searches the multi search api will execute
       # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
       # @option arguments [Boolean] :ccs_minimize_roundtrips Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
       # @option arguments [Hash] :headers Custom HTTP headers

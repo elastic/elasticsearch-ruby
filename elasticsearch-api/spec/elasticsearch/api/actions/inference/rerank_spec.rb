@@ -23,13 +23,13 @@ describe 'client#inference.rerank' do
       'POST',
       '_inference/rerank/foo',
       {},
-      nil,
+      {},
       {},
       { defined_params: { inference_id: 'foo' }, endpoint: 'inference.rerank' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.inference.rerank(inference_id: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.rerank(inference_id: 'foo', body: {})).to be_a Elasticsearch::API::Response
   end
 end

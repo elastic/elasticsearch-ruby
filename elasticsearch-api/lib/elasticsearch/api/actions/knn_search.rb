@@ -30,7 +30,7 @@ module Elasticsearch
       # @option arguments [List] :index A comma-separated list of index names to search; use `_all` to perform the operation on all indices
       # @option arguments [List] :routing A comma-separated list of specific routing values
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body The search definition
+      # @option arguments [Hash] :body The search definition (*Required*)
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/knn-search-api.html
       #
@@ -42,22 +42,18 @@ module Elasticsearch
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+        raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body = arguments.delete(:body)
+        body   = arguments.delete(:body)
 
         _index = arguments.delete(:index)
 
-        method = if body
-                   Elasticsearch::API::HTTP_POST
-                 else
-                   Elasticsearch::API::HTTP_GET
-                 end
-
-        path = "#{Utils.__listify(_index)}/_knn_search"
+        method = Elasticsearch::API::HTTP_POST
+        path   = "#{Utils.__listify(_index)}/_knn_search"
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

@@ -28,7 +28,7 @@ module Elasticsearch
       # @option arguments [Boolean] :ignore_throttled Whether specified concrete, expanded or aliased indices should be ignored when throttled
       # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
       # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
-      # @option arguments [Number] :min_score Include only documents with a specific `_score` value in the result
+      # @option arguments [Double] :min_score Include only documents with a specific `_score` value in the result
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
       # @option arguments [List] :routing A comma-separated list of specific routing values
       # @option arguments [String] :q Query in the Lucene query string syntax
@@ -37,7 +37,7 @@ module Elasticsearch
       # @option arguments [String] :default_operator The default operator for query string query (AND or OR) (options: AND, OR)
       # @option arguments [String] :df The field to use as default where no field prefix is given in the query string
       # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-      # @option arguments [Number] :terminate_after The maximum count for each shard, upon reaching which the query execution will terminate early
+      # @option arguments [Long] :terminate_after The maximum count for each shard, upon reaching which the query execution will terminate early
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body A query to restrict the results specified with the Query DSL (optional)
       #

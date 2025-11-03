@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The lifecycle policy definition to register
+        # @option arguments [Hash] :body The lifecycle policy definition to register (*Required*)
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ilm-put-lifecycle.html
         #
@@ -40,6 +40,7 @@ module Elasticsearch
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'policy' missing" unless arguments[:policy]
 
           arguments = arguments.clone

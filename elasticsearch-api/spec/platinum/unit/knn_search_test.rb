@@ -25,14 +25,13 @@ module Elasticsearch
 
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal('GET', method)
+            assert_equal('POST', method)
             assert_equal('foo/_knn_search', url)
             assert_equal({}, params)
-            assert_nil(body)
             true
           end.returns(FakeResponse.new)
 
-          subject.knn_search(index: 'foo')
+          subject.knn_search(index: 'foo', body: {})
         end
       end
     end

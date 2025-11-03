@@ -33,7 +33,7 @@ module Elasticsearch
       # @option arguments [List] :_source True or false to return the _source field or not, or a list of fields to return
       # @option arguments [List] :_source_excludes A list of fields to exclude from the returned _source field
       # @option arguments [List] :_source_includes A list of fields to extract and return from the _source field
-      # @option arguments [Number] :version Explicit version number for concurrency control
+      # @option arguments [Long] :version Explicit version number for concurrency control
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte)
       # @option arguments [Hash] :headers Custom HTTP headers
       #

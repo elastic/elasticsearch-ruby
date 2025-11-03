@@ -25,13 +25,13 @@ module Elasticsearch
         # Analyze a snapshot repository
         #
         # @option arguments [String] :repository A repository name
-        # @option arguments [Number] :blob_count Number of blobs to create during the test. Defaults to 100.
-        # @option arguments [Number] :concurrency Number of operations to run concurrently during the test. Defaults to 10.
-        # @option arguments [Number] :register_operation_count The minimum number of linearizable register operations to perform in total. Defaults to 10.
-        # @option arguments [Number] :read_node_count Number of nodes on which to read a blob after writing. Defaults to 10.
-        # @option arguments [Number] :early_read_node_count Number of nodes on which to perform an early read on a blob, i.e. before writing has completed. Early reads are rare actions so the 'rare_action_probability' parameter is also relevant. Defaults to 2.
-        # @option arguments [Number] :seed Seed for the random number generator used to create the test workload. Defaults to a random value.
-        # @option arguments [Number] :rare_action_probability Probability of taking a rare action such as an early read or an overwrite. Defaults to 0.02.
+        # @option arguments [Integer] :blob_count Number of blobs to create during the test. Defaults to 100.
+        # @option arguments [Integer] :concurrency Number of operations to run concurrently during the test. Defaults to 10.
+        # @option arguments [Integer] :register_operation_count The minimum number of linearizable register operations to perform in total. Defaults to 10.
+        # @option arguments [Integer] :read_node_count Number of nodes on which to read a blob after writing. Defaults to 10.
+        # @option arguments [Integer] :early_read_node_count Number of nodes on which to perform an early read on a blob, i.e. before writing has completed. Early reads are rare actions so the 'rare_action_probability' parameter is also relevant. Defaults to 2.
+        # @option arguments [Integer] :seed Seed for the random number generator used to create the test workload. Defaults to a random value.
+        # @option arguments [Double] :rare_action_probability Probability of taking a rare action such as an early read or an overwrite. Defaults to 0.02.
         # @option arguments [String] :max_blob_size Maximum size of a blob to create during the test, e.g '1gb' or '100mb'. Defaults to '10mb'.
         # @option arguments [String] :max_total_data_size Maximum total size of all blobs to create during the test, e.g '1tb' or '100gb'. Defaults to '1gb'.
         # @option arguments [Time] :timeout Explicit operation timeout. Defaults to '30s'.

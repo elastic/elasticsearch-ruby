@@ -29,7 +29,7 @@ module Elasticsearch
       # @option arguments [String] :refresh If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes. (options: true, false, wait_for)
       # @option arguments [String] :routing Specific routing value
       # @option arguments [Time] :timeout Explicit operation timeout
-      # @option arguments [Number] :version Explicit version number for concurrency control
+      # @option arguments [Long] :version Explicit version number for concurrency control
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte)
       # @option arguments [String] :pipeline The pipeline id to preprocess incoming documents with
       # @option arguments [Boolean] :include_source_on_error True or false if to include the document source in the error message in case of parsing errors. Defaults to true.

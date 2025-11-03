@@ -23,7 +23,7 @@ describe 'client#inference.put_googleaistudio' do
       'PUT',
       '_inference/foo/bar',
       {},
-      nil,
+      {},
       {},
       { defined_params: { googleaistudio_inference_id: 'bar', task_type: 'foo' },
         endpoint: 'inference.put_googleaistudio' }
@@ -31,6 +31,6 @@ describe 'client#inference.put_googleaistudio' do
   end
 
   it 'performs the request' do
-    expect(client_double.inference.put_googleaistudio(task_type: 'foo', googleaistudio_inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.put_googleaistudio(task_type: 'foo', googleaistudio_inference_id: 'bar', body: {})).to be_a Elasticsearch::API::Response
   end
 end

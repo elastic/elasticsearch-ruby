@@ -23,13 +23,13 @@ describe 'client.cluster#put_data_stream_options' do
       'PUT',
       '_data_stream/foo/_options',
       {},
-      nil,
+      {},
       {},
       { endpoint: 'indices.put_data_stream_options', defined_params: { name: 'foo' } }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.indices.put_data_stream_options(name: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.indices.put_data_stream_options(name: 'foo', body: {})).to be_a Elasticsearch::API::Response
   end
 end

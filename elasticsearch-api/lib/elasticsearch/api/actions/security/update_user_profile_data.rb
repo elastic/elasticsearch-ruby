@@ -25,8 +25,8 @@ module Elasticsearch
         # Update user profile data
         #
         # @option arguments [String] :uid An unique identifier of the user profile
-        # @option arguments [Number] :if_seq_no only perform the update operation if the last operation that has changed the document has the specified sequence number
-        # @option arguments [Number] :if_primary_term only perform the update operation if the last operation that has changed the document has the specified primary term
+        # @option arguments [Long] :if_seq_no only perform the update operation if the last operation that has changed the document has the specified sequence number
+        # @option arguments [Long] :if_primary_term only perform the update operation if the last operation that has changed the document has the specified primary term
         # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The application data to update (*Required*)
