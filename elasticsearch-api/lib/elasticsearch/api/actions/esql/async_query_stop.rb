@@ -25,6 +25,7 @@ module Elasticsearch
         # Stop async ES|QL query
         #
         # @option arguments [String] :id The async query ID
+        # @option arguments [Boolean] :drop_null_columns Indicates whether columns that are entirely `null` will be removed from the `columns` and `values` portion of the results.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/esql-async-query-stop-api.html
@@ -48,7 +49,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_query/async/#{Utils.__listify(_id)}/stop"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

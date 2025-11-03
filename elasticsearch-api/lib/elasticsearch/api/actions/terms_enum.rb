@@ -25,7 +25,7 @@ module Elasticsearch
       #
       # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body field name, string which is the prefix expected in matching terms, timeout and size for max number of results
+      # @option arguments [Hash] :body field name, string which is the prefix expected in matching terms, timeout and size for max number of results (*Required*)
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/search-terms-enum.html
       #
@@ -37,22 +37,18 @@ module Elasticsearch
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+        raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body = arguments.delete(:body)
+        body   = arguments.delete(:body)
 
         _index = arguments.delete(:index)
 
-        method = if body
-                   Elasticsearch::API::HTTP_POST
-                 else
-                   Elasticsearch::API::HTTP_GET
-                 end
-
-        path = "#{Utils.__listify(_index)}/_terms_enum"
+        method = Elasticsearch::API::HTTP_POST
+        path   = "#{Utils.__listify(_index)}/_terms_enum"
         params = {}
 
         Elasticsearch::API::Response.new(

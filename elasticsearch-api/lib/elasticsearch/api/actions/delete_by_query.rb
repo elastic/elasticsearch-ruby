@@ -28,7 +28,7 @@ module Elasticsearch
       # @option arguments [Boolean] :analyze_wildcard Specify whether wildcard and prefix queries should be analyzed (default: false)
       # @option arguments [String] :default_operator The default operator for query string query (AND or OR) (options: AND, OR)
       # @option arguments [String] :df The field to use as default where no field prefix is given in the query string
-      # @option arguments [Number] :from Starting offset (default: 0)
+      # @option arguments [Long] :from Starting offset (default: 0)
       # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
       # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
       # @option arguments [String] :conflicts What to do when the delete by query hits version conflicts? (options: abort, proceed)
@@ -40,16 +40,16 @@ module Elasticsearch
       # @option arguments [Time] :scroll Specify how long a consistent view of the index should be maintained for scrolled search
       # @option arguments [String] :search_type Search operation type (options: query_then_fetch, dfs_query_then_fetch)
       # @option arguments [Time] :search_timeout Explicit timeout for each search request. Defaults to no timeout.
-      # @option arguments [Number] :max_docs Maximum number of documents to process (default: all documents)
+      # @option arguments [Long] :max_docs Maximum number of documents to process (default: all documents)
       # @option arguments [List] :sort A comma-separated list of <field>:<direction> pairs
-      # @option arguments [Number] :terminate_after The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
+      # @option arguments [Long] :terminate_after The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
       # @option arguments [List] :stats Specific 'tag' of the request for logging and statistical purposes
       # @option arguments [Boolean] :version Specify whether to return document version as part of a hit
       # @option arguments [Boolean] :request_cache Specify if request cache should be used for this request or not, defaults to index level setting
       # @option arguments [Boolean] :refresh Should the affected indexes be refreshed?
       # @option arguments [Time] :timeout Time each individual bulk request should wait for shards that are unavailable.
       # @option arguments [String] :wait_for_active_shards Sets the number of shard copies that must be active before proceeding with the delete by query operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-      # @option arguments [Number] :scroll_size Size on the scroll request powering the delete by query
+      # @option arguments [Long] :scroll_size Size on the scroll request powering the delete by query
       # @option arguments [Boolean] :wait_for_completion Should the request should block until the delete by query is complete.
       # @option arguments [Number] :requests_per_second The throttle for this request in sub-requests per second. -1 means no throttle.
       # @option arguments [Number|string] :slices The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`.

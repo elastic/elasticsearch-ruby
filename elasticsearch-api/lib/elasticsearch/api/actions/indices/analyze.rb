@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [String] :index The name of the index to scope the operation
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Define analyzer/tokenizer parameters and the text on which the analysis should be performed
+        # @option arguments [Hash] :body Define analyzer/tokenizer parameters and the text on which the analysis should be performed (*Required*)
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8/operation/operation-indices-analyze
         #
@@ -38,24 +38,21 @@ module Elasticsearch
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
+          body   = arguments.delete(:body)
 
           _index = arguments.delete(:index)
 
-          method = if body
-                     Elasticsearch::API::HTTP_POST
+          method = Elasticsearch::API::HTTP_POST
+          path   = if _index
+                     "#{Utils.__listify(_index)}/_analyze"
                    else
-                     Elasticsearch::API::HTTP_GET
+                     '_analyze'
                    end
-
-          path = if _index
-                   "#{Utils.__listify(_index)}/_analyze"
-                 else
-                   '_analyze'
-                 end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

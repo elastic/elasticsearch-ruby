@@ -25,7 +25,7 @@ module Elasticsearch
       #
       # @option arguments [String] :id The id of the stored search template
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body The search definition template and its params
+      # @option arguments [Hash] :body The search definition template and its params (*Required*)
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/render-search-template-api.html
       #
@@ -37,6 +37,8 @@ module Elasticsearch
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+        raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
@@ -44,17 +46,12 @@ module Elasticsearch
 
         _id = arguments.delete(:id)
 
-        method = if body
-                   Elasticsearch::API::HTTP_POST
+        method = Elasticsearch::API::HTTP_POST
+        path   = if _id
+                   "_render/template/#{Utils.__listify(_id)}"
                  else
-                   Elasticsearch::API::HTTP_GET
+                   '_render/template'
                  end
-
-        path = if _id
-                 "_render/template/#{Utils.__listify(_id)}"
-               else
-                 '_render/template'
-               end
         params = {}
 
         Elasticsearch::API::Response.new(

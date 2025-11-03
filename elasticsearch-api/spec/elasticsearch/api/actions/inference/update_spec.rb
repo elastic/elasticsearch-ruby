@@ -23,7 +23,7 @@ describe 'client#inference.update' do
       'PUT',
       '_inference/foo/bar/_update',
       {},
-      nil,
+      {},
       {},
       { defined_params: { inference_id: 'bar', task_type: 'foo' },
         endpoint: 'inference.update' }
@@ -31,6 +31,6 @@ describe 'client#inference.update' do
   end
 
   it 'performs the request' do
-    expect(client_double.inference.update(task_type: 'foo', inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.update(task_type: 'foo', inference_id: 'bar', body: {})).to be_a Elasticsearch::API::Response
   end
 end

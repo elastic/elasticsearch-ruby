@@ -31,11 +31,11 @@ module Elasticsearch
       # @option arguments [List] :_source_includes A list of fields to extract and return from the _source field
       # @option arguments [String] :lang The script language (default: painless)
       # @option arguments [String] :refresh If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes. (options: true, false, wait_for)
-      # @option arguments [Number] :retry_on_conflict Specify how many times should the operation be retried when a conflict occurs (default: 0)
+      # @option arguments [Integer] :retry_on_conflict Specify how many times should the operation be retried when a conflict occurs (default: 0)
       # @option arguments [String] :routing Specific routing value
       # @option arguments [Time] :timeout Explicit operation timeout
-      # @option arguments [Number] :if_seq_no only perform the update operation if the last operation that has changed the document has the specified sequence number
-      # @option arguments [Number] :if_primary_term only perform the update operation if the last operation that has changed the document has the specified primary term
+      # @option arguments [Long] :if_seq_no only perform the update operation if the last operation that has changed the document has the specified sequence number
+      # @option arguments [Long] :if_primary_term only perform the update operation if the last operation that has changed the document has the specified primary term
       # @option arguments [Boolean] :require_alias When true, requires destination is an alias. Default is false
       # @option arguments [Boolean] :include_source_on_error True or false if to include the document source in the error message in case of parsing errors. Defaults to true.
       # @option arguments [Hash] :headers Custom HTTP headers

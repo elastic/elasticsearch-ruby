@@ -26,9 +26,9 @@ module Elasticsearch
         #
         # @option arguments [String] :id Watch ID
         # @option arguments [Boolean] :active Specify whether the watch is in/active by default
-        # @option arguments [Number] :version Explicit version number for concurrency control
-        # @option arguments [Number] :if_seq_no only update the watch if the last operation that has changed the watch has the specified sequence number
-        # @option arguments [Number] :if_primary_term only update the watch if the last operation that has changed the watch has the specified primary term
+        # @option arguments [Long] :version Explicit version number for concurrency control
+        # @option arguments [Long] :if_seq_no only update the watch if the last operation that has changed the watch has the specified sequence number
+        # @option arguments [Long] :if_primary_term only update the watch if the last operation that has changed the watch has the specified primary term
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The watch (*Required*)
         #

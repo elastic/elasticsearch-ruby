@@ -23,7 +23,7 @@ describe 'client#inference.put_voyageai' do
       'PUT',
       '_inference/foo/bar',
       {},
-      nil,
+      {},
       {},
       { defined_params: { voyageai_inference_id: 'bar', task_type: 'foo' },
         endpoint: 'inference.put_voyageai' }
@@ -31,6 +31,6 @@ describe 'client#inference.put_voyageai' do
   end
 
   it 'performs the request' do
-    expect(client_double.inference.put_voyageai(task_type: 'foo', voyageai_inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.put_voyageai(task_type: 'foo', voyageai_inference_id: 'bar', body: {})).to be_a Elasticsearch::API::Response
   end
 end

@@ -24,12 +24,14 @@ module Elasticsearch
       # Close a point in time
       #
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body a point-in-time id to close
+      # @option arguments [Hash] :body a point-in-time id to close (*Required*)
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/point-in-time-api.html
       #
       def close_point_in_time(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'close_point_in_time' }
+
+        raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}

@@ -28,25 +28,22 @@ module Elasticsearch
       # support SLA of official GA features.
       #
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body The script to execute
+      # @option arguments [Hash] :body The script to execute (*Required*)
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/painless/8.19/painless-execute-api.html
       #
       def scripts_painless_execute(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'scripts_painless_execute' }
 
+        raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
         body   = arguments.delete(:body)
 
-        method = if body
-                   Elasticsearch::API::HTTP_POST
-                 else
-                   Elasticsearch::API::HTTP_GET
-                 end
-
-        path = '_scripts/painless/_execute'
+        method = Elasticsearch::API::HTTP_POST
+        path   = '_scripts/painless/_execute'
         params = {}
 
         Elasticsearch::API::Response.new(

@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [String] :index The name of the index whose lifecycle step is to change
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The new lifecycle step to move to
+        # @option arguments [Hash] :body The new lifecycle step to move to (*Required*)
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/ilm-move-to-step.html
         #
@@ -38,6 +38,7 @@ module Elasticsearch
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
           arguments = arguments.clone

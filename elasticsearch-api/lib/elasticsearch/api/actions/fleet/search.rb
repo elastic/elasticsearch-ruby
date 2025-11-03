@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Time] :wait_for_checkpoints_timeout Explicit wait_for_checkpoints timeout
         # @option arguments [Boolean] :allow_partial_search_results Indicate if an error should be returned if there is a partial search failure or timeout
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The search definition using the Query DSL
+        # @option arguments [Hash] :body The search definition using the Query DSL (*Required*)
         #
         # @see [TODO]
         #
@@ -45,22 +45,18 @@ module Elasticsearch
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
+          body   = arguments.delete(:body)
 
           _index = arguments.delete(:index)
 
-          method = if body
-                     Elasticsearch::API::HTTP_POST
-                   else
-                     Elasticsearch::API::HTTP_GET
-                   end
-
-          path = "#{Utils.__listify(_index)}/_fleet/_fleet_search"
+          method = Elasticsearch::API::HTTP_POST
+          path   = "#{Utils.__listify(_index)}/_fleet/_fleet_search"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

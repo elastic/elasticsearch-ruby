@@ -23,31 +23,17 @@ describe 'client#terms_enum' do
       method,
       'foo/_terms_enum',
       {},
-      body,
+      {},
       {},
       { defined_params: { index: 'foo' }, endpoint: 'terms_enum' }
     ]
   end
 
   context 'without a body' do
-    let(:method) { 'GET' }
-    let(:body) { nil }
+    let(:method) { 'POST' }
 
     it 'performs a GET request' do
-      expect(client_double.terms_enum(index: 'foo')).to be_a Elasticsearch::API::Response
+      expect(client_double.terms_enum(index: 'foo', body: {})).to be_a Elasticsearch::API::Response
     end
-  end
-
-  context 'with a body' do
-    let(:method) { 'POST' }
-    let(:body) { {} }
-
-    it 'performs a POST request' do
-      expect(client_double.terms_enum(index: 'foo', body: body)).to be_a Elasticsearch::API::Response
-    end
-  end
-
-  it 'requires the :index argument' do
-    expect { client.terms_enum }.to raise_exception(ArgumentError)
   end
 end

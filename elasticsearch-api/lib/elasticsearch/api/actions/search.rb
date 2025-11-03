@@ -32,7 +32,7 @@ module Elasticsearch
       # @option arguments [Boolean] :explain Specify whether to return detailed information about score computation as part of a hit
       # @option arguments [List] :stored_fields A comma-separated list of stored fields to return as part of a hit
       # @option arguments [List] :docvalue_fields A comma-separated list of fields to return as the docvalue representation of a field for each hit
-      # @option arguments [Number] :from Starting offset (default: 0)
+      # @option arguments [Integer] :from Starting offset (default: 0)
       # @option arguments [Boolean] :force_synthetic_source Should this request force synthetic _source? Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance. Fetches with this enabled will be slower the enabling synthetic source natively in the index.
       # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
       # @option arguments [Boolean] :ignore_throttled Whether specified concrete, expanded or aliased indices should be ignored when throttled
@@ -44,16 +44,16 @@ module Elasticsearch
       # @option arguments [List] :routing A comma-separated list of specific routing values
       # @option arguments [Time] :scroll Specify how long a consistent view of the index should be maintained for scrolled search
       # @option arguments [String] :search_type Search operation type (options: query_then_fetch, dfs_query_then_fetch)
-      # @option arguments [Number] :size Number of hits to return (default: 10)
+      # @option arguments [Integer] :size Number of hits to return (default: 10)
       # @option arguments [List] :sort A comma-separated list of <field>:<direction> pairs
       # @option arguments [List] :_source True or false to return the _source field or not, or a list of fields to return
       # @option arguments [List] :_source_excludes A list of fields to exclude from the returned _source field
       # @option arguments [List] :_source_includes A list of fields to extract and return from the _source field
-      # @option arguments [Number] :terminate_after The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
+      # @option arguments [Long] :terminate_after The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
       # @option arguments [List] :stats Specific 'tag' of the request for logging and statistical purposes
       # @option arguments [String] :suggest_field Specify which field to use for suggestions
       # @option arguments [String] :suggest_mode Specify suggest mode (options: missing, popular, always)
-      # @option arguments [Number] :suggest_size How many suggestions to return in response
+      # @option arguments [Long] :suggest_size How many suggestions to return in response
       # @option arguments [String] :suggest_text The source text for which the suggestions should be returned
       # @option arguments [Time] :timeout Explicit operation timeout
       # @option arguments [Boolean] :track_scores Whether to calculate and return scores even if they are not used for sorting
@@ -63,9 +63,9 @@ module Elasticsearch
       # @option arguments [Boolean] :version Specify whether to return document version as part of a hit
       # @option arguments [Boolean] :seq_no_primary_term Specify whether to return sequence number and primary term of the last modification of each hit
       # @option arguments [Boolean] :request_cache Specify if request cache should be used for this request or not, defaults to index level setting
-      # @option arguments [Number] :batched_reduce_size The number of shard results that should be reduced at once on the coordinating node. This value should be used as a protection mechanism to reduce the memory overhead per search request if the potential number of shards in the request can be large.
-      # @option arguments [Number] :max_concurrent_shard_requests The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
-      # @option arguments [Number] :pre_filter_shard_size A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
+      # @option arguments [Long] :batched_reduce_size The number of shard results that should be reduced at once on the coordinating node. This value should be used as a protection mechanism to reduce the memory overhead per search request if the potential number of shards in the request can be large.
+      # @option arguments [Integer] :max_concurrent_shard_requests The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
+      # @option arguments [Long] :pre_filter_shard_size A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
       # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
       # @option arguments [String] :min_compatible_shard_node The minimum compatible version that all shards involved in search should have for this request to be successful
       # @option arguments [Boolean] :include_named_queries_score Indicates whether hit.matched_queries should be rendered as a map that includes the name of the matched query associated with its score (true) or as an array containing the name of the matched queries (false)
