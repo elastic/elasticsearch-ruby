@@ -419,3 +419,46 @@
 -
   :file: 'entsearch/connector/80_connector_update_last_sync_stats.yml'
   :description: '*'
+-
+  :file: 'downsample/10_basic.yml'
+  :description: 'Downsample no metric index'
+-
+  :file: 'downsample/10_basic.yml'
+  :description: 'Downsample no metric no label index'
+-
+  :file: 'downsample/10_basic.yml'
+  :description: 'Downsample date_nanos timestamp field using custom format'
+-
+  :file: 'downsample/10_basic.yml'
+  :description: 'Downsample date timestamp field using strict_date_optional_time_nanos format'
+-
+  :file: 'downsample/10_basic.yml'
+  :description: 'Downsample using coarse grained timestamp'
+-
+  :file: 'downsample/10_basic.yml'
+  :description: 'Downsample label with ignore_above'
+-
+  :file: 'downsample/10_basic.yml'
+  :description: 'Downsample index with empty dimension'
+-
+  :file: 'downsample/10_basic.yml'
+  :description: 'Downsample index with empty dimension on routing path'
+-
+  :file: 'downsample/40_runtime_fields.yml'
+  :description: '*'
+-
+  :file: 'downsample/60_settings.yml'
+  :description: '*'
+-
+  :file: 'downsample/70_flattened_field_type.yml'
+  :description: '*'
+-
+  :file: 'downsample/80_downsample_aggregate.yml'
+  :description: '*'
+-
+  :file: 'security/20_settings_filter.yml'
+  :description: '*'
+-
+  :file: 'security/20_test_run_as_execute_watch.yml'
+  :description: '*'
+
