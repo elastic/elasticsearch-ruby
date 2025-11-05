@@ -23,12 +23,15 @@ module Elasticsearch
     module Indices
       module Actions
         # Downsample an index.
-        # Aggregate a time series (TSDS) index and store pre-computed statistical summaries (`min`, `max`, `sum`, `value_count` and `avg`) for each metric field grouped by a configured time interval.
+        # Downsamples a time series (TSDS) index and reduces its size by keeping the last value or by pre-aggregating metrics:
+        # - When running in `aggregate` mode, it pre-calculates and stores statistical summaries (`min`, `max`, `sum`, `value_count` and `avg`)
+        # for each metric field grouped by a configured time interval and their dimensions.
+        # - When running in `last_value` mode, it keeps the last value for each metric in the configured interval and their dimensions.
         # For example, a TSDS index that contains metrics sampled every 10 seconds can be downsampled to an hourly index.
         # All documents within an hour interval are summarized and stored as a single document in the downsample index.
         # NOTE: Only indices in a time series data stream are supported.
         # Neither field nor document level security can be defined on the source index.
-        # The source index must be read only (`index.blocks.write: true`).
+        # The source index must be read-only (`index.blocks.write: true`).
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
