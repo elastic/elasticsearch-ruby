@@ -23,10 +23,11 @@ module Elasticsearch
     module Inference
       module Actions
         # Delete an inference endpoint
+        # This API requires the manage_inference cluster privilege (the built-in `inference_admin` role grants this privilege).
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :inference_id The inference identifier. (*Required*)
-        # @option arguments [Boolean] :dry_run When true, the endpoint is not deleted and a list of ingest processors which reference this endpoint is returned.
+        # @option arguments [Boolean] :dry_run When true, checks the semantic_text fields and inference processors that reference the endpoint and returns them in a list, but does not delete the endpoint.
         # @option arguments [Boolean] :force When true, the inference endpoint is forcefully deleted even if it is still being used by ingest processors or semantic text fields.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
