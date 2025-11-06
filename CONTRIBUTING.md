@@ -72,6 +72,16 @@ rake test:yaml
 
 Check `rake -T` for more test tasks.
 
+## Environment variables
+
+You can use the following environment variables to customize running the Rest API tests:
+* `TEST_ES_SERVER` - the Elasticsearch endpoint where the tests will be run.
+* `ELASTIC_PASSWORD` - the endpoint password, default: `changeme`.
+* `ES_YAML_TESTS_BRANCH` - which branch from the [Elasticsearch Client tests](https://github.com/elastic/elasticsearch-clients-tests/) suite to run.
+* `DEBUG` - if set, the Logger level will be set to `DEBUG`, otherwise the value will be `WARN`.
+* `QUIET` - this is used by the [test runner](https://github.com/elastic/es-test-runner-ruby). If set to `true`, display for passing tests will be more compact (not showing file/test names).
+* `SINGLE_TEST` - You can specify this value to run a single test from the suite, instead of the whole suite. E.g.: `SINGLE_TEST=migration/20_reindex.yml rake test:yaml`
+
 ## Testing Serverless
 
 To run the [Elasticsearch Client tests](https://github.com/elastic/elasticsearch-clients-tests/) Serverless specific test suite, the following environment variables must be provided:
