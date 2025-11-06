@@ -72,6 +72,20 @@ rake test:yaml
 
 Check `rake -T` for more test tasks.
 
+## Testing Serverless
+
+To run the [Elasticsearch Client tests](https://github.com/elastic/elasticsearch-clients-tests/) Serverless specific test suite, the following environment variables must be provided:
+* `TEST_SUITE` must be set to `serverless`.
+* `TEST_ES_SERVER` must be provided with the Elasticsearch endpoint.
+* `ES_API_KEY` the API key value for your Serverless project.
+
+```
+TEST_SUITE=serverless \
+ES_API_KEY=YOUR_SERVERLESS_API_KEY \
+TEST_ES_SERVER='ELASTICSEARCH_SERVERLESS_ENDPOINT' \
+rake test:yaml
+```
+
 # Contributing
 
 The process for contributing to any of the [Elasticsearch](https://github.com/elasticsearch) repositories is similar:
