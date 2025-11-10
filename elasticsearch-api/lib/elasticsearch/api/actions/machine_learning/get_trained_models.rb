@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [String] :model_id The ID of the trained models to fetch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified)
-        # @option arguments [String] :include A comma-separate list of fields to optionally include. Valid options are 'definition' and 'total_feature_importance'. Default is none.
+        # @option arguments [String] :include A comma delimited string of optional fields to include in the response body. (options: definition, feature_importance_baseline, hyperparameters, total_feature_importance, definition_status)
         # @option arguments [Boolean] :include_model_definition Should the full model definition be included in the results. These definitions can be large. So be cautious when including them. Defaults to false. *Deprecated*
         # @option arguments [Boolean] :decompress_definition Should the model definition be decompressed into valid JSON or returned in a custom compressed format. Defaults to true.
         # @option arguments [Integer] :from skips a number of trained models

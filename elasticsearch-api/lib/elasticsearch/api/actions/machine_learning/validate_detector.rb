@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The detector (*Required*)
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v8
+        # @see [TODO]
         #
         def validate_detector(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.validate_detector' }

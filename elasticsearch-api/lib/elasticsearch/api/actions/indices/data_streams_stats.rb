@@ -25,6 +25,7 @@ module Elasticsearch
         # Get data stream stats
         #
         # @option arguments [List] :name A comma-separated list of data stream names; use `_all` or empty string to perform the operation on all data streams
+        # @option arguments [List] :expand_wildcards Whether to expand wildcard expressions to concrete data stream names that are open, closed or both. (options: all, closed, hidden, none, open)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/data-stream-stats-api.html
@@ -50,7 +51,7 @@ module Elasticsearch
                    else
                      '_data_stream/_stats'
                    end
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

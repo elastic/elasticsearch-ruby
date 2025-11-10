@@ -24,7 +24,7 @@ module Elasticsearch
       module Actions
         # Run an async ES|QL query
         #
-        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
+        # @option arguments [String] :format A short version of the Accept header, e.g. json, yaml.  `csv`, `tsv`, and `txt` formats will return results in a tabular format, excluding other metadata fields from the response.  For async requests, nothing will be returned if the async query doesn't finish within the timeout. The query ID and running status are available in the `X-Elasticsearch-Async-Id` and `X-Elasticsearch-Async-Is-Running` HTTP headers of the response, respectively. (options: csv, json, tsv, txt, yaml, cbor, smile, arrow)
         # @option arguments [String] :delimiter The character to use between values within a CSV row. Only valid for the csv format.
         # @option arguments [Boolean] :drop_null_columns Should entirely null columns be removed from the results? Their name and type will be returning in a new `all_columns` section.
         # @option arguments [Boolean] :allow_partial_results If `true`, partial results will be returned if there are shard failures, but the query can continue to execute on other clusters and shards. If `false`, the entire query will fail if there are any failures.

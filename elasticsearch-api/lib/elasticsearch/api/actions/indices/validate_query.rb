@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [String] :q Query in the Lucene query string syntax
         # @option arguments [String] :analyzer The analyzer to use for the query string
         # @option arguments [Boolean] :analyze_wildcard Specify whether wildcard and prefix queries should be analyzed (default: false)
-        # @option arguments [String] :default_operator The default operator for query string query (AND or OR) (options: AND, OR)
+        # @option arguments [String] :default_operator The default operator for query string query (AND or OR) (options: and, or)
         # @option arguments [String] :df The field to use as default where no field prefix is given in the query string
         # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
         # @option arguments [Boolean] :rewrite Provide a more detailed explanation showing the actual Lucene query that will be executed.
