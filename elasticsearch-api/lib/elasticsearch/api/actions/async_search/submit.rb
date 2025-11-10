@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [String] :analyzer The analyzer to use for the query string
         # @option arguments [Boolean] :analyze_wildcard Specify whether wildcard and prefix queries should be analyzed (default: false)
         # @option arguments [Boolean] :ccs_minimize_roundtrips When doing a cross-cluster search, setting it to true may improve overall search latency, particularly when searching clusters with a large number of shards. However, when set to true, the progress of searches on the remote clusters will not be received until the search finishes on all clusters.
-        # @option arguments [String] :default_operator The default operator for query string query (AND or OR) (options: AND, OR)
+        # @option arguments [String] :default_operator The default operator for query string query (AND or OR) (options: and, or)
         # @option arguments [String] :df The field to use as default where no field prefix is given in the query string
         # @option arguments [Boolean] :explain Specify whether to return detailed information about score computation as part of a hit
         # @option arguments [List] :stored_fields A comma-separated list of stored fields to return as part of a hit

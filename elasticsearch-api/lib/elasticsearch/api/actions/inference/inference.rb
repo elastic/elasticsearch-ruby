@@ -26,6 +26,7 @@ module Elasticsearch
         #
         # @option arguments [String] :inference_id The inference Id
         # @option arguments [String] :task_type The task type
+        # @option arguments [Time] :timeout The amount of time to wait for the inference request to complete.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference payload (*Required*)
         #
@@ -57,7 +58,7 @@ module Elasticsearch
                    else
                      "_inference/#{Utils.__listify(_inference_id)}"
                    end
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

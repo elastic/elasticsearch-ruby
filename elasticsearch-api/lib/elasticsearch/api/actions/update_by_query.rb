@@ -26,7 +26,7 @@ module Elasticsearch
       # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
       # @option arguments [String] :analyzer The analyzer to use for the query string
       # @option arguments [Boolean] :analyze_wildcard Specify whether wildcard and prefix queries should be analyzed (default: false)
-      # @option arguments [String] :default_operator The default operator for query string query (AND or OR) (options: AND, OR)
+      # @option arguments [String] :default_operator The default operator for query string query (AND or OR) (options: and, or)
       # @option arguments [String] :df The field to use as default where no field prefix is given in the query string
       # @option arguments [Long] :from Starting offset (default: 0)
       # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)

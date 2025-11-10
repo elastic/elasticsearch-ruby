@@ -26,6 +26,7 @@ module Elasticsearch
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :elasticsearch_inference_id The inference Id
+        # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference endpoint to be created.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference endpoint's task and service settings (*Required*)
         #
@@ -58,7 +59,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_elasticsearch_inference_id)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

@@ -29,10 +29,10 @@ module Elasticsearch
         # @option arguments [String] :deployment_id The Id of the new deployment. Defaults to the model_id if not set.
         # @option arguments [Integer] :number_of_allocations The total number of allocations this model is assigned across machine learning nodes.
         # @option arguments [Integer] :threads_per_allocation The number of threads used by each model allocation during inference.
-        # @option arguments [String] :priority The deployment priority.
+        # @option arguments [String] :priority The deployment priority. (options: normal, low)
         # @option arguments [Integer] :queue_capacity Controls how many inference requests are allowed in the queue at a time.
         # @option arguments [Time] :timeout Controls the amount of time to wait for the model to deploy.
-        # @option arguments [String] :wait_for The allocation status for which to wait (options: starting, started, fully_allocated)
+        # @option arguments [String] :wait_for Specifies the allocation status to wait for before returning. (options: started, starting, fully_allocated)
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The settings for the trained model deployment
         #
