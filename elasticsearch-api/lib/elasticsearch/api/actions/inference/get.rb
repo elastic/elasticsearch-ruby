@@ -23,6 +23,7 @@ module Elasticsearch
     module Inference
       module Actions
         # Get an inference endpoint
+        # This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :inference_id The inference Id
