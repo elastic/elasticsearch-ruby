@@ -26,7 +26,7 @@ module Elasticsearch
         # Add an index block to an index.
         # Index blocks limit the operations allowed on an index by blocking specific operation types.
         #
-        # @option arguments [String] :index A comma-separated list or wildcard expression of index names used to limit the request.
+        # @option arguments [String, Array] :index A comma-separated list or wildcard expression of index names used to limit the request.
         #  By default, you must explicitly name the indices you are adding blocks to.
         #  To allow the adding of blocks to indices with `_all`, `*`, or other wildcard expressions, change the `action.destructive_requires_name` setting to `false`.
         #  You can update this setting in the `elasticsearch.yml` file or by using the cluster update settings API. (*Required*)

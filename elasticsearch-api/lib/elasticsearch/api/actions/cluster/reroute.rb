@@ -36,7 +36,7 @@ module Elasticsearch
         # @option arguments [Boolean] :dry_run If true, then the request simulates the operation.
         #  It will calculate the result of applying the commands to the current cluster state and return the resulting cluster state after the commands (and rebalancing) have been applied; it will not actually perform the requested changes.
         # @option arguments [Boolean] :explain If true, then the response contains an explanation of why the commands can or cannot run.
-        # @option arguments [String, Array<String>] :metric Limits the information returned to the specified metrics. Server default: all.
+        # @option arguments [String, Array<String>] :metric Limits the information returned to the specified metrics.
         # @option arguments [Boolean] :retry_failed If true, then retries allocation of shards that are blocked due to too many subsequent allocation failures.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.

@@ -26,7 +26,7 @@ module Elasticsearch
         # Evict privileges from the native application privilege cache.
         # The cache is also automatically cleared for applications that have their privileges updated.
         #
-        # @option arguments [String] :application A comma-separated list of applications.
+        # @option arguments [String, Array<String>] :application A comma-separated list of applications.
         #  To clear all applications, use an asterism (`*`).
         #  It does not support other wildcard patterns. (*Required*)
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

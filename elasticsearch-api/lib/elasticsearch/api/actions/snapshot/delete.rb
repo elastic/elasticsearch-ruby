@@ -25,7 +25,7 @@ module Elasticsearch
         # Delete snapshots.
         #
         # @option arguments [String] :repository The name of the repository to delete a snapshot from. (*Required*)
-        # @option arguments [String] :snapshot A comma-separated list of snapshot names to delete.
+        # @option arguments [String, Array<String>] :snapshot A comma-separated list of snapshot names to delete.
         #  It also accepts wildcards (`*`). (*Required*)
         # @option arguments [Time] :master_timeout The period to wait for the master node.
         #  If the master node is not available before the timeout expires, the request fails and returns an error.
