@@ -26,10 +26,9 @@ module Elasticsearch
         # Check in a connector sync job and set the `last_seen` field to the current time before updating it in the internal index.
         # To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
         # This service runs automatically on Elastic Cloud for Elastic managed connectors.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # This functionality is in technical preview and may be changed or removed in a future
+        # release. Elastic will apply best effort to fix any issues, but features in technical
+        # preview are not subject to the support SLA of official GA features.
         #
         # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job to be checked in. (*Required*)
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
