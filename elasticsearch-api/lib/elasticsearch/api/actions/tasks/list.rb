@@ -78,10 +78,9 @@ module Elasticsearch
         # In this example, `X-Opaque-Id: 123456` is the ID as a part of the response header.
         # The `X-Opaque-Id` in the task `headers` is the ID for the task that was initiated by the REST request.
         # The `X-Opaque-Id` in the children `headers` is the child task of the task that was initiated by the REST request.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # This functionality is in technical preview and may be changed or removed in a future
+        # release. Elastic will apply best effort to fix any issues, but features in technical
+        # preview are not subject to the support SLA of official GA features.
         #
         # @option arguments [String, Array<String>] :actions A comma-separated list or wildcard expression of actions used to limit the request.
         #  For example, you can use `cluser:*` to retrieve all cluster-related tasks.

@@ -24,10 +24,9 @@ module Elasticsearch
       module Actions
         # Disable logs stream.
         # Turn off the logs stream feature for this cluster.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # This functionality is in technical preview and may be changed or removed in a future
+        # release. Elastic will apply best effort to fix any issues, but features in technical
+        # preview are not subject to the support SLA of official GA features.
         #
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.

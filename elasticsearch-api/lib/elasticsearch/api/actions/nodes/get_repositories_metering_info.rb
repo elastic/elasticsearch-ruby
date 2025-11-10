@@ -26,10 +26,9 @@ module Elasticsearch
         # Get repositories metering information for a cluster.
         # This API exposes monotonically non-decreasing counters and it is expected that clients would durably store the information needed to compute aggregations over a period of time.
         # Additionally, the information exposed by this API is volatile, meaning that it will not be present after node restarts.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # This functionality is in technical preview and may be changed or removed in a future
+        # release. Elastic will apply best effort to fix any issues, but features in technical
+        # preview are not subject to the support SLA of official GA features.
         #
         # @option arguments [String, Array] :node_id Comma-separated list of node IDs or names used to limit returned information. (*Required*)
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
