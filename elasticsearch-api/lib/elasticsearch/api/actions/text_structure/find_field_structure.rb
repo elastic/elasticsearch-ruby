@@ -36,7 +36,7 @@ module Elasticsearch
         # If the structure finder produces unexpected results, specify the `explain` query parameter and an explanation will appear in the response.
         # It helps determine why the returned structure was chosen.
         #
-        # @option arguments [String] :column_names If `format` is set to `delimited`, you can specify the column names in a comma-separated list.
+        # @option arguments [String, Array<String>] :column_names If `format` is set to `delimited`, you can specify the column names in a comma-separated list.
         #  If this parameter is not specified, the structure finder uses the column names from the header row of the text.
         #  If the text does not have a header row, columns are named "column1", "column2", "column3", for example.
         # @option arguments [String] :delimiter If you have set `format` to `delimited`, you can specify the character used to delimit the values in each row.

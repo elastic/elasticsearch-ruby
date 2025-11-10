@@ -35,7 +35,7 @@ module Elasticsearch
       # @option arguments [String, Array<String>] :fields A comma-separated list of fields to retrieve capabilities for. Wildcard (`*`) expressions are supported.
       # @option arguments [Boolean] :ignore_unavailable If `true`, missing or closed indices are not included in the response.
       # @option arguments [Boolean] :include_unmapped If true, unmapped fields are included in the response.
-      # @option arguments [String] :filters A comma-separated list of filters to apply to the response.
+      # @option arguments [String, Array<String>] :filters A comma-separated list of filters to apply to the response.
       # @option arguments [Array<String>] :types A comma-separated list of field types to include.
       #  Any fields that do not match one of these types will be excluded from the results.
       #  It defaults to empty, meaning that all field types are returned.

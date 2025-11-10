@@ -25,7 +25,7 @@ module Elasticsearch
         # Get index templates.
         # Get information about one or more index templates.
         #
-        # @option arguments [String] :name Comma-separated list of index template names used to limit the request. Wildcard (*) expressions are supported.
+        # @option arguments [String] :name Name of index template to retrieve. Wildcard (*) expressions are supported.
         # @option arguments [Boolean] :local If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node.
         # @option arguments [Boolean] :flat_settings If true, returns settings in flat format.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.

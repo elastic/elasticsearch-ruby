@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [String, Array] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
         # @option arguments [String, Array<String>] :metric Limits the information returned to the specific metrics.
-        #  A comma-separated list of the following options: `_all`, `rest_actions`.
+        #  A comma-separated list of the following options: `_all`, `rest_actions`, `aggregations`.
         # @option arguments [Time] :timeout Period to wait for a response.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

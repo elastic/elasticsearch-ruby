@@ -25,7 +25,7 @@ module Elasticsearch
       # Discover terms that match a partial string in an index.
       # This API is designed for low-latency look-ups used in auto-complete scenarios.
       #
-      # @option arguments [String] :index A comma-separated list of data streams, indices, and index aliases to search.
+      # @option arguments [String, Array] :index A comma-separated list of data streams, indices, and index aliases to search.
       #  Wildcard (`*`) expressions are supported.
       #  To search all data streams or indices, omit this parameter or use `*`  or `_all`. (*Required*)
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
