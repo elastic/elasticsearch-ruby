@@ -24,10 +24,6 @@ module Elasticsearch
       module Actions
         # Create an index from a source index.
         # Copy the mappings and settings from the source index to a destination index while allowing request settings and mappings to override the source values.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String] :source The source index or data stream name (*Required*)
         # @option arguments [String] :dest The destination index or data stream name (*Required*)
