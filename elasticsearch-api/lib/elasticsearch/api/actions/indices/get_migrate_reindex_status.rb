@@ -24,10 +24,6 @@ module Elasticsearch
       module Actions
         # Get the migration reindexing status.
         # Get the status of a migration reindex attempt for a data stream or index.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String, Array] :index The index or data stream name. (*Required*)
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
