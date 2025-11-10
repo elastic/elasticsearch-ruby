@@ -26,10 +26,9 @@ module Elasticsearch
         # Run several Fleet searches with a single API request.
         # The API follows the same structure as the multi search API.
         # However, similar to the Fleet search API, it supports the `wait_for_checkpoints` parameter.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # This functionality is in technical preview and may be changed or removed in a future
+        # release. Elastic will apply best effort to fix any issues, but features in technical
+        # preview are not subject to the support SLA of official GA features.
         #
         # @option arguments [String] :index A single target to search. If the target is an index alias, it must resolve to a single index.
         # @option arguments [Boolean] :allow_no_indices If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar.
