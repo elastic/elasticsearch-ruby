@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.indices.create(
-  index: '<my-index-{now/d}>'
-)
-puts response
-----
