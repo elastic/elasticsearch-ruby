@@ -38,7 +38,7 @@ module Elasticsearch
         #  For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
         #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-        #  Supports comma-separated values, such as `open,hidden`.
+        #  Supports comma-separated values, such as `open,hidden`. Server default: open.
         # @option arguments [Boolean] :ignore_unavailable If `true`, missing or closed indices are not included in the response.
         # @option arguments [String, Array<String>] :fields Comma-separated list or wildcard expressions of fields to include in the statistics.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

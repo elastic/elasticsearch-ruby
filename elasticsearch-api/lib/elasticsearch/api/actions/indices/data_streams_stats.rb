@@ -29,7 +29,7 @@ module Elasticsearch
         #  Wildcard expressions (`*`) are supported.
         #  To target all data streams in a cluster, omit this parameter or use `*`.
         # @option arguments [String, Array<String>] :expand_wildcards Type of data stream that wildcard patterns can match.
-        #  Supports comma-separated values, such as `open,hidden`. Server default: open.
+        #  Supports comma-separated values, such as `open,hidden`. Server default: open,closed.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
