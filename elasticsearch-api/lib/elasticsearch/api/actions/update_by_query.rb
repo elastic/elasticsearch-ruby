@@ -109,7 +109,7 @@ module Elasticsearch
       #  This parameter can be used only when the `q` query string parameter is specified.
       # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
       #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-      #  It supports comma-separated values, such as `open,hidden`.
+      #  It supports comma-separated values, such as `open,hidden`. Server default: open.
       # @option arguments [Integer] :from Skips the specified number of documents. Server default: 0.
       # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a missing or closed index.
       # @option arguments [Boolean] :lenient If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.

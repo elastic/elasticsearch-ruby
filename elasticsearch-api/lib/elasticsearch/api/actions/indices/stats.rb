@@ -36,7 +36,7 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :completion_fields Comma-separated list or wildcard expressions of fields to include in fielddata and suggest statistics.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match. If the request can target data streams, this argument
         #  determines whether wildcard expressions match hidden data streams. Supports comma-separated values,
-        #  such as `open,hidden`.
+        #  such as `open,hidden`. Server default: open.
         # @option arguments [String, Array<String>] :fielddata_fields Comma-separated list or wildcard expressions of fields to include in fielddata statistics.
         # @option arguments [String, Array<String>] :fields Comma-separated list or wildcard expressions of fields to include in the statistics.
         # @option arguments [Boolean] :forbid_closed_indices If true, statistics are not collected from closed indices. Server default: true.

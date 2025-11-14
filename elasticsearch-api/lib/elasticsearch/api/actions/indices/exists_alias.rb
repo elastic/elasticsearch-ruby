@@ -32,7 +32,7 @@ module Elasticsearch
         #  This behavior applies even if the request targets other open indices. Server default: true.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
         #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-        #  Supports comma-separated values, such as `open,hidden`. Server default: open.
+        #  Supports comma-separated values, such as `open,hidden`. Server default: all.
         # @option arguments [Boolean] :ignore_unavailable If `false`, requests that include a missing data stream or index in the target indices or data streams return an error.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
