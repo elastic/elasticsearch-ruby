@@ -28,8 +28,8 @@ module Elasticsearch
         # @option arguments [Boolean] :exclude_interim Exclude interim results
         # @option arguments [Integer] :from skips a number of influencers
         # @option arguments [Integer] :size specifies a max number of influencers to get
-        # @option arguments [String] :start start timestamp for the requested influencers
-        # @option arguments [String] :end end timestamp for the requested influencers
+        # @option arguments [Date] :start start timestamp for the requested influencers
+        # @option arguments [Date] :end end timestamp for the requested influencers
         # @option arguments [Double] :influencer_score influencer score threshold for the requested influencers
         # @option arguments [String] :sort sort field for the requested influencers
         # @option arguments [Boolean] :desc whether the results should be sorted in decending order

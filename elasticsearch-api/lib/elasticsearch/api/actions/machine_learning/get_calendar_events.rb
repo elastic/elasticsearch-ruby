@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [String] :calendar_id The ID of the calendar containing the events
         # @option arguments [String] :job_id Get events for the job. When this option is used calendar_id must be '_all'
-        # @option arguments [String] :start Get events after this time
+        # @option arguments [Date] :start Get events after this time
         # @option arguments [Date] :end Get events before this time
         # @option arguments [Integer] :from Skips a number of events
         # @option arguments [Integer] :size Specifies a max number of events to get

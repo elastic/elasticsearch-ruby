@@ -25,8 +25,8 @@ module Elasticsearch
         # Send data to an anomaly detection job for analysis
         #
         # @option arguments [String] :job_id The name of the job receiving the data
-        # @option arguments [String] :reset_start Optional parameter to specify the start of the bucket resetting range
-        # @option arguments [String] :reset_end Optional parameter to specify the end of the bucket resetting range
+        # @option arguments [Date] :reset_start Optional parameter to specify the start of the bucket resetting range
+        # @option arguments [Date] :reset_end Optional parameter to specify the end of the bucket resetting range
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data to process (*Required*)
         #
