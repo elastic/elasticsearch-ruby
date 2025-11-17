@@ -25,8 +25,8 @@ module Elasticsearch
         # Preview a datafeed
         #
         # @option arguments [String] :datafeed_id The ID of the datafeed to preview
-        # @option arguments [String] :start The start time from where the datafeed preview should begin
-        # @option arguments [String] :end The end time when the datafeed preview should stop
+        # @option arguments [Date] :start The start time from where the datafeed preview should begin
+        # @option arguments [Date] :end The end time when the datafeed preview should stop
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The datafeed config and job config with which to execute the preview
         #

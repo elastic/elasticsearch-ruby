@@ -26,10 +26,10 @@ module Elasticsearch
         #
         # @option arguments [String] :job_id The name of the job to flush
         # @option arguments [Boolean] :calc_interim Calculates interim results for the most recent bucket or all buckets within the latency period
-        # @option arguments [String] :start When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results
-        # @option arguments [String] :end When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results
-        # @option arguments [String] :advance_time Advances time to the given value generating results and updating the model for the advanced interval
-        # @option arguments [String] :skip_time Skips time to the given value without generating results or updating the model for the skipped interval
+        # @option arguments [Date] :start When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results
+        # @option arguments [Date] :end When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results
+        # @option arguments [Date] :advance_time Advances time to the given value generating results and updating the model for the advanced interval
+        # @option arguments [Date] :skip_time Skips time to the given value without generating results or updating the model for the skipped interval
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Flush parameters
         #

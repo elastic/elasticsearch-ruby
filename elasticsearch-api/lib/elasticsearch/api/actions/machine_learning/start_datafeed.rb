@@ -25,8 +25,8 @@ module Elasticsearch
         # Start datafeeds
         #
         # @option arguments [String] :datafeed_id The ID of the datafeed to start
-        # @option arguments [String] :start The start time from where the datafeed should begin
-        # @option arguments [String] :end The end time when the datafeed should stop. When not set, the datafeed continues in real time
+        # @option arguments [Date] :start The start time from where the datafeed should begin
+        # @option arguments [Date] :end The end time when the datafeed should stop. When not set, the datafeed continues in real time
         # @option arguments [Time] :timeout Controls the time to wait until a datafeed has started. Default to 20 seconds
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The start datafeed parameters

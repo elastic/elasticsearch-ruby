@@ -30,8 +30,8 @@ module Elasticsearch
         # @option arguments [Boolean] :exclude_interim Exclude interim results
         # @option arguments [Integer] :from skips a number of buckets
         # @option arguments [Integer] :size specifies a max number of buckets to get
-        # @option arguments [String] :start Start time filter for buckets
-        # @option arguments [String] :end End time filter for buckets
+        # @option arguments [Date] :start Start time filter for buckets
+        # @option arguments [Date] :end End time filter for buckets
         # @option arguments [Double] :anomaly_score Filter for the most anomalous buckets
         # @option arguments [String] :sort Sort buckets by a particular field
         # @option arguments [Boolean] :desc Set the sort direction
