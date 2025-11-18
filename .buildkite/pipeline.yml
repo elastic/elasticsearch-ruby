@@ -25,7 +25,7 @@ steps:
             transport: main
     env:
       RUBY_VERSION: '{{ matrix.ruby }}'
-      STACK_VERSION: 9.2.1-SNAPSHOT
+      STACK_VERSION: 9.2.2-SNAPSHOT
       ES_YAML_TESTS_BRANCH: 9.2
       TRANSPORT_VERSION: '{{ matrix.transport }}'
       RUBY_SOURCE: '{{ matrix.ruby_source }}'
