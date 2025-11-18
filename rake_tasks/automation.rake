@@ -105,6 +105,7 @@ namespace :automation do
   DESC
   task :bumpmatrix, :version do |_, args|
     abort('[!] Required argument [version] missing') unless (version = args[:version])
+    version = args[:version].to_s
     gh_actions = [
       File.expand_path('../.github/workflows/main.yml', __dir__),
       File.expand_path('../.github/workflows/otel.yml', __dir__),
@@ -114,9 +115,9 @@ namespace :automation do
     files.each do |file|
       content = File.read(file)
       if file == '.buildkite/pipeline.yml'
-        pipeline(content, args[:version])
+        pipeline(content, version)
       elsif file.include?('.github/workflows/')
-        workflows(content, args[:version])
+        workflows(content, version)
       end
       File.open(file, 'w') { |f| f.puts content }
       puts "[#{version}] in #{file.to_s.gsub('./','')}"
@@ -125,7 +126,7 @@ namespace :automation do
 
   def pipeline(content, version)
     yaml = YAML.safe_load(content)
-    yaml_tests_branch = yaml['steps'][0]['env']['ES_YAML_TESTS_BRANCH']
+    yaml_tests_branch = yaml['steps'][0]['env']['ES_YAML_TESTS_BRANCH'].to_s
 
     if yaml_tests_branch == 'main'
       branch = yaml_tests_branch
@@ -141,7 +142,7 @@ namespace :automation do
   def workflows(content, version)
     yaml = YAML.safe_load(content)
     tests = yaml['name'] == 'opentelemetry' ? 'otel' : 'main'
-    old_version = yaml['jobs']["test-#{tests}"]['steps'][2]['with']['stack-version']
+    old_version = yaml['jobs']["test-#{tests}"]['steps'][2]['with']['stack-version'].to_s
     return if old_version == version
 
     content.gsub!(old_version, version)
