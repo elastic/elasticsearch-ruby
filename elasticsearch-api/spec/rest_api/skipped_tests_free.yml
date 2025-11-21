@@ -261,3 +261,7 @@
 -
   :file: 'streams/logs/10_basic.yml'
   :description: '*'
+# Failing on CI for JRuby 9.4, works ok locally
+-
+  :file: 'nodes.stats/11_indices_metrics.yml'
+  :description: 'Metric - http'
