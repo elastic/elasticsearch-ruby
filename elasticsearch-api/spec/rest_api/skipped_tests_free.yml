@@ -265,3 +265,6 @@
 -
   :file: 'nodes.stats/11_indices_metrics.yml'
   :description: 'Metric - http'
+-
+  :file: 'cluster.info/20_info_http.yml'
+  :description: 'Cluster HTTP Info'
