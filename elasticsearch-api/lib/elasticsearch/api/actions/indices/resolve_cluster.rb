@@ -26,9 +26,9 @@ module Elasticsearch
         #
         # @option arguments [List] :name A comma-separated list of cluster:index names or wildcard expressions
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed). Only allowed when providing an index expression.
-        # @option arguments [Boolean] :ignore_throttled Whether specified concrete, expanded or aliased indices should be ignored when throttled. Only allowed when providing an index expression.
+        # @option arguments [Boolean] :ignore_throttled Whether specified concrete, expanded or aliased indices should be ignored when throttled. Only allowed when providing an index expression. *Deprecated*
         # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified). Only allowed when providing an index expression.
-        # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open). Only allowed when providing an index expression. (options: open, closed, hidden, none, all)
+        # @option arguments [List] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open). Only allowed when providing an index expression. (options: open, closed, hidden, none, all)
         # @option arguments [Time] :timeout The maximum time to wait for remote clusters to respond
         # @option arguments [Hash] :headers Custom HTTP headers
         #

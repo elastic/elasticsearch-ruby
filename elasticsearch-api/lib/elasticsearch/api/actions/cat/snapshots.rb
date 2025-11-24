@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Boolean] :ignore_unavailable Set to true to ignore unavailable snapshots
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [List] :h Comma-separated list of column names to display
+        # @option arguments [List] :h Comma-separated list of column names to display (options: id, repository, status, start_epoch, start_time, end_epoch, end_time, duration, indices, successful_shards, failed_shards, total_shards, reason)
         # @option arguments [Boolean] :help Return help information
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)

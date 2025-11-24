@@ -25,7 +25,7 @@ module Elasticsearch
         # Deletes the data stream options of the selected data streams
         #
         # @option arguments [List] :name A comma-separated list of data streams of which the data stream options will be deleted; use `*` to get all data streams
-        # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
+        # @option arguments [List] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
         # @option arguments [Time] :timeout Explicit timestamp for the document
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers

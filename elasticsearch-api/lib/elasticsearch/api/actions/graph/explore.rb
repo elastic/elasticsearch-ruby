@@ -25,7 +25,7 @@ module Elasticsearch
         # Explore graph analytics
         #
         # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-        # @option arguments [String] :routing Specific routing value
+        # @option arguments [List] :routing Specific routing value
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Graph Query DSL (*Required*)

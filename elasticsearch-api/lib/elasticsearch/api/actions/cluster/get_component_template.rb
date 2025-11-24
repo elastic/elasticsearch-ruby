@@ -24,7 +24,7 @@ module Elasticsearch
       module Actions
         # Get component templates
         #
-        # @option arguments [List] :name The comma separated names of the component templates
+        # @option arguments [String] :name The name of the component template. Wildcard (`*`) expressions are supported.
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Boolean] :include_defaults Return all default configurations for the component template (default: false)

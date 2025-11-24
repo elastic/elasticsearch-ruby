@@ -25,7 +25,7 @@ module Elasticsearch
         # Perform inference on the service
         #
         # @option arguments [String] :inference_id The inference Id
-        # @option arguments [String] :task_type The task type
+        # @option arguments [String] :task_type The task type (options: sparse_embedding, text_embedding, rerank, completion, chat_completion)
         # @option arguments [Time] :timeout The amount of time to wait for the inference request to complete.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference payload (*Required*)

@@ -29,9 +29,9 @@ module Elasticsearch
         # @option arguments [Integer] :size specifies a max number of transforms to get, defaults to 100
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [List] :h Comma-separated list of column names to display
+        # @option arguments [List] :h Comma-separated list of column names to display (options: changes_last_detection_time, checkpoint, checkpoint_duration_time_exp_avg, checkpoint_progress, create_time, delete_time, description, dest_index, documents_deleted, documents_indexed, docs_per_second, documents_processed, frequency, id, index_failure, index_time, index_total, indexed_documents_exp_avg, last_search_time, max_page_search_size, pages_processed, pipeline, processed_documents_exp_avg, processing_time, reason, search_failure, search_time, search_total, source_index, state, transform_type, trigger_count, version)
         # @option arguments [Boolean] :help Return help information
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
+        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by (options: changes_last_detection_time, checkpoint, checkpoint_duration_time_exp_avg, checkpoint_progress, create_time, delete_time, description, dest_index, documents_deleted, documents_indexed, docs_per_second, documents_processed, frequency, id, index_failure, index_time, index_total, indexed_documents_exp_avg, last_search_time, max_page_search_size, pages_processed, pipeline, processed_documents_exp_avg, processing_time, reason, search_failure, search_time, search_total, source_index, state, transform_type, trigger_count, version)
         # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [String] :bytes The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)

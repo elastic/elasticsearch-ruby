@@ -24,7 +24,7 @@ module Elasticsearch
       module Actions
         # Create a custom inference endpoint
         #
-        # @option arguments [String] :task_type The task type
+        # @option arguments [String] :task_type The task type (options: text_embedding, sparse_embedding, rerank, completion)
         # @option arguments [String] :custom_inference_id The inference Id
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference endpoint's task and service settings (*Required*)

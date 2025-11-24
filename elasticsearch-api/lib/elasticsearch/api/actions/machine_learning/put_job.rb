@@ -27,8 +27,8 @@ module Elasticsearch
         # @option arguments [String] :job_id The ID of the job to create
         # @option arguments [Boolean] :ignore_unavailable Ignore unavailable indexes (default: false). Only set if datafeed_config is provided.
         # @option arguments [Boolean] :allow_no_indices Ignore if the source indices expressions resolves to no concrete indices (default: true). Only set if datafeed_config is provided.
-        # @option arguments [Boolean] :ignore_throttled Ignore indices that are marked as throttled (default: true). Only set if datafeed_config is provided.
-        # @option arguments [String] :expand_wildcards Whether source index expressions should get expanded to open or closed indices (default: open). Only set if datafeed_config is provided. (options: open, closed, hidden, none, all)
+        # @option arguments [Boolean] :ignore_throttled Ignore indices that are marked as throttled (default: true). Only set if datafeed_config is provided. *Deprecated*
+        # @option arguments [List] :expand_wildcards Whether source index expressions should get expanded to open or closed indices (default: open). Only set if datafeed_config is provided. (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The job (*Required*)
         #

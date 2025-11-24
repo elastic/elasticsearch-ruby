@@ -24,7 +24,7 @@ module Elasticsearch
       module Actions
         # Create an Amazon Bedrock inference endpoint
         #
-        # @option arguments [String] :task_type The task type
+        # @option arguments [String] :task_type The task type (options: completion, text_embedding)
         # @option arguments [String] :amazonbedrock_inference_id The inference Id
         # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference endpoint to be created.
         # @option arguments [Hash] :headers Custom HTTP headers

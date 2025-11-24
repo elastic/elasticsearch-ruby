@@ -25,7 +25,7 @@ module Elasticsearch
         # Get the cluster health status
         #
         # @option arguments [List] :index Limit the information returned to a specific index
-        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
+        # @option arguments [List] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
         # @option arguments [String] :level Specify the level of detail for returned information (options: cluster, indices, shards)
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [String] :wait_for_events Wait until all currently queued events with the given priority are processed (options: immediate, urgent, high, normal, low, languid)
         # @option arguments [Boolean] :wait_for_no_relocating_shards Whether to wait until there are no relocating shards in the cluster
         # @option arguments [Boolean] :wait_for_no_initializing_shards Whether to wait until there are no initializing shards in the cluster
-        # @option arguments [String] :wait_for_status Wait until cluster is in a specific state (options: green, yellow, red)
+        # @option arguments [String] :wait_for_status Wait until cluster is in a specific state (options: green, yellow, red, unknown, unavailable)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/cluster-health.html

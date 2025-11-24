@@ -28,9 +28,9 @@ module Elasticsearch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no configs. (This includes `_all` string or when no configs have been specified)
         # @option arguments [String] :bytes The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [List] :h Comma-separated list of column names to display
+        # @option arguments [List] :h Comma-separated list of column names to display (options: assignment_explanation, create_time, description, dest_index, failure_reason, id, model_memory_limit, node.address, node.ephemeral_id, node.id, node.name, progress, source_index, state, type, version)
         # @option arguments [Boolean] :help Return help information
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
+        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by (options: assignment_explanation, create_time, description, dest_index, failure_reason, id, model_memory_limit, node.address, node.ephemeral_id, node.id, node.name, progress, source_index, state, type, version)
         # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers

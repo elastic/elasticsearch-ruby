@@ -24,7 +24,7 @@ module Elasticsearch
       module Actions
         # Create an OpenAI inference endpoint
         #
-        # @option arguments [String] :task_type The task type
+        # @option arguments [String] :task_type The task type (options: chat_completion, completion, text_embedding)
         # @option arguments [String] :openai_inference_id The inference ID
         # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference endpoint to be created.
         # @option arguments [Hash] :headers Custom HTTP headers

@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [List] :h Comma-separated list of column names to display
+        # @option arguments [List] :h Comma-separated list of column names to display (options: shards, shards.undesired, write_load.forecast, disk.indices.forecast, disk.indices, disk.used, disk.avail, disk.total, disk.percent, host, ip, node, node.role)
         # @option arguments [Boolean] :help Return help information
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [Boolean] :v Verbose mode. Display column headers
