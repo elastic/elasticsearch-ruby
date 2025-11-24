@@ -30,9 +30,9 @@ module Elasticsearch
         # @option arguments [Integer] :size specifies a max number of trained models to get
         # @option arguments [String] :bytes The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [List] :h Comma-separated list of column names to display
+        # @option arguments [List] :h Comma-separated list of column names to display (options: create_time, created_by, data_frame_analytics_id, description, heap_size, id, ingest.count, ingest.current, ingest.failed, ingest.pipelines, ingest.time, license, operations, version)
         # @option arguments [Boolean] :help Return help information
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
+        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by (options: create_time, created_by, data_frame_analytics_id, description, heap_size, id, ingest.count, ingest.current, ingest.failed, ingest.pipelines, ingest.time, license, operations, version)
         # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers

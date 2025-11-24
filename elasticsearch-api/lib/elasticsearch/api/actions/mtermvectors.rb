@@ -32,7 +32,7 @@ module Elasticsearch
       # @option arguments [Boolean] :positions Specifies if term positions should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
       # @option arguments [Boolean] :payloads Specifies if term payloads should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random) .Applies to all returned documents unless otherwise specified in body "params" or "docs".
-      # @option arguments [String] :routing Specific routing value. Applies to all returned documents unless otherwise specified in body "params" or "docs".
+      # @option arguments [List] :routing Specific routing value. Applies to all returned documents unless otherwise specified in body "params" or "docs".
       # @option arguments [Boolean] :realtime Specifies if requests are real-time as opposed to near-real-time (default: true).
       # @option arguments [Long] :version Explicit version number for concurrency control
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte)

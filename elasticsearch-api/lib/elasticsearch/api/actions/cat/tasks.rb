@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [List] :actions A comma-separated list of actions that should be returned. Leave empty to return all.
         # @option arguments [Boolean] :detailed Return detailed task information (default: false)
         # @option arguments [String] :parent_task_id Return tasks with specified parent task id (node_id:task_number). Set to -1 to return all.
-        # @option arguments [List] :h Comma-separated list of column names to display
+        # @option arguments [List] :h Comma-separated list of column names to display (options: id, action, task_id, parent_task_id, type, start_time, timestamp, running_time_ns, running_time, node_id, ip, port, node, version, x_opaque_id)
         # @option arguments [Boolean] :help Return help information
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)

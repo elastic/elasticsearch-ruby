@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :active_only If `true`, the response only includes ongoing shard recoveries
         # @option arguments [String] :bytes The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)
         # @option arguments [Boolean] :detailed If `true`, the response includes detailed information about shard recoveries
-        # @option arguments [List] :h Comma-separated list of column names to display
+        # @option arguments [List] :h Comma-separated list of column names to display (options: index, shard, start_time, start_time_millis, stop_time, stop_time_millis, time, type, stage, source_host, source_node, target_host, target_node, repository, snapshot, files, files_recovered, files_percent, files_total, bytes, bytes_recovered, bytes_percent, bytes_total, translog_ops, translog_ops_recovered, translog_ops_percent)
         # @option arguments [Boolean] :help Return help information
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)

@@ -25,8 +25,8 @@ module Elasticsearch
         # Get node statistics
         #
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-        # @option arguments [List] :metric Limit the information returned to the specified metrics (options: _all, breaker, fs, http, indices, jvm, os, process, thread_pool, transport, discovery, indexing_pressure)
-        # @option arguments [List] :index_metric Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified. (options: _all, completion, docs, fielddata, query_cache, flush, get, indexing, merge, request_cache, refresh, search, segments, store, warmer, bulk, shard_stats)
+        # @option arguments [List] :metric Limit the information returned to the specified metrics (options: _all, _none, adaptive_selection, allocations, breaker, discovery, fs, http, indexing_pressure, indices, ingest, jvm, os, process, repositories, script, script_cache, thread_pool, transport)
+        # @option arguments [List] :index_metric Limit the information returned for `indices` metric to the specific index metrics. Isn't used if `indices` (or `all`) metric isn't specified. (options: _all, completion, docs, fielddata, query_cache, flush, get, indexing, mappings, merge, request_cache, recovery, refresh, search, segments, store, warmer, bulk, shard_stats, translog, dense_vector, sparse_vector)
         # @option arguments [List] :completion_fields A comma-separated list of fields for the `completion` index metric (supports wildcards)
         # @option arguments [List] :fielddata_fields A comma-separated list of fields for the `fielddata` index metric (supports wildcards)
         # @option arguments [List] :fields A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)

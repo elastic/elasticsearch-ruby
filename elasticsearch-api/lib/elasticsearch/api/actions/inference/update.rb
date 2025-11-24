@@ -25,7 +25,7 @@ module Elasticsearch
         # Update an inference endpoint
         #
         # @option arguments [String] :inference_id The inference Id
-        # @option arguments [String] :task_type The task type
+        # @option arguments [String] :task_type The task type (options: sparse_embedding, text_embedding, rerank, completion, chat_completion)
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference endpoint's task and service settings (*Required*)
         #

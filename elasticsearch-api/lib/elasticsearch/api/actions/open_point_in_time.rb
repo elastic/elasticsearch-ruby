@@ -25,9 +25,9 @@ module Elasticsearch
       #
       # @option arguments [List] :index A comma-separated list of index names to open point in time; use `_all` or empty string to perform the operation on all indices
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
-      # @option arguments [String] :routing Specific routing value
+      # @option arguments [List] :routing Specific routing value
       # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
-      # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
+      # @option arguments [List] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
       # @option arguments [String] :keep_alive Specific the time to live for the point in time (*Required*)
       # @option arguments [Boolean] :allow_partial_search_results Specify whether to tolerate shards missing when creating the point-in-time, or otherwise throw an exception. (default: false)
       # @option arguments [Integer] :max_concurrent_shard_requests The number of concurrent shard requests per node executed concurrently when opening this point-in-time. This value should be used to limit the impact of opening the point-in-time on the cluster

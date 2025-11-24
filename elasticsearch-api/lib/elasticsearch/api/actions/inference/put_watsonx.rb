@@ -24,7 +24,7 @@ module Elasticsearch
       module Actions
         # Create a Watsonx inference endpoint
         #
-        # @option arguments [String] :task_type The task type
+        # @option arguments [String] :task_type The task type (options: text_embedding, chat_completion, completion)
         # @option arguments [String] :watsonx_inference_id The inference Id
         # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference endpoint to be created.
         # @option arguments [Hash] :headers Custom HTTP headers

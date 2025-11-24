@@ -25,7 +25,7 @@ module Elasticsearch
         # Get an inference endpoint
         #
         # @option arguments [String] :inference_id The inference Id
-        # @option arguments [String] :task_type The task type
+        # @option arguments [String] :task_type The task type (options: sparse_embedding, text_embedding, rerank, completion, chat_completion)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/get-inference-api.html

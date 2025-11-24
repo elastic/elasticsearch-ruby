@@ -29,7 +29,7 @@ module Elasticsearch
         # support SLA of official GA features.
         #
         # @option arguments [String] :collection_name The name of behavioral analytics collection
-        # @option arguments [String] :event_type Behavioral analytics event type. Available: page_view, search, search_click
+        # @option arguments [String] :event_type Behavioral analytics event type. Available: page_view, search, search_click (options: page_view, search, search_click)
         # @option arguments [Boolean] :debug If true, returns event information that will be stored
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The event definition (*Required*)

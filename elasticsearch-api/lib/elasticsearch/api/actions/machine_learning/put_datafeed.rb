@@ -27,8 +27,8 @@ module Elasticsearch
         # @option arguments [String] :datafeed_id The ID of the datafeed to create
         # @option arguments [Boolean] :ignore_unavailable Ignore unavailable indexes (default: false)
         # @option arguments [Boolean] :allow_no_indices Ignore if the source indices expressions resolves to no concrete indices (default: true)
-        # @option arguments [Boolean] :ignore_throttled Ignore indices that are marked as throttled (default: true)
-        # @option arguments [String] :expand_wildcards Whether source index expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
+        # @option arguments [Boolean] :ignore_throttled Ignore indices that are marked as throttled (default: true) *Deprecated*
+        # @option arguments [List] :expand_wildcards Whether source index expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The datafeed config (*Required*)
         #

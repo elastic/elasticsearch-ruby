@@ -27,9 +27,9 @@ module Elasticsearch
         # @option arguments [String] :datafeed_id The ID of the datafeeds stats to fetch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [List] :h Comma-separated list of column names to display
+        # @option arguments [List] :h Comma-separated list of column names to display (options: ae, bc, id, na, ne, ni, nn, sba, sc, seah, st, s)
         # @option arguments [Boolean] :help Return help information
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
+        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by (options: ae, bc, id, na, ne, ni, nn, sba, sc, seah, st, s)
         # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [String] :bytes The unit in which to display byte values (options: b, kb, mb, gb, tb, pb)

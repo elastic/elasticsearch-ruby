@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Integer] :size specifies a max number of results to get (default: 100)
         # @option arguments [String] :status A sync job status to fetch connector sync jobs for (options: canceling, canceled, completed, error, in_progress, pending, suspended)
         # @option arguments [String] :connector_id Id of the connector to fetch the sync jobs for
-        # @option arguments [List] :job_type A comma-separated list of job types
+        # @option arguments [List] :job_type A comma-separated list of job types (options: full, incremental, access_control)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/list-connector-sync-jobs-api.html

@@ -32,7 +32,7 @@ module Elasticsearch
       # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
       # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
       # @option arguments [String] :conflicts What to do when the delete by query hits version conflicts? (options: abort, proceed)
-      # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
+      # @option arguments [List] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
       # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
       # @option arguments [String] :q Query in the Lucene query string syntax
@@ -41,7 +41,7 @@ module Elasticsearch
       # @option arguments [String] :search_type Search operation type (options: query_then_fetch, dfs_query_then_fetch)
       # @option arguments [Time] :search_timeout Explicit timeout for each search request. Defaults to no timeout.
       # @option arguments [Long] :max_docs Maximum number of documents to process (default: all documents)
-      # @option arguments [List] :sort A comma-separated list of <field>:<direction> pairs
+      # @option arguments [List] :sort A comma-separated list of <field>:<direction> pairs *Deprecated*
       # @option arguments [Long] :terminate_after The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
       # @option arguments [List] :stats Specific 'tag' of the request for logging and statistical purposes
       # @option arguments [Boolean] :version Specify whether to return document version as part of a hit
