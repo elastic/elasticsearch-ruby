@@ -89,8 +89,13 @@ namespace :es do
     # works in new API.
     #
     # Get the latest minor from version number, and get latest snapshot
-    major_minor = version_number.split('.')[0..1].join('.')
+    major_minor = if version_number == 'main'
+                    'master'
+                  else
+                    version_number.split('.')[0..1].join('.')
+                  end
     url = URI("https://artifacts-snapshot.elastic.co/elasticsearch/latest/#{major_minor}.json")
+
     manifest_url = JSON.parse(Net::HTTP.get(url))['manifest_url']
     download_file!(manifest_url, json_filename)
 
