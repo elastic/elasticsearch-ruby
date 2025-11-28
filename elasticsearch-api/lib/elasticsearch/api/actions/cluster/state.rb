@@ -40,11 +40,11 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :metric Limit the information returned to the specified metrics
         # @option arguments [String, Array] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
         # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) Server default: true.
-        # @option arguments [String, Array<String>] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
+        # @option arguments [String, Array<String>] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. Server default: open.
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master Server default: 30s.
+        # @option arguments [Time] :master_timeout Timeout for waiting for new cluster state in case it is blocked Server default: 30s.
         # @option arguments [Integer] :wait_for_metadata_version Wait for the metadata version to be equal or greater than the specified metadata version
         # @option arguments [Time] :wait_for_timeout The maximum time to wait for wait_for_metadata_version before timing out
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

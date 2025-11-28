@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Delete an inference endpoint
+        # Delete an inference endpoint.
         #
         # @option arguments [String] :task_type The task type
         # @option arguments [String] :inference_id The inference identifier. (*Required*)

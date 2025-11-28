@@ -25,10 +25,9 @@ module Elasticsearch
         # Run a Fleet search.
         # The purpose of the Fleet search API is to provide an API where the search will be run only
         # after the provided checkpoint has been processed and is visible for searches inside of Elasticsearch.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # This functionality is in technical preview and may be changed or removed in a future
+        # release. Elastic will apply best effort to fix any issues, but features in technical
+        # preview are not subject to the support SLA of official GA features.
         #
         # @option arguments [String] :index A single target to search. If the target is an index alias, it must resolve to a single index. (*Required*)
         # @option arguments [Boolean] :allow_no_indices [TODO]

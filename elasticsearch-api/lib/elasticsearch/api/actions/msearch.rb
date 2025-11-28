@@ -44,7 +44,7 @@ module Elasticsearch
       # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and index aliases to search.
       # @option arguments [Boolean] :allow_no_indices If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar.
       # @option arguments [Boolean] :ccs_minimize_roundtrips If true, network roundtrips between the coordinating node and remote clusters are minimized for cross-cluster search requests. Server default: true.
-      # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+      # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Server default: open.
       # @option arguments [Boolean] :ignore_throttled If true, concrete, expanded or aliased indices are ignored when frozen.
       # @option arguments [Boolean] :ignore_unavailable If true, missing or closed indices are not included in the response.
       # @option arguments [Boolean] :include_named_queries_score Indicates whether hit.matched_queries should be rendered as a map that includes
