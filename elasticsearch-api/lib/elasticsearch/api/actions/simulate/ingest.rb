@@ -35,10 +35,9 @@ module Elasticsearch
         # By default, the pipeline definitions that are currently in the system are used.
         # However, you can supply substitute pipeline definitions in the body of the request.
         # These will be used in place of the pipeline definitions that are already in the system. This can be used to replace existing pipeline definitions or to create new ones. The pipeline substitutions are used only within this request.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # This functionality is in technical preview and may be changed or removed in a future
+        # release. Elastic will apply best effort to fix any issues, but features in technical
+        # preview are not subject to the support SLA of official GA features.
         #
         # @option arguments [String] :index The index to simulate ingesting into.
         #  This value can be overridden by specifying an index on each document.

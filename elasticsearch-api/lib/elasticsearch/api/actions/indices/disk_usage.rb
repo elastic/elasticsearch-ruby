@@ -29,10 +29,9 @@ module Elasticsearch
         # NOTE: The total size of fields of the analyzed shards of the index in the response is usually smaller than the index `store_size` value because some small metadata files are ignored and some parts of data files might not be scanned by the API.
         # Since stored fields are stored together in a compressed format, the sizes of stored fields are also estimates and can be inaccurate.
         # The stored size of the `_id` field is likely underestimated while the `_source` field is overestimated.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # This functionality is in technical preview and may be changed or removed in a future
+        # release. Elastic will apply best effort to fix any issues, but features in technical
+        # preview are not subject to the support SLA of official GA features.
         #
         # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and aliases used to limit the request.
         #  It’s recommended to execute this API with a single index (or the latest backing index of a data stream) as the API consumes resources significantly. (*Required*)

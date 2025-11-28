@@ -34,7 +34,7 @@ module Elasticsearch
         #  or `:desc` as a suffix to the column name.
         # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
         #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-        #  It supports comma-separated values, such as `open,hidden`.
+        #  It supports comma-separated values, such as `open,hidden`. Server default: all.
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
         #  If the master node is not available before the timeout expires, the request fails and returns an error.
         #  To indicated that the request should never timeout, you can set it to `-1`. Server default: 30s.

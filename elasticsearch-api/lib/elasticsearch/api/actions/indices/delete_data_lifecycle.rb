@@ -26,7 +26,7 @@ module Elasticsearch
         # Removes the data stream lifecycle from a data stream, rendering it not managed by the data stream lifecycle.
         #
         # @option arguments [String, Array<String>] :name A comma-separated list of data streams of which the data stream lifecycle will be deleted; use `*` to get all data streams (*Required*)
-        # @option arguments [String, Array<String>] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open)
+        # @option arguments [String, Array<String>] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) Server default: open.
         # @option arguments [Time] :master_timeout Specify timeout for connection to master Server default: 30s.
         # @option arguments [Time] :timeout Explicit timestamp for the document
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

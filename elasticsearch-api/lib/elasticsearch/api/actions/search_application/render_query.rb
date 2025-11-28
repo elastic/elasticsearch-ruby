@@ -27,10 +27,9 @@ module Elasticsearch
         # If a parameter used in the search template is not specified in `params`, the parameter's default value will be used.
         # The API returns the specific Elasticsearch query that would be generated and run by calling the search application search API.
         # You must have `read` privileges on the backing alias of the search application.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # This functionality is in technical preview and may be changed or removed in a future
+        # release. Elastic will apply best effort to fix any issues, but features in technical
+        # preview are not subject to the support SLA of official GA features.
         #
         # @option arguments [String] :name The name of the search application to render teh query for. (*Required*)
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

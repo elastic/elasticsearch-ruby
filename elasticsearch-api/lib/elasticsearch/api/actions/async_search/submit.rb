@@ -44,7 +44,7 @@ module Elasticsearch
         # @option arguments [String] :default_operator The default operator for query string query (AND or OR) Server default: or.
         # @option arguments [String] :df The field to use as default where no field prefix is given in the query string
         # @option arguments [String, Array<String>] :docvalue_fields A comma-separated list of fields to return as the docvalue representation of a field for each hit
-        # @option arguments [String, Array<String>] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
+        # @option arguments [String, Array<String>] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. Server default: open.
         # @option arguments [Boolean] :explain Specify whether to return detailed information about score computation as part of a hit
         # @option arguments [Boolean] :ignore_throttled Whether specified concrete, expanded or aliased indices should be ignored when throttled
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
