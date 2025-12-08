@@ -462,3 +462,6 @@
   :file: 'security/20_test_run_as_execute_watch.yml'
   :description: '*'
 
+-
+  :file: 'downsample/90_multi_fields.yml'
+  :description: '*'
