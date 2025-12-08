@@ -313,7 +313,11 @@ module Elasticsearch
         end
 
         def wipe_all_indices(client)
-          client.indices.delete(index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden', ignore: 404)
+          begin
+            client.indices.delete(index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden', ignore: 404)
+          rescue StandardError => e
+            logger.error "Caught exception attempting to delete all indices: #{e}"
+          end
         end
 
         def wipe_all_templates(client)
