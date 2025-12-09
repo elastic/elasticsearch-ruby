@@ -128,7 +128,7 @@ module Elasticsearch
       # @option arguments [Boolean] :request_cache If `true`, the request cache is used for this request.
       #  It defaults to the index-level setting.
       # @option arguments [Float] :requests_per_second The throttle for this request in sub-requests per second. Server default: -1.
-      # @option arguments [String] :routing A custom value used to route operations to a specific shard.
+      # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
       # @option arguments [Time] :scroll The period to retain the search context for scrolling. Server default: 5m.
       # @option arguments [Integer] :scroll_size The size of the scroll request that powers the operation. Server default: 1000.
       # @option arguments [Time] :search_timeout An explicit timeout for each search request.

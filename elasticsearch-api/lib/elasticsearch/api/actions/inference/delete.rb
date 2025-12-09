@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Delete an inference endpoint
+        # Delete an inference endpoint.
         # This API requires the manage_inference cluster privilege (the built-in `inference_admin` role grants this privilege).
         #
         # @option arguments [String] :task_type The task type

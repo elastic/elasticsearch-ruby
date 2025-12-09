@@ -86,7 +86,7 @@ module Elasticsearch
       #  If `false`, it does nothing with refreshes. Server default: false.
       # @option arguments [Boolean] :require_alias If `true`, the destination must be an index alias.
       # @option arguments [Boolean] :require_data_stream If `true`, the request's actions must target a data stream (existing or to be created).
-      # @option arguments [String] :routing A custom value that is used to route operations to a specific shard.
+      # @option arguments [String, Array<String>] :routing A custom value that is used to route operations to a specific shard.
       # @option arguments [Time] :timeout The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards.
       #  Elasticsearch waits for at least the specified timeout period before failing.
       #  The actual wait time could be longer, particularly when multiple waits occur.This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs.

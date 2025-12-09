@@ -48,7 +48,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/group/ingest-random-sampling
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch#TODO
         #
         def put_sample_configuration(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.put_sample_configuration' }

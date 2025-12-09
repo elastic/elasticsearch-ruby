@@ -30,7 +30,7 @@ module Elasticsearch
         #
         # @option arguments [Array<String>] :categories A comma-separated list of the information categories to include in the response.
         #  For example, `build,license,features`.
-        # @option arguments [Boolean] :accept_enterprise If this param is used it must be set to true
+        # @option arguments [Boolean] :accept_enterprise If used, this otherwise ignored parameter must be set to true
         # @option arguments [Boolean] :human Defines whether additional human-readable information is included in the response.
         #  In particular, it adds descriptions and a tag line. Server default: true.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

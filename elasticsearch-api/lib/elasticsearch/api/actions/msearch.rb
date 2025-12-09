@@ -65,7 +65,7 @@ module Elasticsearch
       #   _alias:*pr*
       #  Supported in serverless only.
       # @option arguments [Boolean] :rest_total_hits_as_int If true, hits.total are returned as an integer in the response. Defaults to false, which returns an object.
-      # @option arguments [String] :routing Custom routing value used to route search operations to a specific shard.
+      # @option arguments [String, Array<String>] :routing Custom routing value used to route search operations to a specific shard.
       # @option arguments [String] :search_type Indicates whether global term and document frequencies should be used when scoring returned documents.
       # @option arguments [Boolean] :typed_keys Specifies whether aggregation and suggester names should be prefixed by their respective types in the response.
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

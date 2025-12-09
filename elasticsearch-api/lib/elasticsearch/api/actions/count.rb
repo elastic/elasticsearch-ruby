@@ -62,7 +62,7 @@ module Elasticsearch
       #   _alias:_origin
       #   _alias:*pr*
       #  Supported in serverless only.
-      # @option arguments [String] :routing A custom value used to route operations to a specific shard.
+      # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
       # @option arguments [Integer] :terminate_after The maximum number of documents to collect for each shard.
       #  If a query reaches this limit, Elasticsearch terminates the query early.
       #  Elasticsearch collects documents before sorting.IMPORTANT: Use with caution.

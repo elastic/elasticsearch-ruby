@@ -47,7 +47,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/group/ingest-random-sampling
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch#TODO
         #
         def delete_sample_configuration(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.delete_sample_configuration' }

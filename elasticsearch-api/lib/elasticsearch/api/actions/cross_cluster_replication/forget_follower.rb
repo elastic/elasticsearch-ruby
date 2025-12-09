@@ -33,7 +33,7 @@ module Elasticsearch
         # NOTE: This API does not stop replication by a following index. If you use this API with a follower index that is still actively following, the following index will add back retention leases on the leader.
         # The only purpose of this API is to handle the case of failure to remove the following retention leases after the unfollow API is invoked.
         #
-        # @option arguments [String] :index the name of the leader index for which specified follower retention leases should be removed (*Required*)
+        # @option arguments [String] :index Name of the leader index for which specified follower retention leases should be removed (*Required*)
         # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.

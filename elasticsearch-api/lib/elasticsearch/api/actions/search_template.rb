@@ -46,7 +46,7 @@ module Elasticsearch
       #   _alias:_origin
       #   _alias:*pr*
       #  Supported in serverless only.
-      # @option arguments [String] :routing A custom value used to route operations to a specific shard.
+      # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
       # @option arguments [Time] :scroll Specifies how long a consistent view of the index
       #  should be maintained for scrolled search.
       # @option arguments [String] :search_type The type of the search operation.

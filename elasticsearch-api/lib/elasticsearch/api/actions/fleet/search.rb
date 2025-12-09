@@ -47,7 +47,7 @@ module Elasticsearch
         # @option arguments [String] :preference [TODO]
         # @option arguments [Integer] :pre_filter_shard_size [TODO]
         # @option arguments [Boolean] :request_cache [TODO]
-        # @option arguments [String] :routing [TODO]
+        # @option arguments [String, Array<String>] :routing [TODO]
         # @option arguments [Time] :scroll [TODO]
         # @option arguments [String] :search_type [TODO]
         # @option arguments [Array<String>] :stats [TODO]

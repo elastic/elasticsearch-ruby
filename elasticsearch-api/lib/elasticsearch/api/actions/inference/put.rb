@@ -45,6 +45,7 @@ module Elasticsearch
         # * Llama (`chat_completion`, `completion`, `text_embedding`)
         # * Mistral (`chat_completion`, `completion`, `text_embedding`)
         # * OpenAI (`chat_completion`, `completion`, `text_embedding`)
+        # * OpenShift AI (`chat_completion`, `completion`, `rerank`, `text_embedding`)
         # * VoyageAI (`rerank`, `text_embedding`)
         # * Watsonx inference integration (`text_embedding`)
         #
