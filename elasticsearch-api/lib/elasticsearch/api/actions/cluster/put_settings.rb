@@ -37,9 +37,9 @@ module Elasticsearch
         # WARNING: Transient cluster settings are no longer recommended. Use persistent cluster settings instead.
         # If a cluster becomes unstable, transient settings can clear unexpectedly, resulting in a potentially undesired cluster configuration.
         #
-        # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node Server default: 30s.
-        # @option arguments [Time] :timeout Explicit operation timeout Server default: 30s.
+        # @option arguments [Boolean] :flat_settings Return settings in flat format
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node. Server default: 30s.
+        # @option arguments [Time] :timeout The period to wait for a response. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

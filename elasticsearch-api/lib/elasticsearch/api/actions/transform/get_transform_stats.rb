@@ -37,7 +37,7 @@ module Elasticsearch
         #  there are no matches or only partial matches. Server default: true.
         # @option arguments [Integer] :from Skips the specified number of transforms. Server default: 0.
         # @option arguments [Integer] :size Specifies the maximum number of transforms to obtain. Server default: 100.
-        # @option arguments [Time] :timeout Controls the time to wait for the stats
+        # @option arguments [Time] :timeout Controls the time to wait for the stats Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

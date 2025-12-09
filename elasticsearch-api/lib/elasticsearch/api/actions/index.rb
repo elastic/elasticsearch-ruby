@@ -93,6 +93,7 @@ module Elasticsearch
       # When using the external version type, the system checks to see if the version number passed to the index request is greater than the version of the currently stored document.
       # If true, the document will be indexed and the new version number used.
       # If the value provided is less than or equal to the stored document's version number, a version conflict will occur and the index operation will fail. For example:
+      #
       # ```
       # PUT my-index-000001/_doc/1?version=2&version_type=external
       # {
@@ -100,6 +101,8 @@ module Elasticsearch
       #     "id": "elkbee"
       #   }
       # }
+      # ```
+      #
       # In this example, the operation will succeed since the supplied version of 2 is higher than the current document version of 1.
       # If the document was already updated and its version was set to 2 or higher, the indexing command will fail and result in a conflict (409 HTTP status code).
       # A nice side effect is that there is no need to maintain strict ordering of async indexing operations run as a result of changes to a source database, as long as version numbers from the source database are used.

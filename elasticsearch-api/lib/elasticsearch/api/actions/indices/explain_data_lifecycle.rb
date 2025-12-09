@@ -25,9 +25,9 @@ module Elasticsearch
         # Get the status for a data stream lifecycle.
         # Get information about an index or data stream's current data stream lifecycle status, such as time since index creation, time since rollover, the lifecycle configuration managing the index, or any errors encountered during lifecycle execution.
         #
-        # @option arguments [String, Array] :index The name of the index to explain (*Required*)
-        # @option arguments [Boolean] :include_defaults indicates if the API should return the default values the system uses for the index's lifecycle
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master Server default: 30s.
+        # @option arguments [String, Array] :index Comma-separated list of index names to explain (*Required*)
+        # @option arguments [Boolean] :include_defaults Indicates if the API should return the default values the system uses for the index's lifecycle
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

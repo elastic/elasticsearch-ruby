@@ -29,7 +29,7 @@ module Elasticsearch
         # You must then re-submit the API request with the `acknowledge` parameter set to `true`.
         # To check the status of your basic license, use the get basic license API.
         #
-        # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)
+        # @option arguments [Boolean] :acknowledge Whether the user has acknowledged acknowledge messages
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

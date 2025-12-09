@@ -37,7 +37,7 @@ module Elasticsearch
         #  If this setting is greater than the number of hardware threads
         #  it will automatically be changed to a value less than the number of hardware threads.
         #  If adaptive_allocations is enabled, do not set this value, because it’s automatically set. Server default: 1.
-        # @option arguments [String] :priority The deployment priority.
+        # @option arguments [String] :priority The deployment priority
         # @option arguments [Integer] :queue_capacity Specifies the number of inference requests that are allowed in the queue. After the number of requests exceeds
         #  this value, new requests are rejected with a 429 error. Server default: 1024.
         # @option arguments [Integer] :threads_per_allocation Sets the number of threads used by each model allocation during inference. This generally increases
