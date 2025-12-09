@@ -30,7 +30,7 @@ module Elasticsearch
         # You can exclude vertices that have already been returned.
         #
         # @option arguments [String, Array] :index Name of the index. (*Required*)
-        # @option arguments [String] :routing Custom value used to route operations to a specific shard.
+        # @option arguments [String, Array<String>] :routing Custom value used to route operations to a specific shard.
         # @option arguments [Time] :timeout Specifies the period of time to wait for a response from each shard.
         #  If no response is received before the timeout expires, the request fails and returns an error.
         #  Defaults to no timeout.

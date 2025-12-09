@@ -40,7 +40,7 @@ module Elasticsearch
         #  It must be a character set that is supported by the JVM that Elasticsearch uses.
         #  For example, `UTF-8`, `UTF-16LE`, `windows-1252`, or `EUC-JP`.
         #  If this parameter is not specified, the structure finder chooses an appropriate character set.
-        # @option arguments [String] :column_names If you have set format to `delimited`, you can specify the column names in a comma-separated list.
+        # @option arguments [String, Array<String>] :column_names If you have set format to `delimited`, you can specify the column names in a comma-separated list.
         #  If this parameter is not specified, the structure finder uses the column names from the header row of the text.
         #  If the text does not have a header role, columns are named "column1", "column2", "column3", for example.
         # @option arguments [String] :delimiter If you have set `format` to `delimited`, you can specify the character used to delimit the values in each row.

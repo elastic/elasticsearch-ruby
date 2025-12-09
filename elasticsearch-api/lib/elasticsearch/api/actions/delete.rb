@@ -56,7 +56,7 @@ module Elasticsearch
       # @option arguments [String] :refresh If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search.
       #  If `wait_for`, it waits for a refresh to make this operation visible to search.
       #  If `false`, it does nothing with refreshes. Server default: false.
-      # @option arguments [String] :routing A custom value used to route operations to a specific shard.
+      # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
       # @option arguments [Time] :timeout The period to wait for active shards.This parameter is useful for situations where the primary shard assigned to perform the delete operation might not be available when the delete operation runs.
       #  Some reasons for this might be that the primary shard is currently recovering from a store or undergoing relocation.
       #  By default, the delete operation will wait on the primary shard to become available for up to 1 minute before failing and responding with an error. Server default: 1m.

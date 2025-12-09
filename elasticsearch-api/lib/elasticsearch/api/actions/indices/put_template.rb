@@ -45,7 +45,7 @@ module Elasticsearch
         # @option arguments [Integer] :order Order in which Elasticsearch applies this template if index
         #  matches multiple templates.Templates with lower 'order' values are merged first. Templates with higher
         #  'order' values are merged later, overriding templates with lower values.
-        # @option arguments [String] :cause User defined reason for creating/updating the index template Server default: .
+        # @option arguments [String] :cause User defined reason for creating or updating the index template Server default: "".
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

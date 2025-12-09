@@ -41,7 +41,7 @@ module Elasticsearch
       # @option arguments [String] :preference Specifies the node or shard the operation should be performed on. Random by default.
       # @option arguments [Boolean] :realtime If `true`, the request is real-time as opposed to near-real-time. Server default: true.
       # @option arguments [Boolean] :refresh If `true`, the request refreshes relevant shards before retrieving documents.
-      # @option arguments [String] :routing Custom value used to route operations to a specific shard.
+      # @option arguments [String, Array<String>] :routing Custom value used to route operations to a specific shard.
       # @option arguments [Boolean, String, Array<String>] :_source True or false to return the `_source` field or not, or a list of fields to return.
       # @option arguments [String, Array<String>] :_source_excludes A comma-separated list of source fields to exclude from the response.
       #  You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter.

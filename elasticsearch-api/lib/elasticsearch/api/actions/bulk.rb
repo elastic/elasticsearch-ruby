@@ -76,6 +76,7 @@ module Elasticsearch
       # * Perl: Check out `Search::Elasticsearch::Client::5_0::Bulk` and `Search::Elasticsearch::Client::5_0::Scroll`
       # * Python: Check out `elasticsearch.helpers.*`
       # * JavaScript: Check out `client.helpers.*`
+      # * Java: Check out `co.elastic.clients.elasticsearch._helpers.bulk.BulkIngester`
       # * .NET: Check out `BulkAllObservable`
       # * PHP: Check out bulk indexing.
       # * Ruby: Check out `Elasticsearch::Helpers::BulkHelper`
@@ -123,7 +124,7 @@ module Elasticsearch
       #  If `wait_for`, wait for a refresh to make this operation visible to search.
       #  If `false`, do nothing with refreshes.
       #  Valid values: `true`, `false`, `wait_for`. Server default: false.
-      # @option arguments [String] :routing A custom value that is used to route operations to a specific shard.
+      # @option arguments [String, Array<String>] :routing A custom value that is used to route operations to a specific shard.
       # @option arguments [Boolean, String, Array<String>] :_source Indicates whether to return the `_source` field (`true` or `false`) or contains a list of fields to return.
       # @option arguments [String, Array<String>] :_source_excludes A comma-separated list of source fields to exclude from the response.
       #  You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter.

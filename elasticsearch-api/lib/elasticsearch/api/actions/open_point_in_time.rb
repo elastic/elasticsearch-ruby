@@ -61,7 +61,7 @@ module Elasticsearch
       #   _alias:_origin
       #   _alias:*pr*
       #  Supported in serverless only.
-      # @option arguments [String] :routing A custom value that is used to route operations to a specific shard.
+      # @option arguments [String, Array<String>] :routing A custom value that is used to route operations to a specific shard.
       # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
       #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
       #  It supports comma-separated values, such as `open,hidden`. Server default: open.

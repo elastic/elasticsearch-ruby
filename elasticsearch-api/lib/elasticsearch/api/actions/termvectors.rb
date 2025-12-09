@@ -58,7 +58,7 @@ module Elasticsearch
       # @option arguments [String] :preference The node or shard the operation should be performed on.
       #  It is random by default.
       # @option arguments [Boolean] :realtime If true, the request is real-time as opposed to near-real-time. Server default: true.
-      # @option arguments [String] :routing A custom value that is used to route operations to a specific shard.
+      # @option arguments [String, Array<String>] :routing A custom value that is used to route operations to a specific shard.
       # @option arguments [Boolean] :term_statistics If `true`, the response includes:
       #  - The total term frequency (how often a term occurs in all documents).
       #  - The document frequency (the number of documents containing the current term).

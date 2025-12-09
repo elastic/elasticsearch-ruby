@@ -94,7 +94,7 @@ module Elasticsearch
       #  Supported in serverless only.
       # @option arguments [Boolean] :request_cache If `true`, the caching of search results is enabled for requests where `size` is `0`.
       #  It defaults to index level settings.
-      # @option arguments [String] :routing A custom value that is used to route operations to a specific shard.
+      # @option arguments [String, Array<String>] :routing A custom value that is used to route operations to a specific shard.
       # @option arguments [Time] :scroll The period to retain the search context for scrolling.
       #  By default, this value cannot exceed `1d` (24 hours).
       #  You can change this limit by using the `search.max_keep_alive` cluster-level setting.

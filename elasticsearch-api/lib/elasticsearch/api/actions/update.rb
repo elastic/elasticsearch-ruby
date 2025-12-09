@@ -48,7 +48,7 @@ module Elasticsearch
       #  If 'false', it does nothing with refreshes. Server default: false.
       # @option arguments [Boolean] :require_alias If `true`, the destination must be an index alias.
       # @option arguments [Integer] :retry_on_conflict The number of times the operation should be retried when a conflict occurs. Server default: 0.
-      # @option arguments [String] :routing A custom value used to route operations to a specific shard.
+      # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
       # @option arguments [Time] :timeout The period to wait for the following operations: dynamic mapping updates and waiting for active shards.
       #  Elasticsearch waits for at least the timeout period before failing.
       #  The actual wait time could be longer, particularly when multiple waits occur. Server default: 1m.

@@ -28,9 +28,9 @@ module Elasticsearch
         #
         # @option arguments [String] :index_uuid The UUID of the index to import. Use the get dangling indices API to locate the UUID. (*Required*)
         # @option arguments [Boolean] :accept_data_loss This parameter must be set to true to import a dangling index.
-        #  Because Elasticsearch cannot know where the dangling index data came from or determine which shard copies are fresh and which are stale, it cannot guarantee that the imported data represents the latest state of the index when it was last in the cluster. (*Required*)
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master Server default: 30s.
-        # @option arguments [Time] :timeout Explicit operation timeout
+        #  Because Elasticsearch cannot know where the dangling index data came from or determine which shard copies are fresh and which are stale, it cannot guarantee that the imported data represents the latest state of the index when it was last in the cluster.
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node. Server default: 30s.
+        # @option arguments [Time] :timeout The period to wait for a response. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

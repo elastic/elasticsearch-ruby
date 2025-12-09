@@ -26,8 +26,9 @@ module Elasticsearch
         # Returns search results for an Event Query Language (EQL) query.
         # EQL assumes each document in a data stream or index corresponds to an event.
         #
-        # @option arguments [String, Array] :index The name of the index to scope the operation (*Required*)
-        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified) Server default: true.
+        # @option arguments [String, Array] :index Comma-separated list of index names to scope the operation (*Required*)
+        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices.
+        #  (This includes `_all` string or when no indices have been specified) Server default: true.
         # @option arguments [Boolean] :allow_partial_search_results If true, returns partial results if there are shard failures. If false, returns an error with no partial results. Server default: true.
         # @option arguments [Boolean] :allow_partial_sequence_results If true, sequence queries will return partial results in case of shard failures. If false, they will return no results at all.
         #  This flag has effect only if allow_partial_search_results is true.

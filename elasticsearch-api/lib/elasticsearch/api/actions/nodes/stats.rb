@@ -27,7 +27,7 @@ module Elasticsearch
         # By default, all stats are returned. You can limit the returned information by using metrics.
         #
         # @option arguments [String, Array] :node_id Comma-separated list of node IDs or names used to limit returned information.
-        # @option arguments [String, Array<String>] :metric Limit the information returned to the specified metrics
+        # @option arguments [String, Array<String>] :metric Limits the information returned to the specific metrics.
         # @option arguments [String, Array<String>] :index_metric Limit the information returned for indices metric to the specific index metrics. It can be used only if indices (or all) metric is specified.
         # @option arguments [String, Array<String>] :completion_fields Comma-separated list or wildcard expressions of fields to include in fielddata and suggest statistics.
         # @option arguments [String, Array<String>] :fielddata_fields Comma-separated list or wildcard expressions of fields to include in fielddata statistics.

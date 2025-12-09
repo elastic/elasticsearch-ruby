@@ -40,7 +40,7 @@ module Elasticsearch
       #  This parameter can be used only when the `q` query string parameter is specified.
       # @option arguments [String] :preference The node or shard the operation should be performed on.
       #  It is random by default.
-      # @option arguments [String] :routing A custom value used to route operations to a specific shard.
+      # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
       # @option arguments [Boolean, String, Array<String>] :_source `True` or `false` to return the `_source` field or not or a list of fields to return.
       # @option arguments [String, Array<String>] :_source_excludes A comma-separated list of source fields to exclude from the response.
       #  You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter.

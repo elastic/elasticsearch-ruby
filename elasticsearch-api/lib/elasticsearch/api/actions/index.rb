@@ -93,6 +93,7 @@ module Elasticsearch
       # When using the external version type, the system checks to see if the version number passed to the index request is greater than the version of the currently stored document.
       # If true, the document will be indexed and the new version number used.
       # If the value provided is less than or equal to the stored document's version number, a version conflict will occur and the index operation will fail. For example:
+      #
       # ```
       # PUT my-index-000001/_doc/1?version=2&version_type=external
       # {
@@ -100,6 +101,8 @@ module Elasticsearch
       #     "id": "elkbee"
       #   }
       # }
+      # ```
+      #
       # In this example, the operation will succeed since the supplied version of 2 is higher than the current document version of 1.
       # If the document was already updated and its version was set to 2 or higher, the indexing command will fail and result in a conflict (409 HTTP status code).
       # A nice side effect is that there is no need to maintain strict ordering of async indexing operations run as a result of changes to a source database, as long as version numbers from the source database are used.
@@ -126,7 +129,7 @@ module Elasticsearch
       # @option arguments [String] :refresh If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search.
       #  If `wait_for`, it waits for a refresh to make this operation visible to search.
       #  If `false`, it does nothing with refreshes. Server default: false.
-      # @option arguments [String] :routing A custom value that is used to route operations to a specific shard.
+      # @option arguments [String, Array<String>] :routing A custom value that is used to route operations to a specific shard.
       # @option arguments [Time] :timeout The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards.This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs.
       #  Some reasons for this might be that the primary shard is currently recovering from a gateway or undergoing relocation.
       #  By default, the operation will wait on the primary shard to become available for at least 1 minute before failing and responding with an error.

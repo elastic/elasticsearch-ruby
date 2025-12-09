@@ -25,7 +25,7 @@ module Elasticsearch
         # Get policy information.
         # Get snapshot lifecycle policy definitions and information about the latest snapshot attempts.
         #
-        # @option arguments [String, Array<String>] :policy_id Comma-separated list of snapshot lifecycle policies to retrieve
+        # @option arguments [String, Array<String>] :policy_id A comma-separated list of snapshot lifecycle policy identifiers.
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Time] :timeout The period to wait for a response.
