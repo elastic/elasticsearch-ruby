@@ -32,7 +32,7 @@ module Elasticsearch
         # The cluster status is controlled by the worst index status.
         #
         # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and index aliases used to limit the request. Wildcard expressions (`*`) are supported. To target all data streams and indices in a cluster, omit this parameter or use _all or `*`.
-        # @option arguments [String, Array<String>] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
+        # @option arguments [String, Array<String>] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. Server default: all.
         # @option arguments [String] :level Can be one of cluster, indices or shards. Controls the details level of the health information returned. Server default: cluster.
         # @option arguments [Boolean] :local If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.

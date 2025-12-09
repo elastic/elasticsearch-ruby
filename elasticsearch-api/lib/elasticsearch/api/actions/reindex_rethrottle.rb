@@ -35,7 +35,7 @@ module Elasticsearch
       #
       # @option arguments [String] :task_id The task identifier, which can be found by using the tasks API. (*Required*)
       # @option arguments [Float] :requests_per_second The throttle for this request in sub-requests per second.
-      #  It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level.
+      #  It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. (*Required*)
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
       #  when they occur.
       # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

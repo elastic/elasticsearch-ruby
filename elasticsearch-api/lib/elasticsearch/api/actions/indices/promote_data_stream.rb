@@ -32,7 +32,7 @@ module Elasticsearch
         # If this is missing, the data stream will not be able to roll over until a matching index template is created.
         # This will affect the lifecycle management of the data stream and interfere with the data stream size and retention.
         #
-        # @option arguments [String] :name The name of the data stream (*Required*)
+        # @option arguments [String] :name The name of the data stream to promote (*Required*)
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.

@@ -22,7 +22,8 @@ module Elasticsearch
   module API
     module Project
       module Actions
-        # Return tags defined for the project
+        # Get tags.
+        # Get the tags that are defined for the project.
         #
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.

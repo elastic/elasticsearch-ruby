@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Perform sparse embedding inference on the service
+        # Perform sparse embedding inference on the service.
         #
         # @option arguments [String] :inference_id The inference Id (*Required*)
         # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference request to complete. Server default: 30s.

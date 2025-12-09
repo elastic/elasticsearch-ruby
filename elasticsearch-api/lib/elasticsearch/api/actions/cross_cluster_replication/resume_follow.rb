@@ -28,7 +28,7 @@ module Elasticsearch
         # Alternatively it could be paused due to replication that cannot be retried due to failures during following tasks.
         # When this API returns, the follower index will resume fetching operations from the leader index.
         #
-        # @option arguments [String] :index The name of the follow index to resume following. (*Required*)
+        # @option arguments [String] :index Name of the follow index to resume following (*Required*)
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.

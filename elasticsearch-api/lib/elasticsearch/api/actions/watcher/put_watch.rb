@@ -35,8 +35,8 @@ module Elasticsearch
         # @option arguments [String] :id The identifier for the watch. (*Required*)
         # @option arguments [Boolean] :active The initial state of the watch.
         #  The default value is `true`, which means the watch is active by default. Server default: true.
-        # @option arguments [Integer] :if_primary_term only update the watch if the last operation that has changed the watch has the specified primary term
-        # @option arguments [Integer] :if_seq_no only update the watch if the last operation that has changed the watch has the specified sequence number
+        # @option arguments [Integer] :if_primary_term Only update the watch if the last operation that has changed the watch has the specified primary term
+        # @option arguments [Integer] :if_seq_no Only update the watch if the last operation that has changed the watch has the specified sequence number
         # @option arguments [Integer] :version Explicit version number for concurrency control
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.

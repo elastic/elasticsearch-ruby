@@ -27,9 +27,9 @@ module Elasticsearch
         # For example, this can happen if you delete more than `cluster.indices.tombstones.size` indices while an Elasticsearch node is offline.
         #
         # @option arguments [String] :index_uuid The UUID of the index to delete. Use the get dangling indices API to find the UUID. (*Required*)
-        # @option arguments [Boolean] :accept_data_loss This parameter must be set to true to acknowledge that it will no longer be possible to recove data from the dangling index. (*Required*)
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master Server default: 30s.
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [Boolean] :accept_data_loss This parameter must be set to true to acknowledge that it will no longer be possible to recove data from the dangling index.
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node. Server default: 30s.
+        # @option arguments [Time] :timeout The period to wait for a response. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
