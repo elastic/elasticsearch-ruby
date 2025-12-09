@@ -34,23 +34,25 @@ module Elasticsearch
         # @option arguments [Time] :keep_alive Specifies how long the async search needs to be available.
         #  Ongoing async searches and any saved search results are deleted after this period. Server default: 5d.
         # @option arguments [Boolean] :keep_on_completion If `true`, results are stored for later retrieval when the search completes within the `wait_for_completion_timeout`.
-        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices.
+        #  (This includes `_all` string or when no indices have been specified)
         # @option arguments [Boolean] :allow_partial_search_results Indicate if an error should be returned if there is a partial search failure or timeout Server default: true.
         # @option arguments [String] :analyzer The analyzer to use for the query string
-        # @option arguments [Boolean] :analyze_wildcard Specify whether wildcard and prefix queries should be analyzed (default: false)
+        # @option arguments [Boolean] :analyze_wildcard Specify whether wildcard and prefix queries should be analyzed
         # @option arguments [Integer] :batched_reduce_size Affects how often partial results become available, which happens whenever shard results are reduced.
         #  A partial reduction is performed every time the coordinating node has received a certain number of new shard responses (5 by default). Server default: 5.
         # @option arguments [Boolean] :ccs_minimize_roundtrips The default value is the only supported value.
         # @option arguments [String] :default_operator The default operator for query string query (AND or OR) Server default: or.
         # @option arguments [String] :df The field to use as default where no field prefix is given in the query string
         # @option arguments [String, Array<String>] :docvalue_fields A comma-separated list of fields to return as the docvalue representation of a field for each hit
-        # @option arguments [String, Array<String>] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
+        # @option arguments [String, Array<String>] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both Server default: open.
         # @option arguments [Boolean] :explain Specify whether to return detailed information about score computation as part of a hit
         # @option arguments [Boolean] :ignore_throttled Whether specified concrete, expanded or aliased indices should be ignored when throttled
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
         # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-        # @option arguments [Integer] :max_concurrent_shard_requests The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests Server default: 5.
-        # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
+        # @option arguments [Integer] :max_concurrent_shard_requests The number of concurrent shard requests per node this search executes concurrently.
+        #  This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests Server default: 5.
+        # @option arguments [String] :preference Specify the node or shard the operation should be performed on Server default: random.
         # @option arguments [String] :project_routing Specifies a subset of projects to target for the search using project
         #  metadata tags in a subset of Lucene query syntax.
         #  Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
@@ -68,9 +70,10 @@ module Elasticsearch
         # @option arguments [String] :suggest_mode Specify suggest mode Server default: missing.
         # @option arguments [Integer] :suggest_size How many suggestions to return in response
         # @option arguments [String] :suggest_text The source text for which the suggestions should be returned.
-        # @option arguments [Integer] :terminate_after The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
+        # @option arguments [Integer] :terminate_after The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early
         # @option arguments [Time] :timeout Explicit operation timeout
-        # @option arguments [Boolean, Integer] :track_total_hits Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
+        # @option arguments [Boolean, Integer] :track_total_hits Indicate if the number of documents that match the query should be tracked.
+        #  A number can also be specified, to accurately track the total hit count up to the number.
         # @option arguments [Boolean] :track_scores Whether to calculate and return scores even if they are not used for sorting
         # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
         # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
@@ -80,8 +83,8 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :_source_includes A list of fields to extract and return from the _source field
         # @option arguments [Boolean] :seq_no_primary_term Specify whether to return sequence number and primary term of the last modification of each hit
         # @option arguments [String] :q Query in the Lucene query string syntax
-        # @option arguments [Integer] :size Number of hits to return (default: 10)
-        # @option arguments [Integer] :from Starting offset (default: 0)
+        # @option arguments [Integer] :size Number of hits to return Server default: 10.
+        # @option arguments [Integer] :from Starting offset Server default: 0.
         # @option arguments [String, Array<String>] :sort A comma-separated list of <field>:<direction> pairs
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.

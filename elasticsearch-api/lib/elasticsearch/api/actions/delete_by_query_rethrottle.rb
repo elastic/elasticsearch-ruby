@@ -27,7 +27,7 @@ module Elasticsearch
       #
       # @option arguments [String] :task_id The ID for the task. (*Required*)
       # @option arguments [Float] :requests_per_second The throttle for this request in sub-requests per second.
-      #  To disable throttling, set it to `-1`.
+      #  To disable throttling, set it to `-1`. (*Required*)
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
       #  when they occur.
       # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

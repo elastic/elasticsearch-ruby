@@ -31,7 +31,7 @@ module Elasticsearch
       # @option arguments [Boolean] :ccs_minimize_roundtrips If `true`, network round-trips are minimized for cross-cluster search requests.
       # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
       #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
-      #  Supports comma-separated values, such as `open,hidden`.
+      #  Supports comma-separated values, such as `open,hidden`. Server default: open.
       # @option arguments [Boolean] :explain If `true`, the response includes additional details about score computation as part of a hit.
       # @option arguments [Boolean] :ignore_throttled If `true`, specified concrete, expanded, or aliased indices are not included in the response when throttled. Server default: true.
       # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a missing or closed index.

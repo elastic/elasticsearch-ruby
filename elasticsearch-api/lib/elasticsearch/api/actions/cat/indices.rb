@@ -37,7 +37,7 @@ module Elasticsearch
         #
         # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and aliases used to limit the request.
         #  Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`.
-        # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
+        # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match. Server default: all.
         # @option arguments [String] :health The health status used to limit returned indices. By default, the response includes indices of any health status.
         # @option arguments [Boolean] :include_unloaded_segments If true, the response includes information from segments that are not loaded into memory.
         # @option arguments [Boolean] :pri If true, the response only includes information from primary shards.

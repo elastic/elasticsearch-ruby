@@ -76,6 +76,7 @@ module Elasticsearch
       # * Perl: Check out `Search::Elasticsearch::Client::5_0::Bulk` and `Search::Elasticsearch::Client::5_0::Scroll`
       # * Python: Check out `elasticsearch.helpers.*`
       # * JavaScript: Check out `client.helpers.*`
+      # * Java: Check out `co.elastic.clients.elasticsearch._helpers.bulk.BulkIngester`
       # * .NET: Check out `BulkAllObservable`
       # * PHP: Check out bulk indexing.
       # * Ruby: Check out `Elasticsearch::Helpers::BulkHelper`
