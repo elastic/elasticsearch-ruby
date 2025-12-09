@@ -28,6 +28,7 @@ module Elasticsearch
   # It includes the namespace modules from ./api/actions
   module API
     include Elasticsearch::API::Actions
+
     DEFAULT_SERIALIZER = MultiJson
 
     HTTP_GET          = 'GET'.freeze

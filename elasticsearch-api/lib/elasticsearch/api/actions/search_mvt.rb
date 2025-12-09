@@ -96,11 +96,18 @@ module Elasticsearch
       # Elasticsearch uses the H3 resolution that is closest to the corresponding geotile density.
       # Learn how to use the vector tile search API with practical examples in the {https://www.elastic.co/docs/reference/elasticsearch/rest-apis/vector-tile-search Vector tile search examples} guide.
       #
-      # @option arguments [String, Array] :index Comma-separated list of data streams, indices, or aliases to search (*Required*)
-      # @option arguments [String] :field Field containing geospatial data to return (*Required*)
-      # @option arguments [Integer] :zoom Zoom level for the vector tile to search (*Required*)
-      # @option arguments [Integer] :x X coordinate for the vector tile to search (*Required*)
-      # @option arguments [Integer] :y Y coordinate for the vector tile to search (*Required*)
+      # @option arguments [String, Array] :index A list of indices, data streams, or aliases to search.
+      #  It supports wildcards (`*`).
+      #  To search all data streams and indices, omit this parameter or use `*` or `_all`.
+      #  To search a remote cluster, use the `<cluster>:<target>` syntax. (*Required*)
+      # @option arguments [String] :field A field that contains the geospatial data to return.
+      #  It must be a `geo_point` or `geo_shape` field.
+      #  The field must have doc values enabled. It cannot be a nested field.NOTE: Vector tiles do not natively support geometry collections.
+      #  For `geometrycollection` values in a `geo_shape` field, the API returns a hits layer feature for each element of the collection.
+      #  This behavior may change in a future release. (*Required*)
+      # @option arguments [Integer] :zoom The zoom level of the vector tile to search. It accepts `0` to `29`. (*Required*)
+      # @option arguments [Integer] :x The X coordinate for the vector tile to search. (*Required*)
+      # @option arguments [Integer] :y The Y coordinate for the vector tile to search. (*Required*)
       # @option arguments [Boolean] :exact_bounds If `false`, the meta layer's feature is the bounding box of the tile.
       #  If true, the meta layer's feature is a bounding box resulting from a
       #  geo_bounds aggregation. The aggregation runs on <field> values that intersect
