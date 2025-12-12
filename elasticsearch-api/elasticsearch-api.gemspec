@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
   s.rdoc_options      = ['--charset=UTF-8']
 
   s.required_ruby_version = '>= 2.6' # For compatibility with JRuby 9.3
+  s.add_dependency 'base64'
   s.add_dependency 'multi_json'
 
   s.add_development_dependency 'ansi'

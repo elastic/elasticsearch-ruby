@@ -102,7 +102,6 @@ module Elasticsearch
         operations = %w[index create delete update]
 
         case
-
         # Hashes with `:data`
         when payload.any? { |d| d.is_a?(Hash) && d.values.first.is_a?(Hash) && operations.include?(d.keys.first.to_s) && (d.values.first[:data] || d.values.first['data']) }
           payload = payload.
@@ -117,17 +116,14 @@ module Elasticsearch
             end.
             map { |item| Elasticsearch::API.serializer.dump(item) }
           payload << '' unless payload.empty?
-
         # Array of strings
         when payload.all? { |d| d.is_a? String }
           payload << ''
-
         # Header/Data pairs
         else
           payload = payload.map { |item| Elasticsearch::API.serializer.dump(item) }
           payload << ''
         end
-
         payload = payload.join("\n")
       end
 
