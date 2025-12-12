@@ -15,6 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
+require 'base64'
 require 'elasticsearch/version'
 require 'elastic/transport'
 require 'elasticsearch/api'
@@ -79,6 +80,12 @@ module Elasticsearch
 
     def respond_to_missing?(method_name, *args)
       @transport.respond_to?(method_name) || super
+    end
+
+    # Helper function that packs a dense vector for efficient uploading.
+    # @param data - the array to pack.
+    def pack_dense_vector(data)
+      Base64.strict_encode64(data.pack('g' * data.size))
     end
 
     private
