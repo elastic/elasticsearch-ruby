@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.cat.allocation(
-  v: true,
-  h: 'node,shards,disk.*'
-)
-puts response
-----
