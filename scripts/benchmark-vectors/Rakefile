@@ -14,14 +14,7 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-require 'spec_helper'
-
-describe Elasticsearch::Client do
-  describe '#pack_dense_vector' do
-    let(:client) { Elasticsearch::Client.new }
-
-    it 'serializes in expected format' do
-      expect(client.pack_dense_vector([1.0, 2.0])).to eq 'P4AAAEAAAAA='
-    end
-  end
+desc 'Run the benchmark'
+task :run do
+  ruby 'app.rb'
 end
