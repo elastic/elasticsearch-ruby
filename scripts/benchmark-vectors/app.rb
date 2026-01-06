@@ -14,10 +14,12 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
+inicio = Time.now
 
+require 'jrjackson' if defined?(JRUBY_VERSION)
+require 'multi_json'
 require 'elasticsearch'
 require 'elasticsearch/helpers/bulk_helper'
-require 'json'
 
 # Download file if not present:
 filename = './open_ai_corpus-initial-indexing-1k.json'
@@ -62,13 +64,11 @@ end
 
 def benchmark(data, chunk_size, vector: false)
   bulk_helper = Elasticsearch::Helpers::BulkHelper.new(@client, @index)
-
   start = Time.now
   20.times do # repeat the dataset until 20k reached (1_000 * 20)
-    json = JSON.parse("[#{data}]")
-
+    json = MultiJson.load("[#{data}]")
     json.each_slice(chunk_size) do |slice|
-      slice = slice.map { |j| j['emb'] = @client.pack_dense_vector(j['emb']) } if vector
+      slice.map { |j| j['emb'] = @client.pack_dense_vector(j['emb']) } if vector
       bulk_helper.ingest(slice)
     end
   end
@@ -108,8 +108,8 @@ end
   result[:float32][:duration] = (result[:float32][:duration].sum / 3)
   result[:base64][:duration] = (result[:base64][:duration].sum / 3)
 
-  docs32 = (20_000 / result[:float32][:duration]) * 1000
-  docs64 = (20_000 / result[:base64][:duration]) * 1000
+  docs32 = (20_000_000 / result[:float32][:duration])
+  docs64 = (20_000_000 / result[:base64][:duration])
 
   puts "Chunk size #{result[:chunk_size]} | " \
        "Float32: #{(result[:float32][:duration] / 1_000).round(2)}s, #{docs32.round(2)} docs/s | " \
@@ -119,3 +119,5 @@ end
 puts JSON.pretty_generate(JSON.parse(@results.to_json))
 # Write JSON results:
 File.write(File.expand_path('./results.json', __dir__), @results.to_json)
+
+puts "Total time: #{Time.now - inicio}s"
