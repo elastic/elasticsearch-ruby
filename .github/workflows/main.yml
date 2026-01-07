@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: ['head', '3.2', '3.3', '3.4', 'jruby-9.3', 'jruby-9.4', 'jruby-10.0']
+        ruby: ['3.2', '3.3', '3.4', '4.0', 'jruby-9.3', 'jruby-9.4', 'jruby-10.0']
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4.3.0
@@ -29,7 +29,7 @@ jobs:
     - uses: elastic/elastic-github-actions/elasticsearch@master
       with:
         stack-version: 9.4.0-SNAPSHOT
-    - uses: ruby/setup-ruby@v1.263.0
+    - uses: ruby/setup-ruby@v1.279.0
       with:
         ruby-version: ${{ matrix.ruby }}
     - name: Build
