@@ -36,14 +36,6 @@ module Elasticsearch
         #  This behavior applies even if the request targets other open indices.
         #  For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. Server default: true.
         # @option arguments [String, Array<String>] :mode Filter indices by index mode - standard, lookup, time_series, etc. Comma-separated list of IndexMode. Empty means no filter.
-        # @option arguments [String] :project_routing Specifies a subset of projects to target using project
-        #  metadata tags in a subset of Lucene query syntax.
-        #  Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
-        #  Examples:
-        #   _alias:my-project
-        #   _alias:_origin
-        #   _alias:*pr*
-        #  Supported in serverless only.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
@@ -56,6 +48,7 @@ module Elasticsearch
         # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body request body
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-resolve-index
         #
@@ -72,11 +65,16 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body = arguments.delete(:body)
 
           _name = arguments.delete(:name)
 
-          method = Elasticsearch::API::HTTP_GET
+          method = if body
+                     Elasticsearch::API::HTTP_POST
+                   else
+                     Elasticsearch::API::HTTP_GET
+                   end
+
           path   = "_resolve/index/#{Utils.listify(_name)}"
           params = Utils.process_params(arguments)
 
