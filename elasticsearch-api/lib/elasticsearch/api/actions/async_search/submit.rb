@@ -53,14 +53,6 @@ module Elasticsearch
         # @option arguments [Integer] :max_concurrent_shard_requests The number of concurrent shard requests per node this search executes concurrently.
         #  This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests Server default: 5.
         # @option arguments [String] :preference Specify the node or shard the operation should be performed on Server default: random.
-        # @option arguments [String] :project_routing Specifies a subset of projects to target for the search using project
-        #  metadata tags in a subset of Lucene query syntax.
-        #  Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
-        #  Examples:
-        #   _alias:my-project
-        #   _alias:_origin
-        #   _alias:*pr*
-        #  Supported in serverless only.
         # @option arguments [Boolean] :request_cache Specify if request cache should be used for this request or not, defaults to true Server default: true.
         # @option arguments [String, Array<String>] :routing A comma-separated list of specific routing values
         # @option arguments [String] :search_type Search operation type
