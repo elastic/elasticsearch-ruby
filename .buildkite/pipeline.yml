@@ -7,6 +7,7 @@ steps:
     matrix:
       setup:
         ruby:
+          - '4.0'
           - '3.4'
           - '3.3'
           - '3.2'
@@ -20,7 +21,7 @@ steps:
             ruby_source: jruby
             transport: '8.4'
         - with: # Test for main branch of transport
-            ruby: '3.4'
+            ruby: '4.0'
             ruby_source: ruby
             transport: main
     env:
