@@ -32,14 +32,6 @@ module Elasticsearch
         #  It supports wildcards (`*`).
         #  To target all data streams and indices, omit this parameter or use `*` or `_all`.
         # @option arguments [String, Array<String>] :h A comma-separated list of columns names to display. It supports simple wildcards.
-        # @option arguments [String] :project_routing Specifies a subset of projects to target for the search using project
-        #  metadata tags in a subset of Lucene query syntax.
-        #  Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
-        #  Examples:
-        #   _alias:my-project
-        #   _alias:_origin
-        #   _alias:*pr*
-        #  Supported in serverless only.
         # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
         #  Sorting defaults to ascending and can be changed by setting `:asc`
         #  or `:desc` as a suffix to the column name.
@@ -69,6 +61,7 @@ module Elasticsearch
         # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body request body
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-count
         #
@@ -83,11 +76,16 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body = arguments.delete(:body)
 
           _index = arguments.delete(:index)
 
-          method = Elasticsearch::API::HTTP_GET
+          method = if body
+                     Elasticsearch::API::HTTP_POST
+                   else
+                     Elasticsearch::API::HTTP_GET
+                   end
+
           path   = if _index
                      "_cat/count/#{Utils.listify(_index)}"
                    else

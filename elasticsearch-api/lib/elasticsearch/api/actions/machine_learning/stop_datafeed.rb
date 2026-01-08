@@ -38,6 +38,7 @@ module Elasticsearch
         #  partial matches. Server default: true.
         # @option arguments [Boolean] :force If `true`, the datafeed is stopped forcefully.
         # @option arguments [Time] :timeout Specifies the amount of time to wait until a datafeed stops. Server default: 20s.
+        # @option arguments [Boolean] :close_job If `true` the job associated with the datafeed is closed.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

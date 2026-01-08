@@ -69,7 +69,7 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. Server default: open.
         # @option arguments [Boolean] :flush Specify whether the index should be flushed after performing the operation Server default: true.
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
-        # @option arguments [Integer] :max_num_segments The number of segments the index should be merged into (defayult: dynamic)
+        # @option arguments [Integer] :max_num_segments The number of segments the index should be merged into (default: dynamic)
         # @option arguments [Boolean] :only_expunge_deletes Specify whether the operation should only expunge deleted documents
         # @option arguments [Boolean] :wait_for_completion Should the request wait until the force merge is completed Server default: true.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
