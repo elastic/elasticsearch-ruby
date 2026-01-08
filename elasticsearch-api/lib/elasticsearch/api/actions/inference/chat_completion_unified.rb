@@ -24,11 +24,11 @@ module Elasticsearch
       module Actions
         # Perform chat completion inference on the service.
         # The chat completion inference API enables real-time responses for chat completion tasks by delivering answers incrementally, reducing response times during computation.
-        # It only works with the `chat_completion` task type for `openai` and `elastic` inference services.
+        # It only works with the `chat_completion` task type.
         # NOTE: The `chat_completion` task type is only available within the _stream API and only supports streaming.
         # The Chat completion inference API and the Stream inference API differ in their response structure and capabilities.
         # The Chat completion inference API provides more comprehensive customization options through more fields and function calling support.
-        # If you use the `openai`, `hugging_face` or the `elastic` service, use the Chat completion inference API.
+        # To determine whether a given inference service supports this task type, please see the page for that service.
         #
         # @option arguments [String] :inference_id The inference Id (*Required*)
         # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference request to complete. Server default: 30s.
