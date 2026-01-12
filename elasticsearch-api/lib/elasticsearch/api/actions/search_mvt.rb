@@ -122,14 +122,6 @@ module Elasticsearch
       #  each feature represents a geotile_grid cell. If 'grid' each feature is a Polygon
       #  of the cells bounding box. If 'point' each feature is a Point that is the centroid
       #  of the cell. Server default: grid.
-      # @option arguments [String] :project_routing Specifies a subset of projects to target for the search using project
-      #  metadata tags in a subset of Lucene query syntax.
-      #  Allowed Lucene queries: the _alias tag and a single value (possibly wildcarded).
-      #  Examples:
-      #   _alias:my-project
-      #   _alias:_origin
-      #   _alias:*pr*
-      #  Supported in serverless only.
       # @option arguments [Integer] :size Maximum number of features to return in the hits layer. Accepts 0-10000.
       #  If 0, results don't include the hits layer. Server default: 10000.
       # @option arguments [Boolean, Integer] :track_total_hits The number of hits matching the query to count accurately.
