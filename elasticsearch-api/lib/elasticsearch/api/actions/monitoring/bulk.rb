@@ -24,9 +24,9 @@ module Elasticsearch
       module Actions
         # Send monitoring data
         #
-        # @option arguments [String] :system_id Identifier of the monitored system
-        # @option arguments [String] :system_api_version API Version of the monitored system
-        # @option arguments [String] :interval Collection interval (e.g., '10s' or '10000ms') of the payload
+        # @option arguments [String] :system_id Identifier of the monitored system (*Required*)
+        # @option arguments [String] :system_api_version API Version of the monitored system (*Required*)
+        # @option arguments [Time] :interval Collection interval (e.g., '10s' or '10000ms') of the payload (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [String|Array] :body The operation definition and data (action-data pairs), separated by newlines. Array of Strings, Header/Data pairs,
         # or the conveniency "combined" format can be passed, refer to Elasticsearch::API::Utils.__bulkify documentation.

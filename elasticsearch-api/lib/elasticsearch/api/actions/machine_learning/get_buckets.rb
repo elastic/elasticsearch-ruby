@@ -25,7 +25,7 @@ module Elasticsearch
         # Get anomaly detection job results for buckets
         #
         # @option arguments [String] :job_id ID of the job to get bucket results from
-        # @option arguments [String] :timestamp The timestamp of the desired single bucket result
+        # @option arguments [Date] :timestamp The timestamp of the desired single bucket result
         # @option arguments [Boolean] :expand Include anomaly records
         # @option arguments [Boolean] :exclude_interim Exclude interim results
         # @option arguments [Integer] :from skips a number of buckets

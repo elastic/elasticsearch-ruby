@@ -25,6 +25,7 @@ module Elasticsearch
         # Open anomaly detection jobs
         #
         # @option arguments [String] :job_id The ID of the job to open
+        # @option arguments [Time] :timeout Controls the time to wait until a job has opened.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Query parameters can be specified in the body
         #
@@ -49,7 +50,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/_open"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

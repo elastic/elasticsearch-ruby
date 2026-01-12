@@ -24,7 +24,7 @@ module Elasticsearch
       module Actions
         # Schedule a transform to start now
         #
-        # @option arguments [String] :transform_id The id of the transform. (*Required*)
+        # @option arguments [String] :transform_id The id of the transform.
         # @option arguments [Time] :timeout Controls the time to wait for the scheduling to take place
         # @option arguments [Hash] :headers Custom HTTP headers
         #
