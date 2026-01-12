@@ -24,6 +24,10 @@ module Elasticsearch
       module Actions
         # Get tags.
         # Get the tags that are defined for the project.
+        # This API is only available in Serverless.
+        # This functionality is in technical preview and may be changed or removed in a future
+        # release. Elastic will apply best effort to fix any issues, but features in technical
+        # preview are not subject to the support SLA of official GA features.
         #
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
@@ -38,7 +42,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch-serverless/operation/operation-project-tags
         #
         def tags(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'project.tags' }

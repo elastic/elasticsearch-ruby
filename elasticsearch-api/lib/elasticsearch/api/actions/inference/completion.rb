@@ -23,6 +23,10 @@ module Elasticsearch
     module Inference
       module Actions
         # Perform completion inference on the service.
+        # Get responses for completion tasks.
+        # This API works only with the completion task type.
+        # IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
+        # This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
         #
         # @option arguments [String] :inference_id The inference Id (*Required*)
         # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference request to complete. Server default: 30s.
