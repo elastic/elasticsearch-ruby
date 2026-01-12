@@ -28,8 +28,8 @@ module Elasticsearch
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :index The index to downsample (*Required*)
-        # @option arguments [String] :target_index The name of the target index to store downsampled data (*Required*)
+        # @option arguments [String] :index The index to downsample
+        # @option arguments [String] :target_index The name of the target index to store downsampled data
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The downsampling configuration (*Required*)
         #

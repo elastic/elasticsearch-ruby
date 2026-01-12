@@ -24,7 +24,7 @@ module Elasticsearch
       module Actions
         # Clear trained model deployment cache
         #
-        # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
+        # @option arguments [String] :model_id The unique identifier of the trained model.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/clear-trained-model-deployment-cache.html
