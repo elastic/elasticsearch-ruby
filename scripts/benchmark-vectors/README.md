@@ -6,5 +6,5 @@ Run with:
 
 ```bash
 bundle install
-bundle exec ruby app.rb
+bundle exec rake run
 ```

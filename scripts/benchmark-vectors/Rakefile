@@ -14,14 +14,7 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-source 'https://rubygems.org'
-
-if defined?(JRUBY_VERSION)
-  gem 'jrjackson'
-else
-  gem 'debug'
+desc 'Run the benchmark'
+task :run do
+  ruby 'app.rb'
 end
-gem 'elasticsearch-api', path: File.expand_path('../../elasticsearch-api', __dir__)
-gem 'elasticsearch', path: File.expand_path('../../elasticsearch', __dir__)
-gem 'multi_json'
-gem 'rake'
