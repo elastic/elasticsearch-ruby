@@ -20,10 +20,9 @@
 # See Elasticsearch::ES_SPECIFICATION_COMMIT for commit hash.
 module Elasticsearch
   module API
-    module ProjectRouting
+    module Project
       module Actions
-        # Create of update named project routing expressions.
-        # Create or update named project routing expressions.
+        # Get named project routing expressions.
         # This API is only available in Serverless.
         # This functionality is in technical preview and may be changed or removed in a future
         # release. Elastic will apply best effort to fix any issues, but features in technical
@@ -41,21 +40,18 @@ module Elasticsearch
         # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body expressions
         #
-        # @see
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch#TODO
         #
-        def create_many(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'project_routing.create_many' }
-
-          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+        def get_many_routing(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'project.get_many_routing' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
+          body = nil
 
-          method = Elasticsearch::API::HTTP_PUT
+          method = Elasticsearch::API::HTTP_GET
           path   = '_project_routing'
           params = Utils.process_params(arguments)
 

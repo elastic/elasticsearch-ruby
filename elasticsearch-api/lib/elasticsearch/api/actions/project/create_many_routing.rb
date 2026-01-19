@@ -20,16 +20,14 @@
 # See Elasticsearch::ES_SPECIFICATION_COMMIT for commit hash.
 module Elasticsearch
   module API
-    module ProjectRouting
+    module Project
       module Actions
-        # Get named project routing expressions.
-        # Get named project routing expressions.
+        # Create of update named project routing expressions.
         # This API is only available in Serverless.
         # This functionality is in technical preview and may be changed or removed in a future
         # release. Elastic will apply best effort to fix any issues, but features in technical
         # preview are not subject to the support SLA of official GA features.
         #
-        # @option arguments [String] :name The name of project routing expression (*Required*)
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
@@ -42,28 +40,22 @@ module Elasticsearch
         # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body expressions
         #
-        # @see
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch#TODO
         #
-        def get(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'project_routing.get' }
+        def create_many_routing(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'project.create_many_routing' }
 
-          defined_params = [:name].each_with_object({}) do |variable, set_variables|
-            set_variables[variable] = arguments[variable] if arguments.key?(variable)
-          end
-          request_opts[:defined_params] = defined_params unless defined_params.empty?
-
-          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body = arguments.delete(:body)
 
-          _name = arguments.delete(:name)
-
-          method = Elasticsearch::API::HTTP_GET
-          path   = "_project_routing/#{Utils.listify(_name)}"
+          method = Elasticsearch::API::HTTP_PUT
+          path   = '_project_routing'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

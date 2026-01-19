@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.project_routing#get_many' do
+describe 'client.project#get_many_routing' do
   let(:expected_args) do
     [
       'GET',
@@ -25,11 +25,11 @@ describe 'client.project_routing#get_many' do
       {},
       nil,
       {},
-      { endpoint: 'project_routing.get_many' }
+      { endpoint: 'project.get_many_routing' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.project_routing.get_many).to be_a Elasticsearch::API::Response
+    expect(client_double.project.get_many_routing).to be_a Elasticsearch::API::Response
   end
 end

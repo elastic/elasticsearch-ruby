@@ -17,19 +17,19 @@
 
 require 'spec_helper'
 
-describe 'client.project_routing#get' do
+describe 'client.project#delete_routing' do
   let(:expected_args) do
     [
-      'GET',
+      'DELETE',
       '_project_routing/foo',
       {},
       nil,
       {},
-      { endpoint: 'project_routing.get', defined_params: { name: 'foo' } }
+      { endpoint: 'project.delete_routing', defined_params: { name: 'foo' } }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.project_routing.get(name: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.project.delete_routing(name: 'foo')).to be_a Elasticsearch::API::Response
   end
 end
