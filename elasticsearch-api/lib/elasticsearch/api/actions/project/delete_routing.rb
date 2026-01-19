@@ -20,9 +20,8 @@
 # See Elasticsearch::ES_SPECIFICATION_COMMIT for commit hash.
 module Elasticsearch
   module API
-    module ProjectRouting
+    module Project
       module Actions
-        # Delete named project routing expressions.
         # Delete named project routing expressions.
         # This API is only available in Serverless.
         # This functionality is in technical preview and may be changed or removed in a future
@@ -43,10 +42,10 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch#TODO
         #
-        def delete(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'project_routing.delete' }
+        def delete_routing(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'project.delete_routing' }
 
           defined_params = [:name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)

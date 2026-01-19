@@ -17,19 +17,19 @@
 
 require 'spec_helper'
 
-describe 'client.project_routing#create' do
+describe 'client.project#get_routing' do
   let(:expected_args) do
     [
-      'PUT',
+      'GET',
       '_project_routing/foo',
       {},
+      nil,
       {},
-      {},
-      { endpoint: 'project_routing.create', defined_params: { name: 'foo' } }
+      { endpoint: 'project.get_routing', defined_params: { name: 'foo' } }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.project_routing.create(name: 'foo', body: {})).to be_a Elasticsearch::API::Response
+    expect(client_double.project.get_routing(name: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

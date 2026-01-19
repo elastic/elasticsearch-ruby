@@ -17,19 +17,19 @@
 
 require 'spec_helper'
 
-describe 'client.project_routing#delete' do
+describe 'client.project#create_many_routing' do
   let(:expected_args) do
     [
-      'DELETE',
-      '_project_routing/foo',
+      'PUT',
+      '_project_routing',
       {},
-      nil,
       {},
-      { endpoint: 'project_routing.delete', defined_params: { name: 'foo' } }
+      {},
+      { endpoint: 'project.create_many_routing' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.project_routing.delete(name: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.project.create_many_routing(body: {})).to be_a Elasticsearch::API::Response
   end
 end
