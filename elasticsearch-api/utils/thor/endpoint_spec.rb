@@ -54,7 +54,13 @@ module Elasticsearch
 
         @path_parts = parse_endpoint_parts(@spec)
         @params = @spec['params'] || {}
-        @paths = @spec['url']['paths'].map { |b| b['path'] } if @spec['url']
+
+        # Reject deprecated URL for infer_trained_model:
+        if @endpoint_name == 'ml.infer_trained_model'
+          @spec['url']['paths'].reject! { |p| p.keys.include?('deprecated') }
+        end
+        @paths = @spec['url']['paths'].map { |b| b['path'] }
+
         @path_params = path_variables.flatten.uniq.collect(&:to_sym)
         @http_method = parse_http_method(@spec)
         @deprecation_note = @spec['url']['paths'].last&.[]('deprecated')
