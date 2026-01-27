@@ -21,6 +21,7 @@ gem 'elasticsearch-api', path: File.expand_path('../elasticsearch-api', __FILE__
 gem 'elasticsearch',     path: File.expand_path('../elasticsearch', __FILE__), require: false
 
 gem 'ansi'
+gem 'benchmark' if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('4')
 gem 'cane'
 gem 'mocha'
 gem 'pry'
