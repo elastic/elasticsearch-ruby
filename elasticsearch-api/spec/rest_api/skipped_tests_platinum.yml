@@ -465,3 +465,9 @@
 -
   :file: 'downsample/90_multi_fields.yml'
   :description: '*'
+-
+  :file: 'ml/3rd_party_deployment.yml'
+  :description: 'Test start deployment with low priority and max allocations more than one'
+-
+  :file: 'ml/3rd_party_deployment.yml'
+  :description: 'Test update deployment with low priority and max allocations more than one'
