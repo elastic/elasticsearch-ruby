@@ -29,11 +29,6 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The docs to apply inference on and inference configuration overrides (*Required*)
         #
-        # *Deprecation notice*:
-        # /_ml/trained_models/{model_id}/deployment/_infer is deprecated. Use /_ml/trained_models/{model_id}/_infer instead
-        # Deprecated since version 8.3.0
-        #
-        #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.19/infer-trained-model.html
         #
         def infer_trained_model(arguments = {})
@@ -55,7 +50,7 @@ module Elasticsearch
           _model_id = arguments.delete(:model_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = ("_ml/trained_models/#{Utils.__listify(_model_id)}/deployment/_infer" if _model_id)
+          path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/_infer"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
