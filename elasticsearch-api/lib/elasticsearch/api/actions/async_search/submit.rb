@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
+# Auto generated from build hash 589cd632d091bc0a512c46d5d81ac1f961b60127
 # @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
 #
 module Elasticsearch
@@ -38,7 +38,7 @@ module Elasticsearch
         # @option arguments [Boolean] :explain Specify whether to return detailed information about score computation as part of a hit
         # @option arguments [List] :stored_fields A comma-separated list of stored fields to return as part of a hit
         # @option arguments [List] :docvalue_fields A comma-separated list of fields to return as the docvalue representation of a field for each hit
-        # @option arguments [Integer] :from Starting offset (default: 0)
+        # @option arguments [Integer] :from Starting offset
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
         # @option arguments [Boolean] :ignore_throttled Whether specified concrete, expanded or aliased indices should be ignored when throttled
         # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
@@ -49,7 +49,7 @@ module Elasticsearch
         # @option arguments [String] :q Query in the Lucene query string syntax
         # @option arguments [List] :routing A comma-separated list of specific routing values
         # @option arguments [String] :search_type Search operation type (options: query_then_fetch, dfs_query_then_fetch)
-        # @option arguments [Integer] :size Number of hits to return (default: 10)
+        # @option arguments [Integer] :size Number of hits to return
         # @option arguments [List] :sort A comma-separated list of <field>:<direction> pairs
         # @option arguments [List] :_source True or false to return the _source field or not, or a list of fields to return
         # @option arguments [List] :_source_excludes A list of fields to exclude from the returned _source field
