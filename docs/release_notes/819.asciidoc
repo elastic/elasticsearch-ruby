@@ -2,6 +2,62 @@
 === 8.19 Release notes
 
 [discrete]
+[[release_notes_8_19_3]]
+=== 8.19.3 Release notes
+
+* Dev: This release replaces the deprecated artifacts API with a new up to date one (https://github.com/elastic/elasticsearch-ruby/pull/2844[Pull Request]). This is used for downloading the REST tests and specification from Elasticsearch in development.
+* Dev: The 8.19 branch now tests for Ruby 4.0, so the gems `ostruct` and `benchmark` have been added to Gemfiles when `RUBY_VERSION >= '4'`.
+
+[discrete]
+==== API changes
+
+* Code updated to the latest Elasticsearch 8.19.11 specification.
+* General source code documentation updates.
+
+* `indices.data_streams_stats` - New parameter: [List] `:expand_wildcards` Whether to expand wildcard expressions to concrete data stream names that are open, closed or both. (options: all, closed, hidden, none, open)
+* Inference APIs add [Time] `:timeout` parameter:
+** `inference.chat_completion_unified`
+** `inference.completion`
+** `inference.inference`
+** `inference.put`
+** `inference.put_alibabacloud`
+** `inference.put_amazonbedrock`
+** `inference.put_amazonsagemaker`
+** `inference.put_anthropic`
+** `inference.put_azureaistudio`
+** `inference.put_azureopenai`
+** `inference.put_cohere`
+** `inference.put_deepseek`
+** `inference.put_elasticsearch`
+** `inference.put_elser`
+** `inference.put_googleaistudio`
+** `inference.put_googlevertexai`
+** `inference.put_hugging_face`
+** `inference.put_jinaai`
+** `inference.put_mistral`
+** `inference.put_openai`
+** `inference.put_voyageai`
+** `inference.put_watsonx`
+
+* Update for `ml.infer_trained_model_path`:
+`/_ml/trained_models/{model_id}/deployment/_infer` is deprecated since version 8.2.0. The code has been updated to use
+`/_ml/trained_models/{model_id}/_infer` instead. The response object is different and will return:
+
+```json
+{
+  "inference_results":
+  [
+    {"predicted_value": [[1.0,1.0]]}
+  ]
+}
+```
+
+Instead of:
+```json
+{"predicted_value": [[1.0,1.0]]}
+```
+
+[discrete]
 [[release_notes_8_19_2]]
 === 8.19.2 Release notes
 
