@@ -31,7 +31,7 @@ steps:
       TRANSPORT_VERSION: '{{ matrix.transport }}'
       RUBY_SOURCE: '{{ matrix.ruby_source }}'
       TEST_SUITE: platinum
-      DEBUG: true
+      QUIET: true
     command: ./.buildkite/run-yaml-tests.sh
     artifact_paths: elasticsearch-api/tmp/*
   # - group: 'Elasticsearch Serverless :elasticsearch:'
