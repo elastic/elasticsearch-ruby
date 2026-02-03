@@ -23,6 +23,7 @@ gem 'elasticsearch-extensions', path: File.expand_path('../elasticsearch-extensi
 gem 'elasticsearch',            path: File.expand_path('../elasticsearch', __FILE__),            require: false
 
 gem 'ansi'
+gem 'benchmark'
 gem 'cane'
 gem 'mocha'
 gem 'pry'
