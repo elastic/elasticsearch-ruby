@@ -54,21 +54,13 @@ namespace :elasticsearch do
     begin
       artifacts = JSON.parse(File.read(filename))
     rescue StandardError => e
-      STDERR.puts "[!] Couldn't read JSON file #{filename}"
+      warn "[!] Couldn't read JSON file #{json_filename}\n#{e.message}"
       exit 1
     end
-
-    build_hash_artifact = artifacts['version']['builds'].select do |build|
-      build.dig('projects', 'elasticsearch', 'commit_hash') == build_hash
-    end.first
-
-    unless build_hash_artifact
-      STDERR.puts "[!] Could not find artifact with build hash #{build_hash}, using latest instead"
-      build_hash_artifact = artifacts['version']['builds'].first
-    end
-
-    # Dig into the elasticsearch packages, search for the rest-resources-zip package and return the URL:
-    build_hash_artifact.dig('projects', 'elasticsearch', 'packages').select { |k,v| k =~ /rest-resources-zip/ }.map { | _, v| v['url'] }.first
+    # Search the JSON for the rest-resources-zip file and get the URL
+    packages = artifacts.dig('projects', 'elasticsearch', 'packages')
+    rest_resources = packages.select { |k, v| k =~ /rest-resources/ }
+    zip_url = rest_resources.map { |_, v| v['url'] }.first
   end
 
   def download_file!(url, filename)
@@ -90,6 +82,7 @@ namespace :elasticsearch do
 
   desc 'Download artifacts (tests and REST spec) for currently running cluster'
   task :download_artifacts do
+    require 'net/http'
     json_filename = CURRENT_PATH.join('tmp/artifacts.json')
 
     unless (version_number = ENV['STACK_VERSION'])
@@ -102,9 +95,16 @@ namespace :elasticsearch do
     # Create ./tmp if it doesn't exist
     Dir.mkdir(CURRENT_PATH.join('tmp'), 0700) unless File.directory?(CURRENT_PATH.join('tmp'))
 
-    # Download json file with package information for version:
-    json_url = "https://artifacts-api.elastic.co/v1/versions/#{version_number}"
-    download_file!(json_url, json_filename)
+    # Get the latest minor from version number, and get latest snapshot
+    major_minor = if version_number == 'main'
+                    'master'
+                  else
+                    version_number.split('.')[0..1].join('.')
+                  end
+    url = URI("https://artifacts-snapshot.elastic.co/elasticsearch/latest/#{major_minor}.json")
+
+    manifest_url = JSON.parse(Net::HTTP.get(url))['manifest_url']
+    download_file!(manifest_url, json_filename)
 
     # Get the package url from the json file given the build hash
     zip_url = package_url(json_filename, build_hash)
