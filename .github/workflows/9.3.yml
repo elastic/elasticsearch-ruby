@@ -7,7 +7,7 @@ on:
     branches:
       - 9.3
 jobs:
-  test-main:
+  test:
     env:
       TEST_ES_SERVER: http://localhost:9250
       PORT: 9250
@@ -41,4 +41,4 @@ jobs:
     - name: elasticsearch
       run: cd elasticsearch && bundle exec rake test:all
     - name: elasticsearch-api
-      run: rake es:download_artifacts[main] && cd elasticsearch-api && bundle exec rake test:all
+      run: rake es:download_artifacts[9.3.0-SNAPSHOT] && cd elasticsearch-api && bundle exec rake test:all
