@@ -1,5 +1,63 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.3.0
+
+## Gem
+
+* Tested versions of Ruby for 9.2.0: Ruby (MRI) 3.2, 3.3, 3.4, 4.0, JRuby 9.3, JRuby 9.4 and JRuby 10.
+
+### Support for base64 indexing for vector values
+
+Adds support for base64 ingestion of floating point arrays. You can use this by calling the client's `pack_dense_vector` function with the data to be converted to Base64 vector encoding for Bulk ingestion:
+
+```ruby
+> data = [1.0, 2.0]
+=> [1.0, 2.0]
+> client.pack_dense_vector(data)
+=> "P4AAAEAAAAA="
+```
+
+See the [Pull Request in Elasticsearch](https://github.com/elastic/elasticsearch/pull/137072) for more information. This change introduces `base64` as a dependency.
+
+### ES|QL Query Builder
+
+The [Ruby ES|QL Query Builder](https://github.com/elastic/esql-ruby) [version 0.4.0](https://github.com/elastic/esql-ruby/releases/tag/v0.4.0) has been released. The recent new versions add support for several functions: `TS` for time series indices, `STATS`, `🐔`, `FORK` and `FUSE`.
+
+## Elasticsearch API
+
+### API updates
+
+* `async_search.submit`, `cat.count`, `count`, `field_caps`, `indices.resolve_index`, `open_point_in_time`, `search`, `sql.query` - removes parameter `:project_routing` from query parameters, should be sent in the body.
+* `cat.segments` - Adds `:expan_wildcards`, `allow_no_indices`, `ignore_throttled`, `ignore_unavailable`, `allow_closed` parameters.
+* `indices.cancel_migrate_reindex`, `indices.create_from`, `indices.get_index_template`, `indices.migrate_reindex` - promoted from Techincal Preview to stable.
+* `machine_learning.start_data_frame_analytics`, `machine_learning.stop_data_frame_analytics`, `machine_learning.stop_trained_model_deployment` - Request body added as a parameter.
+* `machine_learning.stop_datafeed` - adds parameter `close_job`, if `true` the job associated with the datafeed is closed.
+* `project.tags` - Adds `:project_routing` parameter (This API is in technical preview and is only available in Serverless).
+* `transform.get_node_stats` - Adds parameters:
+  * `:error_trace` - When set to `true` Elasticsearch will include the full stack trace of errors when they occur.
+  * `:filter_path` - Comma-separated list of filters in dot notation which reduce the response returned by Elasticsearch.
+  * `:human` - When set to `true` will return statistics in a format suitable for humans.
+  * `:pretty` -  If set to `true` the returned JSON will be "pretty-formatted". Use this option for debugging only.
+
+### New APIs
+
+* `cat.circuit_breaker` -  Get circuit breakers statistics. (CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications)
+* `inference.put_groq` - Create an inference endpoint to perform an inference task with the `groq` service.
+* `inference.put_nvidia` - Create an inference endpoint to perform an inference task with the `nvidia` service.
+* `inference.put_openshift_ai` - Create an inference endpoint to perform an inference task with the `openshift_ai` service.
+
+### New APIs in Technical Preview
+
+* `esql.delete_view` - Deletes a stored ES|QL view.
+* `esql.get_view` - Returns a stored ES|QL view.
+* `esql.put_view` - Create or update an ES|QL view.
+* `indices.delete_sample_configuration` - Delete the sampling configuration for the specified index.
+* `indices.get_all_configuration` - Get the sampling configurations for all indices.
+* `indices.get_sample` - Request for a random sample of raw documents ingested into the given index or data stream.
+* `indices.get_sample_configuration` - Get the sampling configuration for the specified index.
+* `indices.get_sample_stats` - Request stats for a random sample of raw documents ingested into the given index or data stream.
+* `indices.put_sample_configuration` - Create or update the sampling configuration for the specified index.
+
 # 9.2.0
 
 ## Gem
