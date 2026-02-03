@@ -215,7 +215,7 @@ if JRUBY
                   transport_options: { potatoes: 1 }
                 }
 
-                ::Manticore::Client.expects(:new).with(potatoes: 1, ssl: {})
+                ::Manticore::Client.expects(:new).with({ potatoes: 1, ssl: {} })
                 transport = Manticore.new(hosts: [{ host: 'foobar', port: 1234 }], options: options)
                 assert_equal(transport.options[:transport_options][:potatoes], 1)
               end
