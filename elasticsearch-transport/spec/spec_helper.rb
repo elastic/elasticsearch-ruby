@@ -23,6 +23,7 @@ require 'elasticsearch-transport'
 require 'logger'
 require 'ansi/code'
 require 'hashie/mash'
+require 'ostruct'
 if defined?(JRUBY_VERSION)
   require 'elasticsearch/transport/transport/http/manticore'
   require 'pry-nav'

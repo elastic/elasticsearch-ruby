@@ -33,6 +33,7 @@ group :development, :test do
   gem 'faraday-net_http_persistent'
   gem 'faraday-patron' unless defined? JRUBY_VERSION
   gem 'faraday-typhoeus'
+  gem 'ostruct'
   gem 'rspec'
   if defined?(JRUBY_VERSION)
     gem 'pry-nav'
