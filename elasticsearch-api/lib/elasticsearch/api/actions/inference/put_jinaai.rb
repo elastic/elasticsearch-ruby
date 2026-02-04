@@ -25,7 +25,7 @@ module Elasticsearch
         # Create an JinaAI inference endpoint.
         # Create an inference endpoint to perform an inference task with the `jinaai` service.
         # To review the available `rerank` models, refer to <https://jina.ai/reranker>.
-        # To review the available `text_embedding` models, refer to the <https://jina.ai/embeddings/>.
+        # To review the available `embedding` and `text_embedding` models, refer to <https://jina.ai/embeddings/>.
         #
         # @option arguments [String] :task_type The type of the inference task that the model will perform. (*Required*)
         # @option arguments [String] :jinaai_inference_id The unique identifier of the inference endpoint. (*Required*)

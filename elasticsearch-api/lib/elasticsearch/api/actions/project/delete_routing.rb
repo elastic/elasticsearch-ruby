@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Project
       module Actions
-        # Delete named project routing expressions.
+        # Delete a project routing expression.
         # This API is only available in Serverless.
         # This functionality is in technical preview and may be changed or removed in a future
         # release. Elastic will apply best effort to fix any issues, but features in technical
@@ -41,8 +41,6 @@ module Elasticsearch
         # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
-        #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch#TODO
         #
         def delete_routing(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'project.delete_routing' }

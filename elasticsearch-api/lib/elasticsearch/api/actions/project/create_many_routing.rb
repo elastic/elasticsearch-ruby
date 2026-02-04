@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Project
       module Actions
-        # Create of update named project routing expressions.
+        # Create or update project routing expressions.
         # This API is only available in Serverless.
         # This functionality is in technical preview and may be changed or removed in a future
         # release. Elastic will apply best effort to fix any issues, but features in technical
@@ -41,8 +41,6 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body expressions
-        #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch#TODO
         #
         def create_many_routing(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'project.create_many_routing' }
