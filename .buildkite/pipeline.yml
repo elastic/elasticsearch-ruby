@@ -90,7 +90,7 @@ steps:
   #           secret/ci/elastic-elasticsearch-ruby/cloud-access)\"}}" >
   #           ~/.elastic/cloud.json
   #         - qaf elastic-cloud projects delete
-  # - wait: ~
-  #   continue_on_failure: true
+  - wait: ~
+    continue_on_failure: true
   - label: Log Results
     command: ./.buildkite/log-results.sh
