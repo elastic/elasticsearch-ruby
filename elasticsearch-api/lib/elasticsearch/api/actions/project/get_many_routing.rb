@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Project
       module Actions
-        # Get named project routing expressions.
+        # Get project routing expressions.
         # This API is only available in Serverless.
         # This functionality is in technical preview and may be changed or removed in a future
         # release. Elastic will apply best effort to fix any issues, but features in technical
@@ -40,8 +40,6 @@ module Elasticsearch
         # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
-        #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch#TODO
         #
         def get_many_routing(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'project.get_many_routing' }

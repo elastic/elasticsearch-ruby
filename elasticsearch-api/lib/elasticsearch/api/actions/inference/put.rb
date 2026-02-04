@@ -29,7 +29,7 @@ module Elasticsearch
         # The following integrations are available through the inference API. You can find the available task types next to the integration name:
         # * AI21 (`chat_completion`, `completion`)
         # * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`)
-        # * Amazon Bedrock (`completion`, `text_embedding`)
+        # * Amazon Bedrock (`chat_completion`, `completion`, `text_embedding`)
         # * Amazon SageMaker (`chat_completion`, `completion`, `rerank`, `sparse_embedding`, `text_embedding`)
         # * Anthropic (`completion`)
         # * Azure AI Studio (`completion`, `rerank`, `text_embedding`)
@@ -42,7 +42,7 @@ module Elasticsearch
         # * Google Vertex AI (`chat_completion`, `completion`, `rerank`, `text_embedding`)
         # * Groq (`chat_completion`)
         # * Hugging Face (`chat_completion`, `completion`, `rerank`, `text_embedding`)
-        # * JinaAI (`rerank`, `text_embedding`)
+        # * JinaAI (`embedding`, `rerank`, `text_embedding`)
         # * Llama (`chat_completion`, `completion`, `text_embedding`)
         # * Mistral (`chat_completion`, `completion`, `text_embedding`)
         # * Nvidia (`chat_completion`, `completion`, `text_embedding`, `rerank`)
