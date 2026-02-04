@@ -29,7 +29,6 @@ module Elasticsearch
         # release. Elastic will apply best effort to fix any issues, but features in technical
         # preview are not subject to the support SLA of official GA features.
         #
-        # @option arguments [String] :project_routing A Lucene query using project metadata tags used to filter which projects are returned in the response, such as _alias:_origin or _alias:*pr*.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
@@ -42,6 +41,7 @@ module Elasticsearch
         # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body request body
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch-serverless/operation/operation-project-tags
         #
@@ -51,9 +51,14 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body = arguments.delete(:body)
 
-          method = Elasticsearch::API::HTTP_GET
+          method = if body
+                     Elasticsearch::API::HTTP_POST
+                   else
+                     Elasticsearch::API::HTTP_GET
+                   end
+
           path   = '_project/tags'
           params = Utils.process_params(arguments)
 
