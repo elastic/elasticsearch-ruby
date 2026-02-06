@@ -62,7 +62,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-simulate-ingest
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-simulate-ingest
         #
         def ingest(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'simulate.ingest' }

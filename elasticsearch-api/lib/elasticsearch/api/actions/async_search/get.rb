@@ -49,7 +49,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-async-search-submit
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-async-search-submit
         #
         def get(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'async_search.get' }

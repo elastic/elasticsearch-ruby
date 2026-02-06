@@ -55,7 +55,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-revert-model-snapshot
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-revert-model-snapshot
         #
         def revert_model_snapshot(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.revert_model_snapshot' }

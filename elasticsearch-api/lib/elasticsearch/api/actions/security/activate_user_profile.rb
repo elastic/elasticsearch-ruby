@@ -47,7 +47,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-activate-user-profile
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-activate-user-profile
         #
         def activate_user_profile(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.activate_user_profile' }

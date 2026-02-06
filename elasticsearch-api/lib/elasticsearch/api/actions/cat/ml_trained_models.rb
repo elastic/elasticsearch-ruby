@@ -63,7 +63,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-ml-trained-models
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-ml-trained-models
         #
         def ml_trained_models(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.ml_trained_models' }

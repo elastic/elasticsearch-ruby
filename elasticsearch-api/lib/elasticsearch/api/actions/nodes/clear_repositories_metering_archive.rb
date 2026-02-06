@@ -43,7 +43,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-clear-repositories-metering-archive
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-nodes-clear-repositories-metering-archive
         #
         def clear_repositories_metering_archive(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'nodes.clear_repositories_metering_archive' }

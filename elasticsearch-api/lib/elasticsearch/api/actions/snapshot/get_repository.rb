@@ -44,7 +44,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-get-repository
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-snapshot-get-repository
         #
         def get_repository(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.get_repository' }

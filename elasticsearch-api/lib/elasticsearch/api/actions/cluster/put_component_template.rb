@@ -60,7 +60,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-put-component-template
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cluster-put-component-template
         #
         def put_component_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.put_component_template' }

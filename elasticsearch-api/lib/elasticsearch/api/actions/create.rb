@@ -113,7 +113,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body document
       #
-      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-create
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-create
       #
       def create(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'create' }

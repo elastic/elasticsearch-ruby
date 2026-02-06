@@ -43,7 +43,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-follow-info
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ccr-follow-info
         #
         def follow_info(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.follow_info' }

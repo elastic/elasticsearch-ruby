@@ -47,7 +47,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-api-key-id
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-update-api-key-id
         #
         def update_api_key_id(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.update_api_key_id' }

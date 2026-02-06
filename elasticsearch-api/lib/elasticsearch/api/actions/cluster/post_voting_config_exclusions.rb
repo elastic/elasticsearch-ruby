@@ -60,7 +60,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-post-voting-config-exclusions
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cluster-post-voting-config-exclusions
         #
         def post_voting_config_exclusions(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.post_voting_config_exclusions' }
