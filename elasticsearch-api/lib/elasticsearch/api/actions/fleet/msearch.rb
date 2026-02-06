@@ -62,7 +62,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body searches
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-fleet-msearch
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-fleet-msearch
         #
         def msearch(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'fleet.msearch' }

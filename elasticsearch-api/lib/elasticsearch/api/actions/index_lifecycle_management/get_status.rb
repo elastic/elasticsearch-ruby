@@ -38,7 +38,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-get-status
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ilm-get-status
         #
         def get_status(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ilm.get_status' }

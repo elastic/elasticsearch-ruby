@@ -50,7 +50,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-resolve-index
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-resolve-index
         #
         def resolve_index(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.resolve_index' }

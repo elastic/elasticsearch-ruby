@@ -44,7 +44,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-delete-pipeline
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ingest-delete-pipeline
         #
         def delete_pipeline(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.delete_pipeline' }

@@ -40,7 +40,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-list-rulesets
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-query-rules-list-rulesets
         #
         def list_rulesets(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'query_rules.list_rulesets' }

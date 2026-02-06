@@ -45,7 +45,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-stop-trained-model-deployment
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-stop-trained-model-deployment
         #
         def stop_trained_model_deployment(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.stop_trained_model_deployment' }

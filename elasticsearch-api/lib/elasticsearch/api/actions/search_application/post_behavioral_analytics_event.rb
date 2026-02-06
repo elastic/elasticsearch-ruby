@@ -44,7 +44,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body payload
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-post-behavioral-analytics-event
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-search-application-post-behavioral-analytics-event
         #
         def post_behavioral_analytics_event(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'search_application.post_behavioral_analytics_event' }

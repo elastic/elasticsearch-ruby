@@ -42,7 +42,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-exists-index-template
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-exists-index-template
         #
         def exists_index_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.exists_index_template' }

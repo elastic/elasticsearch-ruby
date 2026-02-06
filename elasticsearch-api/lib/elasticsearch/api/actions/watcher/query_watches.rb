@@ -40,7 +40,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-query-watches
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-watcher-query-watches
         #
         def query_watches(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.query_watches' }

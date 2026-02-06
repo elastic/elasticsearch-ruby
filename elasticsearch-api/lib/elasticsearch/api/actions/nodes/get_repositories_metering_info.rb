@@ -44,7 +44,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-get-repositories-metering-info
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-nodes-get-repositories-metering-info
         #
         def get_repositories_metering_info(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'nodes.get_repositories_metering_info' }

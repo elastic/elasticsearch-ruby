@@ -44,7 +44,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-reset-transform
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-transform-reset-transform
         #
         def reset_transform(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'transform.reset_transform' }

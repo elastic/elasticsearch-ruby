@@ -41,7 +41,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-model-snapshot
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-update-model-snapshot
         #
         def update_model_snapshot(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.update_model_snapshot' }

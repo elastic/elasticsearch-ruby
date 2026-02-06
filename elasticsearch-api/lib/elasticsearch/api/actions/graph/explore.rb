@@ -48,7 +48,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-graph
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-graph
         #
         def explore(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'graph.explore' }
