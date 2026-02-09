@@ -29,9 +29,10 @@ module Elasticsearch
       #
       # @option arguments [String] :method REST method to check (options: GET, HEAD, POST, PUT, DELETE)
       # @option arguments [String] :path API path to check
-      # @option arguments [String] :parameters Comma-separated list of API parameters to check
-      # @option arguments [String] :capabilities Comma-separated list of arbitrary API capabilities to check
+      # @option arguments [List] :parameters Comma-separated list of API parameters to check
+      # @option arguments [List] :capabilities Comma-separated list of arbitrary API capabilities to check
       # @option arguments [Boolean] :local_only True if only the node being called should be considered
+      # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
       # @option arguments [Hash] :headers Custom HTTP headers
       #
       # @see https://github.com/elastic/elasticsearch/blob/8.19/rest-api-spec/src/yamlRestTest/resources/rest-api-spec/test/README.asciidoc#require-or-skip-api-capabilities
