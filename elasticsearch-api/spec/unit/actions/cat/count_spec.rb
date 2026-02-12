@@ -21,12 +21,12 @@ describe 'client.cat#count' do
 
   let(:expected_args) do
     [
-        'GET',
-        '_cat/count',
-        {},
-        nil,
-        {},
-        { endpoint: 'cat.count' }
+      'POST',
+      '_cat/count',
+      {},
+      nil,
+      {},
+      { endpoint: 'cat.count' }
     ]
   end
 
