@@ -65,6 +65,10 @@ module Elasticsearch
         # @option arguments [Boolean] :should_trim_fields If the format is `delimited`, you can specify whether values between delimiters should have whitespace trimmed from them.
         #  If this parameter is not specified and the delimiter is pipe (`|`), the default value is true.
         #  Otherwise, the default value is `false`.
+        # @option arguments [Boolean] :should_parse_recursively If the format is `ndjson`, you can specify whether to parse nested JSON objects recursively.
+        #  The nested objects are parsed to a maximum depth equal to the default value of the `index.mapping.depth.limit` setting.
+        #  Anything beyond that depth is parsed as an `object` type field.
+        #  For formats other than `ndjson`, this parameter is ignored.
         # @option arguments [Time] :timeout The maximum amount of time that the structure analysis can take.
         #  If the analysis is still running when the timeout expires, it will be stopped. Server default: 25s.
         # @option arguments [String] :timestamp_field The name of the field that contains the primary timestamp of each record in the text.
