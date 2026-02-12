@@ -24,6 +24,9 @@ module Elasticsearch
       module Actions
         # Disable logs stream.
         # Turn off the logs stream feature for this cluster.
+        #
+        # This API is only available behind a feature flag: `logs_stream`.
+        #
         # This functionality is in technical preview and may be changed or removed in a future
         # release. Elastic will apply best effort to fix any issues, but features in technical
         # preview are not subject to the support SLA of official GA features.
