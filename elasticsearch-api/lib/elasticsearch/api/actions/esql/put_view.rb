@@ -23,6 +23,9 @@ module Elasticsearch
     module Esql
       module Actions
         # Create or update an ES|QL view.
+        #
+        # This API is only available behind a feature flag: `esql_views`.
+        #
         # This functionality is in technical preview and may be changed or removed in a future
         # release. Elastic will apply best effort to fix any issues, but features in technical
         # preview are not subject to the support SLA of official GA features.
