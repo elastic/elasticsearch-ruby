@@ -1,9 +1,0 @@
-[source, ruby]
-----
-response = client.cluster.state(
-  metric: 'metadata',
-  pretty: true,
-  filter_path: 'metadata.stored_scripts'
-)
-puts response
-----

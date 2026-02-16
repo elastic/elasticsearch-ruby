@@ -1,5 +1,0 @@
-[source, ruby]
-----
-response = client.info
-puts response
-----
