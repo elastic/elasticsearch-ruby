@@ -22,18 +22,17 @@ module Elasticsearch
   module API
     module Streams
       module Actions
-        # Enable logs stream.
-        # Turn on the logs stream feature for this cluster.
-        # NOTE: To protect existing data, this feature can be turned on only if the
-        # cluster does not have existing indices or data streams that match the pattern `logs|logs.*`.
-        # If those indices or data streams exist, a `409 - Conflict` response and error is returned.
-        #
-        # This API is only available behind a feature flag: `logs_stream`.
-        #
+        # Enable a named stream.
+        # Turn on the named stream feature for this cluster.
+        # NOTE: To protect existing data, this feature can be turned on only if the cluster does not have
+        # existing indices or data streams that match the pattern `<name>|<name>.*` for the enabled stream
+        # type name. If those indices or data streams exist, a `409 - Conflict` response and error is
+        # returned.
         # This functionality is in technical preview and may be changed or removed in a future
         # release. Elastic will apply best effort to fix any issues, but features in technical
         # preview are not subject to the support SLA of official GA features.
         #
+        # @option arguments [String] :name The stream type to enable. (*Required*)
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Time] :timeout The period to wait for a response.
@@ -56,13 +55,22 @@ module Elasticsearch
         def logs_enable(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'streams.logs_enable' }
 
+          defined_params = [:name].each_with_object({}) do |variable, set_variables|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
+          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
 
+          _name = arguments.delete(:name)
+
           method = Elasticsearch::API::HTTP_POST
-          path   = '_streams/logs/_enable'
+          path   = "_streams/#{Utils.listify(_name)}/_enable"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
