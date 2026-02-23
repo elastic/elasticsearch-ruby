@@ -21,15 +21,15 @@ describe 'client.streams#logs_enable' do
   let(:expected_args) do
     [
       'POST',
-      '_streams/logs/_enable',
+      '_streams/foo/_enable',
       {},
       nil,
       {},
-      { endpoint: 'streams.logs_enable' }
+      { endpoint: 'streams.logs_enable', defined_params: { name: 'foo' } }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.streams.logs_enable).to be_a Elasticsearch::API::Response
+    expect(client_double.streams.logs_enable(name: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

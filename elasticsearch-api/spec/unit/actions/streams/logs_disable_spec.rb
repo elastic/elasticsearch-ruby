@@ -21,15 +21,15 @@ describe 'client.streams#logs_disable' do
   let(:expected_args) do
     [
       'POST',
-      '_streams/logs/_disable',
+      '_streams/foo/_disable',
       {},
       nil,
       {},
-      { endpoint: 'streams.logs_disable' }
+      { endpoint: 'streams.logs_disable', defined_params: { name: 'foo' } }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.streams.logs_disable).to be_a Elasticsearch::API::Response
+    expect(client_double.streams.logs_disable(name: 'foo')).to be_a Elasticsearch::API::Response
   end
 end
