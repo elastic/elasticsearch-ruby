@@ -31,6 +31,9 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
+    # Workaround for https://github.com/actions/runner-images/issues/13647
+    - name: Fix gem directory permissions
+      run: sudo chmod +t $(ruby -e 'puts Gem.default_dir')/gems
     - name: Build
       run: |
         sudo apt-get update
