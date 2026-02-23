@@ -471,3 +471,9 @@
 -
   :file: 'ml/3rd_party_deployment.yml'
   :description: 'Test update deployment with low priority and max allocations more than one'
+-
+  :file: 'security/authz_api_keys/30_field_level_security_synthetic_source.yml'
+  :description: 'Fields with copy_to, field level security and synthetic source'
+-
+  :file: 'security/authz_api_keys/30_field_level_security_synthetic_source.yml'
+  :description: 'Fields with copy_to and skip_ignored_source_read workaround'
