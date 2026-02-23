@@ -268,3 +268,6 @@
 -
   :file: 'cluster.info/20_info_http.yml'
   :description: 'Cluster HTTP Info'
+-
+  :file: 'tsdb/05_dimension_and_metric_in_non_tsdb_index.yml'
+  :description: '*'
