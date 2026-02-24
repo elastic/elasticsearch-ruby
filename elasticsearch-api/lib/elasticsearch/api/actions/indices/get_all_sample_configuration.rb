@@ -24,6 +24,9 @@ module Elasticsearch
       module Actions
         # Get all sampling configurations.
         # Get the sampling configurations for all indices.
+        #
+        # This API is only available behind a feature flag: `random_sampling`.
+        #
         # This functionality is in technical preview and may be changed or removed in a future
         # release. Elastic will apply best effort to fix any issues, but features in technical
         # preview are not subject to the support SLA of official GA features.

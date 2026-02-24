@@ -23,6 +23,9 @@ module Elasticsearch
     module Indices
       module Actions
         # Request for a random sample of raw documents ingested into the given index or data stream.
+        #
+        # This API is only available behind a feature flag: `random_sampling`.
+        #
         # This functionality is in technical preview and may be changed or removed in a future
         # release. Elastic will apply best effort to fix any issues, but features in technical
         # preview are not subject to the support SLA of official GA features.
