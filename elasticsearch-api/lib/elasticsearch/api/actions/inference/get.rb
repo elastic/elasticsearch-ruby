@@ -25,8 +25,9 @@ module Elasticsearch
         # Get an inference endpoint.
         # This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
         #
-        # @option arguments [String] :task_type The task type
-        # @option arguments [String] :inference_id The inference Id
+        # @option arguments [String] :task_type The task type of the endpoint to return
+        # @option arguments [String] :inference_id The inference Id of the endpoint to return. Using `_all` or `*` will return all endpoints with the specified
+        #  `task_type` if one is specified, or all endpoints for all task types if no `task_type` is specified
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
@@ -62,6 +63,8 @@ module Elasticsearch
           method = Elasticsearch::API::HTTP_GET
           path   = if _task_type && _inference_id
                      "_inference/#{Utils.listify(_task_type)}/#{Utils.listify(_inference_id)}"
+                   elsif _task_type
+                     "_inference/#{Utils.listify(_task_type)}/_all"
                    elsif _inference_id
                      "_inference/#{Utils.listify(_inference_id)}"
                    else
