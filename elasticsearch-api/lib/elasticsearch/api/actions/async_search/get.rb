@@ -36,6 +36,13 @@ module Elasticsearch
         # @option arguments [Time] :wait_for_completion_timeout Specifies to wait for the search to be completed up until the provided timeout.
         #  Final results will be returned if available before the timeout expires, otherwise the currently available results will be returned once the timeout expires.
         #  By default no timeout is set meaning that the currently available results will be returned without any additional wait.
+        # @option arguments [Boolean] :return_intermediate_results Specifies whether the response should contain intermediate results if the query is still running when the wait_for_completion_timeout
+        #  expires or if no wait_for_completion_timeout is specified.
+        #  If true and the search is still running, the search response
+        #  will include any hits and partial aggregations that are available.
+        #  If false and the search is still running, the search response will not include any hits (but possibly include
+        #  total hits) nor will include any partial aggregations.
+        #  When not specified, the intermediate results are returned for running queries.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

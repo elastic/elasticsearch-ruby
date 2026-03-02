@@ -33,7 +33,8 @@ module Elasticsearch
         #  If the master node is not available before the timeout expires, the request fails and returns an error.
         #  To indicate that the request should never timeout, set it to `-1`. Server default: 30s.
         # @option arguments [Boolean] :wait_for_completion If true, the request blocks until the operation is complete.
-        # @option arguments [String] :storage The mount option for the searchable snapshot index. Server default: full_copy.
+        # @option arguments [String] :storage The mount option for the searchable snapshot index.
+        #  For further information on mount options, refer to: {https://www.elastic.co/docs/deploy-manage/tools/snapshot-and-restore/searchable-snapshots#searchable-snapshot-mount-storage-options Mount options} Server default: full_copy.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
