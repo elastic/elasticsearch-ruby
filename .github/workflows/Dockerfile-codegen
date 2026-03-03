@@ -19,7 +19,7 @@ RUN groupadd --system -g ${BUILDER_GID} ${BUILDER_GROUP} \
 RUN apt-get -q update && apt-get -y install zip curl git
 WORKDIR /usr/src/app
 COPY . .
-RUN git clone https://$GITHUB_TOKEN@github.com/elastic/elastic-client-generator-ruby.git /usr/src/app/generator \
-    && cd generator \
-    && bundle install
-RUN chown -R ${BUILDER_USER}:${BUILDER_GROUP} /usr/src/app/generator
+# RUN git clone https://$GITHUB_TOKEN@github.com/elastic/elastic-client-generator-ruby.git /usr/src/app/generator \
+#     && cd generator \
+#     && bundle install
+# RUN chown -R ${BUILDER_USER}:${BUILDER_GROUP} /usr/src/app/generator

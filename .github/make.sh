@@ -134,11 +134,11 @@ if [[ "$CMD" == "codegen" ]]; then
          --volume "${repo}:/usr/src/app" \
          --rm \
          "${product}" \
-         /bin/bash -c "cd /usr/src/app/generator && \
-                       rake run[$BRANCH] && \
-                       cd /usr/src/app/elasticsearch-api && \
-                       rm -rf /usr/src/app/generator && \
-                       git status"
+         /bin/bash -x -c "cd /usr/src/app/generator && \
+                          rake run[$BRANCH] && \
+                          cd /usr/src/app/elasticsearch-api && \
+                          rm -rf /usr/src/app/generator && \
+                          git status"
 else
   # ------------------------------------------------------- #
   # Build Container
