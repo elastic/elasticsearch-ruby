@@ -1,57 +1,5 @@
 steps:
-  - label: ":elasticsearch: {{ matrix.stack_version }} :ruby: v{{ matrix.ruby }} :rspec: {{ matrix.suite }}"
+  - label: "🙅"
     agents:
       provider: "gcp"
-    env:
-      RUBY_VERSION: "{{ matrix.ruby }}"
-      TEST_SUITE: "{{ matrix.suite }}"
-      STACK_VERSION: "{{ matrix.stack_version }}"
-    matrix:
-      setup:
-        suite:
-          - "free"
-          - "platinum"
-        ruby:
-          - "4.0"
-          - "3.4"
-          - "3.3"
-          - "3.2"
-        stack_version:
-          - 7.17.30-SNAPSHOT
-      adjustments:
-        # Skip platinum for all but Ruby 3.3:
-        - with:
-            suite: "platinum"
-            ruby: "3.2"
-          skip: true
-        - with:
-            suite: "platinum"
-            ruby: "3.3"
-          skip: true
-        - with:
-            suite: "platinum"
-            ruby: "3.4"
-          skip: true
-    command: ./.buildkite/run-tests.sh
-    artifact_paths: "elasticsearch-api/tmp/*"
-
-  - label: ":elasticsearch: 8.x Compatiblity :ruby: :rspec: {{ matrix.suite }}"
-    agents:
-      provider: "gcp"
-    env:
-      RUBY_VERSION: "3.4"
-      TEST_SUITE: "{{ matrix.suite }}"
-      STACK_VERSION: 8.19.11-SNAPSHOT
-    matrix:
-      setup:
-        suite:
-          - "free"
-          - "platinum"
-    command: ./.buildkite/run-tests.sh
-    artifact_paths: "elasticsearch-api/tmp/*"
-    soft_fail:
-      - exit_status: 1
-  - wait: ~
-    continue_on_failure: true
-  - label: "Log Results"
-    command: ./.buildkite/log-results.sh
+    command: echo "Support for 7.17 has ended so Rest tests are no longer available"
