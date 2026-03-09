@@ -91,5 +91,4 @@ branch = current_branch.match(/[0-9]\.[0-9]+/)&.[](0) || ENV['ES_YAML_TESTS_BRAN
 Elasticsearch::Tests::Downloader::run(tests_path, branch)
 
 runner = Elasticsearch::Tests::TestRunner.new(CLIENT, tests_path, logger)
-runner.add_tests_to_skip(['indices/sample.yml', 'indices/sample_configuration.yml'])
 runner.run(ENV['SINGLE_TEST'] || [])
