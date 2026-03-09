@@ -38,6 +38,7 @@ module Elasticsearch
         # * DeepSeek (`chat_completion`, `completion`)
         # * Elasticsearch (`rerank`, `sparse_embedding`, `text_embedding` - this service is for built-in models and models uploaded through Eland)
         # * ELSER (`sparse_embedding`)
+        # * Fireworks AI (`chat_completion`, `completion`, `text_embedding`)
         # * Google AI Studio (`completion`, `text_embedding`)
         # * Google Vertex AI (`chat_completion`, `completion`, `rerank`, `text_embedding`)
         # * Groq (`chat_completion`)
