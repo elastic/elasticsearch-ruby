@@ -105,8 +105,8 @@ namespace :automation do
   DESC
   task :bumpmatrix, :version do |_, args|
     abort('[!] Required argument [version] missing') unless (version = args[:version])
-    gh_actions = Dir.glob(File.expand_path('../.github/workflows/*.yml', __dir__))
 
+    gh_actions = Dir.glob(File.expand_path('../.github/workflows/*.yml', __dir__))
     files = gh_actions + ['.buildkite/pipeline.yml']
     regexp = Regexp.new(/[stack-version|STACK_VERSION]:\ ([0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}?+(-SNAPSHOT)?)/)
     files.each do |file|
@@ -115,14 +115,15 @@ namespace :automation do
         require 'yaml'
         yaml = YAML.safe_load(content)
         yaml_tests_branch = yaml['steps'][0]['env']['ES_YAML_TESTS_BRANCH'].to_s
+        current_branch = `git rev-parse --abbrev-ref HEAD`
 
-        if yaml_tests_branch == 'main'
+        if current_branch == 'main'
           old = content.match(/STACK_VERSION: (.*)/)[1]
           new = "STACK_VERSION: #{version}"
           content.gsub!(new, old)
         else
           branch = version.to_s.match(/([0-9]+\.[0-9]+)\.[0-9]+.*/)[1]
-          content.gsub!(yaml_tests_branch, branch)
+          content.gsub!(/(ES_YAML_TESTS_BRANCH: )#{yaml_tests_branch}/, "\\1#{branch}")
         end
         puts "[#{yaml_tests_branch}] -> [#{branch}] in #{file.gsub('./', '')}"
       end
