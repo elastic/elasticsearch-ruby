@@ -76,12 +76,15 @@ module Elasticsearch
       # @yieldparam ingest_docs [Array<Hash>] The collection of documents sent in the bulk request.
       #
       def update(docs, params = {}, body = {}, &block)
-        ingest_docs = docs.map do |doc|
-          { update: { _index: @index, _id: doc.delete('id'), data: { doc: doc } } }
-        end
-        if (slice = params.delete(:slice))
-          ingest_docs.each_slice(slice) { |items| update(items, params, &block) }
+        if (slice = params[:slice])
+          request_params = params.dup
+          request_params.delete(:slice)
+          docs.each_slice(slice) { |items| update(items, request_params, &block) }
         else
+          ingest_docs = docs.map do |doc|
+            document = doc.dup
+            { update: { _index: @index, _id: document.delete('id'), data: { doc: document } } }
+          end
           bulk_request(ingest_docs, params, &block)
         end
       end
