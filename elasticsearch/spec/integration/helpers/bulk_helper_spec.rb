@@ -65,6 +65,29 @@ context 'Elasticsearch client helpers' do
       response = bulk_helper.update(docs)
       expect(response.status).to eq(200)
       expect(response['items'].map { |i| i['update']['result'] }.uniq.first).to eq('updated')
+      expect(docs.map { |doc| doc['id'] }).not_to include(nil)
+    end
+
+    it 'Updates documents in slices' do
+      docs = [
+        { scientific_name: 'Otocyon megalotos', name: 'Bat-eared fox' },
+        { scientific_name: 'Herpestes javanicus', name: 'Small Indian mongoose' }
+      ]
+      bulk_helper = Elasticsearch::Helpers::BulkHelper.new(CLIENT, index_slice, params)
+      bulk_helper.ingest(docs)
+      animals = CLIENT.search(index: index_slice, size: 200)['hits']['hits']
+      docs = animals.map { |animal| animal['_source'].merge({ 'id' => animal['_id'] }) }
+      docs.map { |doc| doc['scientific_name'].upcase! }
+
+      bulk_helper.update(docs, { slice: 1 }) do |response, update_docs|
+        expect(response.status).to eq(200)
+        expect(update_docs.count).to eq(1)
+      end
+
+      expect(docs.map { |doc| doc['id'] }).not_to include(nil)
+      response = CLIENT.search(index: index_slice, size: 200)
+      expect(response['hits']['hits'].map { |animal| animal['_source']['scientific_name'] }.sort)
+        .to eq(docs.map { |doc| doc['scientific_name'] }.sort)
     end
 
     it 'Deletes documents' do
