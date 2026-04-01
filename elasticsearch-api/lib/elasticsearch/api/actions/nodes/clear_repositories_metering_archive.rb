@@ -54,7 +54,6 @@ module Elasticsearch
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           raise ArgumentError, "Required argument 'node_id' missing" unless arguments[:node_id]
-
           unless arguments[:max_archive_version]
             raise ArgumentError,
                   "Required argument 'max_archive_version' missing"
