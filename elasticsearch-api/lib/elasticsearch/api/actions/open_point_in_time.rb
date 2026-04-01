@@ -50,7 +50,9 @@ module Elasticsearch
       #
       # @option arguments [String, Array] :index A comma-separated list of index names to open point in time; use `_all` or empty string to perform the operation on all indices (*Required*)
       # @option arguments [Time] :keep_alive Extend the length of time that the point in time persists. (*Required*)
-      # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a missing or closed index.
+      # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+      #  index, alias, or data stream that is missing, closed, or otherwise unavailable.
+      #  If `true`, unavailable concrete targets are silently ignored.
       # @option arguments [String] :preference The node or shard the operation should be performed on.
       #  By default, it is random.
       # @option arguments [String, Array<String>] :routing A custom value that is used to route operations to a specific shard.

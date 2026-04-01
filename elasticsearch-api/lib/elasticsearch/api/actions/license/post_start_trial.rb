@@ -28,7 +28,7 @@ module Elasticsearch
         # For example, if you have already activated a trial for v8.0, you cannot start a new trial until v9.0. You can, however, request an extended trial at https://www.elastic.co/trialextension.
         # To check the status of your trial, use the get trial status API.
         #
-        # @option arguments [Boolean] :acknowledge Whether the user has acknowledged acknowledge messages
+        # @option arguments [Boolean] :acknowledge To start a trial, you must accept the acknowledge messages and set this parameter to `true`.
         # @option arguments [String] :type The type of trial license to generate Server default: trial.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

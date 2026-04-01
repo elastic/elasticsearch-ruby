@@ -30,7 +30,12 @@ module Elasticsearch
         # preview are not subject to the support SLA of official GA features.
         #
         # @option arguments [String] :index A single target to search. If the target is an index alias, it must resolve to a single index. (*Required*)
-        # @option arguments [Boolean] :allow_no_indices [TODO]
+        # @option arguments [Boolean] :allow_no_indices A setting that does two separate checks on the index expression.
+        #  If `false`, the request returns an error (1) if any wildcard expression
+        #  (including `_all` and `*`) resolves to zero matching indices or (2) if the
+        #  complete set of resolved indices, aliases or data streams is empty after all
+        #  expressions are evaluated. If `true`, index expressions that resolve to no
+        #  indices are allowed and the request returns an empty result.
         # @option arguments [String] :analyzer [TODO]
         # @option arguments [Boolean] :analyze_wildcard [TODO]
         # @option arguments [Integer] :batched_reduce_size [TODO]
@@ -41,7 +46,9 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :expand_wildcards [TODO]
         # @option arguments [Boolean] :explain [TODO]
         # @option arguments [Boolean] :ignore_throttled [TODO]
-        # @option arguments [Boolean] :ignore_unavailable [TODO]
+        # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+        #  index, alias, or data stream that is missing, closed, or otherwise unavailable.
+        #  If `true`, unavailable concrete targets are silently ignored.
         # @option arguments [Boolean] :lenient [TODO]
         # @option arguments [Integer] :max_concurrent_shard_requests [TODO]
         # @option arguments [String] :preference [TODO]

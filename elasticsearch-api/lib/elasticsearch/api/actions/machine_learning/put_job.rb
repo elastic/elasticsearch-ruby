@@ -27,12 +27,18 @@ module Elasticsearch
         # If you include a `datafeed_config` but do not provide a query, the datafeed uses `{"match_all": {"boost": 1}}`.
         #
         # @option arguments [String] :job_id The identifier for the anomaly detection job. This identifier can contain lowercase alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric characters. (*Required*)
-        # @option arguments [Boolean] :allow_no_indices If `true`, wildcard indices expressions that resolve into no concrete indices are ignored. This includes the
-        #  `_all` string or when no indices are specified. Server default: true.
+        # @option arguments [Boolean] :allow_no_indices A setting that does two separate checks on the index expression.
+        #  If `false`, the request returns an error (1) if any wildcard expression
+        #  (including `_all` and `*`) resolves to zero matching indices or (2) if the
+        #  complete set of resolved indices, aliases or data streams is empty after all
+        #  expressions are evaluated. If `true`, index expressions that resolve to no
+        #  indices are allowed and the request returns an empty result. Server default: true.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match. If the request can target data streams, this argument determines
         #  whether wildcard expressions match hidden data streams. Supports comma-separated values. Server default: open.
         # @option arguments [Boolean] :ignore_throttled If `true`, concrete, expanded or aliased indices are ignored when frozen. Server default: true.
-        # @option arguments [Boolean] :ignore_unavailable If `true`, unavailable indices (missing or closed) are ignored.
+        # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+        #  index, alias, or data stream that is missing, closed, or otherwise unavailable.
+        #  If `true`, unavailable concrete targets are silently ignored.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
