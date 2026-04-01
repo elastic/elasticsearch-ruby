@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.count(
-  filter_path: '-_shards'
-)
-puts response
-----
