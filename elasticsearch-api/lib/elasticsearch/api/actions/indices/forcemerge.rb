@@ -64,11 +64,17 @@ module Elasticsearch
         # ```
         #
         # @option arguments [String, Array] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices.
-        #  (This includes `_all` string or when no indices have been specified)
+        # @option arguments [Boolean] :allow_no_indices A setting that does two separate checks on the index expression.
+        #  If `false`, the request returns an error (1) if any wildcard expression
+        #  (including `_all` and `*`) resolves to zero matching indices or (2) if the
+        #  complete set of resolved indices, aliases or data streams is empty after all
+        #  expressions are evaluated. If `true`, index expressions that resolve to no
+        #  indices are allowed and the request returns an empty result.
         # @option arguments [String, Array<String>] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. Server default: open.
         # @option arguments [Boolean] :flush Specify whether the index should be flushed after performing the operation Server default: true.
-        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
+        # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+        #  index, alias, or data stream that is missing, closed, or otherwise unavailable.
+        #  If `true`, unavailable concrete targets are silently ignored.
         # @option arguments [Integer] :max_num_segments The number of segments the index should be merged into (default: dynamic)
         # @option arguments [Boolean] :only_expunge_deletes Specify whether the operation should only expunge deleted documents
         # @option arguments [Boolean] :wait_for_completion Should the request wait until the force merge is completed Server default: true.

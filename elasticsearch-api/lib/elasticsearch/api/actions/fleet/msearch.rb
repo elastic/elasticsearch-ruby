@@ -31,11 +31,18 @@ module Elasticsearch
         # preview are not subject to the support SLA of official GA features.
         #
         # @option arguments [String] :index A single target to search. If the target is an index alias, it must resolve to a single index.
-        # @option arguments [Boolean] :allow_no_indices If false, the request returns an error if any wildcard expression, index alias, or _all value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar.
+        # @option arguments [Boolean] :allow_no_indices A setting that does two separate checks on the index expression.
+        #  If `false`, the request returns an error (1) if any wildcard expression
+        #  (including `_all` and `*`) resolves to zero matching indices or (2) if the
+        #  complete set of resolved indices, aliases or data streams is empty after all
+        #  expressions are evaluated. If `true`, index expressions that resolve to no
+        #  indices are allowed and the request returns an empty result.
         # @option arguments [Boolean] :ccs_minimize_roundtrips If true, network roundtrips between the coordinating node and remote clusters are minimized for cross-cluster search requests. Server default: true.
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard expressions can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
         # @option arguments [Boolean] :ignore_throttled If true, concrete, expanded or aliased indices are ignored when frozen.
-        # @option arguments [Boolean] :ignore_unavailable If true, missing or closed indices are not included in the response.
+        # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+        #  index, alias, or data stream that is missing, closed, or otherwise unavailable.
+        #  If `true`, unavailable concrete targets are silently ignored.
         # @option arguments [Integer] :max_concurrent_searches Maximum number of concurrent searches the multi search API can execute.
         # @option arguments [Integer] :max_concurrent_shard_requests Maximum number of concurrent shard requests that each sub-search request executes per node. Server default: 5.
         # @option arguments [Integer] :pre_filter_shard_size Defines a threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method i.e., if date filters are mandatory to match but the shard bounds and the query are disjoint.

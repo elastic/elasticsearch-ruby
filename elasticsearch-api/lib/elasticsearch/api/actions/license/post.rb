@@ -30,7 +30,8 @@ module Elasticsearch
         # NOTE: If Elasticsearch security features are enabled and you are installing a gold or higher license, you must enable TLS on the transport networking layer before you install the license.
         # If the operator privileges feature is enabled, only operator users can use this API.
         #
-        # @option arguments [Boolean] :acknowledge Specifies whether you acknowledge the license changes.
+        # @option arguments [Boolean] :acknowledge To update a license, you must accept the acknowledge messages and set this parameter to `true`.
+        #  In particular, if you are upgrading or downgrading a license, you must acknowlege the feature changes.
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [Time] :timeout The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

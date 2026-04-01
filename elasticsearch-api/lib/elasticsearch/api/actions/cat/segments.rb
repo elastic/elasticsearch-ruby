@@ -43,11 +43,16 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard expressions can match. If the request can target data streams, this argument
         #  determines whether wildcard expressions match hidden data streams. Supports comma-separated values,
         #  such as open,hidden. Server default: open.
-        # @option arguments [Boolean] :allow_no_indices If false, the request returns an error if any wildcard expression, index alias, or _all value targets only
-        #  missing or closed indices. This behavior applies even if the request targets other open indices. For example,
-        #  a request targeting foo*,bar* returns an error if an index starts with foo but no index starts with bar. Server default: true.
+        # @option arguments [Boolean] :allow_no_indices A setting that does two separate checks on the index expression.
+        #  If `false`, the request returns an error (1) if any wildcard expression
+        #  (including `_all` and `*`) resolves to zero matching indices or (2) if the
+        #  complete set of resolved indices, aliases or data streams is empty after all
+        #  expressions are evaluated. If `true`, index expressions that resolve to no
+        #  indices are allowed and the request returns an empty result. Server default: true.
         # @option arguments [Boolean] :ignore_throttled If true, concrete, expanded or aliased indices are ignored when frozen.
-        # @option arguments [Boolean] :ignore_unavailable If true, missing or closed indices are not included in the response.
+        # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+        #  index, alias, or data stream that is missing, closed, or otherwise unavailable.
+        #  If `true`, unavailable concrete targets are silently ignored.
         # @option arguments [Boolean] :allow_closed If true, allow closed indices to be returned in the response otherwise if false, keep the legacy behaviour
         #  of throwing an exception if index pattern matches closed indices
         # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to

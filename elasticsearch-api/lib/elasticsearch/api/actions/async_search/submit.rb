@@ -34,8 +34,12 @@ module Elasticsearch
         # @option arguments [Time] :keep_alive Specifies how long the async search needs to be available.
         #  Ongoing async searches and any saved search results are deleted after this period. Server default: 5d.
         # @option arguments [Boolean] :keep_on_completion If `true`, results are stored for later retrieval when the search completes within the `wait_for_completion_timeout`.
-        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices.
-        #  (This includes `_all` string or when no indices have been specified)
+        # @option arguments [Boolean] :allow_no_indices A setting that does two separate checks on the index expression.
+        #  If `false`, the request returns an error (1) if any wildcard expression
+        #  (including `_all` and `*`) resolves to zero matching indices or (2) if the
+        #  complete set of resolved indices, aliases or data streams is empty after all
+        #  expressions are evaluated. If `true`, index expressions that resolve to no
+        #  indices are allowed and the request returns an empty result.
         # @option arguments [Boolean] :allow_partial_search_results Indicate if an error should be returned if there is a partial search failure or timeout Server default: true.
         # @option arguments [String] :analyzer The analyzer to use for the query string
         # @option arguments [Boolean] :analyze_wildcard Specify whether wildcard and prefix queries should be analyzed
@@ -48,7 +52,9 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both Server default: open.
         # @option arguments [Boolean] :explain Specify whether to return detailed information about score computation as part of a hit
         # @option arguments [Boolean] :ignore_throttled Whether specified concrete, expanded or aliased indices should be ignored when throttled
-        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
+        # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a concrete (non-wildcarded)
+        #  index, alias, or data stream that is missing, closed, or otherwise unavailable.
+        #  If `true`, unavailable concrete targets are silently ignored.
         # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
         # @option arguments [Integer] :max_concurrent_shard_requests The number of concurrent shard requests per node this search executes concurrently.
         #  This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests Server default: 5.
