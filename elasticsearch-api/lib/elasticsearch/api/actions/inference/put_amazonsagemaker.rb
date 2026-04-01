@@ -54,7 +54,6 @@ module Elasticsearch
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'task_type' missing" unless arguments[:task_type]
-
           unless arguments[:amazonsagemaker_inference_id]
             raise ArgumentError,
                   "Required argument 'amazonsagemaker_inference_id' missing"
