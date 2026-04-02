@@ -55,7 +55,6 @@ module Elasticsearch
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'task_type' missing" unless arguments[:task_type]
-
           unless arguments[:openshiftai_inference_id]
             raise ArgumentError,
                   "Required argument 'openshiftai_inference_id' missing"
