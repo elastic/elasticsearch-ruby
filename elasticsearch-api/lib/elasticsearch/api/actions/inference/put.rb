@@ -46,7 +46,7 @@ module Elasticsearch
         # * Mistral (`chat_completion`, `completion`, `text_embedding`)
         # * OpenAI (`chat_completion`, `completion`, `text_embedding`)
         # * VoyageAI (`rerank`, `text_embedding`)
-        # * Watsonx inference integration (`text_embedding`)
+        # * Watsonx (`chat_completion`, `completion`, `rerank`, `text_embedding`)
         #
         # @option arguments [String] :task_type The task type. Refer to the integration list in the API description for the available task types.
         # @option arguments [String] :inference_id The inference Id (*Required*)

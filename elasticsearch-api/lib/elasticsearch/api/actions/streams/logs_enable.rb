@@ -27,6 +27,9 @@ module Elasticsearch
         # NOTE: To protect existing data, this feature can be turned on only if the
         # cluster does not have existing indices or data streams that match the pattern `logs|logs.*`.
         # If those indices or data streams exist, a `409 - Conflict` response and error is returned.
+        #
+        # This API is only available behind a feature flag: `logs_stream`.
+        #
         # This functionality is in technical preview and may be changed or removed in a future
         # release. Elastic will apply best effort to fix any issues, but features in technical
         # preview are not subject to the support SLA of official GA features.

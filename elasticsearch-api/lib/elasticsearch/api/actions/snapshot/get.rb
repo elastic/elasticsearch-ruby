@@ -49,7 +49,7 @@ module Elasticsearch
         #  The default behavior is ascending order. Server default: asc.
         # @option arguments [Integer] :offset Numeric offset to start pagination from based on the snapshots matching this request. Using a non-zero value for this parameter is mutually exclusive with using the after parameter. Defaults to 0. Server default: 0.
         # @option arguments [Integer] :size The maximum number of snapshots to return.
-        #  The default is 0, which means to return all that match the request without limit. Server default: 0.
+        #  The default is -1, which means to return all that match the request without limit. Server default: -1.
         # @option arguments [String] :slm_policy_filter Filter snapshots by a comma-separated list of snapshot lifecycle management (SLM) policy names that snapshots belong to.You can use wildcards (`*`) and combinations of wildcards followed by exclude patterns starting with `-`.
         #  For example, the pattern `*,-policy-a-\*` will return all snapshots except for those that were created by an SLM policy with a name starting with `policy-a-`.
         #  Note that the wildcard pattern `*` matches all snapshots created by an SLM policy but not those snapshots that were not created by an SLM policy.

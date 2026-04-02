@@ -29,7 +29,6 @@ module Elasticsearch
         # preview are not subject to the support SLA of official GA features.
         #
         # @option arguments [String, Array] :node_id The names of the nodes in the cluster to target.
-        # @option arguments [Time] :master_timeout [TODO]
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
