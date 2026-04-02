@@ -28,7 +28,7 @@ module Elasticsearch
       # @option arguments [Boolean] :allow_no_indices If `false`, the request returns an error if any wildcard expression, index alias, or `_all` value targets only missing or closed indices.
       #  This behavior applies even if the request targets other open indices.
       #  For example, a request targeting `foo*,bar*` returns an error if an index starts with `foo` but no index starts with `bar`. Server default: true.
-      # @option arguments [Boolean] :ccs_minimize_roundtrips If `true`, network round-trips are minimized for cross-cluster search requests.
+      # @option arguments [Boolean] :ccs_minimize_roundtrips Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution. Server default: true.
       # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
       #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
       #  Supports comma-separated values, such as `open,hidden`. Server default: open.

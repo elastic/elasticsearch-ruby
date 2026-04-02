@@ -116,7 +116,7 @@ module Elasticsearch
       #  This parameter can be used only when the `q` query string parameter is specified.
       # @option arguments [Integer] :max_docs The maximum number of documents to process.
       #  It defaults to all documents.
-      #  When set to a value less then or equal to `scroll_size` then a scroll will not be used to retrieve the results for the operation.
+      #  When set to a value less than or equal to `scroll_size` and `conflicts` is set to `abort`, a scroll will not be used to retrieve the results for the operation.
       # @option arguments [String] :pipeline The ID of the pipeline to use to preprocess incoming documents.
       #  If the index has a default ingest pipeline specified, then setting the value to `_none` disables the default ingest pipeline for this request.
       #  If a final pipeline is configured it will always run, regardless of the value of this parameter.
