@@ -27,6 +27,7 @@ module Elasticsearch
         # The document count only includes live documents, not deleted documents which have not yet been removed by the merge process.
         # IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console.
         # They are not intended for use by applications. For application consumption, use the count API.
+        # NOTE: Starting in Elasticsearch 9.3.0, this endpoint also supports the `POST` method. This is primarily intended for project routing in serverless environments.
         #
         # @option arguments [String, Array] :index A comma-separated list of data streams, indices, and aliases used to limit the request.
         #  It supports wildcards (`*`).
@@ -80,12 +81,7 @@ module Elasticsearch
 
           _index = arguments.delete(:index)
 
-          method = if body
-                     Elasticsearch::API::HTTP_POST
-                   else
-                     Elasticsearch::API::HTTP_GET
-                   end
-
+          method = Elasticsearch::API::HTTP_POST
           path   = if _index
                      "_cat/count/#{Utils.listify(_index)}"
                    else
