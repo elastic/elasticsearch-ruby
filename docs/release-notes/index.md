@@ -20,13 +20,27 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-ruby-client-next-fixes]
 % *
 
+## 9.3.1 [elasticsearch-ruby-client-9.3.1-release-notes]
+
+### Fixes [elasticsearch-ruby-client-9.3.1-fixes]
+
+#### Gem
+
+* Fixes a bug in BulkHelper when using `update` with slice. Thanks [gitviola](https://github.com/gitviola)! [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2907)
+
+### Features and enhancements [elasticsearch-ruby-client-9.3.1-features-enhancements]
+
+#### Elasticsearch API
+
+* Elasticsearch API code and source code documentation updated to the latest Elasticsearch 9.3 specification.
+
 ## 9.3.0 [elasticsearch-ruby-client-9.3.0-release-notes]
 
 ### Features and enhancements [elasticsearch-ruby-client-9.3.0-features-enhancements]
 
 #### Gem
 
-* Tested versions of Ruby for 9.2.0: Ruby (MRI) 3.2, 3.3, 3.4, 4.0, JRuby 9.3, JRuby 9.4 and JRuby 10.
+* Tested versions of Ruby for 9.3.0: Ruby (MRI) 3.2, 3.3, 3.4, 4.0, JRuby 9.3, JRuby 9.4 and JRuby 10.
 
 ### Support for base64 indexing for vector values
 
@@ -81,6 +95,20 @@ Code updated to the latest Elasticsearch 9.3 specification.
 * `indices.get_sample_configuration` - Get the sampling configuration for the specified index.
 * `indices.get_sample_stats` - Request stats for a random sample of raw documents ingested into the given index or data stream.
 * `indices.put_sample_configuration` - Create or update the sampling configuration for the specified index.
+
+## 9.2.1 [elasticsearch-ruby-client-9.2.1-release-notes]
+
+### Fixes [elasticsearch-ruby-client-9.2.1-fixes]
+
+#### Gem
+
+* Fixes a bug in BulkHelper when using `update` with slice. Thanks [gitviola](https://github.com/gitviola)! [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2907)
+
+### Features and enhancements [elasticsearch-ruby-client-9.2.1-features-enhancements]
+
+#### Elasticsearch API
+
+* Elasticsearch API code and source code documentation updated to the latest Elasticsearch 9.2 specification.
 
 ## 9.2.0 [elasticsearch-ruby-client-9.2.0-release-notes]
 

@@ -1,5 +1,15 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.3.1
+
+## Gem
+
+* Fixes a bug in BulkHelper when using `update` with slice. Thanks [gitviola](https://github.com/gitviola)! [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2907)
+
+## Elasticsearch API
+
+* Elasticsearch API code and source code documentation updated to the latest Elasticsearch 9.3 specification.
+
 # 9.3.0
 
 ## Gem
@@ -57,6 +67,16 @@ The [Ruby ES|QL Query Builder](https://github.com/elastic/esql-ruby) [version 0.
 * `indices.get_sample_configuration` - Get the sampling configuration for the specified index.
 * `indices.get_sample_stats` - Request stats for a random sample of raw documents ingested into the given index or data stream.
 * `indices.put_sample_configuration` - Create or update the sampling configuration for the specified index.
+
+# 9.2.1
+
+## Gem
+
+* Fixes a bug in BulkHelper when using `update` with slice. Thanks [gitviola](https://github.com/gitviola)! [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2907)
+
+## Elasticsearch API
+
+* Elasticsearch API code and source code documentation updated to the latest Elasticsearch 9.2 specification.
 
 # 9.2.0
 
