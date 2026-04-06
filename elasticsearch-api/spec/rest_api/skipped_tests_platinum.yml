@@ -444,6 +444,9 @@
   :file: 'downsample/10_basic.yml'
   :description: 'Downsample index with empty dimension on routing path'
 -
+  :file: 'downsample/10_basic.yml'
+  :description: 'Downsample index with multi-value dimensions'
+-
   :file: 'downsample/40_runtime_fields.yml'
   :description: '*'
 -
