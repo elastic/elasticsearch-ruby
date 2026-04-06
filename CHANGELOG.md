@@ -1,5 +1,15 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.2.1
+
+## Gem
+
+* Fixes a bug in BulkHelper when using `update` with slice. Thanks [gitviola](https://github.com/gitviola)! [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2907)
+
+## Elasticsearch API
+
+* Elasticsearch API code and source code documentation updated to the latest Elasticsearch 9.2 specification.
+
 # 9.2.0
 
 ## Gem
