@@ -16,7 +16,9 @@
 # under the License.
 
 if ENV['TEST_WITH_OTEL'] == 'true'
-  ELASTICSEARCH_URL = ENV['TEST_ES_SERVER'] || "http://localhost:#{(ENV['PORT'] || 9200)}"
+  require 'uri'
+
+  ELASTICSEARCH_URL = ENV['TEST_ES_SERVER'] || "http://localhost:#{ENV['PORT'] || 9200}"
   raise URI::InvalidURIError unless ELASTICSEARCH_URL =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
 
   require 'spec_helper'
@@ -45,10 +47,20 @@ if ENV['TEST_WITH_OTEL'] == 'true'
         expect(span.name).to eq 'search'
       end
 
+      # These conventions were updated in elastic-transport 8.5, so checking for both:
+      # db.elasticsearch.path_parts - <= 8.5
+      # db.operation.parameter      -  > 8.5
+      #
       it 'sets the path parts' do
         client.index(index: 'myindex', id: 1, body: { title: 'Test' })
-        expect(span.attributes['db.elasticsearch.path_parts.index']).to eq 'myindex'
-        expect(span.attributes['db.elasticsearch.path_parts.id']).to eq 1
+        expect(
+          span.attributes['db.operation.parameter.index'] ||
+          span.attributes['db.elasticsearch.path_parts.index']
+        ).to eq 'myindex'
+        expect(
+          span.attributes['db.operation.parameter.id'] ||
+          span.attributes['db.elasticsearch.path_parts.id']
+        ).to eq 1
       end
     end
   end
