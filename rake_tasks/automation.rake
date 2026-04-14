@@ -126,6 +126,7 @@ namespace :automation do
           content.gsub!(/(ES_YAML_TESTS_BRANCH: )#{yaml_tests_branch}/, "\\1#{branch}")
         end
         puts "[#{yaml_tests_branch}] -> [#{branch}] in #{file.gsub('./', '')}"
+        File.open(file, 'w') { |f| f.puts content }
       end
       match = content.match(regexp)
       next if match.nil?
