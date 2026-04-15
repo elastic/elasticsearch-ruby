@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.enrich.execute_policy(
-  name: 'my-policy',
-  wait_for_completion: false
-)
-puts response
-----
