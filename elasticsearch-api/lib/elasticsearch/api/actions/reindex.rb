@@ -37,7 +37,7 @@ module Elasticsearch
       # * To automatically create a data stream or index with a reindex API request, you must have the `auto_configure`, `create_index`, or `manage` index privilege for the destination data stream, index, or alias.
       # * If reindexing from a remote cluster, the `source.remote.user` must have the `monitor` cluster privilege and the `read` index privilege for the source data stream, index, or alias.
       # If reindexing from a remote cluster into a cluster using Elastic Stack, you must explicitly allow the remote host using the `reindex.remote.whitelist` node setting on the destination cluster.
-      # If reindexing from a remote cluster into an Elastic Cloud Serverless project, only remote hosts from Elastic Cloud Hosted are allowed.
+      # If reindexing from a remote cluster into an Elastic Cloud Serverless project, only remote hosts from {https://cloud.elastic.co/registration?page=docs&placement=docs-body Elastic Cloud Hosted} are allowed.
       # Automatic data stream creation requires a matching index template with data stream enabled.
       # The `dest` element can be configured like the index API to control optimistic concurrency control.
       # Omitting `version_type` or setting it to `internal` causes Elasticsearch to blindly dump documents into the destination, overwriting any that happen to have the same ID.
