@@ -31,6 +31,9 @@ module Elasticsearch
         #
         # @option arguments [String] :transform_id Identifier for the transform. (*Required*)
         # @option arguments [Time] :timeout Controls the time to wait for the scheduling to take place Server default: 30s.
+        # @option arguments [Boolean] :defer When true, defers the scheduling by the transform's configured sync delay
+        #  instead of triggering immediately. The transform will process new data after
+        #  the delay elapses rather than right away.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
