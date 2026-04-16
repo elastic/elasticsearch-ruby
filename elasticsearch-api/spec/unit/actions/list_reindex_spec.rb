@@ -15,9 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 
-module Elasticsearch
-  module API
-    VERSION = '9.3.0'.freeze
-    ES_SPECIFICATION_COMMIT = '8b89018432772ecd948d24d0463dd57f663835c5'.freeze
+require 'spec_helper'
+
+describe 'client#list_reindex' do
+  let(:expected_args) do
+    [
+      'GET',
+      '_reindex',
+      {},
+      nil,
+      {},
+      { endpoint: 'list_reindex' }
+    ]
+  end
+
+  it 'performs the request' do
+    expect(client_double.list_reindex).to be_a Elasticsearch::API::Response
   end
 end
