@@ -115,7 +115,7 @@ namespace :automation do
         require 'yaml'
         yaml = YAML.safe_load(content)
         yaml_tests_branch = yaml['steps'][0]['env']['ES_YAML_TESTS_BRANCH'].to_s
-        current_branch = `git rev-parse --abbrev-ref HEAD`
+        current_branch = `git rev-parse --abbrev-ref HEAD | tr -d '\n'`
 
         if current_branch == 'main'
           old = content.match(/STACK_VERSION: (.*)/)[1]
@@ -124,8 +124,8 @@ namespace :automation do
         else
           branch = version.to_s.match(/([0-9]+\.[0-9]+)\.[0-9]+.*/)[1]
           content.gsub!(/(ES_YAML_TESTS_BRANCH: )#{yaml_tests_branch}/, "\\1#{branch}")
+          puts "[#{yaml_tests_branch}] -> [#{branch}] in #{file.gsub('./', '')}"
         end
-        puts "[#{yaml_tests_branch}] -> [#{branch}] in #{file.gsub('./', '')}"
         File.open(file, 'w') { |f| f.puts content }
       end
       match = content.match(regexp)
