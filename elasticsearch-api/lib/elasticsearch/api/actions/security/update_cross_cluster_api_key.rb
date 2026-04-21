@@ -50,7 +50,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-update-cross-cluster-api-key
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-update-cross-cluster-api-key
         #
         def update_cross_cluster_api_key(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.update_cross_cluster_api_key' }
