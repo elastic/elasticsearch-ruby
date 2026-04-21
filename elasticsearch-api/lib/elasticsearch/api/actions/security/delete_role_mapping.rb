@@ -43,7 +43,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-role-mapping
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-delete-role-mapping
         #
         def delete_role_mapping(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.delete_role_mapping' }

@@ -45,7 +45,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-saml-invalidate
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-saml-invalidate
         #
         def saml_invalidate(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.saml_invalidate' }
