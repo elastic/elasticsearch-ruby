@@ -4,12 +4,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4.3.0
+    - uses: actions/checkout@v6
       with:
         persist-credentials: false
-    - uses: ruby/setup-ruby@v1.263.0
+    - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.4'
+        ruby-version: '4.0'
     - name: Check license headers
       run: |
         ruby ./.github/check_license_headers.rb
