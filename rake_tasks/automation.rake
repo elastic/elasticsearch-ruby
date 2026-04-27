@@ -118,7 +118,7 @@ namespace :automation do
         current_branch = `git rev-parse --abbrev-ref HEAD | tr -d '\n'`
 
         if current_branch == 'main'
-          old = content.match(/STACK_VERSION: (.*)/)[1]
+          old = content.match(/STACK_VERSION: (.*)/)[0]
           new = "STACK_VERSION: #{version}"
           content.gsub!(new, old)
         else
