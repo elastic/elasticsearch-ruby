@@ -35,6 +35,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout The period to wait for a response.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :wait_for_completion If `true`, the request blocks until the task has completed.
+        # @option arguments [Boolean] :follow_relocations Internal use only Server default: true.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
