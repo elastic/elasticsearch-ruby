@@ -10,7 +10,6 @@ steps:
           - '4.0'
           - '3.4'
           - '3.3'
-          - '3.2'
         ruby_source:
           - ruby
         transport:
