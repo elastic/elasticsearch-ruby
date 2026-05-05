@@ -55,12 +55,15 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'ostruct'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'require-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'ruby-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'webmock', '> 3.23'
   s.add_development_dependency 'yard'
+
+  unless defined?(JRUBY_VERSION) || defined?(Rubinius)
+    s.add_development_dependency 'require-prof'
+    s.add_development_dependency 'ruby-prof'
+  end
 
   s.description = <<-DESC.gsub(/^    /, '')
     Ruby integrations for Elasticsearch (client, API, etc.)

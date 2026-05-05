@@ -13,14 +13,14 @@ steps:
         ruby_source:
           - ruby
         transport:
-          - '8.4'
+          - '8.5'
       adjustments:
         - with: # JRuby tests
             ruby: '9.4'
             ruby_source: jruby
-            transport: '8.4'
+            transport: '8.5'
         - with: # Test for main branch of transport
-            ruby: '3.4'
+            ruby: '4.0'
             ruby_source: ruby
             transport: main
     env:
