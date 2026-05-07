@@ -110,23 +110,27 @@ namespace :automation do
     files = gh_actions + ['.buildkite/pipeline.yml']
     regexp = Regexp.new(/[stack-version|STACK_VERSION]:\ ([0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}?+(-SNAPSHOT)?)/)
     files.each do |file|
+      next if file.match?('docs')
+
+      current_branch = `git rev-parse --abbrev-ref HEAD | tr -d '\n'`
+      version_branch = version.to_s.match(/([0-9]+\.[0-9]+)\.[0-9]+.*/)[1]
       content = File.read(file)
       if file == '.buildkite/pipeline.yml'
         require 'yaml'
         yaml = YAML.safe_load(content)
         yaml_tests_branch = yaml['steps'][0]['env']['ES_YAML_TESTS_BRANCH'].to_s
-        current_branch = `git rev-parse --abbrev-ref HEAD | tr -d '\n'`
-
         if current_branch == 'main'
           old = content.match(/STACK_VERSION: (.*)/)[0]
           new = "STACK_VERSION: #{version}"
           content.gsub!(new, old)
         else
-          branch = version.to_s.match(/([0-9]+\.[0-9]+)\.[0-9]+.*/)[1]
-          content.gsub!(/(ES_YAML_TESTS_BRANCH: )#{yaml_tests_branch}/, "\\1#{branch}")
-          puts "[#{yaml_tests_branch}] -> [#{branch}] in #{file.gsub('./', '')}"
+          content.gsub!(/(ES_YAML_TESTS_BRANCH: )#{yaml_tests_branch}/, "\\1#{version_branch}")
+          puts "[#{yaml_tests_branch}] -> [#{version_branch}] in #{file.gsub('./', '')}"
         end
         File.open(file, 'w') { |f| f.puts content }
+      end
+      if content.match?('download_artifacts') && current_branch != 'main'
+        content.gsub!('download_artifacts[main]', "download_artifacts[#{version_branch}]")
       end
       match = content.match(regexp)
       next if match.nil?
