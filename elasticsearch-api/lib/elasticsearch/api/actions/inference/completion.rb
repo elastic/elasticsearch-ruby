@@ -29,7 +29,7 @@ module Elasticsearch
         # This API requires the `monitor_inference` cluster privilege (the built-in `inference_admin` and `inference_user` roles grant this privilege).
         #
         # @option arguments [String] :inference_id The inference Id (*Required*)
-        # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference request to complete. Server default: 30s.
+        # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference request to complete. Server default: 120s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
