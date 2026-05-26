@@ -187,6 +187,10 @@ module Elasticsearch
           end
           @response = client.send(method, prepare_arguments(args, test))
           client
+        when 'count'
+          args.delete('method')
+          @response = client.send(method, prepare_arguments(args, test))
+          client
         else
           @response = client.send(method, prepare_arguments(args, test))
           client
