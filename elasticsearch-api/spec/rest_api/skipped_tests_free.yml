@@ -271,3 +271,6 @@
 -
   :file: 'tsdb/05_dimension_and_metric_in_non_tsdb_index.yml'
   :description: '*'
+-
+  :file: 'aggregations/date_histogram.yml'
+  :description: 'date_histogram with hard_bounds outside data under a parent agg'
