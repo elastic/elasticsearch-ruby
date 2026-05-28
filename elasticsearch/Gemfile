@@ -31,3 +31,6 @@ if ENV['TRANSPORT_VERSION'] == 'main'
 end
 
 gem 'opentelemetry-sdk', require: false if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.0')
+if defined?(JRUBY_VERSION)
+  gem 'manticore', platform: :jruby
+end
