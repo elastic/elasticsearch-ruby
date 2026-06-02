@@ -21,16 +21,37 @@
 module Elasticsearch
   module API
     module Actions
-      # Cancel a reindex task.
-      # Cancel an ongoing reindex task. If `wait_for_completion` is `true` (the default),
-      # the response contains the final task state after cancellation.
+      # Cancel an ongoing reindex task.
+      # If `wait_for_completion` is `true` (the default), the response contains the final task state after cancellation.
       # If `wait_for_completion` is `false`, the response contains only `acknowledged: true`.
+      # This API follows reindex tasks across node-shutdown relocations, so callers can
+      # keep using the original task ID throughout the lifetime of the operation.
+      # Returned task IDs and timings reflect the original task, not its relocated successor.
+      # Relocated task IDs are also supported. They are followed transparently and return the task ID and timings of the original task.
+      # When the task ID cannot be cancelled (unknown ID, non-reindex task, sliced child, finished task, or node left with no stored result), the API returns the following response with a 404 status code:
       #
-      # This API is only available behind a feature flag: `reindex_management_api`.
+      # ```
+      # {
+      #   "error": {
+      #     "type": "resource_not_found_exception",
+      #     "reason": "reindex task [r1A2WoRbTwKZ516z6NEs5A:36619] either not found or completed"
+      #   },
+      #   "status": 404
+      # }
+      # ```
       #
-      # This functionality is in technical preview and may be changed or removed in a future
-      # release. Elastic will apply best effort to fix any issues, but features in technical
-      # preview are not subject to the support SLA of official GA features.
+      # During a brief handoff window of a node-shutdown relocation, you may receive the response below with a 503 status code.
+      # Retry with the same task ID; the retry follows the relocated task transparently.
+      #
+      # ```
+      # {
+      #   "error": {
+      #     "type": "status_exception",
+      #     "reason": "cannot cancel task [36619] because it is being relocated"
+      #   },
+      #   "status": 503
+      # }
+      # ```
       #
       # @option arguments [String] :task_id The ID of the reindex task to cancel. (*Required*)
       # @option arguments [Boolean] :wait_for_completion If `true` (the default), the request blocks until the cancellation is complete and returns the final task state.
