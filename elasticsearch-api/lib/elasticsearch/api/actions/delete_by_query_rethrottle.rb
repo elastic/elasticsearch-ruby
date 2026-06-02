@@ -26,8 +26,8 @@ module Elasticsearch
       # Rethrottling that speeds up the query takes effect immediately but rethrotting that slows down the query takes effect after completing the current batch to prevent scroll timeouts.
       #
       # @option arguments [String] :task_id The ID for the task. (*Required*)
-      # @option arguments [Float] :requests_per_second The throttle for this request in sub-requests per second.
-      #  To disable throttling, set it to `-1`. (*Required*)
+      # @option arguments [Float] :requests_per_second The maximum number of documents to delete per second, across the entire delete-by-query operation (including slices).
+      #  It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. (*Required*)
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
       #  when they occur.
       # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

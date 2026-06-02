@@ -73,7 +73,13 @@ module Elasticsearch
       #  Supported in serverless only.
       # @option arguments [Boolean] :rest_total_hits_as_int If true, hits.total are returned as an integer in the response. Defaults to false, which returns an object.
       # @option arguments [String, Array<String>] :routing Custom routing value used to route search operations to a specific shard.
+      #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
       # @option arguments [String] :search_type Indicates whether global term and document frequencies should be used when scoring returned documents.
+      # @option arguments [String] :_slice The slice identifier for routing the search to a specific slice.
+      #  When provided at the top level, all sub-searches are routed to shards matching the given slice value.
+      #  Use the special value `_all` to query all slices without restricting to a routing value.
+      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
+      #  Individual sub-search headers can also specify `_slice` to override the top-level setting.
       # @option arguments [Boolean] :typed_keys Specifies whether aggregation and suggester names should be prefixed by their respective types in the response.
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
       #  when they occur.

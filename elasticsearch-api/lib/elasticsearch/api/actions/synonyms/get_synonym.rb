@@ -25,8 +25,11 @@ module Elasticsearch
         # Get a synonym set.
         #
         # @option arguments [String] :id The synonyms set identifier to retrieve. (*Required*)
-        # @option arguments [Integer] :from The starting offset for query rules to retrieve. Server default: 0.
-        # @option arguments [Integer] :size The max number of query rules to retrieve. Server default: 10.
+        # @option arguments [Integer] :from The starting offset for synonym rules to retrieve. Server default: 0.
+        # @option arguments [Integer] :size The max number of synonym rules to retrieve. Server default: 10.
+        # @option arguments [String] :search_after The synonym rule ID to use as a cursor for pagination.
+        #  The next page of results will start after this rule ID.
+        #  This parameter cannot be used with `from`.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

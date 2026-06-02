@@ -26,7 +26,8 @@ module Elasticsearch
         # Create an inference endpoint to perform an inference task with the `anthropic` service.
         #
         # @option arguments [String] :task_type The task type.
-        #  The only valid task type for the model to perform is `completion`. (*Required*)
+        #  The valid task types for the model to perform are `completion` and `chat_completion`.
+        #  NOTE: The `chat_completion` task type only supports streaming and only through the _stream API. (*Required*)
         # @option arguments [String] :anthropic_inference_id The unique identifier of the inference endpoint. (*Required*)
         # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference endpoint to be created. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

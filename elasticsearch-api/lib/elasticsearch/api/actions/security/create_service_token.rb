@@ -26,6 +26,8 @@ module Elasticsearch
         # Create a service accounts token for access without requiring basic authentication.
         # NOTE: Service account tokens never expire.
         # You must actively delete them if they are no longer needed.
+        # IMPORTANT: On Serverless, non-operator users can create tokens for only `elastic/fleet-server` and `elastic/fleet-server-remote`.
+        # Creating tokens for any other service account requires operator privileges.
         #
         # @option arguments [String] :namespace The name of the namespace, which is a top-level grouping of service accounts. (*Required*)
         # @option arguments [String] :service The name of the service. (*Required*)
