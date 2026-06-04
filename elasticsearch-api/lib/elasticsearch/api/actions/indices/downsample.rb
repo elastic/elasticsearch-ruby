@@ -29,9 +29,6 @@ module Elasticsearch
         # NOTE: Only indices in a time series data stream are supported.
         # Neither field nor document level security can be defined on the source index.
         # The source index must be read only (`index.blocks.write: true`).
-        # This functionality is in technical preview and may be changed or removed in a future
-        # release. Elastic will apply best effort to fix any issues, but features in technical
-        # preview are not subject to the support SLA of official GA features.
         #
         # @option arguments [String] :index Name of the time series index to downsample. (*Required*)
         # @option arguments [String] :target_index Name of the index to create. (*Required*)
