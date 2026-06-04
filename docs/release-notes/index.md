@@ -20,6 +20,13 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-ruby-client-next-fixes]
 % *
 
+## 9.4.1 [elasticsearch-ruby-client-9.4.1-release-notes]
+
+### Features and enhancements [elasticsearch-ruby-client-9.4.1-features-enhancements]
+
+* Updates `elasticsearch-api` to the latest Elasticsearch 9.4 specification.
+* Better handling of `content-type` headers when using Manticore and JRuby to avoid duplication.
+
 ## 9.4.0 [elasticsearch-ruby-client-9.4.0-release-notes]
 
 ### Features and enhancements [elasticsearch-ruby-client-9.4.0-features-enhancements]
@@ -81,6 +88,12 @@ The following APIs were in technical preview behind a feature flag and have been
 * `indices.get_sample_stats`
 * `indices.put_sample_configuration`
 
+## 9.3.2 [elasticsearch-ruby-client-9.3.2-release-notes]
+
+### Features and enhancements [elasticsearch-ruby-client-9.3.2-features-enhancements]
+
+* Updates `elasticsearch-api` to the latest Elasticsearch 9.3 specification.
+* Better handling of `content-type` headers when using Manticore and JRuby to avoid duplication.
 
 ## 9.3.1 [elasticsearch-ruby-client-9.3.1-release-notes]
 
@@ -157,6 +170,13 @@ Code updated to the latest Elasticsearch 9.3 specification.
 * `indices.get_sample_configuration` - Get the sampling configuration for the specified index.
 * `indices.get_sample_stats` - Request stats for a random sample of raw documents ingested into the given index or data stream.
 * `indices.put_sample_configuration` - Create or update the sampling configuration for the specified index.
+
+## 9.2.2 [elasticsearch-ruby-client-9.2.2-release-notes]
+
+### Features and enhancements [elasticsearch-ruby-client-9.2.2-features-enhancements]
+
+* Updates `elasticsearch-api` to the latest Elasticsearch 9.2 specification.
+* Better handling of `content-type` headers when using Manticore and JRuby to avoid duplication.
 
 ## 9.2.1 [elasticsearch-ruby-client-9.2.1-release-notes]
 
