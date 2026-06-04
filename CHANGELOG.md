@@ -1,5 +1,10 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.2.2
+
+* Updates `elasticsearch-api` to the latest Elasticsearch 9.2 specification.
+* Better handling of `content-type` headers when using Manticore and JRuby to avoid duplication.
+
 # 9.2.1
 
 ## Gem
