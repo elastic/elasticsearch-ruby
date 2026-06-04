@@ -31,7 +31,7 @@ module Elasticsearch
         # release. Elastic will apply best effort to fix any issues, but features in technical
         # preview are not subject to the support SLA of official GA features.
         #
-        # @option arguments [String] :name The view name to remove. (*Required*)
+        # @option arguments [String, Array] :name The view name to remove. (*Required*)
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
