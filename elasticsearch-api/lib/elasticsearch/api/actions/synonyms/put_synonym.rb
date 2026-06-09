@@ -32,6 +32,8 @@ module Elasticsearch
         # @option arguments [String] :id The ID of the synonyms set to be created or updated. (*Required*)
         # @option arguments [Boolean] :refresh If `true`, the request will refresh the analyzers with the new synonyms set and wait for the new synonyms to be available before returning.
         #  If `false`, analyzers will not be reloaded with the new synonym set Server default: true.
+        # @option arguments [Boolean] :append If `true`, the provided synonym rules are appended to the existing set, with matching IDs overwriting existing rules.
+        #  If `false`, the entire synonyms set is replaced with the new synonym rules definitions.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
