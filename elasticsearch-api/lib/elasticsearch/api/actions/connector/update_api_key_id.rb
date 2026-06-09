@@ -27,10 +27,10 @@ module Elasticsearch
         # You can specify the ID of the API key used for authorization and the ID of the connector secret where the API key is stored.
         # The connector secret ID is required only for Elastic managed (native) connectors.
         # Self-managed connectors (connector clients) do not use this field.
-        # This functionality is in Beta and is subject to change. The design and
-        # code is less mature than official GA features and is being provided
-        # as-is with no warranties. Beta features are not subject to the support
-        # SLA of official GA features.
+        # This functionality is in beta and is not ready for production usage. For beta
+        # features, the design and code is less mature than official GA features and is being
+        # provided as-is with no warranties. Beta features are not subject to the support SLA of
+        # official GA features. Specific Support terms apply.
         #
         # @option arguments [String] :connector_id The unique identifier of the connector to be updated (*Required*)
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

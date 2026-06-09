@@ -48,9 +48,10 @@ module Elasticsearch
         # For large repositories, consider setting up a separate single-node Elasticsearch cluster just for running the integrity verification API.
         # The response exposes implementation details of the analysis which may change from version to version.
         # The response body format is therefore not considered stable and may be different in newer versions.
-        # This functionality is in technical preview and may be changed or removed in a future
-        # release. Elastic will apply best effort to fix any issues, but features in technical
-        # preview are not subject to the support SLA of official GA features.
+        # This functionality is experimental and is not ready for production usage. Experimental
+        # features may change or be removed at any time. Elastic will work to fix any issues, but
+        # experimental features are not subject to the support SLA of official GA features. Specific
+        # Support terms apply.
         #
         # @option arguments [String, Array<String>] :repository The name of the snapshot repository. (*Required*)
         # @option arguments [Integer] :blob_thread_pool_concurrency If `verify_blob_contents` is `true`, this parameter specifies how many blobs to verify at once. Server default: 1.

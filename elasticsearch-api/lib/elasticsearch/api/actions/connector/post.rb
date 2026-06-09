@@ -26,10 +26,10 @@ module Elasticsearch
         # Connectors are Elasticsearch integrations that bring content from third-party data sources, which can be deployed on Elastic Cloud or hosted on your own infrastructure.
         # Elastic managed connectors (Native connectors) are a managed service on Elastic Cloud.
         # Self-managed connectors (Connector clients) are self-managed on your infrastructure.
-        # This functionality is in Beta and is subject to change. The design and
-        # code is less mature than official GA features and is being provided
-        # as-is with no warranties. Beta features are not subject to the support
-        # SLA of official GA features.
+        # This functionality is in beta and is not ready for production usage. For beta
+        # features, the design and code is less mature than official GA features and is being
+        # provided as-is with no warranties. Beta features are not subject to the support SLA of
+        # official GA features. Specific Support terms apply.
         #
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
