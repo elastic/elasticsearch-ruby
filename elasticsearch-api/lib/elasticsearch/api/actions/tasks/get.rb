@@ -30,9 +30,10 @@ module Elasticsearch
         # For relocatable tasks, this API transparently follows the task across graceful shutdown relocations,
         # so callers can keep using the original task ID. The returned task reports its `original_task_id` and `original_start_time_in_millis`
         # if it is continuing work from an earlier task.
-        # This functionality is in technical preview and may be changed or removed in a future
-        # release. Elastic will apply best effort to fix any issues, but features in technical
-        # preview are not subject to the support SLA of official GA features.
+        # This functionality is experimental and is not ready for production usage. Experimental
+        # features may change or be removed at any time. Elastic will work to fix any issues, but
+        # experimental features are not subject to the support SLA of official GA features. Specific
+        # Support terms apply.
         #
         # @option arguments [String] :task_id The task identifier. (*Required*)
         # @option arguments [Time] :timeout The period to wait for a response.
