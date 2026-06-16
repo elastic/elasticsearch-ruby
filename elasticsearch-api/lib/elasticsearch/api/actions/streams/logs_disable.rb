@@ -24,9 +24,10 @@ module Elasticsearch
       module Actions
         # Disable a named stream.
         # Turn off the named stream feature for this cluster.
-        # This functionality is in technical preview and may be changed or removed in a future
-        # release. Elastic will apply best effort to fix any issues, but features in technical
-        # preview are not subject to the support SLA of official GA features.
+        # This functionality is experimental and is not ready for production usage. Experimental
+        # features may change or be removed at any time. Elastic will work to fix any issues, but
+        # experimental features are not subject to the support SLA of official GA features. Specific
+        # Support terms apply.
         #
         # @option arguments [String] :name The stream type to disable. (*Required*)
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
