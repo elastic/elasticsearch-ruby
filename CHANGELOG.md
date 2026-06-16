@@ -1,5 +1,10 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.4.2
+
+* Updates `elasticsearch-api`, source code documentation for beta/experimental APIs.
+* Fixes NoMethodError when `Content-Type` lacks `compatible-with` parameter. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2974)
+
 # 9.4.1
 
 - Updates `elasticsearch-api` to the latest Elasticsearch 9.4 specification.
@@ -63,6 +68,10 @@ The following APIs were in technical preview behind a feature flag and have been
 * `indices.get_sample_configuration`
 * `indices.get_sample_stats`
 * `indices.put_sample_configuration`
+
+# 9.3.3
+
+* Fixes NoMethodError when `Content-Type` lacks `compatible-with` parameter. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2974)
 
 # 9.3.2
 
@@ -136,6 +145,10 @@ The [Ruby ES|QL Query Builder](https://github.com/elastic/esql-ruby) [version 0.
 * `indices.get_sample_configuration` - Get the sampling configuration for the specified index.
 * `indices.get_sample_stats` - Request stats for a random sample of raw documents ingested into the given index or data stream.
 * `indices.put_sample_configuration` - Create or update the sampling configuration for the specified index.
+
+# 9.2.3
+
+* Fixes NoMethodError when `Content-Type` lacks `compatible-with` parameter. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2974)
 
 # 9.2.2
 
