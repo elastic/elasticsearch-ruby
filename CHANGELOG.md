@@ -1,5 +1,10 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.4.2
+
+* Fixes NoMethodError when `Content-Type` lacks `compatible-with` parameter. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2974)
+* Updates `elasticsearch-api`, source code documentation for beta/experimental APIs.
+
 # 9.4.1
 
 * Updates `elasticsearch-api` to the latest Elasticsearch 9.4 specification.
