@@ -27,10 +27,10 @@ module Elasticsearch
         # This is a destructive action that is not recoverable.
         # NOTE: This action doesn’t delete any API keys, ingest pipelines, or data indices associated with the connector.
         # These need to be removed manually.
-        # This functionality is in Beta and is subject to change. The design and
-        # code is less mature than official GA features and is being provided
-        # as-is with no warranties. Beta features are not subject to the support
-        # SLA of official GA features.
+        # This functionality is in beta and is not ready for production usage. For beta
+        # features, the design and code is less mature than official GA features and is being
+        # provided as-is with no warranties. Beta features are not subject to the support SLA of
+        # official GA features. Specific Support terms apply.
         #
         # @option arguments [String] :connector_id The unique identifier of the connector to be deleted (*Required*)
         # @option arguments [Boolean] :delete_sync_jobs A flag indicating if associated sync jobs should be also removed.

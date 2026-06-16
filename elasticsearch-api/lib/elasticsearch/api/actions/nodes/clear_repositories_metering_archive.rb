@@ -24,9 +24,10 @@ module Elasticsearch
       module Actions
         # Clear the archived repositories metering.
         # Clear the archived repositories metering information in the cluster.
-        # This functionality is in technical preview and may be changed or removed in a future
-        # release. Elastic will apply best effort to fix any issues, but features in technical
-        # preview are not subject to the support SLA of official GA features.
+        # This functionality is experimental and is not ready for production usage. Experimental
+        # features may change or be removed at any time. Elastic will work to fix any issues, but
+        # experimental features are not subject to the support SLA of official GA features. Specific
+        # Support terms apply.
         #
         # @option arguments [String, Array] :node_id Comma-separated list of node IDs or names used to limit returned information. (*Required*)
         # @option arguments [Integer] :max_archive_version Specifies the maximum `archive_version` to be cleared from the archive. (*Required*)
