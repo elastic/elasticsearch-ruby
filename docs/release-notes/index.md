@@ -20,6 +20,12 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-ruby-client-next-fixes]
 % *
 
+## 9.4.3 [elasticsearch-ruby-client-9.4.3-release-notes]
+
+### Fixes [elasticsearch-ruby-client-9.4.3-fixes]
+
+* Fixes header conflict when using Elasticsearch Serverless. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2984)
+
 ## 9.4.2 [elasticsearch-ruby-client-9.4.2-release-notes]
 
 ### Fixes [elasticsearch-ruby-client-9.4.2-fixes]
@@ -97,6 +103,12 @@ The following APIs were in technical preview behind a feature flag and have been
 * `indices.get_sample_configuration`
 * `indices.get_sample_stats`
 * `indices.put_sample_configuration`
+
+## 9.3.4 [elasticsearch-ruby-client-9.3.4-release-notes]
+
+### Fixes [elasticsearch-ruby-client-9.3.4-fixes]
+
+* Fixes header conflict when using Elasticsearch Serverless. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2984)
 
 ## 9.3.3 [elasticsearch-ruby-client-9.3.3-release-notes]
 
