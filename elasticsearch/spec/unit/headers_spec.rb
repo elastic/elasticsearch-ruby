@@ -142,4 +142,26 @@ describe Elasticsearch::Client do
       client.search
     end
   end
+
+  context 'when Elastic-Api-Version header is set' do
+    let!(:client) do
+      described_class.new(
+        host: 'http://localhost:9200',
+        transport_options: { headers: { 'Elastic-Api-Version' => '2023-10-31' } }
+      ).tap do |client|
+        client.instance_variable_set('@verified', true)
+      end
+    end
+
+    it 'does not modify the content-type header' do
+      expected_headers = client.transport.connections.connections.first.connection.headers
+      expect(expected_headers['Content-Type']).to eq 'application/json'
+      expect(expected_headers['Elastic-Api-Version']).to eq '2023-10-31'
+
+      expect_any_instance_of(Faraday::Connection)
+        .to receive(:run_request)
+              .with(:get, 'http://localhost:9200/_search', nil, expected_headers) { OpenStruct.new(body: '') }
+      client.search
+    end
+  end
 end
