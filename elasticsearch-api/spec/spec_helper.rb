@@ -28,11 +28,17 @@ else
 end
 require 'elasticsearch'
 require 'elasticsearch-api'
-require 'jbuilder'
 require 'jsonify'
 require 'logger'
 require 'openssl'
 require 'yaml'
+
+# TODO: There is a dependency issue with JRuby 9.4.15.0 and JBuilder at the moment:
+def jruby_exception?
+  defined?(JRUBY_VERSION) &&
+    JRUBY_VERSION.between?('9.4', '9.5')
+end
+require 'jbuilder' unless jruby_exception?
 
 tracer = ::Logger.new(STDERR)
 tracer.formatter = lambda { |s, d, p, m| "#{m.gsub(/^.*$/) { |n| '   ' + n } }\n" }
