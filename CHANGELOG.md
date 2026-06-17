@@ -1,5 +1,9 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.4.3
+
+* Fixes header conflict when using Elasticsearch Serverless. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2984)
+
 # 9.4.2
 
 * Fixes NoMethodError when `Content-Type` lacks `compatible-with` parameter. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2974)
