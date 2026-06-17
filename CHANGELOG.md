@@ -1,5 +1,9 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.4.3
+
+* Fixes header conflict when using Elasticsearch Serverless. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2984)
+
 # 9.4.2
 
 * Updates `elasticsearch-api`, source code documentation for beta/experimental APIs.
@@ -68,6 +72,10 @@ The following APIs were in technical preview behind a feature flag and have been
 * `indices.get_sample_configuration`
 * `indices.get_sample_stats`
 * `indices.put_sample_configuration`
+
+# 9.3.4
+
+* Fixes header conflict when using Elasticsearch Serverless. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2984)
 
 # 9.3.3
 
