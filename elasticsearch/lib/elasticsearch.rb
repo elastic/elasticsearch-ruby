@@ -199,7 +199,7 @@ module Elasticsearch
     end
 
     def api_version_set?(headers)
-      !!headers.keys.find { |a| a.match?(/elastic-api-version/i) }
+      !!headers&.keys&.find { |a| a.match?(/elastic-api-version/i) }
     end
 
     def set_header(header, arguments)
