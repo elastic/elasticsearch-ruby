@@ -83,5 +83,4 @@ describe 'JSON builders' do
       expect(client_double.search(body: json)).to be_a Elasticsearch::API::Response
     end
   end
-end unless jruby_exception?
-# TODO: Exception for JRuby v9.4.15.0 ^
+end
