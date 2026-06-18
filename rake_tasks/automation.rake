@@ -62,6 +62,7 @@ namespace :automation do
   DESC
   task :bump, :version do |_, args|
     abort('[!] Required argument [version] missing') unless (version = args[:version])
+
     files = ['elasticsearch/elasticsearch.gemspec'] + RELEASE_TOGETHER.map { |gem| Dir["./#{gem}/**/**/version.rb"] }
     version_regexp = Regexp.new(/VERSION = ("|'([0-9.]+(-SNAPSHOT)?)'|")/)
     gemspec_regexp = Regexp.new(/'elasticsearch-api',\s+'([0-9x.]+)'/)
@@ -92,6 +93,14 @@ namespace :automation do
     end
   rescue StandardError => e
     raise "[!!!] #{e.class} : #{e.message}"
+  end
+
+  desc 'Automatically bump to next patch version'
+  task :autobump do
+    version = Elasticsearch::VERSION.split('.').map.with_index do |a, index|
+      index == 2 ? "#{a.to_i + 1}" : a
+    end.join('.')
+    Rake::Task['automation:bump'].invoke(version)
   end
 
   desc <<-DESC
