@@ -17,7 +17,7 @@
 inicio = Time.now
 
 require 'jrjackson' if defined?(JRUBY_VERSION)
-require 'multi_json'
+require 'json'
 require 'elasticsearch'
 require 'elasticsearch/helpers/bulk_helper'
 
@@ -66,7 +66,7 @@ def benchmark(data, chunk_size, vector: false)
   bulk_helper = Elasticsearch::Helpers::BulkHelper.new(@client, @index)
   start = Time.now
   20.times do # repeat the dataset until 20k reached (1_000 * 20)
-    json = MultiJson.load("[#{data}]")
+    json = JSON.load("[#{data}]")
     json.each_slice(chunk_size) do |slice|
       slice.map { |j| j['emb'] = @client.pack_dense_vector(j['emb']) } if vector
       bulk_helper.ingest(slice)

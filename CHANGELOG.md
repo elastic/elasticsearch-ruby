@@ -1,5 +1,9 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# Unreleased
+
+* Removes the `multi_json` and `oj` gems in favor of the standard Ruby `json` gem, which is now the default serializer implementation.
+
 # 9.4.3
 
 * Fixes header conflict when using Elasticsearch Serverless. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2984)
