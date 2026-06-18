@@ -29,7 +29,7 @@ class EndpointSpec
 
   def initialize(filepath)
     @path = Pathname(filepath)
-    json = MultiJson.load(File.read(@path))
+    json = JSON.load(File.read(@path))
     @endpoint_name = json.keys.first
 
     full_namespace = parse_full_namespace
