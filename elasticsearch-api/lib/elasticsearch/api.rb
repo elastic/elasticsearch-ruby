@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require 'cgi'
+require 'cgi/escape'
 require 'multi_json'
 require 'elasticsearch/api/version'
 require 'elasticsearch/api/utils'

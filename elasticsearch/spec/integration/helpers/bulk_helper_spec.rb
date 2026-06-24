@@ -113,7 +113,7 @@ context 'Elasticsearch client helpers' do
     context 'JSON File helper' do
       let(:file) { Tempfile.new('test-data.json') }
       let(:json) do
-        json = <<~JSON
+        <<~JSON
         [
           {
             "character_name": "Anallese Lonie",
@@ -168,7 +168,7 @@ context 'Elasticsearch client helpers' do
 
       context 'with data not in root of JSON file' do
         let(:json) do
-          json = <<~JSON
+          <<~JSON
           {
             "field": "value",
             "status": 200,

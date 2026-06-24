@@ -21,7 +21,9 @@ require 'elasticsearch'
 
 CERTS_PATH = File.expand_path('./../../../.buildkite/certs', __dir__)
 host = ENV['TEST_ES_SERVER'] || 'http://localhost:9200'
-raise URI::InvalidURIError unless host =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
+# TODO: For compatiblity with JRuby 9.3
+parser = defined?(URI::RFC2396_PARSER) ? URI::RFC2396_PARSER : URI::DEFAULT_PARSER
+raise URI::InvalidURIError unless host =~ /\A#{parser.make_regexp}\z/
 
 password = ENV['ELASTIC_PASSWORD'] || 'changeme'
 HOST_URI = URI.parse(host)
