@@ -15,7 +15,9 @@
 # specific language governing permissions and limitations
 # under the License.
 ELASTICSEARCH_URL = ENV['TEST_ES_SERVER'] || "http://localhost:#{(ENV['PORT'] || 9200)}"
-raise URI::InvalidURIError unless ELASTICSEARCH_URL =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
+# TODO: For compatiblity with JRuby 9.3
+parser = defined?(URI::RFC2396_PARSER) ? URI::RFC2396_PARSER : URI::DEFAULT_PARSER
+raise URI::InvalidURIError unless ELASTICSEARCH_URL =~ /\A#{parser.make_regexp}\z/
 
 require 'spec_helper'
 require 'logger'
@@ -49,7 +51,7 @@ context 'Elasticsearch client' do
     it 'Reports es service name and gem version' do
       headers = CLIENT.transport.connections.first.connection.headers
       version = Class.new.extend(Elastic::Transport::MetaHeader).send(:client_meta_version, Elasticsearch::VERSION)
-      expect(headers['x-elastic-client-meta']).to match /^es=#{version}/
+      expect(headers['x-elastic-client-meta']).to match(/^es=#{version}/)
     end
   end
 end
