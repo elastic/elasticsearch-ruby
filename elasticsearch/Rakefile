@@ -33,10 +33,12 @@ namespace :test do
 
   RSpec::Core::RakeTask.new(:integration) do |t|
     t.pattern = 'spec/integration/**{,/*/**}/*_spec.rb'
+    t.rspec_opts = '--warnings'
   end
 
   RSpec::Core::RakeTask.new(:unit) do |t|
     t.pattern = 'spec/unit/**{,/*/**}/*_spec.rb'
+    t.rspec_opts = '--warnings'
   end
 
   desc 'Run unit and integration tests'
