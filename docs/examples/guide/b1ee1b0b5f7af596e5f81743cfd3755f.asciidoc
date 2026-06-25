@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.search(
-  index: '<my-index-{now/d}-*>,<my-index-{now/d-1d}-*>,<my-index-{now/d-2d}-*>'
-)
-puts response
-----

@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.watcher.delete_watch(
-  id: 'log_error_watch'
-)
-puts response
-----

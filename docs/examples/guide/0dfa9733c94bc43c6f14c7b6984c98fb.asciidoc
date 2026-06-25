@@ -1,9 +1,0 @@
-[source, ruby]
-----
-response = client.cat.component_templates(
-  name: 'my-template-*',
-  v: true,
-  s: 'name'
-)
-puts response
-----

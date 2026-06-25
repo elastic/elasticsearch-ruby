@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.autoscaling.delete_autoscaling_policy(
-  name: 'my_autoscaling_policy'
-)
-puts response
-----

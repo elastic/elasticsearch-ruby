@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.get_source(
-  index: 'my-index-000001',
-  id: 1
-)
-puts response
-----

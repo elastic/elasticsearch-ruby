@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.ilm.delete_lifecycle(
-  policy: 'my_policy'
-)
-puts response
-----

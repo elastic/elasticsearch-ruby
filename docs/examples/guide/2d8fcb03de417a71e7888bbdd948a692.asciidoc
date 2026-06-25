@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.cat.transforms(
-  v: true,
-  format: 'json'
-)
-puts response
-----

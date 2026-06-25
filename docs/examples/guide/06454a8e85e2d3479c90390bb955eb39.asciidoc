@@ -1,9 +1,0 @@
-[source, ruby]
-----
-response = client.snapshot.get(
-  repository: 'my_repository',
-  snapshot: 'snapshot*,-snapshot_3',
-  sort: 'name'
-)
-puts response
-----

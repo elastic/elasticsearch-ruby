@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.nodes.info(
-  node_id: 'plugins'
-)
-puts response
-----

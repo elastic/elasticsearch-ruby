@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.nodes.stats(
-  human: true,
-  filter_path: 'nodes.*.name,nodes.*.indices.indexing'
-)
-puts response
-----
