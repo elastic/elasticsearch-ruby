@@ -44,7 +44,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.6' # For compatibility with JRuby 9.3
   s.add_dependency 'base64'
-  s.add_dependency 'multi_json'
+  s.add_dependency 'json', '~> 2.19'
 
   s.add_development_dependency 'ansi'
   s.add_development_dependency 'bundler'

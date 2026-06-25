@@ -21,5 +21,4 @@ gem 'elasticsearch'
 
 gem 'bunny'
 
-gem 'multi_json'
-gem 'oj'
+gem 'json'

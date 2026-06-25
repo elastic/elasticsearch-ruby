@@ -16,7 +16,7 @@
 # under the License.
 
 require 'cgi/escape'
-require 'multi_json'
+require 'json'
 require 'elasticsearch/api/version'
 require 'elasticsearch/api/utils'
 require 'elasticsearch/api/response'
@@ -29,7 +29,7 @@ module Elasticsearch
   module API
     include Elasticsearch::API::Actions
 
-    DEFAULT_SERIALIZER = MultiJson
+    DEFAULT_SERIALIZER = JSON
 
     HTTP_GET          = 'GET'.freeze
     HTTP_HEAD         = 'HEAD'.freeze
