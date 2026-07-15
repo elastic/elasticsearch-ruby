@@ -60,6 +60,7 @@ module Elasticsearch
       # @option arguments [String] :preference The node or shard the operation should be performed on.
       #  By default, it is random.
       # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
+      # @option arguments [Array<String>, String] :stats Specific `tag` of the request for logging and statistical purposes.
       # @option arguments [Integer] :terminate_after The maximum number of documents to collect for each shard.
       #  If a query reaches this limit, Elasticsearch terminates the query early.
       #  Elasticsearch collects documents before sorting.IMPORTANT: Use with caution.
