@@ -50,8 +50,7 @@ namespace :automation do
          " && cd #{generator_path} " \
          ' && bundle config set --local path vendor/bundle ' \
          ' && bundle install ' \
-         " && bundle exec rake update[#{branch}]" \
-         ' && bundle exec rake gen_es'
+         " && bundle exec rake run[#{branch}]"
     end
     FileUtils.rm_rf(generator_path)
   end
