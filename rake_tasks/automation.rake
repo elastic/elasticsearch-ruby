@@ -41,7 +41,7 @@ namespace :automation do
     path = File.expand_path('../elasticsearch-api/', __dir__)
     branch = YAML.load_file(File.expand_path("#{__dir__}/../.buildkite/pipeline.yml"))['steps'].first['env']['ES_YAML_TESTS_BRANCH']
     unless File.exist?(File.expand_path('elastic-client-generator-ruby', __dir__))
-      sh "git clone https://#{ENV['CLIENTS_GITHUB_TOKEN']}@github.com/elastic/elastic-client-generator-ruby.git "
+      sh "git clone https://x-access-token:#{ENV['CLIENTS_GITHUB_TOKEN']}@github.com/elastic/elastic-client-generator-ruby.git "
     end
 
     sh "export ES_RUBY_CLIENT_PATH=#{path} " \
