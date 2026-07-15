@@ -50,7 +50,7 @@ namespace :automation do
          " && cd #{generator_path} " \
          ' && bundle config set --local path vendor/bundle ' \
          ' && bundle install ' \
-         " && bundle exec rake run[#{branch}]"
+         " && GITHUB_TOKEN=\"$CLIENTS_GITHUB_TOKEN\" bundle exec rake run[#{branch}]"
     end
     FileUtils.rm_rf(generator_path)
   end
