@@ -20,18 +20,19 @@
 # See Elasticsearch::ES_SPECIFICATION_COMMIT for commit hash.
 module Elasticsearch
   module API
-    module Inference
+    module Esql
       module Actions
-        # Update an inference endpoint.
-        # Modify `task_settings`, secrets (within `service_settings`), or `num_allocations` for an inference endpoint, depending on the specific endpoint service and `task_type`.
-        # IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face.
-        # For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models.
-        # However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
+        # Get one or more ES|QL data sources.
+        # Returns the requested data sources. A concrete-name miss returns `404`; a
+        # wildcard pattern or list-all with no match returns `200` with an empty
+        # array.
+        # This functionality is experimental and is not ready for production usage. Experimental
+        # features may change or be removed at any time. Elastic will work to fix any issues, but
+        # experimental features are not subject to the support SLA of official GA features. Specific
+        # Support terms apply.
         #
-        # @option arguments [String] :inference_id The unique identifier of the inference endpoint. (*Required*)
-        # @option arguments [String] :task_type The type of inference task that the model performs.
-        # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference endpoint to be updated.
-        #  The default depends on the task type: 120s for `completion` and `chat_completion`, and 30s for all other task types.
+        # @option arguments [String, Array<String>] :name A comma-separated list of data source names or wildcard patterns. Omit to return all data sources.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
@@ -44,35 +45,29 @@ module Elasticsearch
         # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body inference_config
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-update
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch#TODO
         #
-        def update(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'inference.update' }
+        def get_data_source(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'esql.get_data_source' }
 
-          defined_params = [:inference_id, :task_type].each_with_object({}) do |variable, set_variables|
+          defined_params = [:name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          raise ArgumentError, "Required argument 'inference_id' missing" unless arguments[:inference_id]
-
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
+          body = nil
 
-          _inference_id = arguments.delete(:inference_id)
+          _name = arguments.delete(:name)
 
-          _task_type = arguments.delete(:task_type)
-
-          method = Elasticsearch::API::HTTP_PUT
-          path   = if _task_type && _inference_id
-                     "_inference/#{Utils.listify(_task_type)}/#{Utils.listify(_inference_id)}/_update"
+          method = Elasticsearch::API::HTTP_GET
+          path   = if _name
+                     "_query/data_source/#{Utils.listify(_name)}"
                    else
-                     "_inference/#{Utils.listify(_inference_id)}/_update"
+                     '_query/data_source'
                    end
           params = Utils.process_params(arguments)
 

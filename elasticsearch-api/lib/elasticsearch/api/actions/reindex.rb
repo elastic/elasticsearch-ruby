@@ -81,7 +81,9 @@ module Elasticsearch
       # @option arguments [Integer, String] :wait_for_active_shards The number of shard copies that must be active before proceeding with the operation.
       #  Set it to `all` or any positive integer up to the total number of shards in the index (`number_of_replicas+1`).
       #  The default value is one, which means it waits for each primary shard to be active. Server default: 1.
-      # @option arguments [Boolean] :wait_for_completion If `true`, the request blocks until the operation is complete. Server default: true.
+      # @option arguments [Boolean] :wait_for_completion If `true`, the request blocks until the operation is complete. If your requested reindex operation is complex or time-consuming,
+      #  it might timeout due to transport-layer limitations. While the reindex will continue to be processed by the cluster, your
+      #  client will not receive updates on status automatically after timeout. Set this option `true` if you anticipate a long-running reindex. Server default: true.
       # @option arguments [Boolean] :require_alias If `true`, the destination must be an index alias.
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
       #  when they occur.

@@ -35,6 +35,12 @@ module Elasticsearch
         #  - Contains wildcard expressions and there are only partial matches.
         #  If this parameter is false, the request returns a 404 status code when
         #  there are no matches or only partial matches. Server default: true.
+        # @option arguments [Boolean] :basic If true, the response includes `id`, `state`, `node`, `stats`, `health`,
+        #  and basic `checkpointing` information (the last and next checkpoint
+        #  numbers, and the next checkpoint's `position` and `progress`). Skips
+        #  statistics that require heavy computations to calculate:
+        #  `operations_behind`, `changes_last_detected_at`, `last_search_time`, and
+        #  the checkpoint timestamps.
         # @option arguments [Integer] :from Skips the specified number of transforms. Server default: 0.
         # @option arguments [Integer] :size Specifies the maximum number of transforms to obtain. Server default: 100.
         # @option arguments [Time] :timeout Controls the time to wait for the stats Server default: 30s.
