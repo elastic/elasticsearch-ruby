@@ -27,9 +27,10 @@ module Elasticsearch
         # WARNING: The task management API is new and should still be considered a beta feature.
         # The API may change in ways that are not backwards compatible.
         # If the task identifier is not found, a 404 response code indicates that there are no resources that match the request.
-        # This functionality is in technical preview and may be changed or removed in a future
-        # release. Elastic will apply best effort to fix any issues, but features in technical
-        # preview are not subject to the support SLA of official GA features.
+        # This functionality is experimental and is not ready for production usage. Experimental
+        # features may change or be removed at any time. Elastic will work to fix any issues, but
+        # experimental features are not subject to the support SLA of official GA features. Specific
+        # Support terms apply.
         #
         # @option arguments [String] :task_id The task identifier. (*Required*)
         # @option arguments [Time] :timeout The period to wait for a response.
