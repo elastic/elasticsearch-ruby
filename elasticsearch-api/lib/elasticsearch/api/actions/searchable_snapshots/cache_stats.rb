@@ -24,9 +24,10 @@ module Elasticsearch
       module Actions
         # Get cache statistics.
         # Get statistics about the shared cache for partially mounted indices.
-        # This functionality is in technical preview and may be changed or removed in a future
-        # release. Elastic will apply best effort to fix any issues, but features in technical
-        # preview are not subject to the support SLA of official GA features.
+        # This functionality is experimental and is not ready for production usage. Experimental
+        # features may change or be removed at any time. Elastic will work to fix any issues, but
+        # experimental features are not subject to the support SLA of official GA features. Specific
+        # Support terms apply.
         #
         # @option arguments [String, Array] :node_id The names of the nodes in the cluster to target.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

@@ -49,6 +49,11 @@ module Elasticsearch
       # @option arguments [String] :preference The node or shard the operation should be performed on.
       #  It is random by default.
       # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
+      #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+      # @option arguments [String] :_slice The slice identifier for routing the search to a specific slice.
+      #  When provided, the request is limited to shards that match the given slice value.
+      #  Use the special value `_all` to query all slices without restricting to a routing value.
+      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
       #  when they occur.
       # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

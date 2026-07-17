@@ -21,14 +21,10 @@
 module Elasticsearch
   module API
     module Actions
-      # List active reindex tasks.
       # Get information about all currently running reindex tasks.
-      #
-      # This API is only available behind a feature flag: `reindex_management_api`.
-      #
-      # This functionality is in technical preview and may be changed or removed in a future
-      # release. Elastic will apply best effort to fix any issues, but features in technical
-      # preview are not subject to the support SLA of official GA features.
+      # Reindex tasks that are mid-relocation between nodes are reported once,
+      # under their original task ID, so callers do not see duplicates across the relocation chain.
+      # If the API returns a HTTP status of `200 OK`, but `node_failures` or `task_failures` are non-empty in the body, the listing is not a complete authoritative listing and may be missing tasks.
       #
       # @option arguments [Boolean] :detailed If `true`, include detailed task status information in the response.
       # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

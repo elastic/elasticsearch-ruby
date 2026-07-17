@@ -39,18 +39,20 @@ namespace :automation do
   desc 'Generate API code'
   task :codegen do
     path = File.expand_path('../elasticsearch-api/', __dir__)
+    generator_path = File.expand_path('../elastic-client-generator-ruby', __dir__)
     branch = YAML.load_file(File.expand_path("#{__dir__}/../.buildkite/pipeline.yml"))['steps'].first['env']['ES_YAML_TESTS_BRANCH']
-    unless File.exist?(File.expand_path('elastic-client-generator-ruby', __dir__))
-      sh "git clone https://#{ENV['CLIENTS_GITHUB_TOKEN']}@github.com/elastic/elastic-client-generator-ruby.git "
+    unless File.exist?(generator_path)
+      sh "git clone https://x-access-token:#{ENV['CLIENTS_GITHUB_TOKEN']}@github.com/elastic/elastic-client-generator-ruby.git "
     end
 
-    sh "export ES_RUBY_CLIENT_PATH=#{path} " \
-       ' && cd elastic-client-generator-ruby ' \
-       ' && sudo bundle install ' \
-       " && bundle exec rake update[#{branch}]" \
-       ' && bundle exec rake gen_es' \
-       ' && cd ../../ ' \
-       ' && rm -rf elastic-client-generator-ruby '
+    Bundler.with_unbundled_env do
+      sh "export ES_RUBY_CLIENT_PATH=#{path} " \
+         " && cd #{generator_path} " \
+         ' && bundle config set --local path vendor/bundle ' \
+         ' && bundle install ' \
+         " && GITHUB_TOKEN=\"$CLIENTS_GITHUB_TOKEN\" bundle exec rake run[#{branch}]"
+    end
+    FileUtils.rm_rf(generator_path)
   end
 
   desc <<-DESC
@@ -62,6 +64,7 @@ namespace :automation do
   DESC
   task :bump, :version do |_, args|
     abort('[!] Required argument [version] missing') unless (version = args[:version])
+
     files = ['elasticsearch/elasticsearch.gemspec'] + RELEASE_TOGETHER.map { |gem| Dir["./#{gem}/**/**/version.rb"] }
     version_regexp = Regexp.new(/VERSION = ("|'([0-9.]+(-SNAPSHOT)?)'|")/)
     gemspec_regexp = Regexp.new(/'elasticsearch-api',\s+'([0-9x.]+)'/)
@@ -94,6 +97,14 @@ namespace :automation do
     raise "[!!!] #{e.class} : #{e.message}"
   end
 
+  desc 'Automatically bump to next patch version'
+  task :autobump do
+    version = Elasticsearch::VERSION.split('.').map.with_index do |a, index|
+      index == 2 ? "#{a.to_i + 1}" : a
+    end.join('.')
+    Rake::Task['automation:bump'].invoke(version)
+  end
+
   desc <<-DESC
   Bump the version in test matrixes:
   - .github/workflows
@@ -110,23 +121,27 @@ namespace :automation do
     files = gh_actions + ['.buildkite/pipeline.yml']
     regexp = Regexp.new(/[stack-version|STACK_VERSION]:\ ([0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}?+(-SNAPSHOT)?)/)
     files.each do |file|
+      next if file.match?('docs')
+
+      current_branch = `git rev-parse --abbrev-ref HEAD | tr -d '\n'`
+      version_branch = version.to_s.match(/([0-9]+\.[0-9]+)\.[0-9]+.*/)[1]
       content = File.read(file)
       if file == '.buildkite/pipeline.yml'
         require 'yaml'
         yaml = YAML.safe_load(content)
         yaml_tests_branch = yaml['steps'][0]['env']['ES_YAML_TESTS_BRANCH'].to_s
-        current_branch = `git rev-parse --abbrev-ref HEAD | tr -d '\n'`
-
         if current_branch == 'main'
           old = content.match(/STACK_VERSION: (.*)/)[0]
           new = "STACK_VERSION: #{version}"
           content.gsub!(new, old)
         else
-          branch = version.to_s.match(/([0-9]+\.[0-9]+)\.[0-9]+.*/)[1]
-          content.gsub!(/(ES_YAML_TESTS_BRANCH: )#{yaml_tests_branch}/, "\\1#{branch}")
-          puts "[#{yaml_tests_branch}] -> [#{branch}] in #{file.gsub('./', '')}"
+          content.gsub!(/(ES_YAML_TESTS_BRANCH: )#{yaml_tests_branch}/, "\\1#{version_branch}")
+          puts "[#{yaml_tests_branch}] -> [#{version_branch}] in #{file.gsub('./', '')}"
         end
         File.open(file, 'w') { |f| f.puts content }
+      end
+      if content.match?('download_artifacts') && current_branch != 'main'
+        content.gsub!('download_artifacts[main]', "download_artifacts[#{version_branch}]")
       end
       match = content.match(regexp)
       next if match.nil?

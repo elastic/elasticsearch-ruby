@@ -32,7 +32,8 @@ Gem::Specification.new do |s|
     'homepage_uri' => 'https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/index.html',
     'changelog_uri' => 'https://github.com/elastic/elasticsearch-ruby/blob/main/CHANGELOG.md',
     'source_code_uri' => 'https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-api',
-    'bug_tracker_uri' => 'https://github.com/elastic/elasticsearch-ruby/issues'
+    'bug_tracker_uri' => 'https://github.com/elastic/elasticsearch-ruby/issues',
+    'rubygems_mfa_required' => 'true'
   }
   s.files = `git ls-files`.split($/).reject do |file|
     file.match(/^utils\/|^spec\/|^api-spec-testing\/|^Gemfile|^Rakefile/)

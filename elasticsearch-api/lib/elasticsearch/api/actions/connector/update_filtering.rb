@@ -26,10 +26,10 @@ module Elasticsearch
         # Update the draft filtering configuration of a connector and marks the draft validation state as edited.
         # The filtering draft is activated once validated by the running Elastic connector service.
         # The filtering property is used to configure sync rules (both basic and advanced) for a connector.
-        # This functionality is in Beta and is subject to change. The design and
-        # code is less mature than official GA features and is being provided
-        # as-is with no warranties. Beta features are not subject to the support
-        # SLA of official GA features.
+        # This functionality is in beta and is not ready for production usage. For beta
+        # features, the design and code is less mature than official GA features and is being
+        # provided as-is with no warranties. Beta features are not subject to the support SLA of
+        # official GA features. Specific Support terms apply.
         #
         # @option arguments [String] :connector_id The unique identifier of the connector to be updated (*Required*)
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

@@ -119,7 +119,8 @@ module Elasticsearch
       #  Unlike the delete API, it does not support `wait_for`.
       # @option arguments [Boolean] :request_cache If `true`, the request cache is used for this request.
       #  Defaults to the index-level setting.
-      # @option arguments [Float] :requests_per_second The throttle for this request in sub-requests per second. Server default: -1.
+      # @option arguments [Float] :requests_per_second The maximum number of documents to delete per second, across the entire delete-by-query operation (including slices).
+      #  It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. Server default: -1.
       # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
       # @option arguments [String] :q A query in the Lucene query string syntax.
       # @option arguments [Time] :scroll The period to retain the search context for scrolling.

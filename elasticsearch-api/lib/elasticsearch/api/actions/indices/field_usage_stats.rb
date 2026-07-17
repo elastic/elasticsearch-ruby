@@ -28,9 +28,10 @@ module Elasticsearch
         # A shard-level search request that accesses a given field, even if multiple times during that request, is counted as a single use.
         # The response body reports the per-shard usage count of the data structures that back the fields in the index.
         # A given request will increment each count by a maximum value of 1, even if the request accesses the same field multiple times.
-        # This functionality is in technical preview and may be changed or removed in a future
-        # release. Elastic will apply best effort to fix any issues, but features in technical
-        # preview are not subject to the support SLA of official GA features.
+        # This functionality is experimental and is not ready for production usage. Experimental
+        # features may change or be removed at any time. Elastic will work to fix any issues, but
+        # experimental features are not subject to the support SLA of official GA features. Specific
+        # Support terms apply.
         #
         # @option arguments [String, Array] :index Comma-separated list or wildcard expression of index names used to limit the request. (*Required*)
         # @option arguments [Boolean] :allow_no_indices A setting that does two separate checks on the index expression.

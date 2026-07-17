@@ -37,7 +37,7 @@ module Elasticsearch
       # * To automatically create a data stream or index with a reindex API request, you must have the `auto_configure`, `create_index`, or `manage` index privilege for the destination data stream, index, or alias.
       # * If reindexing from a remote cluster, the `source.remote.user` must have the `monitor` cluster privilege and the `read` index privilege for the source data stream, index, or alias.
       # If reindexing from a remote cluster into a cluster using Elastic Stack, you must explicitly allow the remote host using the `reindex.remote.whitelist` node setting on the destination cluster.
-      # If reindexing from a remote cluster into an Elastic Cloud Serverless project, only remote hosts from {https://cloud.elastic.co/registration?page=docs&placement=docs-body Elastic Cloud Hosted} are allowed.
+      # If reindexing from a remote cluster into an Elastic Cloud Serverless project, only remote hosts from {https://cloud.elastic.co/registration?page=docs&placement=docs-body Elastic Cloud Hosted and Elastic Cloud Serverless} are allowed.
       # Automatic data stream creation requires a matching index template with data stream enabled.
       # The `dest` element can be configured like the index API to control optimistic concurrency control.
       # Omitting `version_type` or setting it to `internal` causes Elasticsearch to blindly dump documents into the destination, overwriting any that happen to have the same ID.
@@ -60,9 +60,12 @@ module Elasticsearch
       # Refer to the linked documentation for examples of how to reindex documents.
       #
       # @option arguments [Boolean] :refresh If `true`, the request refreshes affected shards to make this operation visible to search.
-      # @option arguments [Float] :requests_per_second The throttle for this request in sub-requests per second.
-      #  By default, there is no throttle. Server default: -1.
-      # @option arguments [Time] :scroll The period of time that a consistent view of the index should be maintained for scrolled search. Server default: 5m.
+      # @option arguments [Float] :requests_per_second The maximum number of documents to index per second, across the entire reindex operation (including slices).
+      #  It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. Server default: -1.
+      # @option arguments [Time] :scroll The period of time that a consistent view of the index should be maintained for scrolled search.
+      #  In serverless, and stack versions >= v9.5.0, we use PIT rather than scroll for pagination.
+      #  We only use scroll for reindexing from remote clusters that are older than v7.10.0.
+      #  Therefore, this parameter is ignored unless you are reindexing from a remote cluster that is older than v7.10.0. Server default: 5m.
       # @option arguments [Integer, String] :slices The number of slices this task should be divided into.
       #  It defaults to one slice, which means the task isn't sliced into subtasks.Reindex supports sliced scroll to parallelize the reindexing process.
       #  This parallelization can improve efficiency and provide a convenient way to break the request down into smaller parts.NOTE: Reindexing from remote clusters does not support manual or automatic slicing.If set to `auto`, Elasticsearch chooses the number of slices to use.
@@ -70,7 +73,8 @@ module Elasticsearch
       #  If there are multiple sources, it will choose the number of slices based on the index or backing index with the smallest number of shards. Server default: 1.
       # @option arguments [Integer] :max_docs The maximum number of documents to reindex.
       #  By default, all documents are reindexed.
-      #  If it is a value less then or equal to `scroll_size`, a scroll will not be used to retrieve the results for the operation.If `conflicts` is set to `proceed`, the reindex operation could attempt to reindex more documents from the source than `max_docs` until it has successfully indexed `max_docs` documents into the target or it has gone through every document in the source query.
+      #  If it is a value less then or equal to `scroll_size`, a scroll will not be used to retrieve the results for the operation.If `conflicts` is set to `proceed`, the reindex operation could attempt to reindex more documents from the source than `max_docs` until it has successfully indexed `max_docs` documents into the target or it has gone through every document in the source query.If `slices` is set, the `max_docs` limit is split evenly across the slices.
+      #  If the number of documents in the source is equal to or slightly more than `max_docs`, this could result in slightly fewer than `max_docs` documents being reindexed, due to skew in the slicing.
       # @option arguments [Time] :timeout The period each indexing waits for automatic index creation, dynamic mapping updates, and waiting for active shards.
       #  By default, Elasticsearch waits for at least one minute before failing.
       #  The actual wait time could be longer, particularly when multiple waits occur. Server default: 1m.

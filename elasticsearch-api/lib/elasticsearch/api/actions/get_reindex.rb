@@ -21,14 +21,23 @@
 module Elasticsearch
   module API
     module Actions
-      # Get a reindex task.
       # Get the status and progress of a specific reindex task.
+      # This API follows reindex tasks across node-shutdown relocations, so callers can
+      # keep using the original task ID throughout the lifetime of the operation.
+      # Returned task IDs and timings reflect the original task, not its relocated successor.
+      # Relocated task IDs are also supported. They are followed transparently and return the task ID and timings of the original task.
+      # When the task ID cannot be resolved, the API returns the response below with a 404 status code.
+      # This response is used whether the ID is unknown, refers to a non-reindex task, refers to a sliced child subtask, or refers to a task whose node left the cluster with no stored result (e.g. a non-graceful shutdown).
       #
-      # This API is only available behind a feature flag: `reindex_management_api`.
-      #
-      # This functionality is in technical preview and may be changed or removed in a future
-      # release. Elastic will apply best effort to fix any issues, but features in technical
-      # preview are not subject to the support SLA of official GA features.
+      # ```
+      # {
+      #   "error": {
+      #     "type": "resource_not_found_exception",
+      #     "reason": "Reindex operation [r1A2WoRbTwKZ516z6NEs5A:36619] not found"
+      #   },
+      #   "status": 404
+      # }
+      # ```
       #
       # @option arguments [String] :task_id The ID of the reindex task to retrieve. (*Required*)
       # @option arguments [Boolean] :wait_for_completion If `true`, the request blocks until the reindex task completes, then returns the result.

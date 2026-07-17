@@ -27,14 +27,19 @@ module Elasticsearch
         # WARNING: The task management API is new and should still be considered a beta feature.
         # The API may change in ways that are not backwards compatible.
         # If the task identifier is not found, a 404 response code indicates that there are no resources that match the request.
-        # This functionality is in technical preview and may be changed or removed in a future
-        # release. Elastic will apply best effort to fix any issues, but features in technical
-        # preview are not subject to the support SLA of official GA features.
+        # For relocatable tasks, this API transparently follows the task across graceful shutdown relocations,
+        # so callers can keep using the original task ID. The returned task reports its `original_task_id` and `original_start_time_in_millis`
+        # if it is continuing work from an earlier task.
+        # This functionality is experimental and is not ready for production usage. Experimental
+        # features may change or be removed at any time. Elastic will work to fix any issues, but
+        # experimental features are not subject to the support SLA of official GA features. Specific
+        # Support terms apply.
         #
         # @option arguments [String] :task_id The task identifier. (*Required*)
         # @option arguments [Time] :timeout The period to wait for a response.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :wait_for_completion If `true`, the request blocks until the task has completed.
+        # @option arguments [Boolean] :follow_relocations Internal use only Server default: true.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

@@ -1,5 +1,91 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.4.3
+
+* Fixes header conflict when using Elasticsearch Serverless. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2984)
+
+# 9.4.2
+
+* Updates `elasticsearch-api`, source code documentation for beta/experimental APIs.
+* Fixes NoMethodError when `Content-Type` lacks `compatible-with` parameter. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2974)
+
+# 9.4.1
+
+- Updates `elasticsearch-api` to the latest Elasticsearch 9.4 specification.
+- Better handling of `content-type` headers when using Manticore and JRuby to avoid duplication.
+
+# 9.4.0
+
+## Gem
+
+* Tested versions of Ruby for 9.4.0:
+  * Ruby MRI: `3.3`, `3.4`, `4.0`
+  * JRuby `9.3`, `9.4`, `10.0`
+
+### ES|QL Query Builder
+
+The [Ruby ES|QL Query Builder](https://github.com/elastic/esql-ruby) [version 0.6.0](https://github.com/elastic/esql-ruby/releases/tag/v0.6.0) has been released. The version adds support for `INLINE_STATS`, `METRICS_INFO`, `PROMQL`, `REGISTERED_DOMAIN`, `SET`, `URI_PARTS`, and `USER_AGENT`.
+
+## Elasticsearch API
+
+### API Updates
+
+* `async_search.get`: New Parameter `:return_intermediate_results`. Specifies whether the response should contain intermediate results if the query is still running when the wait_for_completion_timeout.
+* `project.tags`: Parameter removed `:project_routing`. Added `:body` parameter.
+* `reindex_rethrottle`: New Parameter `:group_by`.
+* `search_mvt`: Parameter removed `:project_routing`. Specifies a subset of projects to target for the search using project.
+* `streams.logs_disable`: New Parameter `:name`. The stream type to disable. (*Required*)
+* `streams.logs_enable`: New Parameter `:name`. The stream type to enable. (*Required*)
+* `text_structure.find_field_structure`, `text_structure.find_message_structure`, `text_structure.find_structure`: New Parameter `:should_parse_recursively`. If the format is `ndjson`, you can specify whether to parse nested JSON objects recursively.
+* The APIs in the `streams` namespace were behind a feature flag and now they're not. They are still available in Technical Preview.
+* `indices.downsample` has been promoted from Technical Preview to stable.
+
+### New APIs
+
+* `inference.put_fireworksai` - Create a Fireworks AI inference endpoint.
+
+In Technical Preview, available behind the feature flag `reindex_management_api`.
+
+* `cancel_reindex` - Cancel an ongoing reindex task.
+* `get_reindex` - Get the status and progress of a specific reindex task.
+* `list_reindex` - Get information about all currently running reindex tasks.
+
+In Technical Preview:
+
+* `inference.embedding` - Perform dense embedding inference on the service.
+* `security.clone_api_key` -  Create a copy of an existing API key with a new ID. This is intended for applications (such as Kibana) that need to create API keys on behalf of a user using an existing API key credential.
+
+Available only in Serverless, in Technical Preview:
+
+* `project.create_many_routing` - Create or update project routing expressions.
+* `project.create_routing` - Create or update a project routing expression.
+* `project.delete_routing` - Delete a project routing expression.
+* `project.get_many_routing` - Get project routing expressions.
+* `project.get_routing` - Get a project routing expression.
+
+### Deleted APIs
+
+The following APIs were in technical preview behind a feature flag and have been removed:
+* `indices.delete_sample_configuration`
+* `indices.get_all_sample_configuration`
+* `indices.get_sample`
+* `indices.get_sample_configuration`
+* `indices.get_sample_stats`
+* `indices.put_sample_configuration`
+
+# 9.3.4
+
+* Fixes header conflict when using Elasticsearch Serverless. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2984)
+
+# 9.3.3
+
+* Fixes NoMethodError when `Content-Type` lacks `compatible-with` parameter. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2974)
+
+# 9.3.2
+
+* Updates `elasticsearch-api` to the latest Elasticsearch 9.3 specification.
+* Better handling of `content-type` headers when using Manticore and JRuby to avoid duplication.
+
 # 9.3.1
 
 ## Gem
@@ -14,7 +100,7 @@
 
 ## Gem
 
-* Tested versions of Ruby for 9.2.0: Ruby (MRI) 3.2, 3.3, 3.4, 4.0, JRuby 9.3, JRuby 9.4 and JRuby 10.
+* Tested versions of Ruby for 9.3.0: Ruby (MRI) 3.2, 3.3, 3.4, 4.0, JRuby 9.3, JRuby 9.4 and JRuby 10.
 
 ### Support for base64 indexing for vector values
 
@@ -67,6 +153,15 @@ The [Ruby ES|QL Query Builder](https://github.com/elastic/esql-ruby) [version 0.
 * `indices.get_sample_configuration` - Get the sampling configuration for the specified index.
 * `indices.get_sample_stats` - Request stats for a random sample of raw documents ingested into the given index or data stream.
 * `indices.put_sample_configuration` - Create or update the sampling configuration for the specified index.
+
+# 9.2.3
+
+* Fixes NoMethodError when `Content-Type` lacks `compatible-with` parameter. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2974)
+
+# 9.2.2
+
+* Updates `elasticsearch-api` to the latest Elasticsearch 9.2 specification.
+* Better handling of `content-type` headers when using Manticore and JRuby to avoid duplication.
 
 # 9.2.1
 

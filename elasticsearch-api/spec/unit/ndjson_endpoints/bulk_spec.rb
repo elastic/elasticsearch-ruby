@@ -33,14 +33,14 @@ describe 'bulk headers test' do
     it 'does not override headers' do
       allow(client)
         .to receive(:perform_request)
-              .with(
-                Elasticsearch::API::HTTP_POST,
-                '_bulk',
-                {},
-                {},
-                expected_headers,
-                { endpoint: 'bulk' }
-              )
+        .with(
+          Elasticsearch::API::HTTP_POST,
+          '_bulk',
+          {},
+          {},
+          expected_headers,
+          { endpoint: 'bulk' }
+        )
       expect(client.bulk(body: {})).to be_a Elasticsearch::API::Response
     end
   end
@@ -110,15 +110,43 @@ describe 'bulk headers test' do
     it 'does not override version in headers' do
       allow(client)
         .to receive(:perform_request)
-              .with(
-                Elasticsearch::API::HTTP_POST,
-                '_bulk',
-                {},
-                {},
-                expected_headers,
-                { endpoint: 'bulk' }
-              )
+        .with(
+          Elasticsearch::API::HTTP_POST,
+          '_bulk',
+          {},
+          {},
+          expected_headers,
+          { endpoint: 'bulk' }
+        )
       expect(client.bulk(body: {}, headers: { x_custom: 'Custom header' })).to be_a Elasticsearch::API::Response
+    end
+  end
+
+  context 'when using application/x-ndjson as a content-type header' do
+    let(:client) do
+      Elasticsearch::Client.new(
+        url: 'http://localhost:9200',
+        transport_options: {
+          headers: { 'Content-Type' => 'application/x-ndjson' }
+        }
+      )
+    end
+
+    it 'doesnt error when using bulk' do
+      allow(client)
+        .to receive(:perform_request)
+        .with(
+          Elasticsearch::API::HTTP_POST,
+          '_bulk',
+          {},
+          {},
+          {
+            'Content-Type' => 'application/vnd.elasticsearch+x-ndjson; compatible-with=9',
+            'accept' => 'application/vnd.elasticsearch+x-ndjson; compatible-with=9'
+          },
+          { endpoint: 'bulk' }
+        )
+      expect(client.bulk(body: {})).to be_a Elasticsearch::API::Response
     end
   end
 end

@@ -30,6 +30,8 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :name The name of the role.
         #  You can specify multiple roles as a comma-separated list.
         #  If you do not specify this parameter, the API returns information about all roles.
+        # @option arguments [Boolean] :include_implicit If `true`, include privileges that are implicitly granted by registered `ImplicitPrivilegesProviders` alongside the explicitly configured privileges.
+        #  Each implicit entry in the response is annotated with `implicitly_granted: true`.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

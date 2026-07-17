@@ -24,10 +24,10 @@ module Elasticsearch
       module Actions
         # Get all connector sync jobs.
         # Get information about all stored connector sync jobs listed by their creation date in ascending order.
-        # This functionality is in Beta and is subject to change. The design and
-        # code is less mature than official GA features and is being provided
-        # as-is with no warranties. Beta features are not subject to the support
-        # SLA of official GA features.
+        # This functionality is in beta and is not ready for production usage. For beta
+        # features, the design and code is less mature than official GA features and is being
+        # provided as-is with no warranties. Beta features are not subject to the support SLA of
+        # official GA features. Specific Support terms apply.
         #
         # @option arguments [Integer] :from Starting offset Server default: 0.
         # @option arguments [Integer] :size Specifies a max number of results to get Server default: 100.

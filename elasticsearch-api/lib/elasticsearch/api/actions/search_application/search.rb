@@ -25,10 +25,10 @@ module Elasticsearch
         # Run a search application search.
         # Generate and run an Elasticsearch query that uses the specified query parameteter and the search template associated with the search application or default template.
         # Unspecified template parameters are assigned their default values if applicable.
-        # This functionality is in Beta and is subject to change. The design and
-        # code is less mature than official GA features and is being provided
-        # as-is with no warranties. Beta features are not subject to the support
-        # SLA of official GA features.
+        # This functionality is in beta and is not ready for production usage. For beta
+        # features, the design and code is less mature than official GA features and is being
+        # provided as-is with no warranties. Beta features are not subject to the support SLA of
+        # official GA features. Specific Support terms apply.
         #
         # @option arguments [String] :name The name of the search application to be searched. (*Required*)
         # @option arguments [Boolean] :typed_keys Determines whether aggregation names are prefixed by their respective types in the response.

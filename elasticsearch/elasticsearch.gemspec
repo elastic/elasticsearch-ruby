@@ -31,7 +31,8 @@ Gem::Specification.new do |s|
     'homepage_uri' => 'https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/index.html',
     'changelog_uri' => 'https://github.com/elastic/elasticsearch-ruby/blob/main/CHANGELOG.md',
     'source_code_uri' => 'https://github.com/elastic/elasticsearch-ruby/tree/main',
-    'bug_tracker_uri' => 'https://github.com/elastic/elasticsearch-ruby/issues'
+    'bug_tracker_uri' => 'https://github.com/elastic/elasticsearch-ruby/issues',
+    'rubygems_mfa_required' => 'true'
   }
   s.files = `git ls-files`.split($/).reject do |file|
     file.match(/^spec\/|^Gemfile|^Rakefile/)
@@ -46,7 +47,7 @@ Gem::Specification.new do |s|
   s.rdoc_options      = ['--charset=UTF-8']
 
   s.required_ruby_version = '>= 2.6' # For compatibility with JRuby 9.3
-  s.add_dependency 'elasticsearch-api', '9.3.0'
+  s.add_dependency 'elasticsearch-api', '9.5.0'
   s.add_dependency 'elastic-transport', '~> 8.3'
 
   s.add_development_dependency 'base64'
@@ -55,12 +56,15 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'ostruct'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'require-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'ruby-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'webmock', '> 3.23'
   s.add_development_dependency 'yard'
+
+  unless defined?(JRUBY_VERSION) || defined?(Rubinius)
+    s.add_development_dependency 'require-prof'
+    s.add_development_dependency 'ruby-prof'
+  end
 
   s.description = <<-DESC.gsub(/^    /, '')
     Ruby integrations for Elasticsearch (client, API, etc.)

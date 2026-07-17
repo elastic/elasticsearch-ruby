@@ -24,6 +24,8 @@ module Elasticsearch
       module Actions
         # Delete service account tokens.
         # Delete service account tokens for a service in a specified namespace.
+        # IMPORTANT: On Serverless, non-operator users can delete tokens for only `elastic/fleet-server` and `elastic/fleet-server-remote`.
+        # Deleting tokens for any other service account requires operator privileges.
         #
         # @option arguments [String] :namespace The namespace, which is a top-level grouping of service accounts. (*Required*)
         # @option arguments [String] :service The service name. (*Required*)

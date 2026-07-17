@@ -132,7 +132,8 @@ module Elasticsearch
       #  This is different than the update API's `refresh` parameter, which causes just the shard that received the request to be refreshed.
       # @option arguments [Boolean] :request_cache If `true`, the request cache is used for this request.
       #  It defaults to the index-level setting.
-      # @option arguments [Float] :requests_per_second The throttle for this request in sub-requests per second. Server default: -1.
+      # @option arguments [Float] :requests_per_second The maximum number of documents to update per second, across the entire update_by_query operation (including slices).
+      #  It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. Server default: -1.
       # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
       # @option arguments [Time] :scroll The period to retain the search context for scrolling. Server default: 5m.
       # @option arguments [Integer] :scroll_size The size of the scroll request that powers the operation. Server default: 1000.

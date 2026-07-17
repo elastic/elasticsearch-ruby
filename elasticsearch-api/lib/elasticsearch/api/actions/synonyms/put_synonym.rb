@@ -23,7 +23,8 @@ module Elasticsearch
     module Synonyms
       module Actions
         # Create or update a synonym set.
-        # Synonyms sets are limited to a maximum of 10,000 synonym rules per set.
+        # Synonym sets are limited to a maximum of 100,000 synonym rules per set by default.
+        # This limit is configurable using the `synonyms.max_synonym_rules` cluster setting.
         # When an existing synonyms set is updated, the search analyzers that use the synonyms set are reloaded automatically for all indices.
         # This is equivalent to invoking the reload search analyzers API for all indices that use the synonyms set.
         # For practical examples of how to create or update a synonyms set, refer to the External documentation.
@@ -31,6 +32,8 @@ module Elasticsearch
         # @option arguments [String] :id The ID of the synonyms set to be created or updated. (*Required*)
         # @option arguments [Boolean] :refresh If `true`, the request will refresh the analyzers with the new synonyms set and wait for the new synonyms to be available before returning.
         #  If `false`, analyzers will not be reloaded with the new synonym set Server default: true.
+        # @option arguments [Boolean] :append If `true`, the provided synonym rules are appended to the existing set, with matching IDs overwriting existing rules.
+        #  If `false`, the entire synonyms set is replaced with the new synonym rules definitions.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

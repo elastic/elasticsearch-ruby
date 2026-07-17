@@ -31,7 +31,7 @@ module Elasticsearch
         # * AlibabaCloud AI Search (`completion`, `rerank`, `sparse_embedding`, `text_embedding`)
         # * Amazon Bedrock (`chat_completion`, `completion`, `text_embedding`)
         # * Amazon SageMaker (`chat_completion`, `completion`, `rerank`, `sparse_embedding`, `text_embedding`)
-        # * Anthropic (`completion`)
+        # * Anthropic (`chat_completion`, `completion`)
         # * Azure AI Studio (`completion`, `rerank`, `text_embedding`)
         # * Azure OpenAI (`chat_completion`, `completion`, `text_embedding`)
         # * Cohere (`completion`, `rerank`, `text_embedding`)

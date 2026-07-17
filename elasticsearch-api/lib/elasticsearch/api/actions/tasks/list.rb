@@ -26,6 +26,9 @@ module Elasticsearch
         # Get information about the tasks currently running on one or more nodes in the cluster.
         # WARNING: The task management API is new and should still be considered a beta feature.
         # The API may change in ways that are not backwards compatible.
+        # For relocatable tasks, this API transparently follows the task across graceful shutdown relocations,
+        # so callers can keep using the original task ID. The returned task reports its `original_task_id` and `original_start_time_in_millis`
+        # if it is continuing work from an earlier task.
         # **Identifying running tasks**
         # The `X-Opaque-Id header`, when provided on the HTTP request header, is going to be returned as a header in the response as well as in the headers field for in the task information.
         # This enables you to track certain calls or associate certain tasks with the client that started them.
@@ -78,9 +81,10 @@ module Elasticsearch
         # In this example, `X-Opaque-Id: 123456` is the ID as a part of the response header.
         # The `X-Opaque-Id` in the task `headers` is the ID for the task that was initiated by the REST request.
         # The `X-Opaque-Id` in the children `headers` is the child task of the task that was initiated by the REST request.
-        # This functionality is in technical preview and may be changed or removed in a future
-        # release. Elastic will apply best effort to fix any issues, but features in technical
-        # preview are not subject to the support SLA of official GA features.
+        # This functionality is experimental and is not ready for production usage. Experimental
+        # features may change or be removed at any time. Elastic will work to fix any issues, but
+        # experimental features are not subject to the support SLA of official GA features. Specific
+        # Support terms apply.
         #
         # @option arguments [String, Array<String>] :actions A comma-separated list or wildcard expression of actions used to limit the request.
         #  For example, you can use `cluser:*` to retrieve all cluster-related tasks.

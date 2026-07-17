@@ -73,20 +73,18 @@ describe Elasticsearch::Client do
 
       expect_any_instance_of(Faraday::Connection)
         .to receive(:run_request)
-              .with(:get, 'http://localhost:9200/_search', nil, connection_headers) { OpenStruct.new(body: '') }
+          .with(:get, 'http://localhost:9200/_search', nil, connection_headers) { OpenStruct.new(body: '') }
       client.search
     end
   end
 
   context 'when content-type header is changed' do
     let!(:client) do
-      described_class.new(
-        host: 'http://localhost:9200',
-        transport_options: { headers: instance_headers }
-      ).tap do |client|
+      described_class.new(transport_options: { headers: instance_headers }).tap do |client|
         client.instance_variable_set('@verified', true)
       end
     end
+
     let(:instance_headers) do
       { content_type: 'application/json' }
     end
@@ -98,7 +96,30 @@ describe Elasticsearch::Client do
 
       expect_any_instance_of(Faraday::Connection)
         .to receive(:run_request)
-              .with(:get, 'http://localhost:9200/_search', nil, connection_headers) { OpenStruct.new(body: '') }
+          .with(:get, 'http://localhost:9200/_search', nil, connection_headers) { OpenStruct.new(body: '') }
+      client.search
+    end
+  end
+
+  context 'when Content-Type header is used' do
+    let(:client) do
+      described_class.new(transport_options: { headers: instance_headers }).tap do |client|
+        client.instance_variable_set('@verified', true)
+      end
+    end
+
+    let(:instance_headers) do
+      { 'Content-Type' => 'application/text' }
+    end
+
+    it 'performs the request with the header' do
+      connection_headers = client.transport.connections.connections.first.connection.headers
+      expect(connection_headers['Accept']).to eq 'application/vnd.elasticsearch+json; compatible-with=9'
+      expect(connection_headers['Content-Type']).to eq 'application/text'
+
+      expect_any_instance_of(Faraday::Connection)
+        .to receive(:run_request)
+          .with(:get, 'http://localhost:9200/_search', nil, connection_headers) { OpenStruct.new(body: '') }
       client.search
     end
   end
@@ -114,6 +135,28 @@ describe Elasticsearch::Client do
       expected_headers = client.transport.connections.connections.first.connection.headers
       expect(expected_headers['Accept']).to eq 'application/vnd.elasticsearch+json; compatible-with=9'
       expect(expected_headers['Content-Type']).to eq 'application/vnd.elasticsearch+json; compatible-with=9'
+
+      expect_any_instance_of(Faraday::Connection)
+        .to receive(:run_request)
+          .with(:get, 'http://localhost:9200/_search', nil, expected_headers) { OpenStruct.new(body: '') }
+      client.search
+    end
+  end
+
+  context 'when Elastic-Api-Version header is set' do
+    let!(:client) do
+      described_class.new(
+        host: 'http://localhost:9200',
+        transport_options: { headers: { 'Elastic-Api-Version' => '2023-10-31' } }
+      ).tap do |client|
+        client.instance_variable_set('@verified', true)
+      end
+    end
+
+    it 'does not modify the content-type header' do
+      expected_headers = client.transport.connections.connections.first.connection.headers
+      expect(expected_headers['Content-Type']).to eq 'application/json'
+      expect(expected_headers['Elastic-Api-Version']).to eq '2023-10-31'
 
       expect_any_instance_of(Faraday::Connection)
         .to receive(:run_request)
