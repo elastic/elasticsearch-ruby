@@ -26,9 +26,10 @@ module Elasticsearch
         # Set the error field for the connector.
         # If the error provided in the request body is non-null, the connector’s status is updated to error.
         # Otherwise, if the error is reset to null, the connector status is updated to connected.
-        # This functionality is in technical preview and may be changed or removed in a future
-        # release. Elastic will apply best effort to fix any issues, but features in technical
-        # preview are not subject to the support SLA of official GA features.
+        # This functionality is experimental and is not ready for production usage. Experimental
+        # features may change or be removed at any time. Elastic will work to fix any issues, but
+        # experimental features are not subject to the support SLA of official GA features. Specific
+        # Support terms apply.
         #
         # @option arguments [String] :connector_id The unique identifier of the connector to be updated (*Required*)
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors

@@ -24,10 +24,10 @@ module Elasticsearch
       module Actions
         # Get search applications.
         # Get information about search applications.
-        # This functionality is in Beta and is subject to change. The design and
-        # code is less mature than official GA features and is being provided
-        # as-is with no warranties. Beta features are not subject to the support
-        # SLA of official GA features.
+        # This functionality is in beta and is not ready for production usage. For beta
+        # features, the design and code is less mature than official GA features and is being
+        # provided as-is with no warranties. Beta features are not subject to the support SLA of
+        # official GA features. Specific Support terms apply.
         #
         # @option arguments [String] :q Query in the Lucene query string syntax.
         # @option arguments [Integer] :from Starting offset. Server default: 0.
