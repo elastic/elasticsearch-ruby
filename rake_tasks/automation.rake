@@ -45,12 +45,14 @@ namespace :automation do
       sh "git clone https://x-access-token:#{ENV['CLIENTS_GITHUB_TOKEN']}@github.com/elastic/elastic-client-generator-ruby.git "
     end
 
-    sh "export ES_RUBY_CLIENT_PATH=#{path} " \
-       " && cd #{generator_path} " \
-       ' && bundle config set --local path vendor/bundle ' \
-       ' && bundle install ' \
-       " && bundle exec rake update[#{branch}]" \
-       ' && bundle exec rake gen_es'
+    Bundler.with_unbundled_env do
+      sh "export ES_RUBY_CLIENT_PATH=#{path} " \
+         " && cd #{generator_path} " \
+         ' && bundle config set --local path vendor/bundle ' \
+         ' && bundle install ' \
+         " && bundle exec rake update[#{branch}]" \
+         ' && bundle exec rake gen_es'
+    end
     FileUtils.rm_rf(generator_path)
   end
 
