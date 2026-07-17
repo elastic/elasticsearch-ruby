@@ -130,6 +130,10 @@ module Elasticsearch
       #  If `wait_for`, it waits for a refresh to make this operation visible to search.
       #  If `false`, it does nothing with refreshes. Server default: false.
       # @option arguments [String, Array<String>] :routing A custom value that is used to route operations to a specific shard.
+      #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+      # @option arguments [String] :_slice The slice identifier used to route the operation to a specific slice.
+      #  Use the special value `_all` to target all slices without restricting to a routing value.
+      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Time] :timeout The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards.This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs.
       #  Some reasons for this might be that the primary shard is currently recovering from a gateway or undergoing relocation.
       #  By default, the operation will wait on the primary shard to become available for at least 1 minute before failing and responding with an error.

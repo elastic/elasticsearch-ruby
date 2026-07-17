@@ -60,6 +60,11 @@ module Elasticsearch
       # @option arguments [String] :preference The node or shard the operation should be performed on.
       #  By default, it is random.
       # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
+      #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+      # @option arguments [Array<String>, String] :stats Specific `tag` of the request for logging and statistical purposes.
+      # @option arguments [String] :_slice The slice identifier used to route the operation to a specific slice.
+      #  Use the special value `_all` to target all slices without restricting to a routing value.
+      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Integer] :terminate_after The maximum number of documents to collect for each shard.
       #  If a query reaches this limit, Elasticsearch terminates the query early.
       #  Elasticsearch collects documents before sorting.IMPORTANT: Use with caution.
