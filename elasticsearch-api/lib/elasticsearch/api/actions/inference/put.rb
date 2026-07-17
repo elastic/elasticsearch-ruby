@@ -54,7 +54,8 @@ module Elasticsearch
         #
         # @option arguments [String] :task_type The task type. Refer to the integration list in the API description for the available task types.
         # @option arguments [String] :inference_id The inference Id (*Required*)
-        # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference endpoint to be created. Server default: 30s.
+        # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference endpoint to be created.
+        #  The default depends on the task type: 120s for `completion` and `chat_completion`, and 30s for all other task types.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

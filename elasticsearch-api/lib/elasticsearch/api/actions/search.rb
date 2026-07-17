@@ -95,7 +95,7 @@ module Elasticsearch
       #  By default, this value cannot exceed `1d` (24 hours).
       #  You can change this limit by using the `search.max_keep_alive` cluster-level setting.
       # @option arguments [String] :search_type Indicates how distributed term frequencies are calculated for relevance scoring.
-      # @option arguments [Array<String>] :stats Specific `tag` of the request for logging and statistical purposes.
+      # @option arguments [Array<String>, String] :stats Specific `tag` of the request for logging and statistical purposes.
       # @option arguments [String, Array<String>] :stored_fields A comma-separated list of stored fields to return as part of a hit.
       #  If no fields are specified, no stored fields are included in the response.
       #  If this field is specified, the `_source` parameter defaults to `false`.
