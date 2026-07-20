@@ -31,7 +31,7 @@ module Elasticsearch
       # * To automatically create a data stream or index with this API request, you must have the `auto_configure`, `create_index`, or `manage` index privilege.
       # Automatic data stream creation requires a matching index template with data stream enabled.
       # NOTE: Replica shards might not all be started when an indexing operation returns successfully.
-      # By default, only the primary is required. Set `wait_for_active_shards` to change this default behavior.
+      # By default, only the primary is required. Set `wait_for_active_shards` to change this default behavior (this parameter is not available in Elasticsearch Serverless).
       # **Automatically create data streams and indices**
       # If the request's target doesn't exist and matches an index template with a `data_stream` definition, the index operation automatically creates the data stream.
       # If the target doesn't exist and doesn't match a data stream template, the operation automatically creates the index and applies any matching index templates.
@@ -63,7 +63,7 @@ module Elasticsearch
       # If the requisite number of active shard copies are not available, then the write operation must wait and retry, until either the requisite shard copies have started or a timeout occurs.
       # By default, write operations only wait for the primary shards to be active before proceeding (that is to say `wait_for_active_shards` is `1`).
       # This default can be overridden in the index settings dynamically by setting `index.write.wait_for_active_shards`.
-      # To alter this behavior per operation, use the `wait_for_active_shards request` parameter.
+      # To alter this behavior per operation, use the `wait_for_active_shards request` parameter (this parameter is not available in Elasticsearch Serverless).
       # Valid values are all or any positive integer up to the total number of configured copies per shard in the index (which is `number_of_replicas`+1).
       # Specifying a negative value or a number greater than the number of shard copies will throw an error.
       # For example, suppose you have a cluster of three nodes, A, B, and C and you create an index index with the number of replicas set to 3 (resulting in 4 shard copies, one more copy than there are nodes).
@@ -130,6 +130,10 @@ module Elasticsearch
       #  If `wait_for`, it waits for a refresh to make this operation visible to search.
       #  If `false`, it does nothing with refreshes. Server default: false.
       # @option arguments [String, Array<String>] :routing A custom value that is used to route operations to a specific shard.
+      #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+      # @option arguments [String] :_slice The slice identifier used to route the operation to a specific slice.
+      #  Use the special value `_all` to target all slices without restricting to a routing value.
+      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Time] :timeout The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards.This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs.
       #  Some reasons for this might be that the primary shard is currently recovering from a gateway or undergoing relocation.
       #  By default, the operation will wait on the primary shard to become available for at least 1 minute before failing and responding with an error.
