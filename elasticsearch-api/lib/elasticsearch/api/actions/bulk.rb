@@ -103,8 +103,6 @@ module Elasticsearch
       # Each bulk item can include the routing value using the `routing` field.
       # It automatically follows the behavior of the index or delete operation based on the `_routing` mapping.
       # NOTE: Data streams do not support custom routing unless they were created with the `allow_custom_routing` setting enabled in the template.
-      # **Wait for active shards**
-      # When making bulk calls, you can set the `wait_for_active_shards` parameter to require a minimum number of shard copies to be active before starting to process the bulk request.
       # **Refresh**
       # Control when the changes made by this request are visible to search.
       # NOTE: Only the shards that receive the bulk request will be affected by refresh.
@@ -125,6 +123,10 @@ module Elasticsearch
       #  If `false`, do nothing with refreshes.
       #  Valid values: `true`, `false`, `wait_for`. Server default: false.
       # @option arguments [String, Array<String>] :routing A custom value that is used to route operations to a specific shard.
+      #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+      # @option arguments [String] :_slice The slice identifier used to route the operation to a specific slice.
+      #  Use the special value `_all` to target all slices without restricting to a routing value.
+      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Boolean, String, Array<String>] :_source Indicates whether to return the `_source` field (`true` or `false`) or contains a list of fields to return.
       # @option arguments [String, Array<String>] :_source_excludes A comma-separated list of source fields to exclude from the response.
       #  You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter.

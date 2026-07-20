@@ -20,30 +20,20 @@
 # See Elasticsearch::ES_SPECIFICATION_COMMIT for commit hash.
 module Elasticsearch
   module API
-    module Transform
+    module Esql
       module Actions
-        # Get transform stats.
-        # Get usage information for transforms.
+        # Create or update an ES|QL data source.
+        # Creates or replaces a named, type-specific data source configuration that
+        # datasets reference to access external data. Names must be lowercase and
+        # follow index/alias naming rules.
+        # This functionality is experimental and is not ready for production usage. Experimental
+        # features may change or be removed at any time. Elastic will work to fix any issues, but
+        # experimental features are not subject to the support SLA of official GA features. Specific
+        # Support terms apply.
         #
-        # @option arguments [String, Array<String>] :transform_id Identifier for the transform. It can be a transform identifier or a
-        #  wildcard expression. You can get information for all transforms by using
-        #  `_all`, by specifying `*` as the `<transform_id>`, or by omitting the
-        #  `<transform_id>`. (*Required*)
-        # @option arguments [Boolean] :allow_no_match Specifies what to do when the request:
-        #  - Contains wildcard expressions and there are no transforms that match.
-        #  - Contains the _all string or no identifiers and there are no matches.
-        #  - Contains wildcard expressions and there are only partial matches.
-        #  If this parameter is false, the request returns a 404 status code when
-        #  there are no matches or only partial matches. Server default: true.
-        # @option arguments [Boolean] :basic If true, the response includes `id`, `state`, `node`, `stats`, `health`,
-        #  and basic `checkpointing` information (the last and next checkpoint
-        #  numbers, and the next checkpoint's `position` and `progress`). Skips
-        #  statistics that require heavy computations to calculate:
-        #  `operations_behind`, `changes_last_detected_at`, `last_search_time`, and
-        #  the checkpoint timestamps.
-        # @option arguments [Integer] :from Skips the specified number of transforms. Server default: 0.
-        # @option arguments [Integer] :size Specifies the maximum number of transforms to obtain. Server default: 100.
-        # @option arguments [Time] :timeout Controls the time to wait for the stats Server default: 30s.
+        # @option arguments [String] :name The data source name to create or update. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
+        # @option arguments [Time] :timeout The time to wait for the request to be completed. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
@@ -56,28 +46,30 @@ module Elasticsearch
         # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-get-transform-stats
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch#TODO
         #
-        def get_transform_stats(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'transform.get_transform_stats' }
+        def put_data_source(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'esql.put_data_source' }
 
-          defined_params = [:transform_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body = arguments.delete(:body)
 
-          _transform_id = arguments.delete(:transform_id)
+          _name = arguments.delete(:name)
 
-          method = Elasticsearch::API::HTTP_GET
-          path   = "_transform/#{Utils.listify(_transform_id)}/_stats"
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_query/data_source/#{Utils.listify(_name)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
