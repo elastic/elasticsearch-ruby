@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Esql
       module Actions
-        # Get one or more ES|QL data sources.
-        # Returns the requested data sources. A concrete-name miss returns `404`; a
-        # wildcard pattern or list-all with no match returns `200` with an empty
-        # array.
-        # This functionality is experimental and is not ready for production usage. Experimental
-        # features may change or be removed at any time. Elastic will work to fix any issues, but
-        # experimental features are not subject to the support SLA of official GA features. Specific
-        # Support terms apply.
+        # Get ES|QL data sources.
+        # Returns one or more data sources used in ES|QL data federation.
+        # A concrete-name miss returns `404`; a wildcard pattern or list-all request with no match
+        # returns `200` with an empty array.
+        # This functionality is in technical preview and is ready for evaluation. Use with
+        # caution in production; it is not recomme  nded for mission-critical workloads. Elastic
+        # will work to fix any issues, but features in technical preview are not subject to the
+        # support SLA of official GA features. Specific Support terms apply.
         #
         # @option arguments [String, Array<String>] :name A comma-separated list of data source names or wildcard patterns. Omit to return all data sources.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
@@ -46,7 +46,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch#TODO
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-get-data-source
         #
         def get_data_source(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.get_data_source' }

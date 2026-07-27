@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Esql
       module Actions
-        # Create or replace an ES|QL dataset.
-        # Creates or replaces a dataset that references a data source. Dataset
-        # names participate in the index namespace and must follow index/alias naming
-        # rules. Returns `404` if the referenced data source does not exist.
-        # This functionality is experimental and is not ready for production usage. Experimental
-        # features may change or be removed at any time. Elastic will work to fix any issues, but
-        # experimental features are not subject to the support SLA of official GA features. Specific
-        # Support terms apply.
+        # Create or update an ES|QL dataset.
+        # Creates or replaces a dataset that references a data source in ES|QL data federation.
+        # Dataset names participate in the index namespace and must follow index or alias naming rules.
+        # Returns `404` if the referenced data source does not exist.
+        # This functionality is in technical preview and is ready for evaluation. Use with
+        # caution in production; it is not recomme  nded for mission-critical workloads. Elastic
+        # will work to fix any issues, but features in technical preview are not subject to the
+        # support SLA of official GA features. Specific Support terms apply.
         #
         # @option arguments [String] :name The dataset name to create or update. (*Required*)
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
@@ -48,7 +48,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation#TODO
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-put-dataset
         #
         def put_dataset(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.put_dataset' }
