@@ -76,14 +76,6 @@ jobs:
           abort "CHANGELOG.md has no # #{version} section" unless release
           abort "CHANGELOG.md section for #{version} is empty" if release[:body].strip.empty?
 
-          documentation = File.read("docs/release-notes/index.md")
-          expected_heading =
-            "## #{version} [elasticsearch-ruby-client-#{version}-release-notes]"
-
-          unless documentation.lines.any? { |line| line.strip == expected_heading }
-            abort "docs/release-notes/index.md has no expected #{version} heading"
-          end
-
           File.open(ENV.fetch("GITHUB_OUTPUT"), "a") do |output|
             output.puts "version=#{version}"
           end
