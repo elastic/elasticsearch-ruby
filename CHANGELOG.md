@@ -1,5 +1,41 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.5.0
+
+## Gem
+
+* Tested versions of Ruby for 9.5.0:
+  * Ruby MRI: `3.3`, `3.4`, `4.0`
+  * JRuby `9.3`, `9.4`, `10.0`
+
+## Elasticsearch API
+
+### API Updates
+
+* `bulk`, `count`, `delete`, `delete_by_query`, `explain`, `get`, `index`, `indices.validate_query`, `mget`, `msearch`, `mtermvectors`, `search`, `search_shards`, `termvectors`, `update`, `update_by_query`: New Parameter `:_slice`. Routes requests to a specific index slice. Use `_all` to target all slices.
+* `cancel_reindex`, `get_reindex`, `list_reindex`: Promoted from Technical Preview to stable and no longer behind the `reindex_management_api` feature flag.
+* `count`: New Parameter `:stats`. Specifies request tags for logging and statistical purposes.
+* `esql.delete_view`, `esql.get_view`, `esql.put_view`: No longer behind the `esql_views` feature flag. These APIs remain in Technical Preview.
+* `indices.validate_query`: New Parameter `:routing`. Specifies a custom value used to route operations to a shard.
+* `inference.update`: New Parameter `:timeout`. Specifies how long to wait for the inference endpoint update.
+* `search`: Parameter `:stats` now accepts either a string or an array of strings.
+* `security.get_role`: New Parameter `:include_implicit`. Includes implicitly granted privileges in the response.
+* `snapshot.repository_analyze`: New Parameter `:check_overwrite_protection`. Controls whether to run the overwrite protection check.
+* `synonyms.get_synonym`: New Parameter `:search_after`. Uses a synonym rule ID as the pagination cursor.
+* `synonyms.put_synonym`: New Parameter `:append`. Appends rules to an existing synonyms set instead of replacing the complete set.
+* `transform.get_transform_stats`: New Parameter `:basic`. Returns basic transform statistics while skipping expensive checkpoint calculations.
+* `transform.schedule_now_transform`: New Parameter `:defer`. Defers scheduling by the transform's configured synchronization delay.
+
+### New APIs
+
+* `inference.delete_region_policy` - Delete the inference region policy.
+* `inference.get_region_policy` - Get the inference region policy.
+* `inference.put_region_policy` - Create or update the inference region policy.
+
+Available only in Stack, in Technical Preview:
+
+* `encryption.reset` - Reset the project encryption key. Requires the `:accept_data_loss` parameter.
+
 # 9.4.3
 
 * Fixes header conflict when using Elasticsearch Serverless. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/2984)
