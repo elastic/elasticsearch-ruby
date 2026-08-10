@@ -27,6 +27,7 @@ module Elasticsearch
         # @option arguments [String] :index The name of the index to explain
         # @option arguments [Boolean] :only_managed filters the indices included in the response to ones managed by ILM
         # @option arguments [Boolean] :only_errors filters the indices included in the response to ones in an ILM error state, implies only_managed
+        # @option arguments [List] :expand_wildcards Whether wildcard expressions should get expanded to open, closed, or hidden indices (default: open) (options: open, closed, hidden, none, all)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
