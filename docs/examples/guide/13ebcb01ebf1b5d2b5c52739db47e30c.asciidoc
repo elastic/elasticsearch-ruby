@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.indices.recovery(
-  index: 'index1,index2',
-  human: true
-)
-puts response
-----

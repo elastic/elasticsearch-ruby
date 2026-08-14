@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.xpack.info(
-  categories: 'build,features'
-)
-puts response
-----

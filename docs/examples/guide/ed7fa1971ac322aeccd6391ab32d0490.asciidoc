@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.cat.nodes(
-  v: true,
-  h: 'name,master,node.role,disk.used_percent,disk.used,disk.avail,disk.total'
-)
-puts response
-----

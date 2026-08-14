@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.watcher.stats(
-  metric: 'current_watches'
-)
-puts response
-----

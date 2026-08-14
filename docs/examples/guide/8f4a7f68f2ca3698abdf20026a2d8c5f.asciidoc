@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.tasks.list(
-  actions: '*search',
-  detailed: true
-)
-puts response
-----

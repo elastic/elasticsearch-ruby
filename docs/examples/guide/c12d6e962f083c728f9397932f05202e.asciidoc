@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.connector.sync_job_list(
-  connector_id: 'connector-1'
-)
-puts response
-----

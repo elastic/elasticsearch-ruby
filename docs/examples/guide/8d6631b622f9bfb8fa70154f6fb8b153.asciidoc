@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.search(
-  index: 'kibana_sample_data_ecommerce',
-  q: 'kimchy'
-)
-puts response
-----

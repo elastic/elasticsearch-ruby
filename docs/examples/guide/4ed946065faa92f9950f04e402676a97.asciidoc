@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.xpack.info(
-  human: false
-)
-puts response
-----

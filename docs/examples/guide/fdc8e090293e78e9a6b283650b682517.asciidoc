@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.indices.open(
-  index: 'my-data-stream'
-)
-puts response
-----

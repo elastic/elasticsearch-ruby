@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.cluster.state(
-  metric: 'metadata,routing_table',
-  index: 'foo,bar'
-)
-puts response
-----

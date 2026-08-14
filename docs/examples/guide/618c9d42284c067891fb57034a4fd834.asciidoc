@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.rollup.start_job(
-  id: 'sensor'
-)
-puts response
-----

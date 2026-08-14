@@ -1,5 +1,0 @@
-[source, ruby]
-----
-response = client.ilm.get_status
-puts response
-----

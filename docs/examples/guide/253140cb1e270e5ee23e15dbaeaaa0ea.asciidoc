@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.indices.data_streams_stats(
-  human: true
-)
-puts response
-----

@@ -1,5 +1,0 @@
-[source, ruby]
-----
-response = client.cluster.get_component_template
-puts response
-----

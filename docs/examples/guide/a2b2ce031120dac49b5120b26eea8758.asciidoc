@@ -1,9 +1,0 @@
-[source, ruby]
-----
-response = client.cat.indices(
-  index: 'my-index-*',
-  v: true,
-  s: 'index'
-)
-puts response
-----

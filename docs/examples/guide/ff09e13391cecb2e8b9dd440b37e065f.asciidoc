@@ -1,9 +1,0 @@
-[source, ruby]
-----
-response = client.search(
-  index: 'my-new-index-000001',
-  size: 0,
-  filter_path: 'hits.total'
-)
-puts response
-----

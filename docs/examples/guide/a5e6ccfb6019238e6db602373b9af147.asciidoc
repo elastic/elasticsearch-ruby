@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.indices.put_data_lifecycle(
-  name: 'my-data-stream',
-  body: {}
-)
-puts response
-----
