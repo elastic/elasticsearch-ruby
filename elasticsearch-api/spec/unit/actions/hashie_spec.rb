@@ -80,7 +80,7 @@ describe 'Hashie' do
   end
 
   let(:response) do
-    Hashie::Mash.new(MultiJson.load(json))
+    Hashie::Mash.new(JSON.load(json))
   end
 
   it 'wraps the response' do

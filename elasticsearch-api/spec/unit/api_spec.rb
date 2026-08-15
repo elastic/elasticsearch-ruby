@@ -24,7 +24,7 @@ describe Elasticsearch::API do
     end
 
     it 'has a default serializer' do
-      expect(Elasticsearch::API.serializer).to eq(MultiJson)
+      expect(Elasticsearch::API.serializer).to eq(JSON)
     end
 
     context 'when settings are changed' do

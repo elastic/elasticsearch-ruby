@@ -23,5 +23,5 @@ else
 end
 gem 'elasticsearch-api', path: File.expand_path('../../elasticsearch-api', __dir__)
 gem 'elasticsearch', path: File.expand_path('../../elasticsearch', __dir__)
-gem 'multi_json'
+gem 'json'
 gem 'rake'
