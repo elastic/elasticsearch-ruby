@@ -1,9 +1,0 @@
-[source, ruby]
-----
-response = client.rollup.stop_job(
-  id: 'sensor',
-  wait_for_completion: true,
-  timeout: '10s'
-)
-puts response
-----

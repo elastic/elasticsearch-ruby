@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.cat.nodes(
-  v: true
-)
-puts response
-----

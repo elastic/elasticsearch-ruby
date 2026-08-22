@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.transform.start_transform(
-  transform_id: 'suspicious_client_ips'
-)
-puts response
-----

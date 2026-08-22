@@ -1,9 +1,0 @@
-[source, ruby]
-----
-response = client.nodes.reload_secure_settings(
-  body: {
-    secure_settings_password: 'keystore-password'
-  }
-)
-puts response
-----

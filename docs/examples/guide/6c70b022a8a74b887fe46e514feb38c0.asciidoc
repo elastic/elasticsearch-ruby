@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.indices.recovery(
-  index: 'my-index-000001'
-)
-puts response
-----

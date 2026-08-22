@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.rollup.get_jobs(
-  id: 'sensor'
-)
-puts response
-----

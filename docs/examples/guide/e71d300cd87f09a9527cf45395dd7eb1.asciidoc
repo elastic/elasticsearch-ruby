@@ -1,5 +1,0 @@
-[source, ruby]
-----
-response = client.slm.execute_retention
-puts response
-----

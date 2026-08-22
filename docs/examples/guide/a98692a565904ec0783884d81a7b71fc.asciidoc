@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.cat.health(
-  v: true
-)
-puts response
-----

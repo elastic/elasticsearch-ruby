@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.ccr.pause_follow(
-  index: 'follower_index'
-)
-puts response
-----

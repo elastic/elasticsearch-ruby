@@ -1,5 +1,0 @@
-[source, ruby]
-----
-response = client.get_script_languages
-puts response
-----

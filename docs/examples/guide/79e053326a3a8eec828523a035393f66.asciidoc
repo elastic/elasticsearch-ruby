@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.delete(
-  index: '.ds-my-data-stream-2099.03.08-000003',
-  id: 'bfspvnIBr7VVZlfp2lqX'
-)
-puts response
-----

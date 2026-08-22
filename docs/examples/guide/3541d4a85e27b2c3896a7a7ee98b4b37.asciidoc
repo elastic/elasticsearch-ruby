@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.health_report(
-  verbose: false
-)
-puts response
-----

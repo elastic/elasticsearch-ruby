@@ -1,5 +1,0 @@
-[source, ruby]
-----
-response = client.indices.get_index_template
-puts response
-----

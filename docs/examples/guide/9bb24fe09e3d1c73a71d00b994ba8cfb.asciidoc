@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.cat.shards(
-  index: 'my-index-*'
-)
-puts response
-----

@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.indices.shard_stores(
-  index: 'test1,test2'
-)
-puts response
-----

@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.nodes.hot_threads(
-  node_id: 'my-node,my-other-node'
-)
-puts response
-----

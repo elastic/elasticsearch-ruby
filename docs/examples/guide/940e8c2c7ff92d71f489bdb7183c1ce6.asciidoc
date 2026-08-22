@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.indices.segments(
-  index: 'test'
-)
-puts response
-----

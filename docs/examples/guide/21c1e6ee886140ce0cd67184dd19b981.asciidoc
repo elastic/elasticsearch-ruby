@@ -1,5 +1,0 @@
-[source, ruby]
-----
-response = client.dangling_indices.list_dangling_indices
-puts response
-----

@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.cluster.get_settings(
-  include_defaults: true,
-  filter_path: '*.cluster.routing.allocation.disk.watermark.high*'
-)
-puts response
-----
