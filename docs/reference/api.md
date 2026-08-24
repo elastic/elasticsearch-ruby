@@ -103,7 +103,7 @@ When you want to mix the library with your own client, it must conform to the fo
 A simple client could look like this (*with a dependency on `active_support` to parse the query params*):
 
 ```rb
-require 'multi_json'
+require 'json'
 require 'faraday'
 require 'elasticsearch/api'
 
@@ -118,7 +118,7 @@ class MySimpleClient
     CONNECTION.run_request \
       method.downcase.to_sym,
       path_with_params(path, params),
-      ( body ? MultiJson.dump(body): nil ),
+      ( body ? JSON.dump(body): nil ),
       {'Content-Type' => 'application/json'}
   end
 
@@ -201,7 +201,7 @@ mash.hits.hits.first._source.title
 
 ### Using a Custom JSON Serializer [_using_a_custom_json_serializer]
 
-The library uses the [MultiJson](https://rubygems.org/gems/multi_json/) gem by default but allows you to set a custom JSON library, provided it uses the standard `load/dump` interface:
+The library uses the standard `JSON` library by default but allows you to set a custom JSON library, provided it uses the standard `load/dump` interface:
 
 ```rb
 Elasticsearch::API.settings[:serializer] = JrJackson::Json

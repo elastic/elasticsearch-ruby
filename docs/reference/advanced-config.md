@@ -279,7 +279,7 @@ Elasticsearch::Client.new hosts: ['x1.search.org', 'x2.search.org'], selector_cl
 
 ## Serializer Implementations [serializer-implementations]
 
-By default, the [MultiJSON](https://rubygems.org/gems/multi_json) library is used as the serializer implementation, and it picks up the "right" adapter based on gems available.
+By default, the standard `JSON` library is used as the serializer implementation.
 
 The serialization component is pluggable, though, so you can write your own by including the `Elastic::Transport::Transport::Serializer::Base` module, implementing the required contract, and passing it to the client as the `serializer_class` or `serializer` parameter.
 
