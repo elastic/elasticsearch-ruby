@@ -49,7 +49,7 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           _index = arguments.delete(:index)
 
