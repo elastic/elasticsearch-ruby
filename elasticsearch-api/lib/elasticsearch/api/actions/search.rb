@@ -193,11 +193,11 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path   = if _index
-                   "#{Utils.listify(_index)}/_search"
-                 else
-                   '_search'
-                 end
+        path = if _index
+                 "#{Utils.listify(_index)}/_search"
+               else
+                 '_search'
+               end
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
