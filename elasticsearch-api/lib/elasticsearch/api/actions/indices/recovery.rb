@@ -43,7 +43,7 @@ module Elasticsearch
         # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and aliases used to limit the request.
         #  Supports wildcards (`*`).
         #  To target all data streams and indices, omit this parameter or use `*` or `_all`.
-        # @option arguments [Boolean] :active_only If `true`, the response only includes ongoing shard recoveries.
+        # @option arguments [Boolean] :active_only If `true`, the response only includes shard recoveries that have not yet completed (excludes `DONE` stage).
         # @option arguments [Boolean] :detailed If `true`, the response includes detailed information about shard recoveries.
         # @option arguments [Boolean] :allow_no_indices A setting that does two separate checks on the index expression.
         #  If `false`, the request returns an error (1) if any wildcard expression
