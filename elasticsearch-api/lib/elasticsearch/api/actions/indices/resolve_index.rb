@@ -75,7 +75,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = "_resolve/index/#{Utils.listify(_name)}"
+          path = "_resolve/index/#{Utils.listify(_name)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
