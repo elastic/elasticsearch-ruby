@@ -80,11 +80,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = if _job_id && _timestamp
-                     "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/results/buckets/#{Utils.listify(_timestamp)}"
-                   else
-                     "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/results/buckets"
-                   end
+          path = if _job_id && _timestamp
+                   "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/results/buckets/#{Utils.listify(_timestamp)}"
+                 else
+                   "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/results/buckets"
+                 end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
