@@ -109,11 +109,11 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path   = if _index
-                   "#{Utils.listify(_index)}/_count"
-                 else
-                   '_count'
-                 end
+        path = if _index
+                 "#{Utils.listify(_index)}/_count"
+               else
+                 '_count'
+               end
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

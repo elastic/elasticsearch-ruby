@@ -20,19 +20,22 @@
 # See Elasticsearch::ES_SPECIFICATION_COMMIT for commit hash.
 module Elasticsearch
   module API
-    module MachineLearning
+    module Security
       module Actions
-        # Explain data frame analytics config.
-        # This API provides explanations for a data frame analytics config that either
-        # exists already or one that has not been created yet. The following
-        # explanations are provided:
-        # * which fields are included or not in the analysis and why,
-        # * how much memory is estimated to be required. The estimate can be used when deciding the appropriate value for model_memory_limit setting later on.
-        # If you have object fields or fields that are excluded via source filtering, they are not included in the explanation.
+        # Create user-managed service accounts.
+        # Create a service account in a namespace of your own, or replace one that already exists.
+        # A replacement is not a partial update: every write applies the defaults, so an account that was disabled and is then written again without `enabled` comes back enabled.
+        # Creating an account whose name still has leftover service tokens is rejected.
+        # Delete those tokens first.
+        # NOTE: The `elastic` namespace is reserved for the built-in service accounts that ship with Elasticsearch.
+        # The `manage_service_account` privilege does not authorize this API.
         #
-        # @option arguments [String] :id Identifier for the data frame analytics job. This identifier can contain
-        #  lowercase alphanumeric characters (a-z and 0-9), hyphens, and
-        #  underscores. It must start and end with alphanumeric characters.
+        # @option arguments [String] :namespace The namespace, which is a top-level grouping of service accounts.
+        #  It must start with a letter or digit and can contain only letters, digits, hyphens, and underscores, up to a maximum of 128 characters.
+        #  It cannot be `elastic`, which is reserved for built-in service accounts. (*Required*)
+        # @option arguments [String] :service The service name.
+        #  It must start with a letter or digit and can contain only letters, digits, hyphens, and underscores, up to a maximum of 128 characters. (*Required*)
+        # @option arguments [String] :refresh If `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `true` then refresh the affected shards to make this operation visible to search, if `false` then do nothing with refreshes. Server default: wait_for.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
@@ -47,34 +50,31 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-explain-data-frame-analytics
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-put-user-managed-service-account
         #
-        def explain_data_frame_analytics(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'ml.explain_data_frame_analytics' }
+        def put_user_managed_service_account(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'security.put_user_managed_service_account' }
 
-          defined_params = [:id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:namespace, :service].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
+
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'namespace' missing" unless arguments[:namespace]
+          raise ArgumentError, "Required argument 'service' missing" unless arguments[:service]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
 
-          _id = arguments.delete(:id)
+          _namespace = arguments.delete(:namespace)
 
-          method = if body
-                     Elasticsearch::API::HTTP_POST
-                   else
-                     Elasticsearch::API::HTTP_GET
-                   end
+          _service = arguments.delete(:service)
 
-          path = if _id
-                   "_ml/data_frame/analytics/#{Utils.listify(_id)}/_explain"
-                 else
-                   '_ml/data_frame/analytics/_explain'
-                 end
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_security/service/#{Utils.listify(_namespace)}/#{Utils.listify(_service)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

@@ -20,15 +20,31 @@
 # See Elasticsearch::ES_SPECIFICATION_COMMIT for commit hash.
 module Elasticsearch
   module API
-    module Security
+    module Inference
       module Actions
-        # Find users with a query.
-        # Get information for users in a paginated manner.
-        # You can optionally filter the results with a query.
-        # NOTE: As opposed to the get user API, built-in users are excluded from the result.
-        # This API is only for native users.
+        # Perform non-streaming chat completion inference on the service.
+        # The chat completion inference API enables rich responses for chat completion tasks.
+        # It only works with the `chat_completion` task type.
+        # NOTE: The `chat_completion` task type supports both streaming and non-streaming.
+        # The Chat completion inference API provides more comprehensive customization options through more fields and function calling support.
+        # To determine whether a given inference service supports this task type, please see the page for that service.
+        # These services support non-streaming chat completion inference:
+        # - AI21
+        # - Azure OpenAI
+        # - Deepseek
+        # - Elastic
+        # - FireworksAI
+        # - Groq
+        # - Huggingface
+        # - IBMWatsonX
+        # - Llama
+        # - Mistral
+        # - NVIDIA
+        # - OpenAI
+        # - OpenShiftAI
         #
-        # @option arguments [Boolean] :with_profile_uid Determines whether to retrieve the user profile UID, if it exists, for the users.
+        # @option arguments [String] :inference_id The inference Id (*Required*)
+        # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference request to complete. Server default: 120s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
@@ -41,25 +57,30 @@ module Elasticsearch
         # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body request body
+        # @option arguments [Hash] :body chat_completion_request
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-query-user
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-non-streaming-chat-completion
         #
-        def query_user(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'security.query_user' }
+        def non_streaming_chat_completion(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.non_streaming_chat_completion' }
+
+          defined_params = [:inference_id].each_with_object({}) do |variable, set_variables|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'inference_id' missing" unless arguments[:inference_id]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
 
-          method = if body
-                     Elasticsearch::API::HTTP_POST
-                   else
-                     Elasticsearch::API::HTTP_GET
-                   end
+          _inference_id = arguments.delete(:inference_id)
 
-          path = '_security/_query/user'
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_inference/chat_completion/#{Utils.listify(_inference_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

@@ -20,15 +20,19 @@
 # See Elasticsearch::ES_SPECIFICATION_COMMIT for commit hash.
 module Elasticsearch
   module API
-    module Security
+    module Esql
       module Actions
-        # Find users with a query.
-        # Get information for users in a paginated manner.
-        # You can optionally filter the results with a query.
-        # NOTE: As opposed to the get user API, built-in users are excluded from the result.
-        # This API is only for native users.
+        # Test an ES|QL data source connection.
+        # Tests whether the supplied data source configuration can establish a live connection.
+        # The data source does not need to exist in cluster state: this endpoint is intended for
+        # validating a new configuration before saving it.
+        # The request body accepts the same `type` and `settings` fields as the create or update data
+        # source API.
+        # This functionality is experimental and is not ready for production usage. Experimental
+        # features may change or be removed at any time. Elastic will work to fix any issues, but
+        # experimental features are not subject to the support SLA of official GA features. Specific
+        # Support terms apply.
         #
-        # @option arguments [Boolean] :with_profile_uid Determines whether to retrieve the user profile UID, if it exists, for the users.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
@@ -43,23 +47,20 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-query-user
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-data-source-test-connection
         #
-        def query_user(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'security.query_user' }
+        def test_data_source_connection(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'esql.test_data_source_connection' }
+
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
 
-          method = if body
-                     Elasticsearch::API::HTTP_POST
-                   else
-                     Elasticsearch::API::HTTP_GET
-                   end
-
-          path = '_security/_query/user'
+          method = Elasticsearch::API::HTTP_POST
+          path   = '_query/data_source/_test'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
