@@ -74,11 +74,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = if _job_id && _category_id
-                     "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/results/categories/#{Utils.listify(_category_id)}"
-                   else
-                     "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/results/categories"
-                   end
+          path = if _job_id && _category_id
+                   "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/results/categories/#{Utils.listify(_category_id)}"
+                 else
+                   "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/results/categories"
+                 end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
