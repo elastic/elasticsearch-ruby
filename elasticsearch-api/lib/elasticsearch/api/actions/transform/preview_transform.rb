@@ -69,11 +69,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = if _transform_id
-                     "_transform/#{Utils.listify(_transform_id)}/_preview"
-                   else
-                     '_transform/_preview'
-                   end
+          path = if _transform_id
+                   "_transform/#{Utils.listify(_transform_id)}/_preview"
+                 else
+                   '_transform/_preview'
+                 end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
