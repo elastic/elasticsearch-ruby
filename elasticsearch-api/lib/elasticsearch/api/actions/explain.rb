@@ -97,7 +97,7 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path   = "#{Utils.listify(_index)}/_explain/#{Utils.listify(_id)}"
+        path = "#{Utils.listify(_index)}/_explain/#{Utils.listify(_id)}"
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

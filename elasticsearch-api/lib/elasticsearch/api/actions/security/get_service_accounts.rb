@@ -24,13 +24,17 @@ module Elasticsearch
       module Actions
         # Get service accounts.
         # Get a list of service accounts that match the provided path parameters.
-        # NOTE: Currently, only the `elastic/fleet-server` service account is available.
+        # Built-in service accounts ship with Elasticsearch in the `elastic` namespace; user-managed service accounts are created with the put user-managed service account API.
+        # NOTE: When `type` is omitted, a request without a namespace reports built-in accounts only, which preserves the response of a whole-cluster listing.
+        # A request scoped to a namespace reports both kinds, so an account you created is found without naming its kind.
         #
         # @option arguments [String] :namespace The name of the namespace.
         #  Omit this parameter to retrieve information about all service accounts.
         #  If you omit this parameter, you must also omit the `service` parameter.
         # @option arguments [String] :service The service name.
         #  Omit this parameter to retrieve information about all service accounts that belong to the specified `namespace`.
+        # @option arguments [String, Array<String>] :type A comma-separated list of the kinds of service account to return.
+        #  If it is omitted, it defaults to `built_in` when no namespace is given and to `built_in,user_managed` otherwise.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

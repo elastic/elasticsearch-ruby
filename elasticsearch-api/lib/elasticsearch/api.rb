@@ -57,6 +57,7 @@ module Elasticsearch
                       :cluster,
                       :connector,
                       :dangling_indices,
+                      :data_recovery,
                       :encryption,
                       :enrich,
                       :eql,

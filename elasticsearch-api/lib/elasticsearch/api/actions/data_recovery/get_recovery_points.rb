@@ -20,15 +20,23 @@
 # See Elasticsearch::ES_SPECIFICATION_COMMIT for commit hash.
 module Elasticsearch
   module API
-    module Security
+    module DataRecovery
       module Actions
-        # Find users with a query.
-        # Get information for users in a paginated manner.
-        # You can optionally filter the results with a query.
-        # NOTE: As opposed to the get user API, built-in users are excluded from the result.
-        # This API is only for native users.
+        # Get recovery points.
+        # Get recovery points from the platform-managed data recovery repository.
+        # This API is intended for internal operator use.
+        # Recovery points are returned in descending order by end time. Repository,
+        # snapshot, and policy identifiers are not exposed.
+        # This functionality is subject to potential breaking changes within a
+        # minor version, meaning that your referencing code may break when this
+        # library is upgraded.
         #
-        # @option arguments [Boolean] :with_profile_uid Determines whether to retrieve the user profile UID, if it exists, for the users.
+        # @option arguments [String, Time] :end_time_before Return only recovery points whose end time is earlier than this value.
+        #  The boundary is exclusive and can be set to the last recovery point's
+        #  end time to retrieve the next page.
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Integer] :size The maximum number of recovery points to return. The value must be between 1 and 1000. Server default: 100.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
@@ -41,25 +49,17 @@ module Elasticsearch
         # @option arguments [Boolean] :pretty If set to `true` the returned JSON will be "pretty-formatted". Only use
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-query-user
-        #
-        def query_user(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'security.query_user' }
+        def get_recovery_points(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'data_recovery.get_recovery_points' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
+          body = nil
 
-          method = if body
-                     Elasticsearch::API::HTTP_POST
-                   else
-                     Elasticsearch::API::HTTP_GET
-                   end
-
-          path = '_security/_query/user'
+          method = Elasticsearch::API::HTTP_GET
+          path   = '_data_recovery/points'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
