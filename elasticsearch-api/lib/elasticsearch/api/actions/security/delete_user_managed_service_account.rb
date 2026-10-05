@@ -22,16 +22,22 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Delete service account tokens.
-        # Delete service account tokens for a service in a specified namespace.
-        # This route serves both kinds of service account, but the privileges differ: `manage_service_account` authorizes tokens of built-in accounts in the `elastic` namespace only, and tokens of a user-managed account require `manage_security`.
-        # IMPORTANT: On Serverless, non-operator users can delete tokens for only `elastic/fleet-server` and `elastic/fleet-server-remote`.
-        # Deleting tokens for any other service account requires operator privileges.
+        # Delete user-managed service accounts.
+        # Delete a service account from a namespace of your own.
+        # Deleting an account that still has service tokens is rejected unless `force` is `true`.
+        # A forced delete leaves the tokens behind: they cannot authenticate while no account of that name exists, and recreating the account is rejected until they are deleted.
+        # NOTE: The `elastic` namespace is reserved for the built-in service accounts that ship with Elasticsearch.
+        # A name that no user-managed service account could have is rejected rather than reported as not found.
+        # The `manage_service_account` privilege does not authorize this API.
         #
-        # @option arguments [String] :namespace The namespace, which is a top-level grouping of service accounts. (*Required*)
-        # @option arguments [String] :service The service name. (*Required*)
-        # @option arguments [String] :name The name of the service account token. (*Required*)
-        # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+        # @option arguments [String] :namespace The namespace, which is a top-level grouping of service accounts.
+        #  It must start with a letter or digit and can contain only letters, digits, hyphens, and underscores, up to a maximum of 128 characters.
+        #  It cannot be `elastic`, which is reserved for built-in service accounts. (*Required*)
+        # @option arguments [String] :service The service name.
+        #  It must start with a letter or digit and can contain only letters, digits, hyphens, and underscores, up to a maximum of 128 characters. (*Required*)
+        # @option arguments [String] :refresh If `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `true` then refresh the affected shards to make this operation visible to search, if `false` then do nothing with refreshes. Server default: wait_for.
+        # @option arguments [Boolean] :force If `false` (the default), deleting a service account that still has service tokens is rejected.
+        #  If `true`, the account is deleted and its tokens are left in place.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
@@ -45,19 +51,18 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-service-token
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-user-managed-service-account
         #
-        def delete_service_token(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'security.delete_service_token' }
+        def delete_user_managed_service_account(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'security.delete_user_managed_service_account' }
 
-          defined_params = [:namespace, :service, :name].each_with_object({}) do |variable, set_variables|
+          defined_params = [:namespace, :service].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           raise ArgumentError, "Required argument 'namespace' missing" unless arguments[:namespace]
           raise ArgumentError, "Required argument 'service' missing" unless arguments[:service]
-          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -68,10 +73,8 @@ module Elasticsearch
 
           _service = arguments.delete(:service)
 
-          _name = arguments.delete(:name)
-
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_security/service/#{Utils.listify(_namespace)}/#{Utils.listify(_service)}/credential/token/#{Utils.listify(_name)}"
+          path   = "_security/service/#{Utils.listify(_namespace)}/#{Utils.listify(_service)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
