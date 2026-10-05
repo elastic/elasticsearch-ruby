@@ -59,7 +59,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = '_security/_query/user'
+          path = '_security/_query/user'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
