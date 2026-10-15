@@ -1,0 +1,261 @@
+name: Release gems
+
+on:
+  push:
+    tags:
+      - "v*"
+
+concurrency:
+  group: rubygems-release
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    outputs:
+      version: ${{ steps.validate.outputs.version }}
+
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1
+        with:
+          ruby-version: "4.0"
+
+      - name: Validate versions and release notes
+        id: validate
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          ruby <<'RUBY'
+          require "rubygems"
+
+          tag = ENV.fetch("TAG")
+          abort "Release tag must match vX.Y.Z, got #{tag}" unless tag.match?(/\Av\d+\.\d+\.\d+\z/)
+
+          version = tag.delete_prefix("v")
+
+          require File.expand_path("elasticsearch/lib/elasticsearch/version", Dir.pwd)
+          require File.expand_path("elasticsearch-api/lib/elasticsearch/api/version", Dir.pwd)
+
+          versions = {
+            "elasticsearch" => Elasticsearch::VERSION,
+            "elasticsearch-api" => Elasticsearch::API::VERSION
+          }
+
+          versions.each do |name, actual|
+            abort "#{name} version is #{actual}, expected #{version}" unless actual == version
+          end
+
+          specification = Gem::Specification.load("elasticsearch/elasticsearch.gemspec")
+          abort "Could not load elasticsearch.gemspec" unless specification
+
+          dependency = specification.runtime_dependencies.find do |candidate|
+            candidate.name == "elasticsearch-api"
+          end
+
+          abort "elasticsearch-api runtime dependency is missing" unless dependency
+
+          expected_requirement = Gem::Requirement.new(version)
+          unless dependency.requirement == expected_requirement
+            abort "elasticsearch-api dependency is #{dependency.requirement}, expected #{expected_requirement}"
+          end
+
+          changelog = File.read("CHANGELOG.md")
+          release = changelog.match(
+            /^# #{Regexp.escape(version)}\s*$\n(?<body>.*?)(?=^# \d|\z)/m
+          )
+
+          abort "CHANGELOG.md has no # #{version} section" unless release
+          abort "CHANGELOG.md section for #{version} is empty" if release[:body].strip.empty?
+
+          File.open(ENV.fetch("GITHUB_OUTPUT"), "a") do |output|
+            output.puts "version=#{version}"
+          end
+
+          puts "Validated release #{version}"
+          RUBY
+
+  publish-api:
+    name: Publish elasticsearch-api
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: release
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1
+        with:
+          ruby-version: "4.0"
+          bundler-cache: true
+          working-directory: elasticsearch-api
+
+      - name: Check whether elasticsearch-api is already published
+        id: published
+        env:
+          GEM_NAME: elasticsearch-api
+          VERSION: ${{ needs.validate.outputs.version }}
+        run: |
+          ruby -rjson -rnet/http -ruri <<'RUBY'
+          name = ENV.fetch("GEM_NAME")
+          version = ENV.fetch("VERSION")
+          uri = URI("https://rubygems.org/api/v1/versions/#{name}.json")
+          response = Net::HTTP.get_response(uri)
+
+          unless response.is_a?(Net::HTTPSuccess)
+            abort "RubyGems returned HTTP #{response.code} while checking #{name}"
+          end
+
+          published = JSON.parse(response.body).any? do |release|
+            release["number"] == version && release["platform"] == "ruby"
+          end
+
+          File.open(ENV.fetch("GITHUB_OUTPUT"), "a") do |output|
+            output.puts "published=#{published}"
+          end
+
+          puts published ? "#{name} #{version} is already published" : "#{name} #{version} is not published"
+          RUBY
+
+      - name: Publish elasticsearch-api
+        if: steps.published.outputs.published != 'true'
+        uses: rubygems/release-gem@052cc82692552de3ef2b81fd670e41d13cba8092 # v1
+        with:
+          working-directory: elasticsearch-api
+
+  publish-client:
+    name: Publish elasticsearch
+    needs:
+      - validate
+      - publish-api
+    runs-on: ubuntu-latest
+    environment: release
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1
+        with:
+          ruby-version: "4.0"
+          bundler-cache: true
+          working-directory: elasticsearch
+
+      - name: Check whether elasticsearch is already published
+        id: published
+        env:
+          GEM_NAME: elasticsearch
+          VERSION: ${{ needs.validate.outputs.version }}
+        run: |
+          ruby -rjson -rnet/http -ruri <<'RUBY'
+          name = ENV.fetch("GEM_NAME")
+          version = ENV.fetch("VERSION")
+          uri = URI("https://rubygems.org/api/v1/versions/#{name}.json")
+          response = Net::HTTP.get_response(uri)
+
+          unless response.is_a?(Net::HTTPSuccess)
+            abort "RubyGems returned HTTP #{response.code} while checking #{name}"
+          end
+
+          published = JSON.parse(response.body).any? do |release|
+            release["number"] == version && release["platform"] == "ruby"
+          end
+
+          File.open(ENV.fetch("GITHUB_OUTPUT"), "a") do |output|
+            output.puts "published=#{published}"
+          end
+
+          puts published ? "#{name} #{version} is already published" : "#{name} #{version} is not published"
+          RUBY
+
+      - name: Publish elasticsearch
+        if: steps.published.outputs.published != 'true'
+        uses: rubygems/release-gem@052cc82692552de3ef2b81fd670e41d13cba8092 # v1
+        with:
+          working-directory: elasticsearch
+
+  github-release:
+    name: Create GitHub Release
+    needs:
+      - validate
+      - publish-api
+      - publish-client
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Extract hand-written release notes
+        env:
+          VERSION: ${{ needs.validate.outputs.version }}
+        run: |
+          ruby <<'RUBY'
+          version = ENV.fetch("VERSION")
+          changelog = File.read("CHANGELOG.md")
+
+          release = changelog.match(
+            /^# #{Regexp.escape(version)}\s*$\n(?<body>.*?)(?=^# \d|\z)/m
+          )
+
+          abort "CHANGELOG.md has no # #{version} section" unless release
+
+          body = release[:body].strip
+          abort "CHANGELOG.md section for #{version} is empty" if body.empty?
+
+          documentation_url =
+            "https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby"
+
+          File.write(
+            "release-notes.md",
+            "#{body}\n\n[Full documentation release notes](#{documentation_url})\n"
+          )
+          RUBY
+
+      - name: Create or publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.validate.outputs.version }}
+        run: |
+          if release_draft="$(gh release view "$GITHUB_REF_NAME" --json isDraft --jq .isDraft 2>/dev/null)"; then
+            if [[ "$release_draft" == "true" ]]; then
+              gh release edit "$GITHUB_REF_NAME" \
+                --verify-tag \
+                --title "Version $VERSION" \
+                --notes-file release-notes.md \
+                --draft=false
+            else
+              echo "GitHub Release $GITHUB_REF_NAME already exists"
+            fi
+          else
+            gh release create "$GITHUB_REF_NAME" \
+              --verify-tag \
+              --title "Version $VERSION" \
+              --notes-file release-notes.md
+          fi

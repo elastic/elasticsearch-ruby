@@ -51,6 +51,11 @@ module Elasticsearch
         # @option arguments [Boolean] :lenient If `true`, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
         # @option arguments [Boolean] :rewrite If `true`, returns a more detailed explanation showing the actual Lucene query that will be executed.
         # @option arguments [String] :q Query in the Lucene query string syntax.
+        # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
+        #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+        # @option arguments [String] :_slice The slice identifier used to route the operation to a specific slice.
+        #  Use the special value `_all` to target all slices without restricting to a routing value.
+        #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

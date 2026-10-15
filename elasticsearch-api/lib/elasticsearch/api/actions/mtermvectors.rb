@@ -43,6 +43,10 @@ module Elasticsearch
       #  It is random by default.
       # @option arguments [Boolean] :realtime If true, the request is real-time as opposed to near-real-time. Server default: true.
       # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
+      #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+      # @option arguments [String] :_slice The slice identifier used to route the operation to a specific slice.
+      #  Use the special value `_all` to target all slices without restricting to a routing value.
+      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Boolean] :term_statistics If true, the response includes term frequency and document frequency.
       # @option arguments [Integer] :version If `true`, returns the document version as part of a hit.
       # @option arguments [String] :version_type The version type.

@@ -41,6 +41,10 @@ module Elasticsearch
       # @option arguments [String] :preference The node or shard the operation should be performed on.
       #  It is random by default.
       # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
+      #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+      # @option arguments [String] :_slice The slice identifier used to route the operation to a specific slice.
+      #  Use the special value `_all` to target all slices without restricting to a routing value.
+      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Boolean, String, Array<String>] :_source `True` or `false` to return the `_source` field or not or a list of fields to return.
       # @option arguments [String, Array<String>] :_source_excludes A comma-separated list of source fields to exclude from the response.
       #  You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter.

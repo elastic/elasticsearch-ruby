@@ -122,6 +122,10 @@ module Elasticsearch
       # @option arguments [Float] :requests_per_second The maximum number of documents to delete per second, across the entire delete-by-query operation (including slices).
       #  It can be either `-1` to turn off throttling or any decimal number like `1.7` or `12` to throttle to that level. Server default: -1.
       # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
+      #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+      # @option arguments [String] :_slice The slice identifier used to route the operation to a specific slice.
+      #  Use the special value `_all` to target all slices without restricting to a routing value.
+      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [String] :q A query in the Lucene query string syntax.
       # @option arguments [Time] :scroll The period to retain the search context for scrolling.
       # @option arguments [Integer] :scroll_size The size of the scroll request that powers the operation. Server default: 1000.
