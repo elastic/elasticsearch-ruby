@@ -56,7 +56,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = '_watcher/_query/watches'
+          path = '_watcher/_query/watches'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
