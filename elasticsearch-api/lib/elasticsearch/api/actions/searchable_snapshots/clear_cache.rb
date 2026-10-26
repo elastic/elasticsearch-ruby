@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module SearchableSnapshots
       module Actions
-        # Clear the cache.
+        # Clear the searchable snapshots shared cache.
         # Clear indices and data streams from the shared cache for partially mounted indices.
         # This functionality is experimental and is not ready for production usage. Experimental
         # features may change or be removed at any time. Elastic will work to fix any issues, but

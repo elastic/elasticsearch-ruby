@@ -24,6 +24,7 @@ module Elasticsearch
       module Actions
         # Delete service account tokens.
         # Delete service account tokens for a service in a specified namespace.
+        # This route serves both kinds of service account, but the privileges differ: `manage_service_account` authorizes tokens of built-in accounts in the `elastic` namespace only, and tokens of a user-managed account require `manage_security`.
         # IMPORTANT: On Serverless, non-operator users can delete tokens for only `elastic/fleet-server` and `elastic/fleet-server-remote`.
         # Deleting tokens for any other service account requires operator privileges.
         #

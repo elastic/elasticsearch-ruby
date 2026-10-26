@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Get component templates.
+        # Get a compact list of component templates.
         # Get information about component templates in a cluster.
         # Component templates are building blocks for constructing index templates that specify index mappings, settings, and aliases.
         # IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console.
