@@ -64,11 +64,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = if _calendar_id
-                     "_ml/calendars/#{Utils.listify(_calendar_id)}"
-                   else
-                     '_ml/calendars'
-                   end
+          path = if _calendar_id
+                   "_ml/calendars/#{Utils.listify(_calendar_id)}"
+                 else
+                   '_ml/calendars'
+                 end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

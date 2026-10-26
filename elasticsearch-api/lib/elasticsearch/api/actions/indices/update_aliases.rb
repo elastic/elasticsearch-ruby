@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Create or update an alias.
+        # Update aliases and delete indices atomically.
         # Adds a data stream or index to an alias.
         #
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
