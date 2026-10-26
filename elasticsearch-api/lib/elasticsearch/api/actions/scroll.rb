@@ -72,7 +72,7 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path   = '_search/scroll'
+        path = '_search/scroll'
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Get aliases.
+        # Get a compact list of aliases.
         # Get the cluster's index aliases, including filter and routing information.
         # This API does not return data stream aliases.
         # IMPORTANT: CAT APIs are only intended for human consumption using the command line or the Kibana console. They are not intended for use by applications. For application consumption, use the aliases API.
