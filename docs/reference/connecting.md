@@ -120,12 +120,13 @@ ELASTIC_PASSWORD = "<password>"
 
 client = Elasticsearch::Client.new(
   host: "https://elastic:#{ELASTIC_PASSWORD}@localhost:9200",
-  transport_options: { ssl: { verify: false } },
   ca_fingerprint: CERT_FINGERPRINT
 )
 ```
 
-The verification will be run once per connection.
+The certificate matching the fingerprint is used as the only trusted certificate. The server's certificate chain, expiration dates and host name are still validated against it, and this verification applies to every connection the client opens.
+
+If the host name you connect to doesn't match the server certificate's subject or subject alternative names, verification fails. Either connect using a host name listed in the certificate, or explicitly disable verification with `transport_options: { ssl: { verify: false } }`. Disabling verification weakens the security of the connection and isn't recommended.
 
 The certificate fingerprint can be calculated using `openssl x509` with the certificate file:
 
