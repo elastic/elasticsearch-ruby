@@ -32,7 +32,10 @@ module Elasticsearch
       # A subsequent search request with the `pit` parameter must not specify `index`, `routing`, or `preference` values as these parameters are copied from the point in time.
       # Just like regular searches, you can use `from` and `size` to page through point in time search results, up to the first 10,000 hits.
       # If you want to retrieve more hits, use PIT with `search_after`.
-      # IMPORTANT: The open point in time request and each subsequent search request can return different identifiers; always use the most recently received ID for the next search request.
+      # IMPORTANT: Each search request against a PIT returns in its response a `pit_id` field which may be different from the identifier you originally supplied.
+      # Always use the most recently-received PIT identifier for the next request.
+      # If you make concurrent search requests against the same PIT, Elasticsearch can return several different `pit_id` values in its responses.
+      # In that case, use any of these values for later requests, preferring more recently-received values whenever possible.
       # When a PIT that contains shard failures is used in a search request, the missing are always reported in the search response as a `NoShardAvailableActionException` exception.
       # To get rid of these exceptions, a new PIT needs to be created so that shards missing from the previous PIT can be handled, assuming they become available in the meantime.
       # **Keeping point in time alive**

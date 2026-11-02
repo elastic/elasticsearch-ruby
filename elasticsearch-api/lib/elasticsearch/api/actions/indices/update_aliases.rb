@@ -22,8 +22,13 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Create or update an alias.
-        # Adds a data stream or index to an alias.
+        # Update aliases and delete indices atomically.
+        # Applies one or more actions in a single request:
+        # - Add a data stream or index to an alias.
+        # - Remove a data stream or index from an alias.
+        # - Delete an index in that same request, so the deletion and the alias changes are applied together.
+        # For example, you can replace an index with an alias of the same name.
+        # NOTE: Every `remove_index` action in the request runs first, before any `add` or `remove` actions, no matter where it sits in the `actions` array.
         #
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
