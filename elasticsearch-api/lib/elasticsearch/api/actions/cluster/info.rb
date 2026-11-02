@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Get cluster info.
+        # Get cluster subsystem info.
         # Returns basic information about the cluster.
         #
         # @option arguments [String, Array<String>] :target Limits the information returned to the specific target. Supports a comma-separated list, such as http,ingest. (*Required*)
