@@ -67,7 +67,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = '_cluster/allocation/explain'
+          path = '_cluster/allocation/explain'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
