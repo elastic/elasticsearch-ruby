@@ -103,7 +103,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/results/overall_buckets"
+          path = "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/results/overall_buckets"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
