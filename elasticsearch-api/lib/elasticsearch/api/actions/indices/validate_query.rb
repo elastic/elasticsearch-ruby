@@ -93,11 +93,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = if _index
-                     "#{Utils.listify(_index)}/_validate/query"
-                   else
-                     '_validate/query'
-                   end
+          path = if _index
+                   "#{Utils.listify(_index)}/_validate/query"
+                 else
+                   '_validate/query'
+                 end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
