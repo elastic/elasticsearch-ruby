@@ -33,6 +33,8 @@ module Elasticsearch
       # @option arguments [String, Array] :index A comma-separated list of data streams, indices, and aliases to search.
       #  It supports wildcards (`*`).
       #  To search all data streams and indices, omit this parameter or use `*` or `_all`.
+      # @option arguments [String, Array<String>] :_slice The slice identifiers for a slice-enabled index (`index.slice.enabled` set to `true`): a single slice, a comma-separated list such as `tenant-a,tenant-b`, or `_all` to target all slices.
+      #  When omitted, all slices are targeted. Indices that are not slice-enabled match no documents when a slice is specified.
       # @option arguments [Boolean] :allow_no_indices A setting that does two separate checks on the index expression.
       #  If `false`, the request returns an error (1) if any wildcard expression
       #  (including `_all` and `*`) resolves to zero matching indices or (2) if the
@@ -62,9 +64,6 @@ module Elasticsearch
       # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
       #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
       # @option arguments [Array<String>, String] :stats Specific `tag` of the request for logging and statistical purposes.
-      # @option arguments [String] :_slice The slice identifier used to route the operation to a specific slice.
-      #  Use the special value `_all` to target all slices without restricting to a routing value.
-      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Integer] :terminate_after The maximum number of documents to collect for each shard.
       #  If a query reaches this limit, Elasticsearch terminates the query early.
       #  Elasticsearch collects documents before sorting.IMPORTANT: Use with caution.
@@ -91,7 +90,7 @@ module Elasticsearch
       def count(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'count' }
 
-        defined_params = [:index].each_with_object({}) do |variable, set_variables|
+        defined_params = [:index, :_slice].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -103,17 +102,21 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
+        __slice = arguments.delete(:_slice)
+
         method = if body
                    Elasticsearch::API::HTTP_POST
                  else
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path   = if _index
-                   "#{Utils.listify(_index)}/_count"
-                 else
-                   '_count'
-                 end
+        path = if _index && __slice
+                 "#{Utils.listify(_index)}/#{Utils.listify(__slice)}/_count"
+               elsif _index
+                 "#{Utils.listify(_index)}/_count"
+               else
+                 '_count'
+               end
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

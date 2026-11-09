@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Get index information.
+        # Get a compact list of indices.
         # Get high-level information about indices in a cluster, including backing indices for data streams.
         # Use this request to get the following information for each index in a cluster:
         # - shard count
@@ -39,7 +39,9 @@ module Elasticsearch
         #
         # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and aliases used to limit the request.
         #  Supports wildcards (`*`). To target all data streams and indices, omit this parameter or use `*` or `_all`.
-        # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match. Server default: all.
+        # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
+        #  Note that `closed` also matches non-hidden data streams, so their open backing indices are returned as well.
+        #  It does not restrict the response to closed indices only. Server default: open,closed.
         # @option arguments [String] :health The health status used to limit returned indices. By default, the response includes indices of any health status.
         # @option arguments [Boolean] :include_unloaded_segments If true, the response includes information from segments that are not loaded into memory.
         # @option arguments [Boolean] :pri If true, the response only includes information from primary shards.

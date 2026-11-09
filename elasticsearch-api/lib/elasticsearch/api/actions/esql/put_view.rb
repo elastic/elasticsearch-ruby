@@ -23,12 +23,13 @@ module Elasticsearch
     module Esql
       module Actions
         # Create or update an ES|QL view.
-        # This functionality is experimental and is not ready for production usage. Experimental
-        # features may change or be removed at any time. Elastic will work to fix any issues, but
-        # experimental features are not subject to the support SLA of official GA features. Specific
-        # Support terms apply.
+        # Stores an ES|QL query that runs whenever the view is referenced.
+        # A query that cannot be parsed is rejected. Replacing a reserved view fails.
         #
         # @option arguments [String] :name The view name to create or update. (*Required*)
+        # @option arguments [Boolean] :validate Whether to analyze the view query and return a warning when validation fails.Validation reports an unknown index or column, including an index the caller cannot read.
+        #  The view is saved even when validation reports a problem.
+        #  Failures unrelated to the query, such as an overloaded cluster, produce no warning.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
@@ -43,7 +44,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch#TODO
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-put-view
         #
         def put_view(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.put_view' }

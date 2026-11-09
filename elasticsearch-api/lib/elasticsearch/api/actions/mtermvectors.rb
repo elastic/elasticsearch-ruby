@@ -32,6 +32,7 @@ module Elasticsearch
       # The mapping used is determined by the specified `_index`.
       #
       # @option arguments [String] :index The name of the index that contains the documents.
+      # @option arguments [String] :_slice The default slice identifier for a slice-enabled index (`index.slice.enabled` set to `true`), applied to the items that do not specify their own `_slice`.
       # @option arguments [Array<String>] :ids A comma-separated list of documents ids. You must define ids as parameter or set "ids" or "docs" in the request body
       # @option arguments [String, Array<String>] :fields A comma-separated list or wildcard expressions of fields to include in the statistics.
       #  It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
@@ -44,9 +45,6 @@ module Elasticsearch
       # @option arguments [Boolean] :realtime If true, the request is real-time as opposed to near-real-time. Server default: true.
       # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
       #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
-      # @option arguments [String] :_slice The slice identifier used to route the operation to a specific slice.
-      #  Use the special value `_all` to target all slices without restricting to a routing value.
-      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Boolean] :term_statistics If true, the response includes term frequency and document frequency.
       # @option arguments [Integer] :version If `true`, returns the document version as part of a hit.
       # @option arguments [String] :version_type The version type.
@@ -69,7 +67,7 @@ module Elasticsearch
       def mtermvectors(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'mtermvectors' }
 
-        defined_params = [:index].each_with_object({}) do |variable, set_variables|
+        defined_params = [:index, :_slice].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -81,17 +79,21 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
+        __slice = arguments.delete(:_slice)
+
         method = if body
                    Elasticsearch::API::HTTP_POST
                  else
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path   = if _index
-                   "#{Utils.listify(_index)}/_mtermvectors"
-                 else
-                   '_mtermvectors'
-                 end
+        path = if _index && __slice
+                 "#{Utils.listify(_index)}/#{Utils.listify(__slice)}/_mtermvectors"
+               elsif _index
+                 "#{Utils.listify(_index)}/_mtermvectors"
+               else
+                 '_mtermvectors'
+               end
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
