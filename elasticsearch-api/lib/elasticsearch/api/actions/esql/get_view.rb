@@ -32,7 +32,7 @@ module Elasticsearch
         # experimental features are not subject to the support SLA of official GA features. Specific
         # Support terms apply.
         #
-        # @option arguments [String] :name The comma-separated view names to retrieve.
+        # @option arguments [String, Array] :name The comma-separated view names to retrieve.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

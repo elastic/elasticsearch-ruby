@@ -31,7 +31,7 @@ module Elasticsearch
         #  Supports wildcards (`*`).
         #  To target all data streams and indices, omit this parameter or use `*` or `_all`.
         # @option arguments [String, Array<String>] :h A comma-separated list of columns names to display.
-        #  It supports simple wildcards. Server default: ip,hp,rp,r,m,n,cpu,l.
+        #  It supports simple wildcards. Server default: index,shard,prirep,ip,segment,generation,docs.count,docs.deleted,size,size.memory,committed,searchable,version,compound.
         # @option arguments [String, Array<String>] :s A comma-separated list of column names or aliases that determines the sort order.
         #  Sorting defaults to ascending and can be changed by setting `:asc`
         #  or `:desc` as a suffix to the column name.
