@@ -124,9 +124,9 @@ client = Elasticsearch::Client.new(
 )
 ```
 
-The certificate matching the fingerprint is used as the only trusted certificate. The server's certificate chain, expiration dates and host name are still validated against it, and this verification applies to every connection the client opens.
+The certificate matching the fingerprint is fetched from the server and used as the only trusted certificate. The server's certificate chain and expiration dates are verified against it on every connection the client uses for requests. Host names aren't checked, so you can connect by IP address or service name (Faraday 1 and Manticore still check them).
 
-If the host name you connect to doesn't match the server certificate's subject or subject alternative names, verification fails. Either connect using a host name listed in the certificate, or explicitly disable verification with `transport_options: { ssl: { verify: false } }`. Disabling verification weakens the security of the connection and isn't recommended.
+`ca_fingerprint` can't be combined with `verify: false`, `ca_file`, `ca_path`, `cert_store`, `truststore` or a custom `:transport`, and it requires `https` hosts. If you previously combined it with `ssl: { verify: false }`, remove that option. To skip verification entirely, don't set `ca_fingerprint`.
 
 The certificate fingerprint can be calculated using `openssl x509` with the certificate file:
 
