@@ -41,6 +41,8 @@ module Elasticsearch
         # @option arguments [Boolean] :ignore_unavailable If `false`, the request returns an error if it targets a concrete (non-wildcarded)
         #  index, alias, or data stream that is missing, closed, or otherwise unavailable.
         #  If `true`, unavailable concrete targets are silently ignored.
+        # @option arguments [Boolean] :include_auto_calibration If `true`, the response includes the auto-calibration information of each segment, for the `dense_vector` fields that support auto-calibration.
+        # @option arguments [Boolean] :vector_formats If `true`, the response includes the vector formats used by the fields of each segment, in `attributes`.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

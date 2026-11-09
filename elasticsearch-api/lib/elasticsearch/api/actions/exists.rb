@@ -40,6 +40,8 @@ module Elasticsearch
       # @option arguments [String] :id A unique document identifier. (*Required*)
       # @option arguments [String] :index A comma-separated list of data streams, indices, and aliases.
       #  It supports wildcards (`*`). (*Required*)
+      # @option arguments [String] :_slice The slice identifier for a slice-enabled index (`index.slice.enabled` set to `true`), which scopes the operation to that slice.
+      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [String] :preference The node or shard the operation should be performed on.
       #  By default, the operation is randomized between the shard replicas.If it is set to `_local`, the operation will prefer to be run on a local allocated shard when possible.
       #  If it is set to a custom value, the value is used to guarantee that the same shards will be used for the same custom value.
@@ -49,6 +51,7 @@ module Elasticsearch
       # @option arguments [Boolean] :refresh If `true`, the request refreshes the relevant shards before retrieving the document.
       #  Setting it to `true` should be done after careful thought and verification that this does not cause a heavy load on the system (and slow down indexing).
       # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
+      #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
       # @option arguments [Boolean, String, Array<String>] :_source Indicates whether to return the `_source` field (`true` or `false`) or lists the fields to return.
       # @option arguments [String, Array<String>] :_source_excludes A comma-separated list of source fields to exclude from the response.
       #  You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter.
@@ -81,7 +84,7 @@ module Elasticsearch
       def exists(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'exists' }
 
-        defined_params = [:index, :id].each_with_object({}) do |variable, set_variables|
+        defined_params = [:index, :id, :_slice].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -98,8 +101,14 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
+        __slice = arguments.delete(:_slice)
+
         method = Elasticsearch::API::HTTP_HEAD
-        path   = "#{Utils.listify(_index)}/_doc/#{Utils.listify(_id)}"
+        path   = if _index && __slice && _id
+                   "#{Utils.listify(_index)}/#{Utils.listify(__slice)}/_doc/#{Utils.listify(_id)}"
+                 else
+                   "#{Utils.listify(_index)}/_doc/#{Utils.listify(_id)}"
+                 end
         params = Utils.process_params(arguments)
 
         Utils.rescue_from_not_found do

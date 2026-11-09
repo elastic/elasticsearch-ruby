@@ -23,13 +23,9 @@ module Elasticsearch
     module Esql
       module Actions
         # Get an ES|QL view.
-        # Returns a stored ES|QL view.
-        # This functionality is experimental and is not ready for production usage. Experimental
-        # features may change or be removed at any time. Elastic will work to fix any issues, but
-        # experimental features are not subject to the support SLA of official GA features. Specific
-        # Support terms apply.
+        # Returns one or more stored views. A reserved view includes `reserved` set to `true`.
         #
-        # @option arguments [String] :name The comma-separated view names to retrieve.
+        # @option arguments [String, Array] :name The comma-separated view names to retrieve.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response
@@ -43,7 +39,7 @@ module Elasticsearch
         #  this option for debugging only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch#TODO
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-get-view
         #
         def get_view(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.get_view' }

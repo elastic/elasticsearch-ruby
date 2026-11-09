@@ -31,8 +31,10 @@ module Elasticsearch
         # * username and password
         # * Elasticsearch access tokens
         # * JWTs
+        # * service account tokens of user-managed service accounts
         # The user, for whom the authentication credentials is provided, can optionally "run as" (impersonate) another user.
         # In this case, the API key will be created on behalf of the impersonated user.
+        # Run as is not supported with the `_user_managed_service_account` grant type.
         # This API is intended be used by applications that need to create and manage API keys for end users, but cannot guarantee that those users have permission to create API keys on their own behalf.
         # The API keys are created by the Elasticsearch API key service, which is automatically enabled.
         # A successful grant API key API call returns a JSON structure that contains the API key, its unique id, and its name.

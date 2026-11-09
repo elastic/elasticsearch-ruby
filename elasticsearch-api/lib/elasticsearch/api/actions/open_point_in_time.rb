@@ -32,7 +32,10 @@ module Elasticsearch
       # A subsequent search request with the `pit` parameter must not specify `index`, `routing`, or `preference` values as these parameters are copied from the point in time.
       # Just like regular searches, you can use `from` and `size` to page through point in time search results, up to the first 10,000 hits.
       # If you want to retrieve more hits, use PIT with `search_after`.
-      # IMPORTANT: The open point in time request and each subsequent search request can return different identifiers; always use the most recently received ID for the next search request.
+      # IMPORTANT: Each search request against a PIT returns in its response a `pit_id` field which may be different from the identifier you originally supplied.
+      # Always use the most recently-received PIT identifier for the next request.
+      # If you make concurrent search requests against the same PIT, Elasticsearch can return several different `pit_id` values in its responses.
+      # In that case, use any of these values for later requests, preferring more recently-received values whenever possible.
       # When a PIT that contains shard failures is used in a search request, the missing are always reported in the search response as a `NoShardAvailableActionException` exception.
       # To get rid of these exceptions, a new PIT needs to be created so that shards missing from the previous PIT can be handled, assuming they become available in the meantime.
       # **Keeping point in time alive**
@@ -56,6 +59,9 @@ module Elasticsearch
       # @option arguments [String] :preference The node or shard the operation should be performed on.
       #  By default, it is random.
       # @option arguments [String, Array<String>] :routing A custom value that is used to route operations to a specific shard.
+      #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
+      # @option arguments [String, Array<String>] :_slice The slice identifier for a slice-enabled index (`index.slice.enabled` set to `true`), which scopes the point in time to that slice.
+      #  When omitted, the point in time covers all slices.
       # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
       #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
       #  It supports comma-separated values, such as `open,hidden`. Server default: open.
