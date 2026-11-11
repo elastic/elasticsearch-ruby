@@ -130,7 +130,7 @@ The behavior described in this section requires `elastic-transport` 8.6.0 or lat
 
 The certificate matching the fingerprint is fetched from the server and used as the only trusted certificate. The server's certificate chain and expiration dates are verified against it on every connection the client uses for requests. Host names aren't checked, so you can connect by IP address or service name (Faraday 1 and Manticore still check them).
 
-`ca_fingerprint` can't be combined with `verify: false`, `ca_file`, `ca_path`, `cert_store`, `truststore` or a custom `:transport`, and it requires `https` hosts. If you previously combined it with `ssl: { verify: false }`, remove that option. To skip verification entirely, don't set `ca_fingerprint`.
+`ca_fingerprint` can't be combined with `verify: false`, `ca_file`, `ca_path`, `cert_store`, `truststore` or a custom `:transport`. These combinations raise an `ArgumentError` when the client is created. All hosts must use `https`, otherwise the first request raises an error. If you previously combined it with `ssl: { verify: false }`, remove that option. To skip verification entirely, don't set `ca_fingerprint`.
 
 The certificate fingerprint can be calculated using `openssl x509` with the certificate file:
 
