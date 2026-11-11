@@ -124,6 +124,10 @@ client = Elasticsearch::Client.new(
 )
 ```
 
+::::{note}
+The behavior described in this section requires `elastic-transport` 8.6.0 or later. Older versions check the fingerprint on a separate connection and don't use it to verify the connections that carry requests.
+::::
+
 The certificate matching the fingerprint is fetched from the server and used as the only trusted certificate. The server's certificate chain and expiration dates are verified against it on every connection the client uses for requests. Host names aren't checked, so you can connect by IP address or service name (Faraday 1 and Manticore still check them).
 
 `ca_fingerprint` can't be combined with `verify: false`, `ca_file`, `ca_path`, `cert_store`, `truststore` or a custom `:transport`, and it requires `https` hosts. If you previously combined it with `ssl: { verify: false }`, remove that option. To skip verification entirely, don't set `ca_fingerprint`.
