@@ -77,6 +77,8 @@ module Elasticsearch
       # @option arguments [String] :index The name of the data stream or index to target.
       #  If the target doesn't exist and matches the name or wildcard (`*`) pattern of an index template with a `data_stream` definition, this request creates the data stream.
       #  If the target doesn't exist and doesn’t match a data stream template, this request creates the index. (*Required*)
+      # @option arguments [String] :_slice The slice identifier for a slice-enabled index (`index.slice.enabled` set to `true`), which scopes the operation to that slice.
+      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Boolean] :include_source_on_error True or false if to include the document source in the error message in case of parsing errors. Server default: true.
       # @option arguments [String] :pipeline The ID of the pipeline to use to preprocess incoming documents.
       #  If the index has a default ingest pipeline specified, setting the value to `_none` turns off the default ingest pipeline for this request.
@@ -87,6 +89,7 @@ module Elasticsearch
       # @option arguments [Boolean] :require_alias If `true`, the destination must be an index alias.
       # @option arguments [Boolean] :require_data_stream If `true`, the request's actions must target a data stream (existing or to be created).
       # @option arguments [String, Array<String>] :routing A custom value that is used to route operations to a specific shard.
+      #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
       # @option arguments [Time] :timeout The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards.
       #  Elasticsearch waits for at least the specified timeout period before failing.
       #  The actual wait time could be longer, particularly when multiple waits occur.This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs.
@@ -118,7 +121,7 @@ module Elasticsearch
       def create(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'create' }
 
-        defined_params = [:index, :id].each_with_object({}) do |variable, set_variables|
+        defined_params = [:index, :id, :_slice].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -136,8 +139,14 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
+        __slice = arguments.delete(:_slice)
+
         method = Elasticsearch::API::HTTP_PUT
-        path   = "#{Utils.listify(_index)}/_create/#{Utils.listify(_id)}"
+        path   = if _index && __slice && _id
+                   "#{Utils.listify(_index)}/#{Utils.listify(__slice)}/_create/#{Utils.listify(_id)}"
+                 else
+                   "#{Utils.listify(_index)}/_create/#{Utils.listify(_id)}"
+                 end
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
