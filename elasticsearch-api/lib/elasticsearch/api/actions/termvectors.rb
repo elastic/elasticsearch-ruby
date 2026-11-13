@@ -46,6 +46,8 @@ module Elasticsearch
       #
       # @option arguments [String] :index The name of the index that contains the document. (*Required*)
       # @option arguments [String] :id A unique identifier for the document.
+      # @option arguments [String] :_slice The slice identifier for a slice-enabled index (`index.slice.enabled` set to `true`), which scopes the operation to that slice.
+      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [String, Array<String>] :fields A comma-separated list or wildcard expressions of fields to include in the statistics.
       #  It is used as the default list unless a specific field list is provided in the `completion_fields` or `fielddata_fields` parameters.
       # @option arguments [Boolean] :field_statistics If `true`, the response includes:
@@ -60,9 +62,6 @@ module Elasticsearch
       # @option arguments [Boolean] :realtime If true, the request is real-time as opposed to near-real-time. Server default: true.
       # @option arguments [String, Array<String>] :routing A custom value that is used to route operations to a specific shard.
       #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
-      # @option arguments [String] :_slice The slice identifier used to route the operation to a specific slice.
-      #  Use the special value `_all` to target all slices without restricting to a routing value.
-      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Boolean] :term_statistics If `true`, the response includes:
       #  - The total term frequency (how often a term occurs in all documents).
       #  - The document frequency (the number of documents containing the current term).
@@ -88,7 +87,7 @@ module Elasticsearch
       def termvectors(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'termvectors' }
 
-        defined_params = [:index, :id].each_with_object({}) do |variable, set_variables|
+        defined_params = [:index, :id, :_slice].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -104,6 +103,8 @@ module Elasticsearch
 
         _id = arguments.delete(:id)
 
+        __slice = arguments.delete(:_slice)
+
         method = if body
                    Elasticsearch::API::HTTP_POST
                  else
@@ -111,7 +112,11 @@ module Elasticsearch
                  end
 
         arguments.delete(:endpoint)
-        path = if _index && _id
+        path = if _index && __slice && _id
+                 "#{Utils.listify(_index)}/#{Utils.listify(__slice)}/_termvectors/#{Utils.listify(_id)}"
+               elsif _index && __slice
+                 "#{Utils.listify(_index)}/#{Utils.listify(__slice)}/_termvectors"
+               elsif _index && _id
                  "#{Utils.listify(_index)}/_termvectors/#{Utils.listify(_id)}"
                else
                  "#{Utils.listify(_index)}/_termvectors"

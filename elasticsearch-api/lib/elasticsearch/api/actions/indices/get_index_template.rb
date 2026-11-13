@@ -30,6 +30,7 @@ module Elasticsearch
         # @option arguments [Boolean] :flat_settings If true, returns settings in flat format.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :include_defaults If true, returns all relevant default configurations for the index template.
+        # @option arguments [Boolean] :include_managed_fields If true, the response includes internally managed fields, such as `registry_installed`, that are hidden by default.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.
         # @option arguments [String, Array<String>] :filter_path Comma-separated list of filters in dot notation which reduce the response

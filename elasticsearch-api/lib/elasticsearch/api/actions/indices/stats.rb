@@ -41,6 +41,8 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :fields Comma-separated list or wildcard expressions of fields to include in the statistics.
         # @option arguments [Boolean] :forbid_closed_indices If true, statistics are not collected from closed indices. Server default: true.
         # @option arguments [String, Array<String>] :groups Comma-separated list of search groups to include in the search statistics.
+        # @option arguments [Boolean] :include_auto_calibration If `true`, the response includes the auto-calibration information of each `dense_vector` field that supports auto-calibration.
+        #  Only applies at the `indices` and `shards` levels.
         # @option arguments [Boolean] :include_segment_file_sizes If true, the call reports the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested).
         # @option arguments [Boolean] :include_unloaded_segments If true, the response includes information from segments that are not loaded into memory.
         # @option arguments [String] :level Indicates whether statistics are aggregated at the cluster, indices, or shards level. Server default: indices.

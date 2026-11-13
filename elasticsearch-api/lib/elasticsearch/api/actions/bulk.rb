@@ -113,6 +113,7 @@ module Elasticsearch
       # Refer to the linked documentation for step-by-step instructions using the index settings API.
       #
       # @option arguments [String] :index The name of the data stream, index, or index alias to perform bulk actions on.
+      # @option arguments [String] :_slice The default slice identifier for a slice-enabled index (`index.slice.enabled` set to `true`), applied to the items that do not specify their own `_slice`.
       # @option arguments [Boolean] :include_source_on_error True or false if to include the document source in the error message in case of parsing errors. Server default: true.
       # @option arguments [Boolean] :list_executed_pipelines If `true`, the response will include the ingest pipelines that were run for each index or create.
       # @option arguments [String] :pipeline The pipeline identifier to use to preprocess incoming documents.
@@ -124,9 +125,6 @@ module Elasticsearch
       #  Valid values: `true`, `false`, `wait_for`. Server default: false.
       # @option arguments [String, Array<String>] :routing A custom value that is used to route operations to a specific shard.
       #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
-      # @option arguments [String] :_slice The slice identifier used to route the operation to a specific slice.
-      #  Use the special value `_all` to target all slices without restricting to a routing value.
-      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Boolean, String, Array<String>] :_source Indicates whether to return the `_source` field (`true` or `false`) or contains a list of fields to return.
       # @option arguments [String, Array<String>] :_source_excludes A comma-separated list of source fields to exclude from the response.
       #  You can also use this parameter to exclude fields from the subset specified in `_source_includes` query parameter.
@@ -162,7 +160,7 @@ module Elasticsearch
       def bulk(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'bulk' }
 
-        defined_params = [:index].each_with_object({}) do |variable, set_variables|
+        defined_params = [:index, :_slice].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -176,8 +174,12 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
+        __slice = arguments.delete(:_slice)
+
         method = Elasticsearch::API::HTTP_POST
-        path   = if _index
+        path   = if _index && __slice
+                   "#{Utils.listify(_index)}/#{Utils.listify(__slice)}/_bulk"
+                 elsif _index
                    "#{Utils.listify(_index)}/_bulk"
                  else
                    '_bulk'
