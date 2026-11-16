@@ -22,14 +22,14 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Get node information.
+        # Get a compact list of nodes.
         # Get information about the nodes in a cluster.
         # IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the nodes info API.
         #
         # @option arguments [Boolean] :full_id If `true`, return the full node ID. If `false`, return the shortened node ID.
         # @option arguments [Boolean] :include_unloaded_segments If true, the response includes information from segments that are not loaded into memory.
         # @option arguments [String, Array<String>] :h A comma-separated list of columns names to display.
-        #  It supports simple wildcards. Server default: ip,hp,rp,r,m,n,cpu,l.
+        #  It supports simple wildcards. Server default: ip,heap.percent,ram.percent,cpu,load_1m,load_5m,load_15m,node.role,master,name.
         # @option arguments [String, Array<String>] :s A comma-separated list of column names or aliases that determines the sort order.
         #  Sorting defaults to ascending and can be changed by setting `:asc`
         #  or `:desc` as a suffix to the column name.

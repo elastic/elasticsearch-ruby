@@ -31,6 +31,8 @@ module Elasticsearch
         # Support terms apply.
         #
         # @option arguments [String] :index A single target to search. If the target is an index alias, it must resolve to a single index. (*Required*)
+        # @option arguments [String, Array<String>] :_slice The slice identifiers for a slice-enabled index (`index.slice.enabled` set to `true`): a single slice, a comma-separated list such as `tenant-a,tenant-b`, or `_all` to target all slices.
+        #  When omitted, all slices are targeted. Indices that are not slice-enabled match no documents when a slice is specified.
         # @option arguments [Boolean] :allow_no_indices A setting that does two separate checks on the index expression.
         #  If `false`, the request returns an error (1) if any wildcard expression
         #  (including `_all` and `*`) resolves to zero matching indices or (2) if the
@@ -55,7 +57,8 @@ module Elasticsearch
         # @option arguments [String] :preference [TODO]
         # @option arguments [Integer] :pre_filter_shard_size [TODO]
         # @option arguments [Boolean] :request_cache [TODO]
-        # @option arguments [String, Array<String>] :routing [TODO]
+        # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
+        #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
         # @option arguments [Time] :scroll [TODO]
         # @option arguments [String] :search_type [TODO]
         # @option arguments [Array<String>] :stats [TODO]
@@ -82,6 +85,7 @@ module Elasticsearch
         # @option arguments [Array<Integer>] :wait_for_checkpoints A comma separated list of checkpoints. When configured, the search API will only be executed on a shard
         #  after the relevant checkpoint has become visible for search. Defaults to an empty list which will cause
         #  Elasticsearch to immediately execute the search. Server default: [].
+        # @option arguments [Time] :wait_for_checkpoints_timeout The maximum time to wait for the checkpoints specified in `wait_for_checkpoints` to become visible for search. Server default: 30s.
         # @option arguments [Boolean] :allow_partial_search_results If true, returns partial results if there are shard request timeouts or shard failures.
         #  If false, returns an error with no partial results.
         #  Defaults to the configured cluster setting `search.default_allow_partial_results`, which is true by default.
@@ -104,7 +108,7 @@ module Elasticsearch
         def search(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'fleet.search' }
 
-          defined_params = [:index].each_with_object({}) do |variable, set_variables|
+          defined_params = [:index, :_slice].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -119,8 +123,14 @@ module Elasticsearch
 
           _index = arguments.delete(:index)
 
+          __slice = arguments.delete(:_slice)
+
           method = Elasticsearch::API::HTTP_POST
-          path   = "#{Utils.listify(_index)}/_fleet/_fleet_search"
+          path   = if _index && __slice
+                     "#{Utils.listify(_index)}/#{Utils.listify(__slice)}/_fleet/_fleet_search"
+                   else
+                     "#{Utils.listify(_index)}/_fleet/_fleet_search"
+                   end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
