@@ -87,11 +87,11 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path   = if _index
-                   "#{Utils.listify(_index)}/_mtermvectors"
-                 else
-                   '_mtermvectors'
-                 end
+        path = if _index
+                 "#{Utils.listify(_index)}/_mtermvectors"
+               else
+                 '_mtermvectors'
+               end
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
