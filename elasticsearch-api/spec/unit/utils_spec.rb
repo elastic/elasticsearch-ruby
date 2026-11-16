@@ -186,11 +186,11 @@ describe Elasticsearch::API::Utils do
       end
 
       let(:header) do
-        MultiJson.load(lines.first)
+        JSON.load(lines.first)
       end
 
       let(:data_string) do
-        MultiJson.load(lines.last)
+        JSON.load(lines.last)
       end
 
       it 'does not mutate the input' do

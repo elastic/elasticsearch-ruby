@@ -23,8 +23,7 @@
 #     $ bundle exec ruby consume-publish.rb
 #
 
-require 'multi_json'
-require 'oj'
+require 'json'
 
 require 'elasticsearch'
 
@@ -43,12 +42,12 @@ elasticsearch = Elasticsearch::Client.new log:true
 elasticsearch.indices.delete index: 'rabbit' rescue nil
 
 queue.subscribe do |delivery_info, metadata, payload|
-  hash = MultiJson.load(payload)
+  hash = JSON.load(payload)
   elasticsearch.index index: 'rabbit', type: 'event', id: hash.delete(:id), body: hash
 end
 
 (1..10).each do |i|
-  exchange.publish MultiJson.dump({id: i, title: "Test #{i}"}), routing_key: queue.name
+  exchange.publish JSON.dump({id: i, title: "Test #{i}"}), routing_key: queue.name
 end
 
 sleep 1.0
@@ -58,7 +57,7 @@ puts "Enter some words to index (use Ctrl+C to exit):"
 [:INT, :TERM].each do |signal| trap(signal) { puts "\nExiting..."; exit } end
 
 while input = gets
-  exchange.publish MultiJson.dump({title: input.chomp}), routing_key: queue.name unless input =~ /^\s*$/
+  exchange.publish JSON.dump({title: input.chomp}), routing_key: queue.name unless input =~ /^\s*$/
 end
 
 connection.close
