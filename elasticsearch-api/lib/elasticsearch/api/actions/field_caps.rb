@@ -77,11 +77,11 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path   = if _index
-                   "#{Utils.listify(_index)}/_field_caps"
-                 else
-                   '_field_caps'
-                 end
+        path = if _index
+                 "#{Utils.listify(_index)}/_field_caps"
+               else
+                 '_field_caps'
+               end
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

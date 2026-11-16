@@ -75,11 +75,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = if _datafeed_id
-                     "_ml/datafeeds/#{Utils.listify(_datafeed_id)}/_preview"
-                   else
-                     '_ml/datafeeds/_preview'
-                   end
+          path = if _datafeed_id
+                   "_ml/datafeeds/#{Utils.listify(_datafeed_id)}/_preview"
+                 else
+                   '_ml/datafeeds/_preview'
+                 end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
