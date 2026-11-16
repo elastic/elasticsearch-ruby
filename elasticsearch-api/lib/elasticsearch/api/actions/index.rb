@@ -114,6 +114,8 @@ module Elasticsearch
       #  If the target doesn't exist and matches the name or wildcard (`*`) pattern of an index template with a `data_stream` definition, this request creates the data stream.
       #  If the target doesn't exist and doesn't match a data stream template, this request creates the index.
       #  You can check for existing targets with the resolve index API. (*Required*)
+      # @option arguments [String] :_slice The slice identifier for a slice-enabled index (`index.slice.enabled` set to `true`), which scopes the operation to that slice.
+      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Integer] :if_primary_term Only perform the operation if the document has this primary term.
       # @option arguments [Integer] :if_seq_no Only perform the operation if the document has this sequence number.
       # @option arguments [Boolean] :include_source_on_error True or false if to include the document source in the error message in case of parsing errors. Server default: true.
@@ -131,9 +133,6 @@ module Elasticsearch
       #  If `false`, it does nothing with refreshes. Server default: false.
       # @option arguments [String, Array<String>] :routing A custom value that is used to route operations to a specific shard.
       #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
-      # @option arguments [String] :_slice The slice identifier used to route the operation to a specific slice.
-      #  Use the special value `_all` to target all slices without restricting to a routing value.
-      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Time] :timeout The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards.This parameter is useful for situations where the primary shard assigned to perform the operation might not be available when the operation runs.
       #  Some reasons for this might be that the primary shard is currently recovering from a gateway or undergoing relocation.
       #  By default, the operation will wait on the primary shard to become available for at least 1 minute before failing and responding with an error.
@@ -165,7 +164,7 @@ module Elasticsearch
       def index(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'index' }
 
-        defined_params = [:index, :id].each_with_object({}) do |variable, set_variables|
+        defined_params = [:index, :id, :_slice].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -182,8 +181,14 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
+        __slice = arguments.delete(:_slice)
+
         method = _id ? Elasticsearch::API::HTTP_PUT : Elasticsearch::API::HTTP_POST
-        path   = if _index && _id
+        path   = if _index && __slice && _id
+                   "#{Utils.listify(_index)}/#{Utils.listify(__slice)}/_doc/#{Utils.listify(_id)}"
+                 elsif _index && __slice
+                   "#{Utils.listify(_index)}/#{Utils.listify(__slice)}/_doc"
+                 elsif _index && _id
                    "#{Utils.listify(_index)}/_doc/#{Utils.listify(_id)}"
                  else
                    "#{Utils.listify(_index)}/_doc"

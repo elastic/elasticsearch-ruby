@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-        # Get the cluster health status.
+        # Get a compact cluster health summary.
         # IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console.
         # They are not intended for use by applications. For application consumption, use the cluster health API.
         # This API is often used to check malfunctioning clusters.
