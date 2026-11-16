@@ -38,6 +38,8 @@ module Elasticsearch
       # @option arguments [String, Array] :index A comma-separated list of data streams, indices, and aliases to search.
       #  It supports wildcards (`*`).
       #  To search all data streams and indices, omit this parameter or use `*` or `_all`.
+      # @option arguments [String, Array<String>] :_slice The slice identifiers for a slice-enabled index (`index.slice.enabled` set to `true`): a single slice, a comma-separated list such as `tenant-a,tenant-b`, or `_all` to target all slices.
+      #  When omitted, all slices are targeted. Indices that are not slice-enabled match no documents when a slice is specified.
       # @option arguments [Boolean] :allow_no_indices A setting that does two separate checks on the index expression.
       #  If `false`, the request returns an error (1) if any wildcard expression
       #  (including `_all` and `*`) resolves to zero matching indices or (2) if the
@@ -92,9 +94,6 @@ module Elasticsearch
       #  It defaults to index level settings.
       # @option arguments [String, Array<String>] :routing A custom value that is used to route operations to a specific shard.
       #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
-      # @option arguments [String] :_slice The slice identifier used to route the operation to a specific slice.
-      #  Use the special value `_all` to target all slices without restricting to a routing value.
-      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Time] :scroll The period to retain the search context for scrolling.
       #  By default, this value cannot exceed `1d` (24 hours).
       #  You can change this limit by using the `search.max_keep_alive` cluster-level setting.
@@ -175,7 +174,7 @@ module Elasticsearch
       def search(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'search' }
 
-        defined_params = [:index].each_with_object({}) do |variable, set_variables|
+        defined_params = [:index, :_slice].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -187,17 +186,21 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
+        __slice = arguments.delete(:_slice)
+
         method = if body
                    Elasticsearch::API::HTTP_POST
                  else
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path   = if _index
-                   "#{Utils.listify(_index)}/_search"
-                 else
-                   '_search'
-                 end
+        path = if _index && __slice
+                 "#{Utils.listify(_index)}/#{Utils.listify(__slice)}/_search"
+               elsif _index
+                 "#{Utils.listify(_index)}/_search"
+               else
+                 '_search'
+               end
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

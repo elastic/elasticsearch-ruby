@@ -31,6 +31,9 @@ module Elasticsearch
         #  To target all data streams and indices, use `*` or `_all`. (*Required*)
         # @option arguments [Boolean] :only_errors Filters the returned indices to only indices that are managed by ILM and are in an error state, either due to an encountering an error while executing the policy, or attempting to use a policy that does not exist.
         # @option arguments [Boolean] :only_managed Filters the returned indices to only indices that are managed by ILM.
+        # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
+        #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+        #  Supports comma-separated values, such as `open,hidden`. Server default: open.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :error_trace When set to `true` Elasticsearch will include the full stack trace of errors
         #  when they occur.

@@ -51,6 +51,8 @@ module Elasticsearch
       #
       # @option arguments [String] :id A unique identifier for the document. (*Required*)
       # @option arguments [String] :index The name of the target index. (*Required*)
+      # @option arguments [String] :_slice The slice identifier for a slice-enabled index (`index.slice.enabled` set to `true`), which scopes the operation to that slice.
+      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Integer] :if_primary_term Only perform the operation if the document has this primary term.
       # @option arguments [Integer] :if_seq_no Only perform the operation if the document has this sequence number.
       # @option arguments [String] :refresh If `true`, Elasticsearch refreshes the affected shards to make this operation visible to search.
@@ -58,9 +60,6 @@ module Elasticsearch
       #  If `false`, it does nothing with refreshes. Server default: false.
       # @option arguments [String, Array<String>] :routing A custom value used to route operations to a specific shard.
       #  Not allowed when `index.slice.enabled` is `true` for the target index; use `_slice` instead.
-      # @option arguments [String] :_slice The slice identifier used to route the operation to a specific slice.
-      #  Use the special value `_all` to target all slices without restricting to a routing value.
-      #  Required when `index.slice.enabled` is `true` for the target index; not allowed when `index.slice.enabled` is `false`.
       # @option arguments [Time] :timeout The period to wait for active shards.This parameter is useful for situations where the primary shard assigned to perform the delete operation might not be available when the delete operation runs.
       #  Some reasons for this might be that the primary shard is currently recovering from a store or undergoing relocation.
       #  By default, the delete operation will wait on the primary shard to become available for up to 1 minute before failing and responding with an error. Server default: 1m.
@@ -88,7 +87,7 @@ module Elasticsearch
       def delete(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'delete' }
 
-        defined_params = [:index, :id].each_with_object({}) do |variable, set_variables|
+        defined_params = [:index, :id, :_slice].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -105,8 +104,14 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
+        __slice = arguments.delete(:_slice)
+
         method = Elasticsearch::API::HTTP_DELETE
-        path   = "#{Utils.listify(_index)}/_doc/#{Utils.listify(_id)}"
+        path   = if _index && __slice && _id
+                   "#{Utils.listify(_index)}/#{Utils.listify(__slice)}/_doc/#{Utils.listify(_id)}"
+                 else
+                   "#{Utils.listify(_index)}/_doc/#{Utils.listify(_id)}"
+                 end
         params = Utils.process_params(arguments)
 
         if Array(arguments[:ignore]).include?(404)
