@@ -74,6 +74,7 @@ module Elasticsearch
                       :machine_learning,
                       :nodes,
                       :project,
+                      :prometheus,
                       :query_rules,
                       :search_application,
                       :searchable_snapshots,

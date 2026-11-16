@@ -62,7 +62,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = '_project/tags'
+          path = '_project/tags'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

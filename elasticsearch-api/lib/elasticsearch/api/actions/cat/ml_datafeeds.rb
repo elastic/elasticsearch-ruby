@@ -39,7 +39,7 @@ module Elasticsearch
         #  If `true`, the API returns an empty datafeeds array when there are no matches and the subset of results when
         #  there are partial matches. If `false`, the API returns a 404 status code when there are no matches or only
         #  partial matches. Server default: true.
-        # @option arguments [String, Array<String>] :h Comma-separated list of column names to display. Server default: ['bc', 'id', 'sc', 's'].
+        # @option arguments [String, Array<String>] :h Comma-separated list of column names to display. Server default: id,state,buckets.count,search.count.
         # @option arguments [String, Array<String>] :s Comma-separated list of column names or column aliases used to sort the response.
         # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
         #  `text`, `json`, `cbor`, `yaml`, or `smile`. Server default: text.
