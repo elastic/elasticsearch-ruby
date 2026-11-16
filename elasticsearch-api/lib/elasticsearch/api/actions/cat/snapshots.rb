@@ -33,7 +33,7 @@ module Elasticsearch
         #  If any repository fails during the request, Elasticsearch returns an error.
         # @option arguments [Boolean] :ignore_unavailable If `true`, the response does not include information from unavailable snapshots.
         # @option arguments [String, Array<String>] :h A comma-separated list of columns names to display.
-        #  It supports simple wildcards. Server default: ip,hp,rp,r,m,n,cpu,l.
+        #  It supports simple wildcards. Server default: id,repository,status,start_epoch,start_time,end_epoch,end_time,duration,indices,successful_shards,failed_shards,total_shards.
         # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
         #  Sorting defaults to ascending and can be changed by setting `:asc`
         #  or `:desc` as a suffix to the column name.
