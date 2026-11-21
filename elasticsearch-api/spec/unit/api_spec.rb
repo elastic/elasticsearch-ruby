@@ -24,7 +24,16 @@ describe Elasticsearch::API do
     end
 
     it 'has a default serializer' do
-      expect(Elasticsearch::API.serializer).to eq(MultiJson)
+      expect(Elasticsearch::API.serializer).to respond_to(:dump, :load)
+    end
+
+    it 'serializes and deserializes with the default serializer' do
+      serializer = Elasticsearch::API::DEFAULT_SERIALIZER
+      expect(serializer.load(serializer.dump({ 'a' => 1 }))).to eq({ 'a' => 1 })
+    end
+
+    it 'does not emit deprecation warnings' do
+      expect { Elasticsearch::API::DEFAULT_SERIALIZER.dump({ a: 1 }) }.not_to output.to_stderr
     end
 
     context 'when settings are changed' do

@@ -29,7 +29,19 @@ module Elasticsearch
   module API
     include Elasticsearch::API::Actions
 
-    DEFAULT_SERIALIZER = MultiJson
+    # Default JSON serializer. multi_json >= 1.21 deprecates the MultiJson constant and
+    # dump/load in favor of MultiJSON, generate/parse; use the new API when available.
+    module DefaultSerializer
+      def self.dump(object, options = {})
+        defined?(::MultiJSON) ? ::MultiJSON.generate(object, options) : ::MultiJson.dump(object, options)
+      end
+
+      def self.load(string, options = {})
+        defined?(::MultiJSON) ? ::MultiJSON.parse(string, options) : ::MultiJson.load(string, options)
+      end
+    end
+
+    DEFAULT_SERIALIZER = DefaultSerializer
 
     HTTP_GET          = 'GET'.freeze
     HTTP_HEAD         = 'HEAD'.freeze
