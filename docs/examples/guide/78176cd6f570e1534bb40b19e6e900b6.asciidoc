@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.cat.aliases(
-  v: true
-)
-puts response
-----

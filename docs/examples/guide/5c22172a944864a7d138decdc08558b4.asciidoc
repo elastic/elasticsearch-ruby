@@ -1,9 +1,0 @@
-[source, ruby]
-----
-response = client.cat.indices(
-  index: 'my-data-stream',
-  v: true,
-  h: 'health,status,index,docs.count'
-)
-puts response
-----

@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.cluster.health(
-  wait_for_status: 'yellow',
-  timeout: '50s'
-)
-puts response
-----

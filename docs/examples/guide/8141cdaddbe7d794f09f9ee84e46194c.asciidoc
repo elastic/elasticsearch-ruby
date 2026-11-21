@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.cat.count(
-  index: 'my-index-000001',
-  v: true
-)
-puts response
-----

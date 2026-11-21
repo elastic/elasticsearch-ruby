@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.tasks.list(
-  group_by: 'none'
-)
-puts response
-----

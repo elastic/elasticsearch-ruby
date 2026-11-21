@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.connector.sync_job_check_in(
-  connector_sync_job_id: 'my-connector-sync-job'
-)
-puts response
-----

@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.nodes.stats(
-  metric: 'process',
-  filter_path: '**.max_file_descriptors'
-)
-puts response
-----

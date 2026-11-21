@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.snapshot.get_repository(
-  repository: 'my-repo'
-)
-puts response
-----

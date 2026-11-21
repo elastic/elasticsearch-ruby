@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.cat.tasks(
-  v: true
-)
-puts response
-----

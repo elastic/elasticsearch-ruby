@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.cluster.stats(
-  human: true,
-  filter_path: 'indices.mappings.total_deduplicated_mapping_size*'
-)
-puts response
-----

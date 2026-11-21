@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.indices.exists_alias(
-  name: 'my-alias'
-)
-puts response
-----

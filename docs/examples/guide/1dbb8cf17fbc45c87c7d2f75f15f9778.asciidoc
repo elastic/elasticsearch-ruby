@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.cluster.state(
-  filter_path: 'metadata.indices.*.stat*'
-)
-puts response
-----
