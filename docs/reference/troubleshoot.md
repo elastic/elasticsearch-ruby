@@ -65,6 +65,22 @@ Migrating to Faraday v2 requires at least Ruby `2.6`. Faraday v1 requires `2.4`.
 ::::
 
 
+## JRuby 9.4 and json gem incompatibility [ruby-jruby-json]
+
+If you see a message like:
+
+```
+ArgumentError: wrong number of arguments (given 2, expected 1)
+        .../json-3.1.0-java/lib/json/common.rb:291:in `parse'
+        .../multi_json-1.19.1/lib/multi_json/adapters/json_gem.rb:33:in `load'
+        .../multi_json-1.19.1/lib/multi_json/adapter.rb:56:in `load'
+        .../multi_json-1.19.1/lib/multi_json.rb:158:in `load'
+        lib/elastic/transport/transport/serializer/multi_json.rb:41:in `load'
+```
+
+Then you’re facing the problem with compatibility of JRuby 9.4 with `multi_json` that is used via `elastic-transport` gem. `multi_json` is trying to pick the best serializer for requests and responses. The version of `multi_json` that is used by `elasticsearch-ruby` contains a bug that prevents using it on JRuby 9.4 with the default `json` gem.
+
+To work around it, upgrade to JRuby 10, or add another JSON library supported by `multi_json`, such as `oj` or `gson`, to your Gemfile. `multi_json` will use it instead of `json`.
 
 ## More Help [_more_help]
 
