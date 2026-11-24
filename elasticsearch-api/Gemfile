@@ -24,6 +24,8 @@ if File.exist? File.expand_path('../elasticsearch/elasticsearch.gemspec', __dir_
   gem 'elasticsearch', path: File.expand_path('../elasticsearch', __dir__), require: false
 end
 
+gem 'elastic-transport', git: 'https://github.com/elastic/elastic-transport-ruby.git', branch: 'artem/switch-to-default-json-serializer'
+
 group :development do
   gem 'rspec'
   gem 'rspec_junit_formatter'

@@ -26,9 +26,7 @@ if File.exist? File.expand_path('../elasticsearch-api/elasticsearch-api.gemspec'
   gem 'elasticsearch-api', path: File.expand_path('../elasticsearch-api', __dir__), require: false
 end
 
-if ENV['TRANSPORT_VERSION'] == 'main'
-  gem 'elastic-transport', git: 'https://github.com/elastic/elastic-transport-ruby.git', branch: 'main'
-end
+gem 'elastic-transport', git: 'https://github.com/elastic/elastic-transport-ruby.git', branch: 'artem/switch-to-default-json-serializer'
 
 gem 'opentelemetry-sdk', require: false if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.0')
 if defined?(JRUBY_VERSION)
