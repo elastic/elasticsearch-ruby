@@ -1,18 +1,5 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
-# 9.7.0
-
-## Gem
-
-* Tested versions of Ruby for 9.7.0: Ruby (MRI) 3.2, 3.3, 3.4, 4.0, JRuby 9.4 and JRuby 10.
-* Minimal required version of Ruby is set to 3.1
-
-# 9.6.0
-
-## Gem
-
-* Tested versions of Ruby for 9.6.0: Ruby (MRI) 3.2, 3.3, 3.4, 4.0, JRuby 9.4 and JRuby 10.
-
 # 9.5.0
 
 ## Gem
