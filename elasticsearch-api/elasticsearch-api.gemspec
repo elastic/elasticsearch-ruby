@@ -42,7 +42,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files  = ['README.md', 'LICENSE.txt']
   s.rdoc_options      = ['--charset=UTF-8']
 
-  s.required_ruby_version = '>= 2.6' # For compatibility with JRuby 9.3
+  s.required_ruby_version = '>= 3.1' # For compatibility with JRuby 9.4
   s.add_dependency 'base64'
   s.add_dependency 'multi_json'
 
@@ -55,7 +55,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'yard'
 
   # Gems for testing integrations
-  s.add_development_dependency 'concurrent-ruby', '1.3.4' if defined? JRUBY_VERSION && JRUBY_VERSION < '9.4'
   s.add_development_dependency 'activesupport'
   s.add_development_dependency 'hashie'
   s.add_development_dependency 'jbuilder'

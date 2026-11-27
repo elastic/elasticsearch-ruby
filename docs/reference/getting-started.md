@@ -11,7 +11,7 @@ This page guides you through the installation process of the Ruby client, shows 
 
 ### Requirements [_requirements]
 
-A currently maintained version of Ruby (3.0+) or JRuby (9.3+).
+A currently maintained version of Ruby (3.3+) or JRuby (9.4+).
 
 
 ### Installation [_installation]

@@ -46,7 +46,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files  = ['README.md', 'LICENSE.txt']
   s.rdoc_options      = ['--charset=UTF-8']
 
-  s.required_ruby_version = '>= 2.6' # For compatibility with JRuby 9.3
+  s.required_ruby_version = '>= 3.1' # For compatibility with JRuby 9.4
   s.add_dependency 'elasticsearch-api', '9.7.0'
   s.add_dependency 'elastic-transport', '~> 8.3'
 

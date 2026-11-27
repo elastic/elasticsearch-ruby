@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 ELASTICSEARCH_URL = ENV['TEST_ES_SERVER'] || "http://localhost:#{(ENV['PORT'] || 9200)}"
-# TODO: For compatiblity with JRuby 9.3
+# TODO: For compatiblity with JRuby 9.4 and Ruby < 3.4
 parser = defined?(URI::RFC2396_PARSER) ? URI::RFC2396_PARSER : URI::DEFAULT_PARSER
 raise URI::InvalidURIError unless ELASTICSEARCH_URL =~ /\A#{parser.make_regexp}\z/
 
