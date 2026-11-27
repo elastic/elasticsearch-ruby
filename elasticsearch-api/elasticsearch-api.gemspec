@@ -49,7 +49,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'ansi'
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'elasticsearch'
-  s.add_development_dependency 'elasticsearch-test-runner' unless defined?(JRUBY_VERSION) && JRUBY_VERSION <= '9.4'
+  s.add_development_dependency 'elasticsearch-test-runner' unless defined?(JRUBY_VERSION) && JRUBY_VERSION == '9.4'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'yard'

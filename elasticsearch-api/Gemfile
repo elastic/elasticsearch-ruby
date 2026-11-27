@@ -33,9 +33,8 @@ group :development do
     gem 'debug'
   end
   # TODO: Related to https://github.com/ruby-i18n/i18n/issues/735
-  # TODO: Keeping here for compatiblity with JRuby 9.x
-  if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('3.2') &&
-     Gem::Version.new(RUBY_VERSION) > Gem::Version.new('2.6')
+  # TODO: Keeping here for compatiblity with JRuby 9.4
+  if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('3.2')
     gem 'i18n', '1.14'
   end
 end
